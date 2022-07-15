@@ -15,7 +15,23 @@
 		2CBCE6142881DE270057F4CD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CBCE6132881DE270057F4CD /* Preview Assets.xcassets */; };
 		2CCCADB42881F6BC0033E2EF /* CoreTask+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCCADB22881F6BC0033E2EF /* CoreTask+CoreDataClass.swift */; };
 		2CCCADB52881F6BC0033E2EF /* CoreTask+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCCADB32881F6BC0033E2EF /* CoreTask+CoreDataProperties.swift */; };
+		2CCCADB72881F94D0033E2EF /* CoreTask+CRUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCCADB62881F94D0033E2EF /* CoreTask+CRUD.swift */; };
+		2CCCADC02881FCF00033E2EF /* CoreTaskSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCCADBF2881FCF00033E2EF /* CoreTaskSpec.swift */; };
+		2CCCADC82881FECB0033E2EF /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = 2CCCADC72881FECB0033E2EF /* Quick */; };
+		2CCCADCE2882010F0033E2EF /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = 2CCCADCD2882010F0033E2EF /* Nimble */; };
+		2CCCADD1288203720033E2EF /* Logster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCCADD0288203720033E2EF /* Logster.swift */; };
+		2CCCADD4288204100033E2EF /* Crudable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCCADD3288204100033E2EF /* Crudable.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2CCCADC12881FCF00033E2EF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2CBCE5FB2881DE240057F4CD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2CBCE6022881DE240057F4CD;
+			remoteInfo = Tasktive;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		2CBCE6032881DE240057F4CD /* Tasktive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tasktive.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -31,6 +47,11 @@
 		2CCCADAD2881F1CC0033E2EF /* pre_compile.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = pre_compile.sh; sourceTree = "<group>"; };
 		2CCCADB22881F6BC0033E2EF /* CoreTask+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTask+CoreDataClass.swift"; sourceTree = "<group>"; };
 		2CCCADB32881F6BC0033E2EF /* CoreTask+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTask+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		2CCCADB62881F94D0033E2EF /* CoreTask+CRUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTask+CRUD.swift"; sourceTree = "<group>"; };
+		2CCCADBD2881FCF00033E2EF /* CoreTaskTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoreTaskTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2CCCADBF2881FCF00033E2EF /* CoreTaskSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreTaskSpec.swift; sourceTree = "<group>"; };
+		2CCCADD0288203720033E2EF /* Logster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logster.swift; sourceTree = "<group>"; };
+		2CCCADD3288204100033E2EF /* Crudable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crudable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +59,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2CCCADBA2881FCF00033E2EF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2CCCADC82881FECB0033E2EF /* Quick in Frameworks */,
+				2CCCADCE2882010F0033E2EF /* Nimble in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,6 +82,8 @@
 				2CBCE6042881DE240057F4CD /* Products */,
 				2CCCADAC2881F1970033E2EF /* Scripts */,
 				2CBCE6052881DE240057F4CD /* Tasktive */,
+				2CCCADB82881FCC80033E2EF /* Tests */,
+				2CCCADCC2882010F0033E2EF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -59,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				2CBCE6032881DE240057F4CD /* Tasktive.app */,
+				2CCCADBD2881FCF00033E2EF /* CoreTaskTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -73,6 +106,8 @@
 				2CBCE60F2881DE270057F4CD /* Assets.xcassets */,
 				2CCCADAF2881F5680033E2EF /* Models */,
 				2CBCE6122881DE270057F4CD /* Preview Content */,
+				2CCCADD2288204040033E2EF /* Protocols */,
+				2CCCADCF288203480033E2EF /* Utilities */,
 			);
 			path = Tasktive;
 			sourceTree = "<group>";
@@ -115,8 +150,48 @@
 			children = (
 				2CCCADB22881F6BC0033E2EF /* CoreTask+CoreDataClass.swift */,
 				2CCCADB32881F6BC0033E2EF /* CoreTask+CoreDataProperties.swift */,
+				2CCCADB62881F94D0033E2EF /* CoreTask+CRUD.swift */,
 			);
 			path = CoreTask;
+			sourceTree = "<group>";
+		};
+		2CCCADB82881FCC80033E2EF /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				2CCCADBE2881FCF00033E2EF /* CoreTaskTests */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		2CCCADBE2881FCF00033E2EF /* CoreTaskTests */ = {
+			isa = PBXGroup;
+			children = (
+				2CCCADBF2881FCF00033E2EF /* CoreTaskSpec.swift */,
+			);
+			path = CoreTaskTests;
+			sourceTree = "<group>";
+		};
+		2CCCADCC2882010F0033E2EF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2CCCADCF288203480033E2EF /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				2CCCADD0288203720033E2EF /* Logster.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		2CCCADD2288204040033E2EF /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				2CCCADD3288204100033E2EF /* Crudable.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -136,9 +211,33 @@
 			dependencies = (
 			);
 			name = Tasktive;
+			packageProductDependencies = (
+			);
 			productName = Tasktive;
 			productReference = 2CBCE6032881DE240057F4CD /* Tasktive.app */;
 			productType = "com.apple.product-type.application";
+		};
+		2CCCADBC2881FCF00033E2EF /* CoreTaskTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2CCCADC32881FCF00033E2EF /* Build configuration list for PBXNativeTarget "CoreTaskTests" */;
+			buildPhases = (
+				2CCCADB92881FCF00033E2EF /* Sources */,
+				2CCCADBA2881FCF00033E2EF /* Frameworks */,
+				2CCCADBB2881FCF00033E2EF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2CCCADC22881FCF00033E2EF /* PBXTargetDependency */,
+			);
+			name = CoreTaskTests;
+			packageProductDependencies = (
+				2CCCADC72881FECB0033E2EF /* Quick */,
+				2CCCADCD2882010F0033E2EF /* Nimble */,
+			);
+			productName = CoreTaskTests;
+			productReference = 2CCCADBD2881FCF00033E2EF /* CoreTaskTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -153,6 +252,10 @@
 					2CBCE6022881DE240057F4CD = {
 						CreatedOnToolsVersion = 14.0;
 					};
+					2CCCADBC2881FCF00033E2EF = {
+						CreatedOnToolsVersion = 14.0;
+						TestTargetID = 2CBCE6022881DE240057F4CD;
+					};
 				};
 			};
 			buildConfigurationList = 2CBCE5FE2881DE240057F4CD /* Build configuration list for PBXProject "Tasktive" */;
@@ -164,11 +267,16 @@
 				Base,
 			);
 			mainGroup = 2CBCE5FA2881DE240057F4CD;
+			packageReferences = (
+				2CCCADC62881FECB0033E2EF /* XCRemoteSwiftPackageReference "Quick" */,
+				2CCCADC92881FEE90033E2EF /* XCRemoteSwiftPackageReference "Nimble" */,
+			);
 			productRefGroup = 2CBCE6042881DE240057F4CD /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				2CBCE6022881DE240057F4CD /* Tasktive */,
+				2CCCADBC2881FCF00033E2EF /* CoreTaskTests */,
 			);
 		};
 /* End PBXProject section */
@@ -180,6 +288,13 @@
 			files = (
 				2CBCE6142881DE270057F4CD /* Preview Assets.xcassets in Resources */,
 				2CBCE6102881DE270057F4CD /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2CCCADBB2881FCF00033E2EF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -212,16 +327,35 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CCCADD1288203720033E2EF /* Logster.swift in Sources */,
+				2CCCADB72881F94D0033E2EF /* CoreTask+CRUD.swift in Sources */,
 				2CBCE6072881DE240057F4CD /* TasktiveApp.swift in Sources */,
 				2CCCADB42881F6BC0033E2EF /* CoreTask+CoreDataClass.swift in Sources */,
 				2CBCE6092881DE240057F4CD /* Persistence.swift in Sources */,
+				2CCCADD4288204100033E2EF /* Crudable.swift in Sources */,
 				2CCCADB52881F6BC0033E2EF /* CoreTask+CoreDataProperties.swift in Sources */,
 				2CBCE60E2881DE240057F4CD /* ContentView.swift in Sources */,
 				2CBCE60C2881DE240057F4CD /* Tasktive.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2CCCADB92881FCF00033E2EF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2CCCADC02881FCF00033E2EF /* CoreTaskSpec.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2CCCADC22881FCF00033E2EF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2CBCE6022881DE240057F4CD /* Tasktive */;
+			targetProxy = 2CCCADC12881FCF00033E2EF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		2CBCE6152881DE270057F4CD /* Debug */ = {
@@ -397,6 +531,47 @@
 			};
 			name = Release;
 		};
+		2CCCADC42881FCF00033E2EF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DXUKH9VF73;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.kamaal.CoreTaskTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tasktive.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Tasktive";
+			};
+			name = Debug;
+		};
+		2CCCADC52881FCF00033E2EF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DXUKH9VF73;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.kamaal.CoreTaskTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tasktive.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Tasktive";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -418,7 +593,48 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		2CCCADC32881FCF00033E2EF /* Build configuration list for PBXNativeTarget "CoreTaskTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2CCCADC42881FCF00033E2EF /* Debug */,
+				2CCCADC52881FCF00033E2EF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		2CCCADC62881FECB0033E2EF /* XCRemoteSwiftPackageReference "Quick" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Quick/Quick.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+		2CCCADC92881FEE90033E2EF /* XCRemoteSwiftPackageReference "Nimble" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Quick/Nimble.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2CCCADC72881FECB0033E2EF /* Quick */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2CCCADC62881FECB0033E2EF /* XCRemoteSwiftPackageReference "Quick" */;
+			productName = Quick;
+		};
+		2CCCADCD2882010F0033E2EF /* Nimble */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2CCCADC92881FEE90033E2EF /* XCRemoteSwiftPackageReference "Nimble" */;
+			productName = Nimble;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		2CBCE60A2881DE240057F4CD /* Tasktive.xcdatamodeld */ = {
