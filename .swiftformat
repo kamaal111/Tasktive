@@ -1,0 +1,9 @@
+--ifdef no-indent
+--self init-only
+--extensionacl on-declarations
+--importgrouping length
+--emptybraces spaced
+--indent 4
+--tabwidth 4
+--maxwidth 120
+--disable wrapMultilineStatementBraces
