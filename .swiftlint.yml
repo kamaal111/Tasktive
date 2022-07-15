@@ -46,6 +46,7 @@ opt_in_rules:
 excluded:
   - Packages/*/Package.swift
   - Packages/*/Tests
+  - Tasktive/Models/CoreData/CoreTask
 identifier_name:
   min_length:
     warning: 2
