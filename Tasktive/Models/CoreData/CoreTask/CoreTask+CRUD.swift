@@ -23,32 +23,23 @@ extension CoreTask: Crudable {
 
         let updatedTask = updateValues(with: arguments)
 
-        switch CoreTask.save(from: context) {
-        case let .failure(failure):
-            return .failure(failure)
-        case .success:
-            break
-        }
-
-        return .success(updatedTask)
+        return CoreTask.save(from: context)
+            .map {
+                updatedTask
+            }
     }
 
     static func create(with arguments: Arguments,
                        from context: NSManagedObjectContext) -> Result<CoreTask, CrudErrors> {
-        var newTask = CoreTask(context: context)
+        let newTask = CoreTask(context: context)
+            .updateValues(with: arguments)
         newTask.id = UUID()
         newTask.creationDate = Date()
 
-        newTask = newTask.updateValues(with: arguments)
-
-        switch save(from: context) {
-        case let .failure(failure):
-            return .failure(failure)
-        case .success:
-            break
-        }
-
-        return .success(newTask)
+        return save(from: context)
+            .map {
+                newTask
+            }
     }
 
     static func list(from context: NSManagedObjectContext) -> Result<[CoreTask], CrudErrors> {
