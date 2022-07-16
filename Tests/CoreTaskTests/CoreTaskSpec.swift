@@ -63,7 +63,7 @@ final class CoreTaskSpec: QuickSpec {
                     ]
 
                     for arg in args {
-                        _ = try CoreTask.create(with: arg, from: self.viewContext).get()
+                        _ = CoreTask.create(with: arg, from: self.viewContext)
                     }
 
                     let result = CoreTask.list(from: self.viewContext)
@@ -77,6 +77,45 @@ final class CoreTaskSpec: QuickSpec {
                         expect(task.notes) == args[index].notes
                         expect(task.dueDate) == args[index].dueDate
                     }
+                }
+            }
+
+            context("when trying to update tasks") {
+                it("successfully updates a task") {
+                    let arguments = CoreTask.Arguments(
+                        title: "Title",
+                        taskDescription: "Description",
+                        notes: "Notes\nNew Line",
+                        dueDate: Date().addingTimeInterval(100_000)
+                    )
+                    let task = try CoreTask.create(with: arguments, from: self.viewContext).get()
+                    let oldTaskTitle = task.title
+                    let oldTaskID = task.id
+                    let oldTaskCreationDate = task.creationDate
+                    let oldTaskDueDate = task.dueDate
+                    let oldTaskUpdateTime = task.updateDate
+                    let oldTaskDescription = task.taskDescription
+                    let oldTaskNotes = task.notes
+                    let oldTaskTicked = task.ticked
+
+                    let updatedArguments = CoreTask.Arguments(
+                        title: "Updated",
+                        taskDescription: "New description",
+                        notes: "yes note",
+                        dueDate: Date(),
+                        ticked: true
+                    )
+                    let updatedTask = try task.update(with: updatedArguments).get()
+
+                    expect(updatedTask.id) == oldTaskID
+                    expect(updatedTask.creationDate) == oldTaskCreationDate
+
+                    expect(updatedTask.dueDate) != oldTaskDueDate
+                    expect(updatedTask.title) != oldTaskTitle
+                    expect(updatedTask.updateDate) != oldTaskUpdateTime
+                    expect(updatedTask.taskDescription) != oldTaskDescription
+                    expect(updatedTask.notes) != oldTaskNotes
+                    expect(updatedTask.ticked) != oldTaskTicked
                 }
             }
         }

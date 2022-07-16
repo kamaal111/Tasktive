@@ -13,6 +13,8 @@ protocol Crudable {
     associatedtype Context
     associatedtype Arguments
 
-    static func create(with args: Arguments, from context: Context) -> Result<ReturnType, CrudErrors>
+    func update(with arguments: Arguments) -> Result<ReturnType, CrudErrors>
+
+    static func create(with arguments: Arguments, from context: Context) -> Result<ReturnType, CrudErrors>
     static func list(from context: Context) -> Result<[ReturnType], CrudErrors>
 }

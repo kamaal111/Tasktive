@@ -18,4 +18,8 @@ struct Logster {
     func error(_ message: String) {
         logger.error("\(message)")
     }
+
+    func warning(_ message: String) {
+        logger.warning("\(message)")
+    }
 }
