@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C39A919288359A1008BAFD2 /* TasktiveLocale in Frameworks */ = {isa = PBXBuildFile; productRef = 2C39A918288359A1008BAFD2 /* TasktiveLocale */; };
+		2C47E3F22883688F00FD4469 /* Text+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47E3F12883688F00FD4469 /* Text+extensions.swift */; };
 		2CBCE6072881DE240057F4CD /* TasktiveApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCE6062881DE240057F4CD /* TasktiveApp.swift */; };
 		2CBCE6092881DE240057F4CD /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCE6082881DE240057F4CD /* Persistence.swift */; };
 		2CBCE60C2881DE240057F4CD /* Tasktive.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCE60A2881DE240057F4CD /* Tasktive.xcdatamodeld */; };
@@ -34,6 +36,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2C39A91728835847008BAFD2 /* TasktiveLocale */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = TasktiveLocale; sourceTree = "<group>"; };
+		2C39A91C28835ADF008BAFD2 /* run.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = run.sh; sourceTree = "<group>"; };
+		2C47E3F12883688F00FD4469 /* Text+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Text+extensions.swift"; sourceTree = "<group>"; };
+		2C47E3F32883692800FD4469 /* locale.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = locale.js; sourceTree = "<group>"; };
+		2C47E3F42883693400FD4469 /* en.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = en.js; sourceTree = "<group>"; };
+		2C47E3F62883694200FD4469 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		2C47E3F72883694200FD4469 /* Localize.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = Localize.js; sourceTree = "<group>"; };
 		2CBCE6032881DE240057F4CD /* Tasktive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tasktive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CBCE6062881DE240057F4CD /* TasktiveApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasktiveApp.swift; sourceTree = "<group>"; };
 		2CBCE6082881DE240057F4CD /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -59,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C39A919288359A1008BAFD2 /* TasktiveLocale in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,12 +84,57 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2C39A916288357CA008BAFD2 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				2C39A91728835847008BAFD2 /* TasktiveLocale */,
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
+		2C39A91A28835AAD008BAFD2 /* GenerateLocales */ = {
+			isa = PBXGroup;
+			children = (
+				2C47E3F32883692800FD4469 /* locale.js */,
+				2C39A91C28835ADF008BAFD2 /* run.sh */,
+				2C39A91B28835AC1008BAFD2 /* locales */,
+				2C47E3F52883694200FD4469 /* Localize.js */,
+			);
+			path = GenerateLocales;
+			sourceTree = "<group>";
+		};
+		2C39A91B28835AC1008BAFD2 /* locales */ = {
+			isa = PBXGroup;
+			children = (
+				2C47E3F42883693400FD4469 /* en.js */,
+			);
+			path = locales;
+			sourceTree = "<group>";
+		};
+		2C47E3F02883685D00FD4469 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				2C47E3F12883688F00FD4469 /* Text+extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		2C47E3F52883694200FD4469 /* Localize.js */ = {
+			isa = PBXGroup;
+			children = (
+				2C47E3F62883694200FD4469 /* README.md */,
+				2C47E3F72883694200FD4469 /* Localize.js */,
+			);
+			path = Localize.js;
+			sourceTree = "<group>";
+		};
 		2CBCE5FA2881DE240057F4CD = {
 			isa = PBXGroup;
 			children = (
 				2CCCADAB2881F1750033E2EF /* LICENSE */,
 				2CCCADAA2881EFB60033E2EF /* README.md */,
 				2CCCADCC2882010F0033E2EF /* Frameworks */,
+				2C39A916288357CA008BAFD2 /* Packages */,
 				2CBCE6042881DE240057F4CD /* Products */,
 				2CCCADAC2881F1970033E2EF /* Scripts */,
 				2CBCE6052881DE240057F4CD /* Tasktive */,
@@ -104,6 +159,7 @@
 				2CBCE6082881DE240057F4CD /* Persistence.swift */,
 				2CBCE6062881DE240057F4CD /* TasktiveApp.swift */,
 				2CBCE60F2881DE270057F4CD /* Assets.xcassets */,
+				2C47E3F02883685D00FD4469 /* Extensions */,
 				2CCCADAF2881F5680033E2EF /* Models */,
 				2CBCE6122881DE270057F4CD /* Preview Content */,
 				2CCCADD2288204040033E2EF /* Protocols */,
@@ -124,6 +180,7 @@
 			isa = PBXGroup;
 			children = (
 				2CCCADAD2881F1CC0033E2EF /* pre_compile.sh */,
+				2C39A91A28835AAD008BAFD2 /* GenerateLocales */,
 			);
 			path = Scripts;
 			sourceTree = "<group>";
@@ -212,6 +269,7 @@
 			);
 			name = Tasktive;
 			packageProductDependencies = (
+				2C39A918288359A1008BAFD2 /* TasktiveLocale */,
 			);
 			productName = Tasktive;
 			productReference = 2CBCE6032881DE240057F4CD /* Tasktive.app */;
@@ -333,6 +391,7 @@
 				2CCCADB42881F6BC0033E2EF /* CoreTask+CoreDataClass.swift in Sources */,
 				2CBCE6092881DE240057F4CD /* Persistence.swift in Sources */,
 				2CCCADD4288204100033E2EF /* Crudable.swift in Sources */,
+				2C47E3F22883688F00FD4469 /* Text+extensions.swift in Sources */,
 				2CCCADB52881F6BC0033E2EF /* CoreTask+CoreDataProperties.swift in Sources */,
 				2CBCE60E2881DE240057F4CD /* ContentView.swift in Sources */,
 				2CBCE60C2881DE240057F4CD /* Tasktive.xcdatamodeld in Sources */,
@@ -626,6 +685,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		2C39A918288359A1008BAFD2 /* TasktiveLocale */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TasktiveLocale;
+		};
 		2CCCADC72881FECB0033E2EF /* Quick */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 2CCCADC62881FECB0033E2EF /* XCRemoteSwiftPackageReference "Quick" */;

@@ -39,6 +39,16 @@
                ReferencedContainer = "container:Tasktive.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "TasktiveLocaleTests"
+               BuildableName = "TasktiveLocaleTests"
+               BlueprintName = "TasktiveLocaleTests"
+               ReferencedContainer = "container:Packages/TasktiveLocale">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
