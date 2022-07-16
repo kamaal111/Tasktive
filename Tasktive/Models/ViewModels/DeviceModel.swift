@@ -23,6 +23,17 @@ final class DeviceModel: ObservableObject {
         removeNotifications()
     }
 
+    static let deviceType: DeviceType = {
+        #if canImport(UIKit)
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            return .iPad
+        }
+        return .iPhone
+        #else
+        return .mac
+        #endif
+    }()
+
     private func setupNotifications() {
         #if canImport(UIKit)
         NotificationCenter.default.addObserver(
@@ -78,4 +89,10 @@ enum DeviceOrientation {
     case portrait
     case landscape
     case flat
+}
+
+enum DeviceType {
+    case iPhone
+    case iPad
+    case mac
 }
