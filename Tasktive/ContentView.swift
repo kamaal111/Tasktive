@@ -8,10 +8,13 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var deviceModel = DeviceModel()
+
     var body: some View {
         NavigationView {
             Text(localized: .HELLO)
         }
+        .environmentObject(deviceModel)
     }
 }
 

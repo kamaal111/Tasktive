@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		2C39A919288359A1008BAFD2 /* TasktiveLocale in Frameworks */ = {isa = PBXBuildFile; productRef = 2C39A918288359A1008BAFD2 /* TasktiveLocale */; };
 		2C47E3F22883688F00FD4469 /* Text+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47E3F12883688F00FD4469 /* Text+extensions.swift */; };
+		2C47E3FB28836A6A00FD4469 /* DeviceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47E3FA28836A6A00FD4469 /* DeviceModel.swift */; };
+		2C47E3FD28836B2200FD4469 /* NotificationName+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47E3FC28836B2200FD4469 /* NotificationName+extensions.swift */; };
 		2CBCE6072881DE240057F4CD /* TasktiveApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCE6062881DE240057F4CD /* TasktiveApp.swift */; };
 		2CBCE6092881DE240057F4CD /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCE6082881DE240057F4CD /* Persistence.swift */; };
 		2CBCE60C2881DE240057F4CD /* Tasktive.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCE60A2881DE240057F4CD /* Tasktive.xcdatamodeld */; };
@@ -43,6 +45,8 @@
 		2C47E3F42883693400FD4469 /* en.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = en.js; sourceTree = "<group>"; };
 		2C47E3F62883694200FD4469 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		2C47E3F72883694200FD4469 /* Localize.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = Localize.js; sourceTree = "<group>"; };
+		2C47E3FA28836A6A00FD4469 /* DeviceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceModel.swift; sourceTree = "<group>"; };
+		2C47E3FC28836B2200FD4469 /* NotificationName+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationName+extensions.swift"; sourceTree = "<group>"; };
 		2CBCE6032881DE240057F4CD /* Tasktive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tasktive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CBCE6062881DE240057F4CD /* TasktiveApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasktiveApp.swift; sourceTree = "<group>"; };
 		2CBCE6082881DE240057F4CD /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -114,6 +118,7 @@
 		2C47E3F02883685D00FD4469 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				2C47E3FC28836B2200FD4469 /* NotificationName+extensions.swift */,
 				2C47E3F12883688F00FD4469 /* Text+extensions.swift */,
 			);
 			path = Extensions;
@@ -126,6 +131,21 @@
 				2C47E3F72883694200FD4469 /* Localize.js */,
 			);
 			path = Localize.js;
+			sourceTree = "<group>";
+		};
+		2C47E3F828836A1500FD4469 /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SwiftUI;
+			sourceTree = "<group>";
+		};
+		2C47E3F928836A5100FD4469 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				2C47E3FA28836A6A00FD4469 /* DeviceModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		2CBCE5FA2881DE240057F4CD = {
@@ -156,13 +176,13 @@
 			children = (
 				2CBCE6112881DE270057F4CD /* Tasktive.entitlements */,
 				2CBCE60D2881DE240057F4CD /* ContentView.swift */,
-				2CBCE6082881DE240057F4CD /* Persistence.swift */,
 				2CBCE6062881DE240057F4CD /* TasktiveApp.swift */,
 				2CBCE60F2881DE270057F4CD /* Assets.xcassets */,
 				2C47E3F02883685D00FD4469 /* Extensions */,
 				2CCCADAF2881F5680033E2EF /* Models */,
 				2CBCE6122881DE270057F4CD /* Preview Content */,
 				2CCCADD2288204040033E2EF /* Protocols */,
+				2C47E3F828836A1500FD4469 /* SwiftUI */,
 				2CCCADCF288203480033E2EF /* Utilities */,
 			);
 			path = Tasktive;
@@ -189,6 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				2CCCADB02881F56E0033E2EF /* CoreData */,
+				2C47E3F928836A5100FD4469 /* ViewModels */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -239,6 +260,7 @@
 			isa = PBXGroup;
 			children = (
 				2CCCADD0288203720033E2EF /* Logster.swift */,
+				2CBCE6082881DE240057F4CD /* Persistence.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -386,6 +408,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2CCCADD1288203720033E2EF /* Logster.swift in Sources */,
+				2C47E3FD28836B2200FD4469 /* NotificationName+extensions.swift in Sources */,
 				2CCCADB72881F94D0033E2EF /* CoreTask+CRUD.swift in Sources */,
 				2CBCE6072881DE240057F4CD /* TasktiveApp.swift in Sources */,
 				2CCCADB42881F6BC0033E2EF /* CoreTask+CoreDataClass.swift in Sources */,
@@ -393,6 +416,7 @@
 				2CCCADD4288204100033E2EF /* Crudable.swift in Sources */,
 				2C47E3F22883688F00FD4469 /* Text+extensions.swift in Sources */,
 				2CCCADB52881F6BC0033E2EF /* CoreTask+CoreDataProperties.swift in Sources */,
+				2C47E3FB28836A6A00FD4469 /* DeviceModel.swift in Sources */,
 				2CBCE60E2881DE240057F4CD /* ContentView.swift in Sources */,
 				2CBCE60C2881DE240057F4CD /* Tasktive.xcdatamodeld in Sources */,
 			);
