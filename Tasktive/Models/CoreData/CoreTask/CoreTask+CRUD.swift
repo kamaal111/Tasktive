@@ -29,6 +29,18 @@ extension CoreTask: Crudable {
             }
     }
 
+    func delete() -> Result<Void, CrudErrors> {
+        guard let context = managedObjectContext else {
+            let message = "Context missing"
+            logger.warning(message)
+            return .failure(.generalFailure(message: message))
+        }
+
+        context.delete(self)
+
+        return .success(())
+    }
+
     static func create(with arguments: Arguments,
                        from context: NSManagedObjectContext) -> Result<CoreTask, CrudErrors> {
         let newTask = CoreTask(context: context)

@@ -36,7 +36,7 @@ final class CoreTaskSpec: QuickSpec {
                     let task = try result.get()
 
                     expect(task.title) == "Title"
-                    expect(task.ticked) == false
+                    expect(task.ticked).to(beFalse())
                     expect(task.taskDescription) == "Description"
                     expect(task.notes) == "Notes\nNew Line"
                     expect(task.dueDate) == now
@@ -116,6 +116,27 @@ final class CoreTaskSpec: QuickSpec {
                     expect(updatedTask.taskDescription) != oldTaskDescription
                     expect(updatedTask.notes) != oldTaskNotes
                     expect(updatedTask.ticked) != oldTaskTicked
+                }
+            }
+
+            context("when trying to delete a task") {
+                it("get's deleted successfully") {
+                    let arguments = CoreTask.Arguments(
+                        title: "Title",
+                        taskDescription: nil,
+                        notes: nil,
+                        dueDate: Date()
+                    )
+                    let task = try CoreTask.create(with: arguments, from: self.viewContext).get()
+                    let tasks = try CoreTask.list(from: self.viewContext).get()
+
+                    expect(tasks.count) == 1
+
+                    _ = task.delete()
+
+                    let updatedTasks = try CoreTask.list(from: self.viewContext).get()
+
+                    expect(updatedTasks).to(beEmpty())
                 }
             }
         }

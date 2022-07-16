@@ -14,6 +14,7 @@ protocol Crudable {
     associatedtype Arguments
 
     func update(with arguments: Arguments) -> Result<ReturnType, CrudErrors>
+    func delete() -> Result<Void, CrudErrors>
 
     static func create(with arguments: Arguments, from context: Context) -> Result<ReturnType, CrudErrors>
     static func list(from context: Context) -> Result<[ReturnType], CrudErrors>
