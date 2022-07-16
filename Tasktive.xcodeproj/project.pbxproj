@@ -11,6 +11,9 @@
 		2C47E3F22883688F00FD4469 /* Text+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47E3F12883688F00FD4469 /* Text+extensions.swift */; };
 		2C47E3FB28836A6A00FD4469 /* DeviceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47E3FA28836A6A00FD4469 /* DeviceModel.swift */; };
 		2C47E3FD28836B2200FD4469 /* NotificationName+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47E3FC28836B2200FD4469 /* NotificationName+extensions.swift */; };
+		2C47E40128836FBF00FD4469 /* SalmonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2C47E40028836FBF00FD4469 /* SalmonUI */; };
+		2C47E4042883719000FD4469 /* Sidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47E4032883719000FD4469 /* Sidebar.swift */; };
+		2C47E406288371A300FD4469 /* DetailsColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47E405288371A300FD4469 /* DetailsColumn.swift */; };
 		2CBCE6072881DE240057F4CD /* TasktiveApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCE6062881DE240057F4CD /* TasktiveApp.swift */; };
 		2CBCE6092881DE240057F4CD /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCE6082881DE240057F4CD /* Persistence.swift */; };
 		2CBCE60C2881DE240057F4CD /* Tasktive.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCE60A2881DE240057F4CD /* Tasktive.xcdatamodeld */; };
@@ -47,6 +50,8 @@
 		2C47E3F72883694200FD4469 /* Localize.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = Localize.js; sourceTree = "<group>"; };
 		2C47E3FA28836A6A00FD4469 /* DeviceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceModel.swift; sourceTree = "<group>"; };
 		2C47E3FC28836B2200FD4469 /* NotificationName+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationName+extensions.swift"; sourceTree = "<group>"; };
+		2C47E4032883719000FD4469 /* Sidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sidebar.swift; sourceTree = "<group>"; };
+		2C47E405288371A300FD4469 /* DetailsColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsColumn.swift; sourceTree = "<group>"; };
 		2CBCE6032881DE240057F4CD /* Tasktive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tasktive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CBCE6062881DE240057F4CD /* TasktiveApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasktiveApp.swift; sourceTree = "<group>"; };
 		2CBCE6082881DE240057F4CD /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -72,6 +77,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C47E40128836FBF00FD4469 /* SalmonUI in Frameworks */,
 				2C39A919288359A1008BAFD2 /* TasktiveLocale in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -148,6 +154,23 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
+		2C47E3FE28836F6200FD4469 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2C47E4022883718100FD4469 /* SupportingView */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		2C47E4022883718100FD4469 /* SupportingView */ = {
+			isa = PBXGroup;
+			children = (
+				2C47E4032883719000FD4469 /* Sidebar.swift */,
+				2C47E405288371A300FD4469 /* DetailsColumn.swift */,
+			);
+			path = SupportingView;
+			sourceTree = "<group>";
+		};
 		2CBCE5FA2881DE240057F4CD = {
 			isa = PBXGroup;
 			children = (
@@ -184,6 +207,7 @@
 				2CCCADD2288204040033E2EF /* Protocols */,
 				2C47E3F828836A1500FD4469 /* SwiftUI */,
 				2CCCADCF288203480033E2EF /* Utilities */,
+				2C47E3FE28836F6200FD4469 /* Views */,
 			);
 			path = Tasktive;
 			sourceTree = "<group>";
@@ -292,6 +316,7 @@
 			name = Tasktive;
 			packageProductDependencies = (
 				2C39A918288359A1008BAFD2 /* TasktiveLocale */,
+				2C47E40028836FBF00FD4469 /* SalmonUI */,
 			);
 			productName = Tasktive;
 			productReference = 2CBCE6032881DE240057F4CD /* Tasktive.app */;
@@ -350,6 +375,7 @@
 			packageReferences = (
 				2CCCADC62881FECB0033E2EF /* XCRemoteSwiftPackageReference "Quick" */,
 				2CCCADC92881FEE90033E2EF /* XCRemoteSwiftPackageReference "Nimble" */,
+				2C47E3FF28836FBF00FD4469 /* XCRemoteSwiftPackageReference "SalmonUI" */,
 			);
 			productRefGroup = 2CBCE6042881DE240057F4CD /* Products */;
 			projectDirPath = "";
@@ -407,6 +433,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C47E406288371A300FD4469 /* DetailsColumn.swift in Sources */,
 				2CCCADD1288203720033E2EF /* Logster.swift in Sources */,
 				2C47E3FD28836B2200FD4469 /* NotificationName+extensions.swift in Sources */,
 				2CCCADB72881F94D0033E2EF /* CoreTask+CRUD.swift in Sources */,
@@ -418,6 +445,7 @@
 				2CCCADB52881F6BC0033E2EF /* CoreTask+CoreDataProperties.swift in Sources */,
 				2C47E3FB28836A6A00FD4469 /* DeviceModel.swift in Sources */,
 				2CBCE60E2881DE240057F4CD /* ContentView.swift in Sources */,
+				2C47E4042883719000FD4469 /* Sidebar.swift in Sources */,
 				2CBCE60C2881DE240057F4CD /* Tasktive.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -690,6 +718,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		2C47E3FF28836FBF00FD4469 /* XCRemoteSwiftPackageReference "SalmonUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kamaal111/SalmonUI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
 		2CCCADC62881FECB0033E2EF /* XCRemoteSwiftPackageReference "Quick" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Quick/Quick.git";
@@ -712,6 +748,11 @@
 		2C39A918288359A1008BAFD2 /* TasktiveLocale */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = TasktiveLocale;
+		};
+		2C47E40028836FBF00FD4469 /* SalmonUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2C47E3FF28836FBF00FD4469 /* XCRemoteSwiftPackageReference "SalmonUI" */;
+			productName = SalmonUI;
 		};
 		2CCCADC72881FECB0033E2EF /* Quick */ = {
 			isa = XCSwiftPackageProductDependency;

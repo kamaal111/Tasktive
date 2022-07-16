@@ -6,13 +6,33 @@
 //
 
 import SwiftUI
+import SalmonUI
 
 struct ContentView: View {
     @StateObject private var deviceModel = DeviceModel()
 
     var body: some View {
-        NavigationView {
-            Text(localized: .HELLO)
+        KJustStack {
+            if DeviceModel.deviceType == .iPhone {
+                TabView(selection: .constant(0)) {
+                    NavigationStack {
+                        DetailsColumn()
+                    }
+                    .tabItem {
+                        Image(systemName: "doc.text.image")
+                        Text("Today or whatever day")
+                    }
+                    .tag(0)
+                }
+            } else {
+                NavigationSplitView(sidebar: {
+                    Sidebar()
+                }) {
+                    NavigationStack {
+                        DetailsColumn()
+                    }
+                }
+            }
         }
         .environmentObject(deviceModel)
     }
@@ -20,6 +40,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        ContentView()
+            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }

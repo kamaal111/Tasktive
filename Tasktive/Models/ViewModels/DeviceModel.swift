@@ -55,6 +55,7 @@ final class DeviceModel: ObservableObject {
     @objc
     private func onOrientationChange(_ notification: Notification) {
         guard let device = notification.object as? UIDevice else { return }
+
         setOrientation(from: device)
     }
     #endif
