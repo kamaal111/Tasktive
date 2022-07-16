@@ -18,4 +18,5 @@ protocol Crudable {
 
     static func create(with arguments: Arguments, from context: Context) -> Result<ReturnType, CrudErrors>
     static func list(from context: Context) -> Result<[ReturnType], CrudErrors>
+    static func filter(by predicate: NSPredicate, from context: Context) -> Result<[ReturnType], CrudErrors>
 }

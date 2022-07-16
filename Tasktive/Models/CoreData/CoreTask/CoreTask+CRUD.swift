@@ -56,6 +56,12 @@ extension CoreTask: Crudable {
 
     static func list(from context: NSManagedObjectContext) -> Result<[CoreTask], CrudErrors> {
         let predicate = NSPredicate(value: true)
+
+        return filter(by: predicate, from: context)
+    }
+
+    static func filter(by predicate: NSPredicate,
+                       from context: NSManagedObjectContext) -> Result<[CoreTask], CrudErrors> {
         let request = request(by: predicate)
 
         let result: [CoreTask]
