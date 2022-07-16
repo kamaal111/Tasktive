@@ -47,6 +47,7 @@ excluded:
   - Packages/*/Package.swift
   - Packages/*/Tests
   - Tasktive/Models/CoreData/CoreTask
+  - Tests
 identifier_name:
   min_length:
     warning: 2

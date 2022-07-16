@@ -9,8 +9,10 @@ import Foundation
 
 protocol Crudable {
     associatedtype ReturnType: Crudable
-    associatedtype Arguments
     associatedtype CrudErrors: Error
+    associatedtype Context
+    associatedtype Arguments
 
-    static func create(with args: Arguments) -> Result<ReturnType, CrudErrors>
+    static func create(with args: Arguments, from context: Context) -> Result<ReturnType, CrudErrors>
+    static func list(from context: Context) -> Result<[ReturnType], CrudErrors>
 }

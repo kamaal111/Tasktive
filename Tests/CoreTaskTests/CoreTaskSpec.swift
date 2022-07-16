@@ -15,51 +15,70 @@ final class CoreTaskSpec: QuickSpec {
 
     override func spec() {
         describe("CRUD operations on CoreTask") {
+            beforeEach {
+                do {
+                    try CoreTask.clear(from: self.viewContext).get()
+                } catch {
+                    fail("failed to clear store; error='\(error)'")
+                }
+            }
+
             context("when trying to create a CoreTask") {
-                it("returns a failure due to context being misisng") {
-                    self.whenTryingToCreateACoreTaskReturnsAFailureDueToContextBeingMissing()
+                it("returns a new task") {
+                    let now = Date()
+                    let arguments = CoreTask.Arguments(
+                        title: "Title",
+                        taskDescription: "Description",
+                        notes: "Notes\nNew Line",
+                        dueDate: now
+                    )
+                    let result = CoreTask.create(with: arguments, from: self.viewContext)
+                    let task = try result.get()
+
+                    expect(task.title) == "Title"
+                    expect(task.ticked) == false
+                    expect(task.taskDescription) == "Description"
+                    expect(task.notes) == "Notes\nNew Line"
+                    expect(task.dueDate) == now
+                }
+            }
+
+            context("when trying to list tasks") {
+                it("returns no tasks because nothing has been saved yet") {
+                    let result = CoreTask.list(from: self.viewContext)
+                    let tasks = try result.get()
+
+                    expect(tasks).to(beEmpty())
                 }
 
-                it("returns a new task") {
-                    try self.whenTryingToCreateACoreTaskReturnANewTask()
+                it("returns couple of tasks that have been saved") {
+                    let args: [CoreTask.Arguments] = [
+                        .init(
+                            title: "First",
+                            taskDescription: "Some things to think about",
+                            notes: "Wow notes",
+                            dueDate: Date()
+                        ),
+                        .init(title: "Second", taskDescription: "Other things ", notes: "Oh yeah", dueDate: Date()),
+                    ]
+
+                    for arg in args {
+                        _ = try CoreTask.create(with: arg, from: self.viewContext).get()
+                    }
+
+                    let result = CoreTask.list(from: self.viewContext)
+                    let tasks = try result.get()
+
+                    expect(tasks.count) == 2
+
+                    for (index, task) in tasks.enumerated() {
+                        expect(task.title) == args[index].title
+                        expect(task.taskDescription) == args[index].taskDescription
+                        expect(task.notes) == args[index].notes
+                        expect(task.dueDate) == args[index].dueDate
+                    }
                 }
             }
         }
-    }
-}
-
-extension CoreTaskSpec {
-    private func whenTryingToCreateACoreTaskReturnsAFailureDueToContextBeingMissing() {
-        let arguments = CoreTask.Arguments(
-            context: nil,
-            title: "Missing context",
-            taskDescription: nil,
-            notes: nil,
-            dueDate: Date()
-        )
-        let taskResult = CoreTask.create(with: arguments)
-
-        expect({ try taskResult.get() }).to(throwError(closure: { error in
-            expect(error as? CoreTask.CrudErrors) == .contextMissing
-        }))
-    }
-
-    private func whenTryingToCreateACoreTaskReturnANewTask() throws {
-        let now = Date()
-        let arguments = CoreTask.Arguments(
-            context: viewContext,
-            title: "Title",
-            taskDescription: "Description",
-            notes: "Notes\nNew Line",
-            dueDate: now
-        )
-        let taskResult = CoreTask.create(with: arguments)
-        let task = try taskResult.get()
-
-        expect(task.title) == "Title"
-        expect(task.ticked) == false
-        expect(task.taskDescription) == "Description"
-        expect(task.notes) == "Notes\nNew Line"
-        expect(task.dueDate) == now
     }
 }
