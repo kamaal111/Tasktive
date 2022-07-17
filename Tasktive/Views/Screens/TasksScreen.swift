@@ -97,7 +97,7 @@ extension TasksScreen {
 
         @MainActor
         private func setTitle(_ title: String) {
-            self.newTitle = title
+            newTitle = title
         }
 
         private static let taskDateFormatter: DateFormatter = {

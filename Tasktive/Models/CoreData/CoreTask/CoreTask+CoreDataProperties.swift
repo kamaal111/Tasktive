@@ -22,6 +22,7 @@ extension CoreTask {
     @NSManaged public var updateDate: Date
     @NSManaged public var ticked: Bool
     @NSManaged public var dueDate: Date
+    @NSManaged public var completionDate: Date?
 }
 
 extension CoreTask: Identifiable { }

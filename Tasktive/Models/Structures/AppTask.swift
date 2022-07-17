@@ -14,6 +14,7 @@ struct AppTask: Hashable, Identifiable, Taskable {
     var notes: String?
     var ticked: Bool
     var dueDate: Date
+    var completionDate: Date?
     var source: TaskSource
 
     init(
@@ -23,6 +24,7 @@ struct AppTask: Hashable, Identifiable, Taskable {
         notes: String? = nil,
         ticked: Bool,
         dueDate: Date,
+        completionDate: Date?,
         source: TaskSource
     ) {
         self.id = id
@@ -31,6 +33,7 @@ struct AppTask: Hashable, Identifiable, Taskable {
         self.notes = notes
         self.ticked = ticked
         self.dueDate = dueDate
+        self.completionDate = completionDate
         self.source = source
     }
 }

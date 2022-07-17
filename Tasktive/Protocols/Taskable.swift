@@ -14,6 +14,7 @@ protocol Taskable {
     var notes: String? { get set }
     var ticked: Bool { get set }
     var dueDate: Date { get set }
+    var completionDate: Date? { get set }
     var source: TaskSource { get }
 }
 
@@ -23,6 +24,6 @@ enum TaskSource {
 
 extension Taskable {
     var asAppTask: AppTask {
-        .init(id: id, title: title, ticked: ticked, dueDate: dueDate, source: source)
+        .init(id: id, title: title, ticked: ticked, dueDate: dueDate, completionDate: completionDate, source: source)
     }
 }

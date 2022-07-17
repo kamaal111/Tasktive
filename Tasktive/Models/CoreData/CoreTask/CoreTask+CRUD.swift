@@ -102,6 +102,7 @@ extension CoreTask: Crudable {
         let notes: String?
         let dueDate: Date
         let ticked: Bool
+        let completionDate: Date?
         let id: UUID?
 
         init(title: String, taskDescription: String?, notes: String?, dueDate: Date, ticked: Bool) {
@@ -111,6 +112,7 @@ extension CoreTask: Crudable {
             self.dueDate = dueDate
             self.ticked = ticked
             self.id = nil
+            self.completionDate = nil
         }
 
         init(title: String, taskDescription: String?, notes: String?, dueDate: Date) {
@@ -118,13 +120,22 @@ extension CoreTask: Crudable {
         }
 
         #if DEBUG
-        init(title: String, taskDescription: String?, notes: String?, dueDate: Date, ticked: Bool, id: UUID) {
+        init(
+            title: String,
+            taskDescription: String?,
+            notes: String?,
+            dueDate: Date,
+            ticked: Bool,
+            id: UUID,
+            completionDate: Date?
+        ) {
             self.title = title
             self.taskDescription = taskDescription
             self.notes = notes
             self.dueDate = dueDate
             self.ticked = ticked
             self.id = id
+            self.completionDate = completionDate
         }
         #endif
     }
