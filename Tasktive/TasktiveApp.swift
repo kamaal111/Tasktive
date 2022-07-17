@@ -9,12 +9,15 @@ import SwiftUI
 
 @main
 struct TasktiveApp: App {
-    let persistenceController = PersistenceController.shared
+    @StateObject private var tasksViewModel = TasksViewModel()
+
+    private let persistenceController = PersistenceController.shared
 
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .environment(\.managedObjectContext, persistenceController.context)
+                .environmentObject(tasksViewModel)
         }
     }
 }

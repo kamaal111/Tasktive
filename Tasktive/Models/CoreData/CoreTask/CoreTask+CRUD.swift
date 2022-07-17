@@ -45,7 +45,7 @@ extension CoreTask: Crudable {
                        from context: NSManagedObjectContext) -> Result<CoreTask, CrudErrors> {
         let newTask = CoreTask(context: context)
             .updateValues(with: arguments)
-        newTask.id = UUID()
+        newTask.id = arguments.id ?? UUID()
         newTask.creationDate = Date()
 
         return save(from: context)
@@ -102,6 +102,7 @@ extension CoreTask: Crudable {
         let notes: String?
         let dueDate: Date
         let ticked: Bool
+        let id: UUID?
 
         init(title: String, taskDescription: String?, notes: String?, dueDate: Date, ticked: Bool) {
             self.title = title
@@ -109,11 +110,23 @@ extension CoreTask: Crudable {
             self.notes = notes
             self.dueDate = dueDate
             self.ticked = ticked
+            self.id = nil
         }
 
         init(title: String, taskDescription: String?, notes: String?, dueDate: Date) {
             self.init(title: title, taskDescription: taskDescription, notes: notes, dueDate: dueDate, ticked: false)
         }
+
+        #if DEBUG
+        init(title: String, taskDescription: String?, notes: String?, dueDate: Date, ticked: Bool, id: UUID) {
+            self.title = title
+            self.taskDescription = taskDescription
+            self.notes = notes
+            self.dueDate = dueDate
+            self.ticked = ticked
+            self.id = id
+        }
+        #endif
     }
 
     enum CrudErrors: Error {

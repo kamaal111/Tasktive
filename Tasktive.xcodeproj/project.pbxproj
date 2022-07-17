@@ -16,6 +16,12 @@
 		2C47E406288371A300FD4469 /* DetailsColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47E405288371A300FD4469 /* DetailsColumn.swift */; };
 		2C51C90D28847115008939F7 /* AppSizes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C90C28847115008939F7 /* AppSizes.swift */; };
 		2C51C90F28847438008939F7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C90E28847438008939F7 /* Constants.swift */; };
+		2C51C91128847C3B008939F7 /* DataClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C91028847C3B008939F7 /* DataClient.swift */; };
+		2C51C91328847F9E008939F7 /* TasksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C91228847F9E008939F7 /* TasksViewModel.swift */; };
+		2C51C916288481A9008939F7 /* AppTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C915288481A9008939F7 /* AppTask.swift */; };
+		2C51C918288481F7008939F7 /* Taskable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C917288481F7008939F7 /* Taskable.swift */; };
+		2C51C91A28848392008939F7 /* CoreTask+Taskable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C91928848392008939F7 /* CoreTask+Taskable.swift */; };
+		2C51C91C28848B09008939F7 /* Array+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C91B28848B09008939F7 /* Array+extensions.swift */; };
 		2CBCE6072881DE240057F4CD /* TasktiveApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCE6062881DE240057F4CD /* TasktiveApp.swift */; };
 		2CBCE6092881DE240057F4CD /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCE6082881DE240057F4CD /* Persistence.swift */; };
 		2CBCE60C2881DE240057F4CD /* Tasktive.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCE60A2881DE240057F4CD /* Tasktive.xcdatamodeld */; };
@@ -61,6 +67,12 @@
 		2C47E405288371A300FD4469 /* DetailsColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsColumn.swift; sourceTree = "<group>"; };
 		2C51C90C28847115008939F7 /* AppSizes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSizes.swift; sourceTree = "<group>"; };
 		2C51C90E28847438008939F7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		2C51C91028847C3B008939F7 /* DataClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataClient.swift; sourceTree = "<group>"; };
+		2C51C91228847F9E008939F7 /* TasksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksViewModel.swift; sourceTree = "<group>"; };
+		2C51C915288481A9008939F7 /* AppTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTask.swift; sourceTree = "<group>"; };
+		2C51C917288481F7008939F7 /* Taskable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Taskable.swift; sourceTree = "<group>"; };
+		2C51C91928848392008939F7 /* CoreTask+Taskable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTask+Taskable.swift"; sourceTree = "<group>"; };
+		2C51C91B28848B09008939F7 /* Array+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+extensions.swift"; sourceTree = "<group>"; };
 		2CBCE6032881DE240057F4CD /* Tasktive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tasktive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CBCE6062881DE240057F4CD /* TasktiveApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasktiveApp.swift; sourceTree = "<group>"; };
 		2CBCE6082881DE240057F4CD /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -139,6 +151,7 @@
 		2C47E3F02883685D00FD4469 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				2C51C91B28848B09008939F7 /* Array+extensions.swift */,
 				2C47E3FC28836B2200FD4469 /* NotificationName+extensions.swift */,
 				2C47E3F12883688F00FD4469 /* Text+extensions.swift */,
 				2CF24AA928842B5B00778BD9 /* View+extensions.swift */,
@@ -155,18 +168,12 @@
 			path = Localize.js;
 			sourceTree = "<group>";
 		};
-		2C47E3F828836A1500FD4469 /* SwiftUI */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = SwiftUI;
-			sourceTree = "<group>";
-		};
 		2C47E3F928836A5100FD4469 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
 				2C47E3FA28836A6A00FD4469 /* DeviceModel.swift */,
 				2CF24AA52884289100778BD9 /* NamiNavigator.swift */,
+				2C51C91228847F9E008939F7 /* TasksViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -196,6 +203,14 @@
 				2C51C90C28847115008939F7 /* AppSizes.swift */,
 			);
 			path = Enumerations;
+			sourceTree = "<group>";
+		};
+		2C51C91428848199008939F7 /* Structures */ = {
+			isa = PBXGroup;
+			children = (
+				2C51C915288481A9008939F7 /* AppTask.swift */,
+			);
+			path = Structures;
 			sourceTree = "<group>";
 		};
 		2CBCE5FA2881DE240057F4CD = {
@@ -235,7 +250,6 @@
 				2CCCADAF2881F5680033E2EF /* Models */,
 				2CBCE6122881DE270057F4CD /* Preview Content */,
 				2CCCADD2288204040033E2EF /* Protocols */,
-				2C47E3F828836A1500FD4469 /* SwiftUI */,
 				2CCCADCF288203480033E2EF /* Utilities */,
 				2C47E3FE28836F6200FD4469 /* Views */,
 			);
@@ -263,6 +277,7 @@
 			isa = PBXGroup;
 			children = (
 				2CCCADB02881F56E0033E2EF /* CoreData */,
+				2C51C91428848199008939F7 /* Structures */,
 				2C47E3F928836A5100FD4469 /* ViewModels */,
 			);
 			path = Models;
@@ -283,6 +298,7 @@
 				2CCCADB22881F6BC0033E2EF /* CoreTask+CoreDataClass.swift */,
 				2CCCADB32881F6BC0033E2EF /* CoreTask+CoreDataProperties.swift */,
 				2CCCADB62881F94D0033E2EF /* CoreTask+CRUD.swift */,
+				2C51C91928848392008939F7 /* CoreTask+Taskable.swift */,
 			);
 			path = CoreTask;
 			sourceTree = "<group>";
@@ -313,6 +329,7 @@
 		2CCCADCF288203480033E2EF /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				2C51C91028847C3B008939F7 /* DataClient.swift */,
 				2CCCADD0288203720033E2EF /* Logster.swift */,
 				2CBCE6082881DE240057F4CD /* Persistence.swift */,
 			);
@@ -323,6 +340,7 @@
 			isa = PBXGroup;
 			children = (
 				2CCCADD3288204100033E2EF /* Crudable.swift */,
+				2C51C917288481F7008939F7 /* Taskable.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -478,11 +496,16 @@
 				2CCCADD1288203720033E2EF /* Logster.swift in Sources */,
 				2C47E3FD28836B2200FD4469 /* NotificationName+extensions.swift in Sources */,
 				2CF24AA62884289100778BD9 /* NamiNavigator.swift in Sources */,
+				2C51C91128847C3B008939F7 /* DataClient.swift in Sources */,
 				2CCCADB72881F94D0033E2EF /* CoreTask+CRUD.swift in Sources */,
 				2CBCE6072881DE240057F4CD /* TasktiveApp.swift in Sources */,
+				2C51C918288481F7008939F7 /* Taskable.swift in Sources */,
+				2C51C91C28848B09008939F7 /* Array+extensions.swift in Sources */,
 				2CCCADB42881F6BC0033E2EF /* CoreTask+CoreDataClass.swift in Sources */,
 				2CBCE6092881DE240057F4CD /* Persistence.swift in Sources */,
 				2CCCADD4288204100033E2EF /* Crudable.swift in Sources */,
+				2C51C916288481A9008939F7 /* AppTask.swift in Sources */,
+				2C51C91A28848392008939F7 /* CoreTask+Taskable.swift in Sources */,
 				2CF24AB128843FE800778BD9 /* TasksScreen.swift in Sources */,
 				2C47E3F22883688F00FD4469 /* Text+extensions.swift in Sources */,
 				2CCCADB52881F6BC0033E2EF /* CoreTask+CoreDataProperties.swift in Sources */,
@@ -493,6 +516,7 @@
 				2C47E4042883719000FD4469 /* Sidebar.swift in Sources */,
 				2CF24AA828842AEB00778BD9 /* AppTabView.swift in Sources */,
 				2CBCE60C2881DE240057F4CD /* Tasktive.xcdatamodeld in Sources */,
+				2C51C91328847F9E008939F7 /* TasksViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

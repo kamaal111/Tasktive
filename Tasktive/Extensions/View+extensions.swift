@@ -14,9 +14,10 @@ extension View {
 
     #if DEBUG
     func previewEnvironment() -> some View {
-        environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        environment(\.managedObjectContext, PersistenceController.preview.context)
             .environmentObject(DeviceModel())
             .environmentObject(NamiNavigator())
+            .environmentObject(TasksViewModel(preview: true))
     }
     #endif
 }
