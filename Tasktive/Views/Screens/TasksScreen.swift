@@ -39,17 +39,22 @@ struct TasksScreen: View {
                 KFloatingTextField(
                     text: $viewModel.newTitle,
                     title: TasktiveLocale.Keys.NEW_TASK_INPUT_TITLE.localized,
-                    onCommit: { Task { await viewModel.submitNewTask() } }
+                    onCommit: { onNewTaskSubmit() }
                 )
-                Button(action: { Task { await viewModel.submitNewTask() } }) {
+                Button(action: onNewTaskSubmit) {
                     Text(localized: .SUBMIT)
                         .foregroundColor(.accentColor)
                 }
+                .padding(.top, 12)
                 .buttonStyle(.plain)
                 .disabled(viewModel.disableNewTaskSubmitButton)
             }
             .padding(.horizontal, .medium)
+            #if os(macOS)
+            .padding(.vertical, .medium)
+            #else
             .padding(.vertical, .small)
+            #endif
             .background(colorScheme == .dark ? Color.black : Color.white)
             .ktakeSizeEagerly(alignment: .bottom)
         }
@@ -60,6 +65,12 @@ struct TasksScreen: View {
         #if os(iOS)
         .navigationBarTitleDisplayMode(.large)
         #endif
+    }
+
+    private func onNewTaskSubmit() {
+        Task {
+            await viewModel.submitNewTask()
+        }
     }
 }
 
