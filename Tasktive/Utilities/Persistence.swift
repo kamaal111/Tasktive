@@ -36,6 +36,14 @@ struct PersistenceController {
         let aDayInMinutes = 1440
         let arguments: [CoreTask.Arguments] = [
             .init(
+                title: "Yesterdays Task",
+                taskDescription: "Did stuff",
+                notes: "Did some note taking",
+                dueDate: Date().adding(minutes: -aDayInMinutes),
+                ticked: true,
+                id: UUID(uuidString: "dd74c487-8b6a-4939-943d-88e93a2f3713")!
+            ),
+            .init(
                 title: "First Task",
                 taskDescription: "Doing stuff",
                 notes: "Note taking",

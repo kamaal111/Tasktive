@@ -8,7 +8,7 @@
 import SwiftUI
 
 final class TasksViewModel: ObservableObject {
-    @Published private(set) var tasks: [AppTask] = []
+    @Published private(set) var tasks: [Date: [AppTask]] = [:]
 
     private let persistenceController: PersistenceController
     private let dataClient = DataClient()
@@ -27,6 +27,17 @@ final class TasksViewModel: ObservableObject {
     }
     #endif
 
+    var taskDates: [Date] {
+        tasks.keys
+            .sorted(by: {
+                $0.compare($1) == .orderedAscending
+            })
+    }
+
+    func tasksForDate(_ date: Date) -> [AppTask] {
+        tasks[date] ?? []
+    }
+
     func getAllTasks() async {
         let tasksResult = dataClient.listTasks(from: persistenceController.context, of: CoreTask.self)
         let tasks: [CoreTask]
@@ -39,15 +50,16 @@ final class TasksViewModel: ObservableObject {
             tasks = success
         }
 
-        let sortedTasks = tasks
-            .map(\.asAppTask)
-            .sorted(by: \.dueDate, using: .orderedAscending)
-        print("sortedTasks", sortedTasks)
-        await setTasks(sortedTasks)
+        let groupedTasks = Dictionary(grouping: tasks.map(\.asAppTask), by: { task in
+            let dateComponents = Calendar.current.dateComponents([.day, .year, .month], from: task.dueDate)
+            return Calendar.current.date(from: dateComponents) ?? Date()
+        })
+
+        await setTasks(groupedTasks)
     }
 
     @MainActor
-    private func setTasks(_ tasks: [AppTask]) {
+    private func setTasks(_ tasks: [Date: [AppTask]]) {
         self.tasks = tasks
     }
 }

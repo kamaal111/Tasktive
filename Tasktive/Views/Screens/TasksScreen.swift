@@ -7,6 +7,8 @@
 
 import SwiftUI
 import SalmonUI
+import TasktiveLocale
+import ShrimpExtensions
 
 private let SCREEN: NamiNavigator.Screens = .tasks
 
@@ -15,8 +17,14 @@ struct TasksScreen: View {
 
     var body: some View {
         VStack {
-            ForEach(tasksViewModel.tasks) { task in
-                Text(task.title)
+            List {
+                ForEach(tasksViewModel.taskDates, id: \.self) { date in
+                    Section(header: Text(formattedDate(date))) {
+                        ForEach(tasksViewModel.tasksForDate(date), id: \.self) { task in
+                            Text(task.title)
+                        }
+                    }
+                }
             }
         }
         .navigationTitle(Text(SCREEN.title))
@@ -27,6 +35,28 @@ struct TasksScreen: View {
         .navigationBarTitleDisplayMode(.large)
         #endif
     }
+
+    func formattedDate(_ date: Date) -> String {
+        let now = Date()
+
+        #warning("not working for some reason")
+        if date.isPreviousDay(of: now) {
+            return TasktiveLocale.Keys.YESTERDAY.localized
+        }
+        if date.isSameDay(as: now) {
+            return TasktiveLocale.Keys.TODAY.localized
+        }
+        if date.isNextDay(of: now) {
+            return TasktiveLocale.Keys.TOMORROW.localized
+        }
+        return Self.taskDateFormatter.string(from: date)
+    }
+
+    static let taskDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        return formatter
+    }()
 }
 
 struct TasksScreen_Previews: PreviewProvider {

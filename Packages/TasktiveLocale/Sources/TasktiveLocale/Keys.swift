@@ -9,5 +9,8 @@ extension TasktiveLocale {
     public enum Keys: String {
         case TASKS
         case SCENES
+        case TODAY
+        case TOMORROW
+        case YESTERDAY
     }
 }
