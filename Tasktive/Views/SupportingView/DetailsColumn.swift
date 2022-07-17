@@ -8,13 +8,21 @@
 import SwiftUI
 
 struct DetailsColumn: View {
+    @EnvironmentObject private var namiNavigator: NamiNavigator
+
     var body: some View {
-        Text("Details")
+        switch namiNavigator.tabSelection {
+        case .today:
+            TodayScreen()
+        }
     }
 }
 
+#if DEBUG
 struct DetailsColumn_Previews: PreviewProvider {
     static var previews: some View {
         DetailsColumn()
+            .previewEnvironment()
     }
 }
+#endif

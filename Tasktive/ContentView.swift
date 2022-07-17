@@ -10,31 +10,24 @@ import SalmonUI
 
 struct ContentView: View {
     @StateObject private var deviceModel = DeviceModel()
+    @StateObject private var namiNavigator = NamiNavigator()
+
+    init() { }
 
     var body: some View {
         KJustStack {
             if DeviceModel.deviceType == .iPhone {
-                TabView(selection: .constant(0)) {
-                    NavigationStack {
-                        DetailsColumn()
-                    }
-                    .tabItem {
-                        Image(systemName: "doc.text.image")
-                        Text("Today or whatever day")
-                    }
-                    .tag(0)
-                }
+                AppTabView()
             } else {
                 NavigationSplitView(sidebar: {
                     Sidebar()
                 }) {
-                    NavigationStack {
-                        DetailsColumn()
-                    }
+                    DetailsColumn()
                 }
             }
         }
         .environmentObject(deviceModel)
+        .environmentObject(namiNavigator)
     }
 }
 

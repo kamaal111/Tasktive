@@ -13,8 +13,11 @@ struct Sidebar: View {
     }
 }
 
+#if DEBUG
 struct Sidebar_Previews: PreviewProvider {
     static var previews: some View {
         Sidebar()
+            .previewEnvironment()
     }
 }
+#endif

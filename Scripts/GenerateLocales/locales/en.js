@@ -1,5 +1,5 @@
 // en.js
 
 module.exports = {
-  HELLO: "Hello",
+  TODAY: "Today",
 };

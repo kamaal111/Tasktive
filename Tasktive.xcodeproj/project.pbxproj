@@ -28,6 +28,11 @@
 		2CCCADCE2882010F0033E2EF /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = 2CCCADCD2882010F0033E2EF /* Nimble */; };
 		2CCCADD1288203720033E2EF /* Logster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCCADD0288203720033E2EF /* Logster.swift */; };
 		2CCCADD4288204100033E2EF /* Crudable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCCADD3288204100033E2EF /* Crudable.swift */; };
+		2CF24AA62884289100778BD9 /* NamiNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF24AA52884289100778BD9 /* NamiNavigator.swift */; };
+		2CF24AA828842AEB00778BD9 /* AppTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF24AA728842AEB00778BD9 /* AppTabView.swift */; };
+		2CF24AAA28842B5B00778BD9 /* View+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF24AA928842B5B00778BD9 /* View+extensions.swift */; };
+		2CF24AAE28842F9A00778BD9 /* ShrimpExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 2CF24AAD28842F9A00778BD9 /* ShrimpExtensions */; };
+		2CF24AB128843FE800778BD9 /* TodayScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF24AB028843FE800778BD9 /* TodayScreen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +75,11 @@
 		2CCCADBF2881FCF00033E2EF /* CoreTaskSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreTaskSpec.swift; sourceTree = "<group>"; };
 		2CCCADD0288203720033E2EF /* Logster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logster.swift; sourceTree = "<group>"; };
 		2CCCADD3288204100033E2EF /* Crudable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crudable.swift; sourceTree = "<group>"; };
+		2CF24AA52884289100778BD9 /* NamiNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamiNavigator.swift; sourceTree = "<group>"; };
+		2CF24AA728842AEB00778BD9 /* AppTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabView.swift; sourceTree = "<group>"; };
+		2CF24AA928842B5B00778BD9 /* View+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+extensions.swift"; sourceTree = "<group>"; };
+		2CF24AAB28842E2600778BD9 /* package.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = package.json; sourceTree = "<group>"; };
+		2CF24AB028843FE800778BD9 /* TodayScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayScreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +88,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C47E40128836FBF00FD4469 /* SalmonUI in Frameworks */,
+				2CF24AAE28842F9A00778BD9 /* ShrimpExtensions in Frameworks */,
 				2C39A919288359A1008BAFD2 /* TasktiveLocale in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -126,6 +137,7 @@
 			children = (
 				2C47E3FC28836B2200FD4469 /* NotificationName+extensions.swift */,
 				2C47E3F12883688F00FD4469 /* Text+extensions.swift */,
+				2CF24AA928842B5B00778BD9 /* View+extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -150,6 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				2C47E3FA28836A6A00FD4469 /* DeviceModel.swift */,
+				2CF24AA52884289100778BD9 /* NamiNavigator.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -157,6 +170,7 @@
 		2C47E3FE28836F6200FD4469 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2CF24AAF28843FD800778BD9 /* Screens */,
 				2C47E4022883718100FD4469 /* SupportingView */,
 			);
 			path = Views;
@@ -165,8 +179,9 @@
 		2C47E4022883718100FD4469 /* SupportingView */ = {
 			isa = PBXGroup;
 			children = (
-				2C47E4032883719000FD4469 /* Sidebar.swift */,
+				2CF24AA728842AEB00778BD9 /* AppTabView.swift */,
 				2C47E405288371A300FD4469 /* DetailsColumn.swift */,
+				2C47E4032883719000FD4469 /* Sidebar.swift */,
 			);
 			path = SupportingView;
 			sourceTree = "<group>";
@@ -175,6 +190,7 @@
 			isa = PBXGroup;
 			children = (
 				2CCCADAB2881F1750033E2EF /* LICENSE */,
+				2CF24AAB28842E2600778BD9 /* package.json */,
 				2CCCADAA2881EFB60033E2EF /* README.md */,
 				2CCCADCC2882010F0033E2EF /* Frameworks */,
 				2C39A916288357CA008BAFD2 /* Packages */,
@@ -297,6 +313,14 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		2CF24AAF28843FD800778BD9 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				2CF24AB028843FE800778BD9 /* TodayScreen.swift */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -317,6 +341,7 @@
 			packageProductDependencies = (
 				2C39A918288359A1008BAFD2 /* TasktiveLocale */,
 				2C47E40028836FBF00FD4469 /* SalmonUI */,
+				2CF24AAD28842F9A00778BD9 /* ShrimpExtensions */,
 			);
 			productName = Tasktive;
 			productReference = 2CBCE6032881DE240057F4CD /* Tasktive.app */;
@@ -376,6 +401,7 @@
 				2CCCADC62881FECB0033E2EF /* XCRemoteSwiftPackageReference "Quick" */,
 				2CCCADC92881FEE90033E2EF /* XCRemoteSwiftPackageReference "Nimble" */,
 				2C47E3FF28836FBF00FD4469 /* XCRemoteSwiftPackageReference "SalmonUI" */,
+				2CF24AAC28842F9A00778BD9 /* XCRemoteSwiftPackageReference "ShrimpExtensions" */,
 			);
 			productRefGroup = 2CBCE6042881DE240057F4CD /* Products */;
 			projectDirPath = "";
@@ -436,16 +462,20 @@
 				2C47E406288371A300FD4469 /* DetailsColumn.swift in Sources */,
 				2CCCADD1288203720033E2EF /* Logster.swift in Sources */,
 				2C47E3FD28836B2200FD4469 /* NotificationName+extensions.swift in Sources */,
+				2CF24AA62884289100778BD9 /* NamiNavigator.swift in Sources */,
 				2CCCADB72881F94D0033E2EF /* CoreTask+CRUD.swift in Sources */,
 				2CBCE6072881DE240057F4CD /* TasktiveApp.swift in Sources */,
 				2CCCADB42881F6BC0033E2EF /* CoreTask+CoreDataClass.swift in Sources */,
 				2CBCE6092881DE240057F4CD /* Persistence.swift in Sources */,
 				2CCCADD4288204100033E2EF /* Crudable.swift in Sources */,
+				2CF24AB128843FE800778BD9 /* TodayScreen.swift in Sources */,
 				2C47E3F22883688F00FD4469 /* Text+extensions.swift in Sources */,
 				2CCCADB52881F6BC0033E2EF /* CoreTask+CoreDataProperties.swift in Sources */,
+				2CF24AAA28842B5B00778BD9 /* View+extensions.swift in Sources */,
 				2C47E3FB28836A6A00FD4469 /* DeviceModel.swift in Sources */,
 				2CBCE60E2881DE240057F4CD /* ContentView.swift in Sources */,
 				2C47E4042883719000FD4469 /* Sidebar.swift in Sources */,
+				2CF24AA828842AEB00778BD9 /* AppTabView.swift in Sources */,
 				2CBCE60C2881DE240057F4CD /* Tasktive.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -742,6 +772,14 @@
 				minimumVersion = 10.0.0;
 			};
 		};
+		2CF24AAC28842F9A00778BD9 /* XCRemoteSwiftPackageReference "ShrimpExtensions" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kamaal111/ShrimpExtensions.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -763,6 +801,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2CCCADC92881FEE90033E2EF /* XCRemoteSwiftPackageReference "Nimble" */;
 			productName = Nimble;
+		};
+		2CF24AAD28842F9A00778BD9 /* ShrimpExtensions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2CF24AAC28842F9A00778BD9 /* XCRemoteSwiftPackageReference "ShrimpExtensions" */;
+			productName = ShrimpExtensions;
 		};
 /* End XCSwiftPackageProductDependency section */
 

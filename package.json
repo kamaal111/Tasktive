@@ -1,0 +1,19 @@
+{
+  "name": "tasktive",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "localize": "sh Scripts/GenerateLocales/run.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kamaal111/Tasktive.git"
+  },
+  "author": "Kamaal",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kamaal111/Tasktive/issues"
+  },
+  "homepage": "https://github.com/kamaal111/Tasktive#readme"
+}

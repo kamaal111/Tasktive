@@ -7,6 +7,6 @@
 
 extension TasktiveLocale {
     public enum Keys: String {
-        case HELLO
+        case TODAY
     }
 }
