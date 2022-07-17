@@ -13,19 +13,45 @@ import ShrimpExtensions
 private let SCREEN: NamiNavigator.Screens = .tasks
 
 struct TasksScreen: View {
+    @Environment(\.colorScheme) private var colorScheme
+
     @EnvironmentObject private var tasksViewModel: TasksViewModel
 
+    @StateObject private var viewModel = ViewModel()
+
     var body: some View {
-        VStack {
-            List {
-                ForEach(tasksViewModel.taskDates, id: \.self) { date in
-                    Section(header: Text(formattedDate(date))) {
-                        ForEach(tasksViewModel.tasksForDate(date), id: \.self) { task in
-                            Text(task.title)
+        ZStack {
+            VStack {
+                List {
+                    ForEach(tasksViewModel.taskDates, id: \.self) { date in
+                        Section(header: Text(viewModel.formattedDate(date))) {
+                            ForEach(tasksViewModel.tasksForDate(date), id: \.self) { task in
+                                Text(task.title)
+                            }
                         }
                     }
                 }
             }
+            HStack {
+                Image(systemName: "plus.circle")
+                    .bold()
+                    .padding(.top, 12)
+                KFloatingTextField(
+                    text: $viewModel.newTitle,
+                    title: TasktiveLocale.Keys.NEW_TASK_INPUT_TITLE.localized,
+                    onCommit: { Task { await viewModel.submitNewTask() } }
+                )
+                Button(action: { Task { await viewModel.submitNewTask() } }) {
+                    Text(localized: .SUBMIT)
+                        .foregroundColor(.accentColor)
+                }
+                .buttonStyle(.plain)
+                .disabled(viewModel.disableNewTaskSubmitButton)
+            }
+            .padding(.horizontal, .medium)
+            .padding(.vertical, .small)
+            .background(colorScheme == .dark ? Color.black : Color.white)
+            .ktakeSizeEagerly(alignment: .bottom)
         }
         .navigationTitle(Text(SCREEN.title))
         .onAppear(perform: {
@@ -35,28 +61,51 @@ struct TasksScreen: View {
         .navigationBarTitleDisplayMode(.large)
         #endif
     }
+}
 
-    func formattedDate(_ date: Date) -> String {
-        let now = Date()
+extension TasksScreen {
+    final class ViewModel: ObservableObject {
+        @Published var newTitle = ""
 
-        #warning("not working for some reason")
-        if date.isPreviousDay(of: now) {
-            return TasktiveLocale.Keys.YESTERDAY.localized
+        init() { }
+
+        var disableNewTaskSubmitButton: Bool {
+            newTitle.trimmingByWhitespacesAndNewLines.isEmpty
         }
-        if date.isSameDay(as: now) {
-            return TasktiveLocale.Keys.TODAY.localized
+
+        func submitNewTask() async {
+            guard !disableNewTaskSubmitButton else { return }
+
+            await setTitle("")
         }
-        if date.isNextDay(of: now) {
-            return TasktiveLocale.Keys.TOMORROW.localized
+
+        func formattedDate(_ date: Date) -> String {
+            let now = Date()
+
+            #warning("not working for some reason")
+            if date.isPreviousDay(of: now) {
+                return TasktiveLocale.Keys.YESTERDAY.localized
+            }
+            if date.isSameDay(as: now) {
+                return TasktiveLocale.Keys.TODAY.localized
+            }
+            if date.isNextDay(of: now) {
+                return TasktiveLocale.Keys.TOMORROW.localized
+            }
+            return Self.taskDateFormatter.string(from: date)
         }
-        return Self.taskDateFormatter.string(from: date)
+
+        @MainActor
+        private func setTitle(_ title: String) {
+            self.newTitle = title
+        }
+
+        private static let taskDateFormatter: DateFormatter = {
+            let formatter = DateFormatter()
+            formatter.dateStyle = .short
+            return formatter
+        }()
     }
-
-    static let taskDateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        return formatter
-    }()
 }
 
 struct TasksScreen_Previews: PreviewProvider {

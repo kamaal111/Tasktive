@@ -12,5 +12,7 @@ extension TasktiveLocale {
         case TODAY
         case TOMORROW
         case YESTERDAY
+        case NEW_TASK_INPUT_TITLE
+        case SUBMIT
     }
 }
