@@ -30,6 +30,9 @@ struct ContentView: View {
         }
         .environmentObject(deviceModel)
         .environmentObject(namiNavigator)
+        #if os(macOS)
+            .frame(minWidth: Constants.UI.mainViewMinimumSize.width, minHeight: Constants.UI.mainViewMinimumSize.height)
+        #endif
     }
 }
 
