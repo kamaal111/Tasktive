@@ -8,8 +8,15 @@
 import SwiftUI
 
 struct Sidebar: View {
+    @EnvironmentObject private var namiNavigator: NamiNavigator
+
     var body: some View {
-        Text("List")
+        ForEach(namiNavigator.sidebarButtons, id: \.self) { screen in
+            Button(action: { namiNavigator.navigate(to: screen) }) {
+                Label(screen.title, systemImage: screen.icon)
+            }
+            .buttonStyle(.plain)
+        }
     }
 }
 

@@ -9,10 +9,11 @@ import SwiftUI
 
 struct DetailsColumn: View {
     @EnvironmentObject private var namiNavigator: NamiNavigator
+    @EnvironmentObject private var deviceModel: DeviceModel
 
     var body: some View {
-        switch namiNavigator.tabSelection {
-        case .today:
+        switch DeviceModel.deviceType.shouldHaveSidebar ? namiNavigator.sidebarSelection : namiNavigator.tabSelection {
+        case .today, .none:
             TodayScreen()
         }
     }

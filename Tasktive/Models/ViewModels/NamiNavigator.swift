@@ -19,10 +19,19 @@ final class NamiNavigator: ObservableObject {
         }
     }
 
+    @Published var sidebarSelection: Screens? {
+        didSet {
+            if let sidebarSelection, navigationPaths[sidebarSelection] == nil {
+                navigationPaths[sidebarSelection] = NavigationPath()
+            }
+        }
+    }
+
     @Published var navigationPaths: [Screens: NavigationPath]
 
     init() {
         self.tabSelection = STARTING_SCREEN
+        self.sidebarSelection = STARTING_SCREEN
         self.navigationPaths = [STARTING_SCREEN: NavigationPath()]
     }
 
@@ -32,10 +41,31 @@ final class NamiNavigator: ObservableObject {
             .filter(\.isTab)
     }
 
-    func screenPath(_ screen: Screens) -> Binding<NavigationPath> {
+    var sidebarButtons: [Screens] {
+        NamiNavigator.Screens
+            .allCases
+            .filter(\.isSidebarButton)
+    }
+
+    @MainActor
+    func navigate(to screen: Screens?) {
+        guard screen != sidebarSelection else { return }
+
+        sidebarSelection = screen
+    }
+
+    func screenPath(_ screen: Screens?) -> Binding<NavigationPath> {
         Binding(
-            get: { self.navigationPaths[screen] ?? UNVIEWED_NAVIGATION_PATH },
-            set: { self.navigationPaths[screen] = $0 }
+            get: {
+                guard let screen else { return UNVIEWED_NAVIGATION_PATH }
+
+                return self.navigationPaths[screen] ?? UNVIEWED_NAVIGATION_PATH
+            },
+            set: {
+                guard let screen else { return }
+
+                self.navigationPaths[screen] = $0
+            }
         )
     }
 }
@@ -49,6 +79,13 @@ extension NamiNavigator {
         }
 
         var isTab: Bool {
+            switch self {
+            case .today:
+                return true
+            }
+        }
+
+        var isSidebarButton: Bool {
             switch self {
             case .today:
                 return true

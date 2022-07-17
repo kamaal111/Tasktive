@@ -16,14 +16,16 @@ struct ContentView: View {
 
     var body: some View {
         KJustStack {
-            if DeviceModel.deviceType == .iPhone {
-                AppTabView()
-            } else {
+            if DeviceModel.deviceType.shouldHaveSidebar {
                 NavigationSplitView(sidebar: {
                     Sidebar()
                 }) {
-                    DetailsColumn()
+                    NavigationStack(path: namiNavigator.screenPath(namiNavigator.sidebarSelection)) {
+                        DetailsColumn()
+                    }
                 }
+            } else {
+                AppTabView()
             }
         }
         .environmentObject(deviceModel)

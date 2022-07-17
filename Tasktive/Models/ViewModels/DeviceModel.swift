@@ -96,4 +96,8 @@ enum DeviceType {
     case iPhone
     case iPad
     case mac
+
+    var shouldHaveSidebar: Bool {
+        self != .iPhone
+    }
 }
