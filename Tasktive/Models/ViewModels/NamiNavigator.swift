@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TasktiveLocale
 
 private let STARTING_SCREEN: NamiNavigator.Screens = .today
 private let UNVIEWED_NAVIGATION_PATH = NavigationPath()
@@ -95,7 +96,7 @@ extension NamiNavigator {
         var title: String {
             switch self {
             case .today:
-                return "Today"
+                return TasktiveLocale.Keys.TODAY.localized
             }
         }
 

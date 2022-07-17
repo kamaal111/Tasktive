@@ -14,6 +14,7 @@
 		2C47E40128836FBF00FD4469 /* SalmonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2C47E40028836FBF00FD4469 /* SalmonUI */; };
 		2C47E4042883719000FD4469 /* Sidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47E4032883719000FD4469 /* Sidebar.swift */; };
 		2C47E406288371A300FD4469 /* DetailsColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47E405288371A300FD4469 /* DetailsColumn.swift */; };
+		2C51C90D28847115008939F7 /* AppSizes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C90C28847115008939F7 /* AppSizes.swift */; };
 		2CBCE6072881DE240057F4CD /* TasktiveApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCE6062881DE240057F4CD /* TasktiveApp.swift */; };
 		2CBCE6092881DE240057F4CD /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCE6082881DE240057F4CD /* Persistence.swift */; };
 		2CBCE60C2881DE240057F4CD /* Tasktive.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCE60A2881DE240057F4CD /* Tasktive.xcdatamodeld */; };
@@ -57,6 +58,7 @@
 		2C47E3FC28836B2200FD4469 /* NotificationName+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationName+extensions.swift"; sourceTree = "<group>"; };
 		2C47E4032883719000FD4469 /* Sidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sidebar.swift; sourceTree = "<group>"; };
 		2C47E405288371A300FD4469 /* DetailsColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsColumn.swift; sourceTree = "<group>"; };
+		2C51C90C28847115008939F7 /* AppSizes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSizes.swift; sourceTree = "<group>"; };
 		2CBCE6032881DE240057F4CD /* Tasktive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tasktive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CBCE6062881DE240057F4CD /* TasktiveApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasktiveApp.swift; sourceTree = "<group>"; };
 		2CBCE6082881DE240057F4CD /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -186,6 +188,14 @@
 			path = SupportingView;
 			sourceTree = "<group>";
 		};
+		2C51C90B288470C3008939F7 /* Enumerations */ = {
+			isa = PBXGroup;
+			children = (
+				2C51C90C28847115008939F7 /* AppSizes.swift */,
+			);
+			path = Enumerations;
+			sourceTree = "<group>";
+		};
 		2CBCE5FA2881DE240057F4CD = {
 			isa = PBXGroup;
 			children = (
@@ -217,6 +227,7 @@
 				2CBCE60D2881DE240057F4CD /* ContentView.swift */,
 				2CBCE6062881DE240057F4CD /* TasktiveApp.swift */,
 				2CBCE60F2881DE270057F4CD /* Assets.xcassets */,
+				2C51C90B288470C3008939F7 /* Enumerations */,
 				2C47E3F02883685D00FD4469 /* Extensions */,
 				2CCCADAF2881F5680033E2EF /* Models */,
 				2CBCE6122881DE270057F4CD /* Preview Content */,
@@ -459,6 +470,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C51C90D28847115008939F7 /* AppSizes.swift in Sources */,
 				2C47E406288371A300FD4469 /* DetailsColumn.swift in Sources */,
 				2CCCADD1288203720033E2EF /* Logster.swift in Sources */,
 				2C47E3FD28836B2200FD4469 /* NotificationName+extensions.swift in Sources */,

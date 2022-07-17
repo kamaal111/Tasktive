@@ -12,10 +12,17 @@ struct DetailsColumn: View {
     @EnvironmentObject private var deviceModel: DeviceModel
 
     var body: some View {
-        switch DeviceModel.deviceType.shouldHaveSidebar ? namiNavigator.sidebarSelection : namiNavigator.tabSelection {
+        switch currentSelection {
         case .today, .none:
             TodayScreen()
         }
+    }
+
+    private var currentSelection: NamiNavigator.Screens? {
+        if DeviceModel.deviceType.shouldHaveSidebar {
+            return namiNavigator.sidebarSelection
+        }
+        return namiNavigator.tabSelection
     }
 }
 

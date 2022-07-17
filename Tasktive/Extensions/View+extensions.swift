@@ -8,6 +8,10 @@
 import SwiftUI
 
 extension View {
+    func padding(_ edges: Edge.Set = .all, _ length: AppSizes) -> some View {
+        padding(edges, length.rawValue)
+    }
+
     #if DEBUG
     func previewEnvironment() -> some View {
         environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
