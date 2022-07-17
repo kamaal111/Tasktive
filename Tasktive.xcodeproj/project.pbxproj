@@ -34,7 +34,7 @@
 		2CF24AA828842AEB00778BD9 /* AppTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF24AA728842AEB00778BD9 /* AppTabView.swift */; };
 		2CF24AAA28842B5B00778BD9 /* View+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF24AA928842B5B00778BD9 /* View+extensions.swift */; };
 		2CF24AAE28842F9A00778BD9 /* ShrimpExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 2CF24AAD28842F9A00778BD9 /* ShrimpExtensions */; };
-		2CF24AB128843FE800778BD9 /* TodayScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF24AB028843FE800778BD9 /* TodayScreen.swift */; };
+		2CF24AB128843FE800778BD9 /* TasksScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF24AB028843FE800778BD9 /* TasksScreen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,7 +83,7 @@
 		2CF24AA728842AEB00778BD9 /* AppTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabView.swift; sourceTree = "<group>"; };
 		2CF24AA928842B5B00778BD9 /* View+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+extensions.swift"; sourceTree = "<group>"; };
 		2CF24AAB28842E2600778BD9 /* package.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = package.json; sourceTree = "<group>"; };
-		2CF24AB028843FE800778BD9 /* TodayScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayScreen.swift; sourceTree = "<group>"; };
+		2CF24AB028843FE800778BD9 /* TasksScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksScreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -330,7 +330,7 @@
 		2CF24AAF28843FD800778BD9 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				2CF24AB028843FE800778BD9 /* TodayScreen.swift */,
+				2CF24AB028843FE800778BD9 /* TasksScreen.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -483,7 +483,7 @@
 				2CCCADB42881F6BC0033E2EF /* CoreTask+CoreDataClass.swift in Sources */,
 				2CBCE6092881DE240057F4CD /* Persistence.swift in Sources */,
 				2CCCADD4288204100033E2EF /* Crudable.swift in Sources */,
-				2CF24AB128843FE800778BD9 /* TodayScreen.swift in Sources */,
+				2CF24AB128843FE800778BD9 /* TasksScreen.swift in Sources */,
 				2C47E3F22883688F00FD4469 /* Text+extensions.swift in Sources */,
 				2CCCADB52881F6BC0033E2EF /* CoreTask+CoreDataProperties.swift in Sources */,
 				2CF24AAA28842B5B00778BD9 /* View+extensions.swift in Sources */,

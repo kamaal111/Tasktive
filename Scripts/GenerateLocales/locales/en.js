@@ -1,6 +1,6 @@
 // en.js
 
 module.exports = {
-  	TODAY: "Today",
+  	TASKS: "Tasks",
 	SCENES: "Scenes",
 };

@@ -7,7 +7,7 @@
 
 extension TasktiveLocale {
     public enum Keys: String {
-        case TODAY
+        case TASKS
         case SCENES
     }
 }

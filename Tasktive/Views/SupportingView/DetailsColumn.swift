@@ -13,8 +13,8 @@ struct DetailsColumn: View {
 
     var body: some View {
         switch currentSelection {
-        case .today, .none:
-            TodayScreen()
+        case .tasks, .none:
+            TasksScreen()
         }
     }
 

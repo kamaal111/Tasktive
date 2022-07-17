@@ -8,7 +8,7 @@
 import SwiftUI
 import TasktiveLocale
 
-private let STARTING_SCREEN: NamiNavigator.Screens = .today
+private let STARTING_SCREEN: NamiNavigator.Screens = .tasks
 private let UNVIEWED_NAVIGATION_PATH = NavigationPath()
 
 final class NamiNavigator: ObservableObject {
@@ -73,7 +73,7 @@ final class NamiNavigator: ObservableObject {
 
 extension NamiNavigator {
     enum Screens: Int, Hashable, CaseIterable {
-        case today = 0
+        case tasks = 0
 
         var tag: Int {
             rawValue
@@ -81,28 +81,28 @@ extension NamiNavigator {
 
         var isTab: Bool {
             switch self {
-            case .today:
+            case .tasks:
                 return true
             }
         }
 
         var isSidebarButton: Bool {
             switch self {
-            case .today:
+            case .tasks:
                 return true
             }
         }
 
         var title: String {
             switch self {
-            case .today:
-                return TasktiveLocale.Keys.TODAY.localized
+            case .tasks:
+                return TasktiveLocale.Keys.TASKS.localized
             }
         }
 
         var icon: String {
             switch self {
-            case .today:
+            case .tasks:
                 return "doc.text.image"
             }
         }
