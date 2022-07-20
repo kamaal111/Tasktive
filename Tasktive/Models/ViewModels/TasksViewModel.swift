@@ -12,6 +12,7 @@ private let logger = Logster(from: TasksViewModel.self)
 
 final class TasksViewModel: ObservableObject {
     @Published private(set) var tasks: [Date: [AppTask]] = [:]
+    @Published var loadingTasks = false
 
     private let persistenceController: PersistenceController
     private let dataClient = DataClient()
@@ -66,24 +67,39 @@ final class TasksViewModel: ObservableObject {
     }
 
     func getAllTasks() async -> Result<Void, UserErrors> {
-        let tasksResult = dataClient.listTasks(from: persistenceController.context, of: CoreTask.self)
-        let tasks: [AppTask]
-        switch tasksResult {
-        case let .failure(failure):
-            logger.error("failed to get all tasks; error='\(failure)'")
-            return .failure(.getAllFailure)
-        case let .success(success):
-            tasks = success
-                .map(\.asAppTask)
+        await withLoadingTasks {
+            let tasksResult = dataClient.listTasks(from: persistenceController.context, of: CoreTask.self)
+            let tasks: [AppTask]
+            switch tasksResult {
+            case let .failure(failure):
+                logger.error("failed to get all tasks; error='\(failure)'")
+                return .failure(.getAllFailure)
+            case let .success(success):
+                tasks = success
+                    .map(\.asAppTask)
+            }
+
+            let groupedTasks = Dictionary(grouping: tasks, by: { task in
+                getHashDate(from: task.dueDate)
+            })
+
+            await setTasks(groupedTasks)
+
+            return .success(())
         }
+    }
 
-        let groupedTasks = Dictionary(grouping: tasks, by: { task in
-            getHashDate(from: task.dueDate)
-        })
+    private func withLoadingTasks<T>(completion: () async -> T) async -> T {
+        await setLoadingTasks(true)
+        let result = await completion()
+        await setLoadingTasks(false)
+        return result
+    }
 
-        await setTasks(groupedTasks)
-
-        return .success(())
+    @MainActor
+    private func setLoadingTasks(_ state: Bool) {
+        guard loadingTasks != state else { return }
+        loadingTasks = state
     }
 
     private func getHashDate(from date: Date) -> Date {

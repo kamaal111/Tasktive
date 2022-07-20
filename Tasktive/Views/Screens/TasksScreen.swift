@@ -25,6 +25,14 @@ struct TasksScreen: View {
         ZStack {
             VStack {
                 List {
+                    if tasksViewModel.loadingTasks {
+                        KActivityIndicator(isAnimating: .constant(true), style: .large)
+                            .ktakeWidthEagerly()
+                    } else if tasksViewModel.tasks.isEmpty {
+                        #warning("Localize this")
+                        Text("✨ Add your first task bellow ✨")
+                            .ktakeWidthEagerly()
+                    }
                     ForEach(tasksViewModel.taskDates, id: \.self) { date in
                         Section(header: Text(viewModel.formattedDate(date))) {
                             ForEach(tasksViewModel.tasksForDate(date), id: \.self) { task in
