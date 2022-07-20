@@ -19,6 +19,7 @@
 		2C1B19822888723A00D734D2 /* CoreTask+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B19802888723A00D734D2 /* CoreTask+CoreDataClass.swift */; };
 		2C1B19832888723A00D734D2 /* CoreTask+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B19812888723A00D734D2 /* CoreTask+CoreDataProperties.swift */; };
 		2C1B1985288874C100D734D2 /* QuickAddTaskField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B1984288874C100D734D2 /* QuickAddTaskField.swift */; };
+		2C1B1987288893F800D734D2 /* Loading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B1986288893F800D734D2 /* Loading.swift */; };
 		2C39A919288359A1008BAFD2 /* TasktiveLocale in Frameworks */ = {isa = PBXBuildFile; productRef = 2C39A918288359A1008BAFD2 /* TasktiveLocale */; };
 		2C47E3F22883688F00FD4469 /* Text+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47E3F12883688F00FD4469 /* Text+extensions.swift */; };
 		2C47E3FB28836A6A00FD4469 /* DeviceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47E3FA28836A6A00FD4469 /* DeviceModel.swift */; };
@@ -76,6 +77,7 @@
 		2C1B19802888723A00D734D2 /* CoreTask+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTask+CoreDataClass.swift"; sourceTree = "<group>"; };
 		2C1B19812888723A00D734D2 /* CoreTask+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTask+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2C1B1984288874C100D734D2 /* QuickAddTaskField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAddTaskField.swift; sourceTree = "<group>"; };
+		2C1B1986288893F800D734D2 /* Loading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loading.swift; sourceTree = "<group>"; };
 		2C39A91728835847008BAFD2 /* TasktiveLocale */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = TasktiveLocale; sourceTree = "<group>"; };
 		2C39A91C28835ADF008BAFD2 /* run.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = run.sh; sourceTree = "<group>"; };
 		2C47E3F12883688F00FD4469 /* Text+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Text+extensions.swift"; sourceTree = "<group>"; };
@@ -242,6 +244,7 @@
 			children = (
 				2CF24AA728842AEB00778BD9 /* AppTabView.swift */,
 				2C47E405288371A300FD4469 /* DetailsColumn.swift */,
+				2C1B1986288893F800D734D2 /* Loading.swift */,
 				2C1B1984288874C100D734D2 /* QuickAddTaskField.swift */,
 				2C47E4032883719000FD4469 /* Sidebar.swift */,
 			);
@@ -552,6 +555,7 @@
 				2C51C90D28847115008939F7 /* AppSizes.swift in Sources */,
 				2C1B19672888675D00D734D2 /* MainView.swift in Sources */,
 				2C47E406288371A300FD4469 /* DetailsColumn.swift in Sources */,
+				2C1B1987288893F800D734D2 /* Loading.swift in Sources */,
 				2CCCADD1288203720033E2EF /* Logster.swift in Sources */,
 				2C47E3FD28836B2200FD4469 /* NotificationName+extensions.swift in Sources */,
 				2C1B197E2888720300D734D2 /* CoreAttachments+CoreDataClass.swift in Sources */,

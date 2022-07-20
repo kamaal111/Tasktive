@@ -26,7 +26,7 @@ struct TasksScreen: View {
             VStack {
                 List {
                     if tasksViewModel.loadingTasks {
-                        KActivityIndicator(isAnimating: .constant(true), style: .large)
+                        Loading()
                             .ktakeWidthEagerly()
                     } else if tasksViewModel.tasks.isEmpty {
                         #warning("Localize this")
