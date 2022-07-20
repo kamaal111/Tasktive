@@ -47,6 +47,9 @@ extension CoreTask: Crudable {
             .updateValues(with: arguments)
         newTask.id = arguments.id ?? UUID()
         newTask.creationDate = Date()
+        newTask.attachments = NSSet(array: [])
+        newTask.reminders = NSSet(array: [])
+        newTask.tags = NSSet(array: [])
 
         return save(from: context)
             .map {
