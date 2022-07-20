@@ -79,32 +79,7 @@ final class TasksViewModel: ObservableObject {
                 tasks = success
             }
 
-            let tasksGroupedByDueDateIsBeforeToday = Dictionary(grouping: tasks, by: \.dueDate.isBeforeToday)
-
-            var updatedTasks: [AppTask]?
-            if let tasksFromDaysBefore = tasksGroupedByDueDateIsBeforeToday[true] {
-                let now = Date()
-                let updateResult = dataClient.updateManyTaskDates(
-                    by: tasksFromDaysBefore.map(\.id),
-                    date: now,
-                    context: persistenceController.context
-                )
-
-                switch updateResult {
-                case let .failure(failure):
-                    logger.error("failed to updated outdated tasks; error='\(failure)'")
-                case .success:
-                    updatedTasks = (tasksGroupedByDueDateIsBeforeToday[false]?.map(\.asAppTask) ?? []) +
-                        (tasksFromDaysBefore.map {
-                            var task = $0.asAppTask
-                            task.dueDate = now
-                            return task
-                        })
-                    logger.info("successfully updated outdated tasks")
-                }
-            }
-
-            let groupedTasks = Dictionary(grouping: updatedTasks ?? tasks.map(\.asAppTask), by: { task in
+            let groupedTasks = Dictionary(grouping: updateDueDateOfTasksIfNeeded(tasks.map(\.asAppTask)), by: { task in
                 getHashDate(from: task.dueDate)
             })
 
@@ -112,6 +87,35 @@ final class TasksViewModel: ObservableObject {
 
             return .success(())
         }
+    }
+
+    private func updateDueDateOfTasksIfNeeded(_ tasks: [AppTask]) -> [AppTask] {
+        let tasksGroupedByDueDateIsBeforeToday = Dictionary(grouping: tasks, by: \.dueDate.isBeforeToday)
+        guard let tasksFromDaysBefore = tasksGroupedByDueDateIsBeforeToday[true] else { return tasks }
+
+        let now = Date()
+        let updateResult = dataClient.updateManyTaskDates(
+            by: tasksFromDaysBefore.map(\.id),
+            date: now,
+            context: persistenceController.context
+        )
+
+        switch updateResult {
+        case let .failure(failure):
+            logger.error("failed to updated outdated tasks; error='\(failure)'")
+        case .success:
+            break
+        }
+
+        let notUpdatedTasks = tasksGroupedByDueDateIsBeforeToday[false]?.map(\.asAppTask) ?? []
+        let updatedTasks = tasksFromDaysBefore
+            .map {
+                var task = $0.asAppTask
+                task.dueDate = now
+                return task
+            }
+
+        return notUpdatedTasks + updatedTasks
     }
 
     private func withLoadingTasks<T>(completion: () async -> T) async -> T {
