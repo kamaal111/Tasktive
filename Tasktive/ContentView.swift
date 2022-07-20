@@ -6,33 +6,23 @@
 //
 
 import SwiftUI
-import SalmonUI
+import PopperUp
 
 struct ContentView: View {
     @StateObject private var deviceModel = DeviceModel()
     @StateObject private var namiNavigator = NamiNavigator()
+    @StateObject private var popperUpManager = PopperUpManager(config: .init())
 
     init() { }
 
     var body: some View {
-        KJustStack {
-            if DeviceModel.deviceType.shouldHaveSidebar {
-                NavigationSplitView(sidebar: {
-                    Sidebar()
-                }) {
-                    NavigationStack(path: namiNavigator.screenPath(namiNavigator.sidebarSelection)) {
-                        DetailsColumn()
-                    }
-                }
-            } else {
-                AppTabView()
-            }
-        }
-        .environmentObject(deviceModel)
-        .environmentObject(namiNavigator)
-        #if os(macOS)
+        MainView()
+            .environmentObject(deviceModel)
+            .environmentObject(namiNavigator)
+            .withPopperUp(popperUpManager)
+            #if os(macOS)
             .frame(minWidth: Constants.UI.mainViewMinimumSize.width, minHeight: Constants.UI.mainViewMinimumSize.height)
-        #endif
+            #endif
     }
 }
 

@@ -9,6 +9,7 @@ import SwiftUI
 import SalmonUI
 import TasktiveLocale
 import ShrimpExtensions
+import PopperUp
 
 private let SCREEN: NamiNavigator.Screens = .tasks
 
@@ -16,6 +17,7 @@ struct TasksScreen: View {
     @Environment(\.colorScheme) private var colorScheme
 
     @EnvironmentObject private var tasksViewModel: TasksViewModel
+    @EnvironmentObject private var popperUpManager: PopperUpManager
 
     @StateObject private var viewModel = ViewModel()
 
@@ -69,7 +71,16 @@ struct TasksScreen: View {
 
     private func onNewTaskSubmit() {
         Task {
-            await viewModel.submitNewTask()
+            let result = await viewModel.submitNewTask()
+            let newTitle: String
+            switch result {
+            case .failure(let failure):
+                popperUpManager.showPopup(style: failure.style, timeout: failure.timeout)
+                return
+            case .success(let success):
+                newTitle = success
+            }
+            print("newTitle", newTitle)
         }
     }
 }
@@ -81,13 +92,19 @@ extension TasksScreen {
         init() { }
 
         var disableNewTaskSubmitButton: Bool {
-            newTitle.trimmingByWhitespacesAndNewLines.isEmpty
+            invalidTitle
         }
 
-        func submitNewTask() async {
-            guard !disableNewTaskSubmitButton else { return }
+        func submitNewTask() async -> Result<String, ValidationErrors> {
+            guard !invalidTitle else {
+                return .failure(.invalidTitle)
+            }
+
+            let title = newTitle
 
             await setTitle("")
+
+            return .success(title)
         }
 
         func formattedDate(_ date: Date) -> String {
@@ -106,6 +123,10 @@ extension TasksScreen {
             return Self.taskDateFormatter.string(from: date)
         }
 
+        private var invalidTitle: Bool {
+            newTitle.trimmingByWhitespacesAndNewLines.isEmpty
+        }
+
         @MainActor
         private func setTitle(_ title: String) {
             newTitle = title
@@ -119,11 +140,44 @@ extension TasksScreen {
     }
 }
 
+extension TasksScreen.ViewModel {
+    enum ValidationErrors: PopUpError, Error {
+        case invalidTitle
+
+        var style: PopperUpStyles {
+            switch self {
+            case .invalidTitle:
+                return .bottom(title: title, type: .warning, description: description)
+            }
+        }
+
+        var timeout: TimeInterval? {
+            3
+        }
+
+        private var title: String {
+            switch self {
+            case .invalidTitle:
+                #warning("Localize this")
+                return "Invalid title"
+            }
+        }
+
+        private var description: String? {
+            switch self {
+            case .invalidTitle:
+                return nil
+            }
+        }
+    }
+}
+
 struct TasksScreen_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationStack {
-            TasksScreen()
-        }
-        .previewEnvironment()
+        var configuration = PreviewConfiguration()
+        configuration.screen = .tasks
+
+        return MainView()
+            .previewEnvironment(withConfiguration: configuration)
     }
 }

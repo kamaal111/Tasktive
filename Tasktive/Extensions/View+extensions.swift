@@ -6,6 +6,9 @@
 //
 
 import SwiftUI
+#if DEBUG
+import PopperUp
+#endif
 
 extension View {
     func padding(_ edges: Edge.Set = .all, _ length: AppSizes) -> some View {
@@ -13,11 +16,29 @@ extension View {
     }
 
     #if DEBUG
-    func previewEnvironment() -> some View {
-        environment(\.managedObjectContext, PersistenceController.preview.context)
+    func previewEnvironment(withConfiguration configuration: PreviewConfiguration? = nil) -> some View {
+        let namiNavigator = NamiNavigator()
+
+        if let configuration = configuration {
+            if let screen = configuration.screen {
+                namiNavigator.tabSelection = screen
+                namiNavigator.sidebarSelection = screen
+            }
+        }
+
+        return environment(\.managedObjectContext, PersistenceController.preview.context)
             .environmentObject(DeviceModel())
-            .environmentObject(NamiNavigator())
+            .environmentObject(namiNavigator)
             .environmentObject(TasksViewModel(preview: true))
+            .withPopperUp(PopperUpManager(config: .init()))
     }
     #endif
 }
+
+#if DEBUG
+struct PreviewConfiguration {
+    var screen: NamiNavigator.Screens?
+
+    init() { }
+}
+#endif

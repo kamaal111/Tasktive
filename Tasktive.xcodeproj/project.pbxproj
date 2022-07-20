@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C1B19672888675D00D734D2 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B19662888675D00D734D2 /* MainView.swift */; };
+		2C1B196A2888689700D734D2 /* PopperUp in Frameworks */ = {isa = PBXBuildFile; productRef = 2C1B19692888689700D734D2 /* PopperUp */; };
+		2C1B196C28886CFB00D734D2 /* PopUpError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B196B28886CFB00D734D2 /* PopUpError.swift */; };
 		2C39A919288359A1008BAFD2 /* TasktiveLocale in Frameworks */ = {isa = PBXBuildFile; productRef = 2C39A918288359A1008BAFD2 /* TasktiveLocale */; };
 		2C47E3F22883688F00FD4469 /* Text+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47E3F12883688F00FD4469 /* Text+extensions.swift */; };
 		2C47E3FB28836A6A00FD4469 /* DeviceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47E3FA28836A6A00FD4469 /* DeviceModel.swift */; };
@@ -55,6 +58,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2C1B19662888675D00D734D2 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		2C1B196B28886CFB00D734D2 /* PopUpError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpError.swift; sourceTree = "<group>"; };
 		2C39A91728835847008BAFD2 /* TasktiveLocale */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = TasktiveLocale; sourceTree = "<group>"; };
 		2C39A91C28835ADF008BAFD2 /* run.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = run.sh; sourceTree = "<group>"; };
 		2C47E3F12883688F00FD4469 /* Text+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Text+extensions.swift"; sourceTree = "<group>"; };
@@ -108,6 +113,7 @@
 				2C47E40128836FBF00FD4469 /* SalmonUI in Frameworks */,
 				2CF24AAE28842F9A00778BD9 /* ShrimpExtensions in Frameworks */,
 				2C39A919288359A1008BAFD2 /* TasktiveLocale in Frameworks */,
+				2C1B196A2888689700D734D2 /* PopperUp in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -246,6 +252,7 @@
 				2CBCE6112881DE270057F4CD /* Tasktive.entitlements */,
 				2C51C90E28847438008939F7 /* Constants.swift */,
 				2CBCE60D2881DE240057F4CD /* ContentView.swift */,
+				2C1B19662888675D00D734D2 /* MainView.swift */,
 				2CBCE6062881DE240057F4CD /* TasktiveApp.swift */,
 				2CBCE60F2881DE270057F4CD /* Assets.xcassets */,
 				2C51C90B288470C3008939F7 /* Enumerations */,
@@ -343,6 +350,7 @@
 			isa = PBXGroup;
 			children = (
 				2CCCADD3288204100033E2EF /* Crudable.swift */,
+				2C1B196B28886CFB00D734D2 /* PopUpError.swift */,
 				2C51C917288481F7008939F7 /* Taskable.swift */,
 			);
 			path = Protocols;
@@ -377,6 +385,7 @@
 				2C39A918288359A1008BAFD2 /* TasktiveLocale */,
 				2C47E40028836FBF00FD4469 /* SalmonUI */,
 				2CF24AAD28842F9A00778BD9 /* ShrimpExtensions */,
+				2C1B19692888689700D734D2 /* PopperUp */,
 			);
 			productName = Tasktive;
 			productReference = 2CBCE6032881DE240057F4CD /* Tasktive.app */;
@@ -437,6 +446,7 @@
 				2CCCADC92881FEE90033E2EF /* XCRemoteSwiftPackageReference "Nimble" */,
 				2C47E3FF28836FBF00FD4469 /* XCRemoteSwiftPackageReference "SalmonUI" */,
 				2CF24AAC28842F9A00778BD9 /* XCRemoteSwiftPackageReference "ShrimpExtensions" */,
+				2C1B19682888689700D734D2 /* XCRemoteSwiftPackageReference "PopperUp" */,
 			);
 			productRefGroup = 2CBCE6042881DE240057F4CD /* Products */;
 			projectDirPath = "";
@@ -495,6 +505,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C51C90D28847115008939F7 /* AppSizes.swift in Sources */,
+				2C1B19672888675D00D734D2 /* MainView.swift in Sources */,
 				2C47E406288371A300FD4469 /* DetailsColumn.swift in Sources */,
 				2CCCADD1288203720033E2EF /* Logster.swift in Sources */,
 				2C47E3FD28836B2200FD4469 /* NotificationName+extensions.swift in Sources */,
@@ -521,6 +532,7 @@
 				2CF24AA828842AEB00778BD9 /* AppTabView.swift in Sources */,
 				2CBCE60C2881DE240057F4CD /* Tasktive.xcdatamodeld in Sources */,
 				2C51C91328847F9E008939F7 /* TasksViewModel.swift in Sources */,
+				2C1B196C28886CFB00D734D2 /* PopUpError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -792,6 +804,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		2C1B19682888689700D734D2 /* XCRemoteSwiftPackageReference "PopperUp" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kamaal111/PopperUp.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.2.0;
+			};
+		};
 		2C47E3FF28836FBF00FD4469 /* XCRemoteSwiftPackageReference "SalmonUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kamaal111/SalmonUI.git";
@@ -827,6 +847,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		2C1B19692888689700D734D2 /* PopperUp */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2C1B19682888689700D734D2 /* XCRemoteSwiftPackageReference "PopperUp" */;
+			productName = PopperUp;
+		};
 		2C39A918288359A1008BAFD2 /* TasktiveLocale */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = TasktiveLocale;
