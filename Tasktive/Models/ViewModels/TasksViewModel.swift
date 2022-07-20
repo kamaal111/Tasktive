@@ -79,8 +79,8 @@ final class TasksViewModel: ObservableObject {
                 tasks = success
             }
 
-            let groupedTasks = Dictionary(grouping: updateDueDateOfTasksIfNeeded(tasks.map(\.asAppTask)), by: { task in
-                getHashDate(from: task.dueDate)
+            let groupedTasks = Dictionary(grouping: updateDueDateOfTasksIfNeeded(tasks.map(\.asAppTask)), by: {
+                getHashDate(from: $0.dueDate)
             })
 
             await setTasks(groupedTasks)
@@ -90,7 +90,9 @@ final class TasksViewModel: ObservableObject {
     }
 
     private func updateDueDateOfTasksIfNeeded(_ tasks: [AppTask]) -> [AppTask] {
-        let tasksGroupedByDueDateIsBeforeToday = Dictionary(grouping: tasks, by: \.dueDate.isBeforeToday)
+        let tasksGroupedByDueDateIsBeforeToday = Dictionary(grouping: tasks, by: {
+            $0.dueDate.isBeforeToday && !$0.ticked
+        })
         guard let tasksFromDaysBefore = tasksGroupedByDueDateIsBeforeToday[true] else { return tasks }
 
         let now = Date()
