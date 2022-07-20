@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21223.11" systemVersion="22A5295i" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21223.11" systemVersion="21F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CoreAttachments" representedClassName="CoreAttachments" syncable="YES">
+        <attribute name="creationDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="data" attributeType="Binary"/>
+        <attribute name="dataType" attributeType="String"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="updateDate" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="task" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CoreTask" inverseName="attachments" inverseEntity="CoreTask"/>
+    </entity>
+    <entity name="CoreReminder" representedClassName="CoreReminder" syncable="YES">
+        <attribute name="creationDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="reminderDescription" optional="YES" attributeType="String"/>
+        <attribute name="time" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="title" attributeType="String"/>
+        <attribute name="updateDate" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="task" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CoreTask" inverseName="reminders" inverseEntity="CoreTask"/>
+    </entity>
+    <entity name="CoreTag" representedClassName="CoreTag" syncable="YES">
+        <attribute name="creationDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="updateDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="value" attributeType="String"/>
+        <relationship name="tasks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CoreTask" inverseName="tags" inverseEntity="CoreTask"/>
+    </entity>
     <entity name="CoreTask" representedClassName="CoreTask" syncable="YES">
         <attribute name="completionDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="creationDate" attributeType="Date" usesScalarValueType="NO"/>
@@ -10,8 +34,14 @@
         <attribute name="ticked" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="title" attributeType="String"/>
         <attribute name="updateDate" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="attachments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CoreAttachments" inverseName="task" inverseEntity="CoreAttachments"/>
+        <relationship name="reminders" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CoreReminder" inverseName="task" inverseEntity="CoreReminder"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CoreTag" inverseName="tasks" inverseEntity="CoreTag"/>
     </entity>
     <elements>
-        <element name="CoreTask" positionX="-63" positionY="-18" width="128" height="164"/>
+        <element name="CoreTask" positionX="-63" positionY="-18" width="128" height="209"/>
+        <element name="CoreTag" positionX="-63" positionY="54" width="128" height="104"/>
+        <element name="CoreReminder" positionX="-45" positionY="72" width="128" height="134"/>
+        <element name="CoreAttachments" positionX="-36" positionY="108" width="128" height="119"/>
     </elements>
 </model>

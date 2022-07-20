@@ -10,6 +10,14 @@
 		2C1B19672888675D00D734D2 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B19662888675D00D734D2 /* MainView.swift */; };
 		2C1B196A2888689700D734D2 /* PopperUp in Frameworks */ = {isa = PBXBuildFile; productRef = 2C1B19692888689700D734D2 /* PopperUp */; };
 		2C1B196C28886CFB00D734D2 /* PopUpError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B196B28886CFB00D734D2 /* PopUpError.swift */; };
+		2C1B19702888715600D734D2 /* CoreTag+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B196E2888715600D734D2 /* CoreTag+CoreDataClass.swift */; };
+		2C1B19712888715600D734D2 /* CoreTag+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B196F2888715600D734D2 /* CoreTag+CoreDataProperties.swift */; };
+		2C1B1975288871AB00D734D2 /* CoreReminder+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B1973288871AB00D734D2 /* CoreReminder+CoreDataClass.swift */; };
+		2C1B1976288871AB00D734D2 /* CoreReminder+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B1974288871AB00D734D2 /* CoreReminder+CoreDataProperties.swift */; };
+		2C1B197E2888720300D734D2 /* CoreAttachments+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B197C2888720300D734D2 /* CoreAttachments+CoreDataClass.swift */; };
+		2C1B197F2888720300D734D2 /* CoreAttachments+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B197D2888720300D734D2 /* CoreAttachments+CoreDataProperties.swift */; };
+		2C1B19822888723A00D734D2 /* CoreTask+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B19802888723A00D734D2 /* CoreTask+CoreDataClass.swift */; };
+		2C1B19832888723A00D734D2 /* CoreTask+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B19812888723A00D734D2 /* CoreTask+CoreDataProperties.swift */; };
 		2C39A919288359A1008BAFD2 /* TasktiveLocale in Frameworks */ = {isa = PBXBuildFile; productRef = 2C39A918288359A1008BAFD2 /* TasktiveLocale */; };
 		2C47E3F22883688F00FD4469 /* Text+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47E3F12883688F00FD4469 /* Text+extensions.swift */; };
 		2C47E3FB28836A6A00FD4469 /* DeviceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47E3FA28836A6A00FD4469 /* DeviceModel.swift */; };
@@ -32,8 +40,6 @@
 		2CBCE60E2881DE240057F4CD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCE60D2881DE240057F4CD /* ContentView.swift */; };
 		2CBCE6102881DE270057F4CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CBCE60F2881DE270057F4CD /* Assets.xcassets */; };
 		2CBCE6142881DE270057F4CD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CBCE6132881DE270057F4CD /* Preview Assets.xcassets */; };
-		2CCCADB42881F6BC0033E2EF /* CoreTask+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCCADB22881F6BC0033E2EF /* CoreTask+CoreDataClass.swift */; };
-		2CCCADB52881F6BC0033E2EF /* CoreTask+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCCADB32881F6BC0033E2EF /* CoreTask+CoreDataProperties.swift */; };
 		2CCCADB72881F94D0033E2EF /* CoreTask+CRUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCCADB62881F94D0033E2EF /* CoreTask+CRUD.swift */; };
 		2CCCADC02881FCF00033E2EF /* CoreTaskSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCCADBF2881FCF00033E2EF /* CoreTaskSpec.swift */; };
 		2CCCADC82881FECB0033E2EF /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = 2CCCADC72881FECB0033E2EF /* Quick */; };
@@ -60,6 +66,14 @@
 /* Begin PBXFileReference section */
 		2C1B19662888675D00D734D2 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		2C1B196B28886CFB00D734D2 /* PopUpError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpError.swift; sourceTree = "<group>"; };
+		2C1B196E2888715600D734D2 /* CoreTag+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTag+CoreDataClass.swift"; sourceTree = "<group>"; };
+		2C1B196F2888715600D734D2 /* CoreTag+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTag+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		2C1B1973288871AB00D734D2 /* CoreReminder+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreReminder+CoreDataClass.swift"; sourceTree = "<group>"; };
+		2C1B1974288871AB00D734D2 /* CoreReminder+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreReminder+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		2C1B197C2888720300D734D2 /* CoreAttachments+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreAttachments+CoreDataClass.swift"; sourceTree = "<group>"; };
+		2C1B197D2888720300D734D2 /* CoreAttachments+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreAttachments+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		2C1B19802888723A00D734D2 /* CoreTask+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTask+CoreDataClass.swift"; sourceTree = "<group>"; };
+		2C1B19812888723A00D734D2 /* CoreTask+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTask+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2C39A91728835847008BAFD2 /* TasktiveLocale */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = TasktiveLocale; sourceTree = "<group>"; };
 		2C39A91C28835ADF008BAFD2 /* run.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = run.sh; sourceTree = "<group>"; };
 		2C47E3F12883688F00FD4469 /* Text+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Text+extensions.swift"; sourceTree = "<group>"; };
@@ -91,8 +105,6 @@
 		2CCCADAA2881EFB60033E2EF /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		2CCCADAB2881F1750033E2EF /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		2CCCADAD2881F1CC0033E2EF /* pre_compile.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = pre_compile.sh; sourceTree = "<group>"; };
-		2CCCADB22881F6BC0033E2EF /* CoreTask+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTask+CoreDataClass.swift"; sourceTree = "<group>"; };
-		2CCCADB32881F6BC0033E2EF /* CoreTask+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTask+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2CCCADB62881F94D0033E2EF /* CoreTask+CRUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTask+CRUD.swift"; sourceTree = "<group>"; };
 		2CCCADBD2881FCF00033E2EF /* CoreTaskTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoreTaskTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CCCADBF2881FCF00033E2EF /* CoreTaskSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreTaskSpec.swift; sourceTree = "<group>"; };
@@ -129,6 +141,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2C1B196D2888712B00D734D2 /* CoreTag */ = {
+			isa = PBXGroup;
+			children = (
+				2C1B196E2888715600D734D2 /* CoreTag+CoreDataClass.swift */,
+				2C1B196F2888715600D734D2 /* CoreTag+CoreDataProperties.swift */,
+			);
+			path = CoreTag;
+			sourceTree = "<group>";
+		};
+		2C1B19722888716700D734D2 /* CoreReminder */ = {
+			isa = PBXGroup;
+			children = (
+				2C1B1973288871AB00D734D2 /* CoreReminder+CoreDataClass.swift */,
+				2C1B1974288871AB00D734D2 /* CoreReminder+CoreDataProperties.swift */,
+			);
+			path = CoreReminder;
+			sourceTree = "<group>";
+		};
+		2C1B1977288871BA00D734D2 /* CoreAttachments */ = {
+			isa = PBXGroup;
+			children = (
+				2C1B197C2888720300D734D2 /* CoreAttachments+CoreDataClass.swift */,
+				2C1B197D2888720300D734D2 /* CoreAttachments+CoreDataProperties.swift */,
+			);
+			path = CoreAttachments;
+			sourceTree = "<group>";
+		};
 		2C39A916288357CA008BAFD2 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
@@ -296,6 +335,9 @@
 		2CCCADB02881F56E0033E2EF /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				2C1B1977288871BA00D734D2 /* CoreAttachments */,
+				2C1B19722888716700D734D2 /* CoreReminder */,
+				2C1B196D2888712B00D734D2 /* CoreTag */,
 				2CCCADB12881F6920033E2EF /* CoreTask */,
 				2CBCE60A2881DE240057F4CD /* Tasktive.xcdatamodeld */,
 			);
@@ -305,8 +347,8 @@
 		2CCCADB12881F6920033E2EF /* CoreTask */ = {
 			isa = PBXGroup;
 			children = (
-				2CCCADB22881F6BC0033E2EF /* CoreTask+CoreDataClass.swift */,
-				2CCCADB32881F6BC0033E2EF /* CoreTask+CoreDataProperties.swift */,
+				2C1B19802888723A00D734D2 /* CoreTask+CoreDataClass.swift */,
+				2C1B19812888723A00D734D2 /* CoreTask+CoreDataProperties.swift */,
 				2CCCADB62881F94D0033E2EF /* CoreTask+CRUD.swift */,
 				2C51C91928848392008939F7 /* CoreTask+Taskable.swift */,
 			);
@@ -509,20 +551,23 @@
 				2C47E406288371A300FD4469 /* DetailsColumn.swift in Sources */,
 				2CCCADD1288203720033E2EF /* Logster.swift in Sources */,
 				2C47E3FD28836B2200FD4469 /* NotificationName+extensions.swift in Sources */,
+				2C1B197E2888720300D734D2 /* CoreAttachments+CoreDataClass.swift in Sources */,
+				2C1B1976288871AB00D734D2 /* CoreReminder+CoreDataProperties.swift in Sources */,
+				2C1B19702888715600D734D2 /* CoreTag+CoreDataClass.swift in Sources */,
 				2CF24AA62884289100778BD9 /* NamiNavigator.swift in Sources */,
 				2C51C91128847C3B008939F7 /* DataClient.swift in Sources */,
 				2CCCADB72881F94D0033E2EF /* CoreTask+CRUD.swift in Sources */,
 				2CBCE6072881DE240057F4CD /* TasktiveApp.swift in Sources */,
+				2C1B19832888723A00D734D2 /* CoreTask+CoreDataProperties.swift in Sources */,
 				2C51C918288481F7008939F7 /* Taskable.swift in Sources */,
+				2C1B19822888723A00D734D2 /* CoreTask+CoreDataClass.swift in Sources */,
 				2C51C91C28848B09008939F7 /* Array+extensions.swift in Sources */,
-				2CCCADB42881F6BC0033E2EF /* CoreTask+CoreDataClass.swift in Sources */,
 				2CBCE6092881DE240057F4CD /* Persistence.swift in Sources */,
 				2CCCADD4288204100033E2EF /* Crudable.swift in Sources */,
 				2C51C916288481A9008939F7 /* AppTask.swift in Sources */,
 				2C51C91A28848392008939F7 /* CoreTask+Taskable.swift in Sources */,
 				2CF24AB128843FE800778BD9 /* TasksScreen.swift in Sources */,
 				2C47E3F22883688F00FD4469 /* Text+extensions.swift in Sources */,
-				2CCCADB52881F6BC0033E2EF /* CoreTask+CoreDataProperties.swift in Sources */,
 				2CF24AAA28842B5B00778BD9 /* View+extensions.swift in Sources */,
 				2C47E3FB28836A6A00FD4469 /* DeviceModel.swift in Sources */,
 				2C51C90F28847438008939F7 /* Constants.swift in Sources */,
@@ -531,6 +576,9 @@
 				2C47E4042883719000FD4469 /* Sidebar.swift in Sources */,
 				2CF24AA828842AEB00778BD9 /* AppTabView.swift in Sources */,
 				2CBCE60C2881DE240057F4CD /* Tasktive.xcdatamodeld in Sources */,
+				2C1B1975288871AB00D734D2 /* CoreReminder+CoreDataClass.swift in Sources */,
+				2C1B19712888715600D734D2 /* CoreTag+CoreDataProperties.swift in Sources */,
+				2C1B197F2888720300D734D2 /* CoreAttachments+CoreDataProperties.swift in Sources */,
 				2C51C91328847F9E008939F7 /* TasksViewModel.swift in Sources */,
 				2C1B196C28886CFB00D734D2 /* PopUpError.swift in Sources */,
 			);

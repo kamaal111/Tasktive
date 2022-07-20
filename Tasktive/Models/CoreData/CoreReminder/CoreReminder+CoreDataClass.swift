@@ -1,5 +1,5 @@
 //
-//  CoreTask+CoreDataClass.swift
+//  CoreReminder+CoreDataClass.swift
 //  Tasktive
 //
 //  Created by Kamaal Farah on 20/07/2022.
@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-@objc(CoreTask)
-public class CoreTask: NSManagedObject {
+@objc(CoreReminder)
+public class CoreReminder: NSManagedObject {
 
 }
