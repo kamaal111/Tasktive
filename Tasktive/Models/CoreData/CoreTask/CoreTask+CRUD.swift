@@ -7,12 +7,17 @@
 
 import CoreData
 import Foundation
+import ShrimpExtensions
 
 private let logger = Logster(from: CoreTask.self)
 
 extension CoreTask: Crudable {
     typealias ReturnType = CoreTask
     typealias Context = NSManagedObjectContext
+
+    var arguments: Arguments {
+        .init(title: title, taskDescription: taskDescription, notes: notes, dueDate: dueDate, ticked: ticked)
+    }
 
     func update(with arguments: Arguments) -> Result<CoreTask, CrudErrors> {
         guard let context = managedObjectContext else {
@@ -78,6 +83,26 @@ extension CoreTask: Crudable {
         return .success(result)
     }
 
+    static func updateManyDates(by ids: [UUID], date: Date,
+                                on context: NSManagedObjectContext) -> Result<Void, CrudErrors> {
+        let predicate = NSPredicate(format: "id IN %@", ids.map(\.nsString))
+        let request = NSBatchUpdateRequest(entityName: CoreTask.description())
+        request.predicate = predicate
+
+        let convertedDate = date as NSDate
+        request.propertiesToUpdate = ["dueDate": convertedDate]
+        print(ids, date, context)
+
+        do {
+            try context.execute(request)
+        } catch {
+            logger.error("error while updating multiple tasks; error=\(error)")
+            return .failure(.updateManyFailure)
+        }
+
+        return .success(())
+    }
+
     #if DEBUG
     static func clear(from context: NSManagedObjectContext) -> Result<Void, CrudErrors> {
         guard let request = request() as? NSFetchRequest<NSFetchRequestResult> else {
@@ -103,7 +128,7 @@ extension CoreTask: Crudable {
         let title: String
         let taskDescription: String?
         let notes: String?
-        let dueDate: Date
+        var dueDate: Date
         let ticked: Bool
         let completionDate: Date?
         let id: UUID?
@@ -147,6 +172,7 @@ extension CoreTask: Crudable {
         case saveFailure
         case fetchFailure
         case clearFailure
+        case updateManyFailure
         case generalFailure(message: String)
     }
 }

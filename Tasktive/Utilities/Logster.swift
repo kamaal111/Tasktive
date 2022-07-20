@@ -22,4 +22,8 @@ struct Logster {
     func warning(_ message: String) {
         logger.warning("\(message)")
     }
+
+    func info(_ message: String) {
+        logger.info("\(message)")
+    }
 }

@@ -131,7 +131,6 @@ extension TasksScreen {
         func formattedDate(_ date: Date) -> String {
             let now = Date()
 
-            #warning("not working for some reason")
             if date.isPreviousDay(of: now) {
                 return TasktiveLocale.Keys.YESTERDAY.localized
             }

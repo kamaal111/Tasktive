@@ -7,6 +7,7 @@
 
 import SwiftUI
 import PopperUp
+import ShrimpExtensions
 
 private let logger = Logster(from: TasksViewModel.self)
 
@@ -43,7 +44,7 @@ final class TasksViewModel: ObservableObject {
     }
 
     func createTask(with arguments: CoreTask.Arguments) async -> Result<Void, UserErrors> {
-        let result = dataClient.createTask(with: arguments, from: persistenceController.context, of: CoreTask.self)
+        let result = dataClient.create(with: arguments, from: persistenceController.context, of: CoreTask.self)
         let task: AppTask
         switch result {
         case let .failure(failure):
@@ -68,18 +69,42 @@ final class TasksViewModel: ObservableObject {
 
     func getAllTasks() async -> Result<Void, UserErrors> {
         await withLoadingTasks {
-            let tasksResult = dataClient.listTasks(from: persistenceController.context, of: CoreTask.self)
-            let tasks: [AppTask]
+            let tasksResult = dataClient.list(from: persistenceController.context, of: CoreTask.self)
+            var tasks: [CoreTask]
             switch tasksResult {
             case let .failure(failure):
                 logger.error("failed to get all tasks; error='\(failure)'")
                 return .failure(.getAllFailure)
             case let .success(success):
                 tasks = success
-                    .map(\.asAppTask)
             }
 
-            let groupedTasks = Dictionary(grouping: tasks, by: { task in
+            let tasksGroupedByDueDateIsBeforeToday = Dictionary(grouping: tasks, by: \.dueDate.isBeforeToday)
+
+            var updatedTasks: [AppTask]?
+            if let tasksFromDaysBefore = tasksGroupedByDueDateIsBeforeToday[true] {
+                let now = Date()
+                let updateResult = dataClient.updateManyTaskDates(
+                    by: tasksFromDaysBefore.map(\.id),
+                    date: now,
+                    context: persistenceController.context
+                )
+
+                switch updateResult {
+                case let .failure(failure):
+                    logger.error("failed to updated outdated tasks; error='\(failure)'")
+                case .success:
+                    updatedTasks = (tasksGroupedByDueDateIsBeforeToday[false]?.map(\.asAppTask) ?? []) +
+                        (tasksFromDaysBefore.map {
+                            var task = $0.asAppTask
+                            task.dueDate = now
+                            return task
+                        })
+                    logger.info("successfully updated outdated tasks")
+                }
+            }
+
+            let groupedTasks = Dictionary(grouping: updatedTasks ?? tasks.map(\.asAppTask), by: { task in
                 getHashDate(from: task.dueDate)
             })
 
