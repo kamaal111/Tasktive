@@ -34,31 +34,16 @@ struct TasksScreen: View {
                     }
                 }
             }
-            HStack {
-                Image(systemName: "plus.circle")
-                    .bold()
-                    .padding(.top, 12)
-                KFloatingTextField(
-                    text: $viewModel.newTitle,
-                    title: TasktiveLocale.Keys.NEW_TASK_INPUT_TITLE.localized,
-                    onCommit: { onNewTaskSubmit() }
-                )
-                Button(action: onNewTaskSubmit) {
-                    Text(localized: .SUBMIT)
-                        .foregroundColor(.accentColor)
-                }
-                .padding(.top, 12)
-                .buttonStyle(.plain)
+            QuickAddTaskField(title: $viewModel.newTitle, submit: onNewTaskSubmit)
                 .disabled(viewModel.disableNewTaskSubmitButton)
-            }
-            .padding(.horizontal, .medium)
-            #if os(macOS)
-            .padding(.vertical, .medium)
-            #else
-            .padding(.vertical, .small)
-            #endif
-            .background(colorScheme == .dark ? Color.black : Color.white)
-            .ktakeSizeEagerly(alignment: .bottom)
+                .padding(.horizontal, .medium)
+                #if os(macOS)
+                .padding(.vertical, .medium)
+                #else
+                .padding(.vertical, .small)
+                #endif
+                .background(colorScheme == .dark ? Color.black : Color.white)
+                .ktakeSizeEagerly(alignment: .bottom)
         }
         .navigationTitle(Text(SCREEN.title))
         .onAppear(perform: {

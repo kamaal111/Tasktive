@@ -1,0 +1,39 @@
+//
+//  QuickAddTaskField.swift
+//  Tasktive
+//
+//  Created by Kamaal Farah on 20/07/2022.
+//
+
+import SwiftUI
+import SalmonUI
+import TasktiveLocale
+
+struct QuickAddTaskField: View {
+    @Binding var title: String
+    let submit: () -> Void
+
+    var body: some View {
+        HStack {
+            Image(systemName: "plus.circle")
+                .bold()
+                .padding(.top, 12)
+            KFloatingTextField(
+                text: $title,
+                title: TasktiveLocale.Keys.NEW_TASK_INPUT_TITLE.localized,
+                onCommit: submit)
+            Button(action: submit) {
+                Text(localized: .SUBMIT)
+                    .foregroundColor(.accentColor)
+            }
+            .padding(.top, 12)
+            .buttonStyle(.plain)
+        }
+    }
+}
+
+struct QuickAddTaskField_Previews: PreviewProvider {
+    static var previews: some View {
+        QuickAddTaskField(title: .constant("New"), submit: { })
+    }
+}
