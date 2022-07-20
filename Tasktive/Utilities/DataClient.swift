@@ -13,4 +13,9 @@ struct DataClient {
     func listTasks<T: Crudable>(from context: T.Context, of type: T.Type) -> Result<[T.ReturnType], T.CrudErrors> {
         type.list(from: context)
     }
+
+    func createTask<T: Crudable>(with arguments: T.Arguments, from context: T.Context,
+                                 of type: T.Type) -> Result<T.ReturnType, T.CrudErrors> {
+        type.create(with: arguments, from: context)
+    }
 }

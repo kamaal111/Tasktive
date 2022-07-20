@@ -6,14 +6,12 @@
 //
 //
 
-import Foundation
 import CoreData
-
+import Foundation
 
 extension CoreTag {
-
     @nonobjc public class func fetchRequest() -> NSFetchRequest<CoreTag> {
-        return NSFetchRequest<CoreTag>(entityName: "CoreTag")
+        NSFetchRequest<CoreTag>(entityName: "CoreTag")
     }
 
     @NSManaged public var creationDate: Date
@@ -21,12 +19,11 @@ extension CoreTag {
     @NSManaged public var updateDate: Date
     @NSManaged public var value: String
     @NSManaged public var tasks: NSSet
-
 }
 
 // MARK: Generated accessors for tasks
-extension CoreTag {
 
+extension CoreTag {
     @objc(addTasksObject:)
     @NSManaged public func addToTasks(_ value: CoreTask)
 
@@ -38,9 +35,6 @@ extension CoreTag {
 
     @objc(removeTasks:)
     @NSManaged public func removeFromTasks(_ values: NSSet)
-
 }
 
-extension CoreTag : Identifiable {
-
-}
+extension CoreTag: Identifiable { }

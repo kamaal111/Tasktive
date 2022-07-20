@@ -7,9 +7,9 @@
 
 import SwiftUI
 import SalmonUI
+import PopperUp
 import TasktiveLocale
 import ShrimpExtensions
-import PopperUp
 
 private let SCREEN: NamiNavigator.Screens = .tasks
 
@@ -34,21 +34,24 @@ struct TasksScreen: View {
                     }
                 }
             }
-            QuickAddTaskField(title: $viewModel.newTitle, submit: onNewTaskSubmit)
-                .disabled(viewModel.disableNewTaskSubmitButton)
-                .padding(.horizontal, .medium)
-                #if os(macOS)
+            QuickAddTaskField(
+                title: $viewModel.newTitle,
+                disableSubmit: viewModel.disableNewTaskSubmitButton,
+                submit: onNewTaskSubmit
+            )
+            .padding(.horizontal, .medium)
+            #if os(macOS)
                 .padding(.vertical, .medium)
-                #else
+            #else
                 .padding(.vertical, .small)
-                #endif
+            #endif
                 .background(colorScheme == .dark ? Color.black : Color.white)
                 .ktakeSizeEagerly(alignment: .bottom)
         }
         .navigationTitle(Text(SCREEN.title))
         .onAppear(perform: handleOnAppear)
         #if os(iOS)
-        .navigationBarTitleDisplayMode(.large)
+            .navigationBarTitleDisplayMode(.large)
         #endif
     }
 
@@ -56,7 +59,7 @@ struct TasksScreen: View {
         Task {
             let result = await tasksViewModel.getAllTasks()
             switch result {
-            case .failure(let failure):
+            case let .failure(failure):
                 popperUpManager.showPopup(style: failure.style, timeout: failure.timeout)
                 return
             case .success:
@@ -67,16 +70,30 @@ struct TasksScreen: View {
 
     private func onNewTaskSubmit() {
         Task {
-            let result = await viewModel.submitNewTask()
+            let submitTaskResult = await viewModel.submitNewTask()
             let newTitle: String
-            switch result {
-            case .failure(let failure):
+            switch submitTaskResult {
+            case let .failure(failure):
                 popperUpManager.showPopup(style: failure.style, timeout: failure.timeout)
                 return
-            case .success(let success):
+            case let .success(success):
                 newTitle = success
             }
-            print("newTitle", newTitle)
+
+            let createTaskResult = await tasksViewModel
+                .createTask(with: .init(title: newTitle, taskDescription: nil, notes: nil, dueDate: Date()))
+            switch createTaskResult {
+            case let .failure(failure):
+                popperUpManager.showPopup(style: failure.style, timeout: failure.timeout)
+                return
+            case .success:
+                break
+            }
+
+            popperUpManager.showPopup(
+                style: .bottom(title: "New task saved", type: .success, description: nil),
+                timeout: 2
+            )
         }
     }
 }

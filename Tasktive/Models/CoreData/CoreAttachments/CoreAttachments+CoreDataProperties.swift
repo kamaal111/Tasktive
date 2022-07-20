@@ -6,14 +6,12 @@
 //
 //
 
-import Foundation
 import CoreData
-
+import Foundation
 
 extension CoreAttachments {
-
     @nonobjc public class func fetchRequest() -> NSFetchRequest<CoreAttachments> {
-        return NSFetchRequest<CoreAttachments>(entityName: "CoreAttachments")
+        NSFetchRequest<CoreAttachments>(entityName: "CoreAttachments")
     }
 
     @NSManaged public var creationDate: Date
@@ -22,9 +20,6 @@ extension CoreAttachments {
     @NSManaged public var data: Data
     @NSManaged public var dataType: String
     @NSManaged public var task: CoreTask?
-
 }
 
-extension CoreAttachments : Identifiable {
-
-}
+extension CoreAttachments: Identifiable { }

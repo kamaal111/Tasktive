@@ -6,10 +6,8 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 @objc(CoreTask)
-public class CoreTask: NSManagedObject {
-
-}
+public class CoreTask: NSManagedObject { }

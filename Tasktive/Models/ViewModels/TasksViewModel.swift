@@ -41,6 +41,30 @@ final class TasksViewModel: ObservableObject {
         tasks[date] ?? []
     }
 
+    func createTask(with arguments: CoreTask.Arguments) async -> Result<Void, UserErrors> {
+        let result = dataClient.createTask(with: arguments, from: persistenceController.context, of: CoreTask.self)
+        let task: AppTask
+        switch result {
+        case let .failure(failure):
+            logger.error("failed to create this task; error='\(failure)'")
+            return .failure(.createTaskFailure)
+        case let .success(success):
+            task = success.asAppTask
+        }
+
+        var tempTasks = tasks
+        let hashDate = getHashDate(from: task.dueDate)
+        if tempTasks[hashDate] == nil {
+            tempTasks[hashDate] = [task]
+        } else {
+            tempTasks[hashDate] = tempTasks[hashDate] ?? [] + [task]
+        }
+
+        await setTasks(tempTasks)
+
+        return .success(())
+    }
+
     func getAllTasks() async -> Result<Void, UserErrors> {
         let tasksResult = dataClient.listTasks(from: persistenceController.context, of: CoreTask.self)
         let tasks: [AppTask]
@@ -54,13 +78,17 @@ final class TasksViewModel: ObservableObject {
         }
 
         let groupedTasks = Dictionary(grouping: tasks, by: { task in
-            let dateComponents = Calendar.current.dateComponents([.day, .year, .month], from: task.dueDate)
-            return Calendar.current.date(from: dateComponents) ?? Date()
+            getHashDate(from: task.dueDate)
         })
 
         await setTasks(groupedTasks)
 
         return .success(())
+    }
+
+    private func getHashDate(from date: Date) -> Date {
+        let dateComponents = Calendar.current.dateComponents([.day, .year, .month], from: date)
+        return Calendar.current.date(from: dateComponents) ?? Date()
     }
 
     @MainActor
@@ -72,12 +100,16 @@ final class TasksViewModel: ObservableObject {
 extension TasksViewModel {
     enum UserErrors: PopUpError, Error {
         case getAllFailure
+        case createTaskFailure
 
         var style: PopperUpStyles {
             switch self {
             case .getAllFailure:
                 #warning("Localize this")
                 return .bottom(title: "Something went wrong", type: .error, description: "We couldn't get your tasks")
+            case .createTaskFailure:
+                #warning("Localize this")
+                return .bottom(title: "Something went wrong", type: .error, description: "We couldn't create this task")
             }
         }
 

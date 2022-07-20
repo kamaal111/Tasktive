@@ -6,10 +6,8 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 @objc(CoreReminder)
-public class CoreReminder: NSManagedObject {
-
-}
+public class CoreReminder: NSManagedObject { }

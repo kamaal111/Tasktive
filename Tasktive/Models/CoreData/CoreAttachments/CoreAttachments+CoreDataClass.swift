@@ -6,10 +6,8 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 @objc(CoreAttachments)
-public class CoreAttachments: NSManagedObject {
-
-}
+public class CoreAttachments: NSManagedObject { }

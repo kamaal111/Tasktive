@@ -6,14 +6,12 @@
 //
 //
 
-import Foundation
 import CoreData
-
+import Foundation
 
 extension CoreTask {
-
     @nonobjc public class func fetchRequest() -> NSFetchRequest<CoreTask> {
-        return NSFetchRequest<CoreTask>(entityName: "CoreTask")
+        NSFetchRequest<CoreTask>(entityName: "CoreTask")
     }
 
     @NSManaged public var completionDate: Date?
@@ -28,12 +26,11 @@ extension CoreTask {
     @NSManaged public var tags: NSSet
     @NSManaged public var reminders: NSSet
     @NSManaged public var attachments: NSSet
-
 }
 
 // MARK: Generated accessors for tags
-extension CoreTask {
 
+extension CoreTask {
     @objc(addTagsObject:)
     @NSManaged public func addToTags(_ value: CoreTag)
 
@@ -45,12 +42,11 @@ extension CoreTask {
 
     @objc(removeTags:)
     @NSManaged public func removeFromTags(_ values: NSSet)
-
 }
 
 // MARK: Generated accessors for reminders
-extension CoreTask {
 
+extension CoreTask {
     @objc(addRemindersObject:)
     @NSManaged public func addToReminders(_ value: CoreReminder)
 
@@ -62,12 +58,11 @@ extension CoreTask {
 
     @objc(removeReminders:)
     @NSManaged public func removeFromReminders(_ values: NSSet)
-
 }
 
 // MARK: Generated accessors for attachments
-extension CoreTask {
 
+extension CoreTask {
     @objc(addAttachmentsObject:)
     @NSManaged public func addToAttachments(_ value: CoreAttachments)
 
@@ -79,9 +74,6 @@ extension CoreTask {
 
     @objc(removeAttachments:)
     @NSManaged public func removeFromAttachments(_ values: NSSet)
-
 }
 
-extension CoreTask : Identifiable {
-
-}
+extension CoreTask: Identifiable { }

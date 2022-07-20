@@ -5,8 +5,8 @@
 //  Created by Kamaal Farah on 20/07/2022.
 //
 
-import Foundation
 import PopperUp
+import Foundation
 
 protocol PopUpError: Error {
     var style: PopperUpStyles { get }

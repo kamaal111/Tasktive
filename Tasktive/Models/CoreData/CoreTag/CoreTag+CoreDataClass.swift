@@ -6,10 +6,8 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 @objc(CoreTag)
-public class CoreTag: NSManagedObject {
-
-}
+public class CoreTag: NSManagedObject { }

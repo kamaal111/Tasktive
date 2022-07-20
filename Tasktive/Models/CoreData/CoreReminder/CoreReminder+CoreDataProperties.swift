@@ -6,14 +6,12 @@
 //
 //
 
-import Foundation
 import CoreData
-
+import Foundation
 
 extension CoreReminder {
-
     @nonobjc public class func fetchRequest() -> NSFetchRequest<CoreReminder> {
-        return NSFetchRequest<CoreReminder>(entityName: "CoreReminder")
+        NSFetchRequest<CoreReminder>(entityName: "CoreReminder")
     }
 
     @NSManaged public var creationDate: Date
@@ -23,9 +21,6 @@ extension CoreReminder {
     @NSManaged public var reminderDescription: String?
     @NSManaged public var time: Date
     @NSManaged public var task: CoreTask?
-
 }
 
-extension CoreReminder : Identifiable {
-
-}
+extension CoreReminder: Identifiable { }

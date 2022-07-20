@@ -11,6 +11,7 @@ import TasktiveLocale
 
 struct QuickAddTaskField: View {
     @Binding var title: String
+    let disableSubmit: Bool
     let submit: () -> Void
 
     var body: some View {
@@ -21,11 +22,16 @@ struct QuickAddTaskField: View {
             KFloatingTextField(
                 text: $title,
                 title: TasktiveLocale.Keys.NEW_TASK_INPUT_TITLE.localized,
-                onCommit: submit)
+                onCommit: {
+                    guard !disableSubmit else { return }
+                    submit()
+                }
+            )
             Button(action: submit) {
                 Text(localized: .SUBMIT)
                     .foregroundColor(.accentColor)
             }
+            .disabled(disableSubmit)
             .padding(.top, 12)
             .buttonStyle(.plain)
         }
@@ -34,6 +40,6 @@ struct QuickAddTaskField: View {
 
 struct QuickAddTaskField_Previews: PreviewProvider {
     static var previews: some View {
-        QuickAddTaskField(title: .constant("New"), submit: { })
+        QuickAddTaskField(title: .constant("New"), disableSubmit: false, submit: { })
     }
 }
