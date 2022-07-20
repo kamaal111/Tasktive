@@ -46,12 +46,23 @@ struct TasksScreen: View {
                 .ktakeSizeEagerly(alignment: .bottom)
         }
         .navigationTitle(Text(SCREEN.title))
-        .onAppear(perform: {
-            Task { await tasksViewModel.getAllTasks() }
-        })
+        .onAppear(perform: handleOnAppear)
         #if os(iOS)
         .navigationBarTitleDisplayMode(.large)
         #endif
+    }
+
+    private func handleOnAppear() {
+        Task {
+            let result = await tasksViewModel.getAllTasks()
+            switch result {
+            case .failure(let failure):
+                popperUpManager.showPopup(style: failure.style, timeout: failure.timeout)
+                return
+            case .success:
+                break
+            }
+        }
     }
 
     private func onNewTaskSubmit() {

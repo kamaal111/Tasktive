@@ -6,6 +6,9 @@
 //
 
 import SwiftUI
+import PopperUp
+
+private let logger = Logster(from: TasksViewModel.self)
 
 final class TasksViewModel: ObservableObject {
     @Published private(set) var tasks: [Date: [AppTask]] = [:]
@@ -38,28 +41,48 @@ final class TasksViewModel: ObservableObject {
         tasks[date] ?? []
     }
 
-    func getAllTasks() async {
+    func getAllTasks() async -> Result<Void, UserErrors> {
         let tasksResult = dataClient.listTasks(from: persistenceController.context, of: CoreTask.self)
-        let tasks: [CoreTask]
+        let tasks: [AppTask]
         switch tasksResult {
         case let .failure(failure):
-            #warning("handle user error")
-            print("failure", failure)
-            return
+            logger.error("failed to get all tasks; error='\(failure)'")
+            return .failure(.getAllFailure)
         case let .success(success):
             tasks = success
+                .map(\.asAppTask)
         }
 
-        let groupedTasks = Dictionary(grouping: tasks.map(\.asAppTask), by: { task in
+        let groupedTasks = Dictionary(grouping: tasks, by: { task in
             let dateComponents = Calendar.current.dateComponents([.day, .year, .month], from: task.dueDate)
             return Calendar.current.date(from: dateComponents) ?? Date()
         })
 
         await setTasks(groupedTasks)
+
+        return .success(())
     }
 
     @MainActor
     private func setTasks(_ tasks: [Date: [AppTask]]) {
         self.tasks = tasks
+    }
+}
+
+extension TasksViewModel {
+    enum UserErrors: PopUpError, Error {
+        case getAllFailure
+
+        var style: PopperUpStyles {
+            switch self {
+            case .getAllFailure:
+                #warning("Localize this")
+                return .bottom(title: "Something went wrong", type: .error, description: "We couldn't get your tasks")
+            }
+        }
+
+        var timeout: TimeInterval? {
+            5
+        }
     }
 }
