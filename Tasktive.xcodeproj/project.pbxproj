@@ -34,8 +34,6 @@
 		2C51C916288481A9008939F7 /* AppTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C915288481A9008939F7 /* AppTask.swift */; };
 		2C51C918288481F7008939F7 /* Taskable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C917288481F7008939F7 /* Taskable.swift */; };
 		2C51C91A28848392008939F7 /* CoreTask+Taskable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C91928848392008939F7 /* CoreTask+Taskable.swift */; };
-		2C51C91C28848B09008939F7 /* Array+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C91B28848B09008939F7 /* Array+extensions.swift */; };
-		2C51C91E28849302008939F7 /* Date+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C91D28849302008939F7 /* Date+extensions.swift */; };
 		2CBCE6072881DE240057F4CD /* TasktiveApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCE6062881DE240057F4CD /* TasktiveApp.swift */; };
 		2CBCE6092881DE240057F4CD /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCE6082881DE240057F4CD /* Persistence.swift */; };
 		2CBCE60C2881DE240057F4CD /* Tasktive.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCE60A2881DE240057F4CD /* Tasktive.xcdatamodeld */; };
@@ -96,8 +94,6 @@
 		2C51C915288481A9008939F7 /* AppTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTask.swift; sourceTree = "<group>"; };
 		2C51C917288481F7008939F7 /* Taskable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Taskable.swift; sourceTree = "<group>"; };
 		2C51C91928848392008939F7 /* CoreTask+Taskable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTask+Taskable.swift"; sourceTree = "<group>"; };
-		2C51C91B28848B09008939F7 /* Array+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+extensions.swift"; sourceTree = "<group>"; };
-		2C51C91D28849302008939F7 /* Date+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+extensions.swift"; sourceTree = "<group>"; };
 		2CBCE6032881DE240057F4CD /* Tasktive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tasktive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CBCE6062881DE240057F4CD /* TasktiveApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasktiveApp.swift; sourceTree = "<group>"; };
 		2CBCE6082881DE240057F4CD /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -202,11 +198,9 @@
 		2C47E3F02883685D00FD4469 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				2C51C91B28848B09008939F7 /* Array+extensions.swift */,
 				2C47E3FC28836B2200FD4469 /* NotificationName+extensions.swift */,
 				2C47E3F12883688F00FD4469 /* Text+extensions.swift */,
 				2CF24AA928842B5B00778BD9 /* View+extensions.swift */,
-				2C51C91D28849302008939F7 /* Date+extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -568,7 +562,6 @@
 				2C1B19832888723A00D734D2 /* CoreTask+CoreDataProperties.swift in Sources */,
 				2C51C918288481F7008939F7 /* Taskable.swift in Sources */,
 				2C1B19822888723A00D734D2 /* CoreTask+CoreDataClass.swift in Sources */,
-				2C51C91C28848B09008939F7 /* Array+extensions.swift in Sources */,
 				2CBCE6092881DE240057F4CD /* Persistence.swift in Sources */,
 				2CCCADD4288204100033E2EF /* Crudable.swift in Sources */,
 				2C51C916288481A9008939F7 /* AppTask.swift in Sources */,
@@ -579,7 +572,6 @@
 				2C1B1985288874C100D734D2 /* QuickAddTaskField.swift in Sources */,
 				2C47E3FB28836A6A00FD4469 /* DeviceModel.swift in Sources */,
 				2C51C90F28847438008939F7 /* Constants.swift in Sources */,
-				2C51C91E28849302008939F7 /* Date+extensions.swift in Sources */,
 				2CBCE60E2881DE240057F4CD /* ContentView.swift in Sources */,
 				2C47E4042883719000FD4469 /* Sidebar.swift in Sources */,
 				2CF24AA828842AEB00778BD9 /* AppTabView.swift in Sources */,
@@ -897,7 +889,7 @@
 			repositoryURL = "https://github.com/kamaal111/ShrimpExtensions.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
+				minimumVersion = 2.6.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

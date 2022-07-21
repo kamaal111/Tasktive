@@ -130,13 +130,13 @@ extension TasksScreen {
         func formattedDate(_ date: Date) -> String {
             let now = Date()
 
-            if date.isPreviousDay(of: now) {
+            if date.isYesterday {
                 return TasktiveLocale.Keys.YESTERDAY.localized
             }
             if date.isSameDay(as: now) {
                 return TasktiveLocale.Keys.TODAY.localized
             }
-            if date.isNextDay(of: now) {
+            if date.isTomorrow {
                 return TasktiveLocale.Keys.TOMORROW.localized
             }
             return Self.taskDateFormatter.string(from: date)
