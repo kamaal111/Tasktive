@@ -29,8 +29,7 @@ struct TasksScreen: View {
                         Loading()
                             .ktakeWidthEagerly()
                     } else if tasksViewModel.tasks.isEmpty {
-                        #warning("Localize this")
-                        Text("✨ Add your first task bellow ✨")
+                        Text(localized: .ADD_NEW_TASK)
                             .ktakeWidthEagerly()
                     }
                     ForEach(tasksViewModel.taskDates, id: \.self) { date in
@@ -178,8 +177,7 @@ extension TasksScreen.ViewModel {
         private var title: String {
             switch self {
             case .invalidTitle:
-                #warning("Localize this")
-                return "Invalid title"
+                return TasktiveLocale.Keys.INVALID_TITLE_ERROR_TITLE.localized
             }
         }
 

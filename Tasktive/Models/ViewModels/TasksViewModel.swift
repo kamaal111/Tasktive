@@ -7,6 +7,7 @@
 
 import SwiftUI
 import PopperUp
+import TasktiveLocale
 import ShrimpExtensions
 
 private let logger = Logster(from: TasksViewModel.self)
@@ -152,11 +153,17 @@ extension TasksViewModel {
         var style: PopperUpStyles {
             switch self {
             case .getAllFailure:
-                #warning("Localize this")
-                return .bottom(title: "Something went wrong", type: .error, description: "We couldn't get your tasks")
+                return .bottom(
+                    title: TasktiveLocale.Keys.SOMETHING_WENT_WRONG_ERROR_TITLE.localized,
+                    type: .error,
+                    description: TasktiveLocale.Keys.GET_ALL_TASKS_ERROR_DESCRIPTION.localized
+                )
             case .createTaskFailure:
-                #warning("Localize this")
-                return .bottom(title: "Something went wrong", type: .error, description: "We couldn't create this task")
+                return .bottom(
+                    title: TasktiveLocale.Keys.SOMETHING_WENT_WRONG_ERROR_TITLE.localized,
+                    type: .error,
+                    description: TasktiveLocale.Keys.CREATE_TASK_ERROR_DESCRIPTION.localized
+                )
             }
         }
 
