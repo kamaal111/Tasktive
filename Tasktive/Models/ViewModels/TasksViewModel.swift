@@ -46,6 +46,9 @@ final class TasksViewModel: ObservableObject {
 
     func progressForDate(_ date: Date) -> Double {
         let tasks = tasksForDate(date)
+
+        guard !tasks.isEmpty else { return 0 }
+
         let tasksDone = tasks
             .reduce(0) { result, task in
                 if task.ticked {

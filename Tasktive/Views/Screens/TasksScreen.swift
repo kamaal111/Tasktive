@@ -89,7 +89,10 @@ struct TasksScreen: View {
             }
 
             let createTaskResult = await tasksViewModel
-                .createTask(with: .init(title: newTitle, taskDescription: nil, notes: nil, dueDate: Date()))
+                .createTask(with: .init(title: newTitle,
+                                        taskDescription: nil,
+                                        notes: nil,
+                                        dueDate: viewModel.currentDay))
             switch createTaskResult {
             case let .failure(failure):
                 popperUpManager.showPopup(style: failure.style, timeout: failure.timeout)
