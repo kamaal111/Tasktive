@@ -44,6 +44,18 @@ final class TasksViewModel: ObservableObject {
         tasks[getHashDate(from: date)] ?? []
     }
 
+    func progressForDate(_ date: Date) -> Double {
+        let tasks = tasksForDate(date)
+        let tasksDone = tasks
+            .reduce(0) { result, task in
+                if task.ticked {
+                    return result + 1
+                }
+                return result
+            }
+        return Double(tasksDone) / Double(tasks.count)
+    }
+
     func createTask(with arguments: CoreTask.Arguments) async -> Result<Void, UserErrors> {
         let result = dataClient.create(with: arguments, from: persistenceController.context, of: CoreTask.self)
         let task: AppTask

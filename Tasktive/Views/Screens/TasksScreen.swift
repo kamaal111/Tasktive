@@ -47,10 +47,13 @@ struct TasksScreen: View {
                             .padding(.vertical, .small)
                             .padding(.trailing, .small)
                             Spacer()
-                            Text("Circle")
-                                .frame(width: 80, height: 80)
-                                .padding(.vertical, .small)
-                                .foregroundColor(.accentColor)
+                            CircularProgressBar(
+                                progress: tasksViewModel.progressForDate(viewModel.currentDay),
+                                lineWidth: 8
+                            )
+                            .frame(width: 80, height: 80)
+                            .padding(.vertical, .small)
+                            .foregroundColor(.accentColor)
                         }
                     }
                     // - TODO: LOCALIZE THIS
