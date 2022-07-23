@@ -58,13 +58,18 @@ final class TasksViewModel: ObservableObject {
 
     func createTask(with arguments: CoreTask.Arguments) async -> Result<Void, UserErrors> {
         let result = dataClient.create(with: arguments, from: persistenceController.context, of: CoreTask.self)
+            .mapError {
+                logger.error("failed to create this task; error='\($0)'")
+                return UserErrors.createTaskFailure
+            }
+            .map(\.asAppTask)
+
         let task: AppTask
         switch result {
         case let .failure(failure):
-            logger.error("failed to create this task; error='\(failure)'")
-            return .failure(.createTaskFailure)
+            return .failure(failure)
         case let .success(success):
-            task = success.asAppTask
+            task = success
         }
 
         var tempTasks = tasks
@@ -83,16 +88,22 @@ final class TasksViewModel: ObservableObject {
     func getAllTasks() async -> Result<Void, UserErrors> {
         await withLoadingTasks {
             let tasksResult = dataClient.list(from: persistenceController.context, of: CoreTask.self)
-            var tasks: [CoreTask]
+                .mapError {
+                    logger.error("failed to get all tasks; error='\($0)'")
+                    return UserErrors.getAllFailure
+                }
+
+            let tasks: [CoreTask]
             switch tasksResult {
             case let .failure(failure):
-                logger.error("failed to get all tasks; error='\(failure)'")
-                return .failure(.getAllFailure)
+                return .failure(failure)
             case let .success(success):
                 tasks = success
             }
 
-            let groupedTasks = Dictionary(grouping: updateDueDateOfTasksIfNeeded(tasks.map(\.asAppTask)), by: {
+            let maybeUpdatedTasks = updateDueDateOfTasksIfNeeded(tasks.map(\.asAppTask))
+
+            let groupedTasks = Dictionary(grouping: maybeUpdatedTasks, by: {
                 getHashDate(from: $0.dueDate)
             })
 

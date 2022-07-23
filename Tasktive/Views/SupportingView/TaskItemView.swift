@@ -10,6 +10,14 @@ import SwiftUI
 struct TaskItemView: View {
     let task: AppTask
 
+    init(task: AppTask) {
+        self.task = task
+    }
+
+    init(_ task: AppTask) {
+        self.init(task: task)
+    }
+
     var body: some View {
         Text(task.title)
     }

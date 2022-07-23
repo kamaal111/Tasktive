@@ -6,22 +6,29 @@
 //
 
 import SwiftUI
+import SalmonUI
 
 struct TasksSection: View {
     let tasks: [AppTask]
+    let loading: Bool
 
     var body: some View {
         // - TODO: LOCALIZE THIS
         Section(header: Text("Tasks")) {
-            ForEach(tasks, id: \.self) { task in
-                TaskItemView(task: task)
+            if loading {
+                LoadingView()
+                    .ktakeWidthEagerly()
+            } else if tasks.isEmpty {
+                Text(localized: .ADD_NEW_TASK)
+                    .ktakeWidthEagerly()
             }
+            ForEach(tasks, id: \.self, content: TaskItemView.init(_:))
         }
     }
 }
 
 struct TasksSection_Previews: PreviewProvider {
     static var previews: some View {
-        TasksSection(tasks: [])
+        TasksSection(tasks: [], loading: false)
     }
 }

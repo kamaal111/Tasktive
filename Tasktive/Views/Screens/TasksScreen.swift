@@ -12,6 +12,7 @@ import TasktiveLocale
 import ShrimpExtensions
 
 private let SCREEN: NamiNavigator.Screens = .tasks
+private let logger = Logster(from: TasksScreen.self)
 
 struct TasksScreen: View {
     @Environment(\.colorScheme) private var colorScheme
@@ -25,18 +26,20 @@ struct TasksScreen: View {
         ZStack {
             VStack {
                 List {
-                    if tasksViewModel.loadingTasks {
-                        LoadingView()
-                            .ktakeWidthEagerly()
-                    } else if tasksViewModel.tasks.isEmpty {
-                        Text(localized: .ADD_NEW_TASK)
-                            .ktakeWidthEagerly()
-                    }
+                    DateControlView(
+                        goToPreviousDay: { Task { await viewModel.goToPreviousDay() } },
+                        goToToday: { Task { await viewModel.goToToday() } },
+                        goToNextDay: { Task { await viewModel.goToNextDay() } }
+                    )
+                    .disabled(tasksViewModel.loadingTasks)
                     ProgressSection(
                         currentDate: viewModel.currentDay,
                         progress: tasksViewModel.progressForDate(viewModel.currentDay)
                     )
-                    TasksSection(tasks: tasksViewModel.tasksForDate(viewModel.currentDay))
+                    TasksSection(
+                        tasks: tasksViewModel.tasksForDate(viewModel.currentDay),
+                        loading: tasksViewModel.loadingTasks
+                    )
                 }
             }
             QuickAddTaskField(
@@ -114,6 +117,22 @@ extension TasksScreen {
             invalidTitle
         }
 
+        func goToToday() async {
+            let now = Date()
+            guard !currentDay.isSameDay(as: now) else { return }
+            await setCurrentDay(now)
+        }
+
+        func goToPreviousDay() async {
+            let previousDate = incrementDay(of: currentDay, by: -1)
+            await setCurrentDay(previousDate)
+        }
+
+        func goToNextDay() async {
+            let previousDate = incrementDay(of: currentDay, by: 1)
+            await setCurrentDay(previousDate)
+        }
+
         func submitNewTask() async -> Result<String, ValidationErrors> {
             guard !invalidTitle else {
                 return .failure(.invalidTitle)
@@ -128,6 +147,25 @@ extension TasksScreen {
 
         private var invalidTitle: Bool {
             newTitle.trimmingByWhitespacesAndNewLines.isEmpty
+        }
+
+        private func incrementDay(of date: Date, by increment: Int) -> Date {
+            var dateComponent = DateComponents()
+            dateComponent.day = increment
+
+            guard let incrementedDate = Calendar.current.date(byAdding: dateComponent, to: date) else {
+                logger.error("coul not set previous date")
+                return date
+            }
+
+            return incrementedDate
+        }
+
+        @MainActor
+        private func setCurrentDay(_ date: Date) {
+            withAnimation {
+                currentDay = date
+            }
         }
 
         @MainActor
@@ -173,7 +211,10 @@ struct TasksScreen_Previews: PreviewProvider {
         var configuration = PreviewConfiguration()
         configuration.screen = .tasks
 
-        return MainView()
-            .previewEnvironment(withConfiguration: configuration)
+        return ForEach(ColorScheme.allCases, id: \.self) { scheme in
+            MainView()
+                .previewEnvironment(withConfiguration: configuration)
+                .colorScheme(scheme)
+        }
     }
 }
