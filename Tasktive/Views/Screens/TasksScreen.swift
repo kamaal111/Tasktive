@@ -32,30 +32,10 @@ struct TasksScreen: View {
                         Text(localized: .ADD_NEW_TASK)
                             .ktakeWidthEagerly()
                     }
-                    // - TODO: LOCALIZE THIS
-                    Section(header: Text("Progress")) {
-                        HStack {
-                            VStack(alignment: .leading) {
-                                Text(viewModel.formattedCurrentDay)
-                                HStack {
-                                    ForEach(viewModel.datesOfWeek, id: \.self) { date in
-                                        DayNumbersRowItem(date: date, activeDate: viewModel.currentDay)
-                                    }
-                                }
-                            }
-                            .ktakeSizeEagerly(alignment: .topLeading)
-                            .padding(.vertical, .small)
-                            .padding(.trailing, .small)
-                            Spacer()
-                            CircularProgressBar(
-                                progress: tasksViewModel.progressForDate(viewModel.currentDay),
-                                lineWidth: 8
-                            )
-                            .frame(width: 80, height: 80)
-                            .padding(.vertical, .small)
-                            .foregroundColor(.accentColor)
-                        }
-                    }
+                    ProgressSection(
+                        currentDate: viewModel.currentDay,
+                        progress: tasksViewModel.progressForDate(viewModel.currentDay)
+                    )
                     // - TODO: LOCALIZE THIS
                     Section(header: Text("Tasks")) {
                         ForEach(tasksViewModel.tasksForDate(viewModel.currentDay), id: \.self) { task in
@@ -139,14 +119,6 @@ extension TasksScreen {
             invalidTitle
         }
 
-        var formattedCurrentDay: String {
-            formattedDate(currentDay)
-        }
-
-        var datesOfWeek: [Date] {
-            currentDay.datesOfWeek(weekOffset: 0)
-        }
-
         func submitNewTask() async -> Result<String, ValidationErrors> {
             guard !invalidTitle else {
                 return .failure(.invalidTitle)
@@ -163,31 +135,10 @@ extension TasksScreen {
             newTitle.trimmingByWhitespacesAndNewLines.isEmpty
         }
 
-        private func formattedDate(_ date: Date) -> String {
-            let now = Date()
-
-            if date.isYesterday {
-                return TasktiveLocale.Keys.YESTERDAY.localized
-            }
-            if date.isSameDay(as: now) {
-                return TasktiveLocale.Keys.TODAY.localized
-            }
-            if date.isTomorrow {
-                return TasktiveLocale.Keys.TOMORROW.localized
-            }
-            return Self.taskDateFormatter.string(from: date)
-        }
-
         @MainActor
         private func setTitle(_ title: String) {
             newTitle = title
         }
-
-        private static let taskDateFormatter: DateFormatter = {
-            let formatter = DateFormatter()
-            formatter.dateStyle = .short
-            return formatter
-        }()
     }
 }
 

@@ -36,6 +36,7 @@
 		2C51C918288481F7008939F7 /* Taskable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C917288481F7008939F7 /* Taskable.swift */; };
 		2C51C91A28848392008939F7 /* CoreTask+Taskable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C91928848392008939F7 /* CoreTask+Taskable.swift */; };
 		2C750F66288C2F9400026D67 /* CircularProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C750F65288C2F9400026D67 /* CircularProgressBar.swift */; };
+		2C750F68288C31CF00026D67 /* ProgressSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C750F67288C31CF00026D67 /* ProgressSection.swift */; };
 		2CBCE6072881DE240057F4CD /* TasktiveApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCE6062881DE240057F4CD /* TasktiveApp.swift */; };
 		2CBCE6092881DE240057F4CD /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCE6082881DE240057F4CD /* Persistence.swift */; };
 		2CBCE60C2881DE240057F4CD /* Tasktive.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCE60A2881DE240057F4CD /* Tasktive.xcdatamodeld */; };
@@ -98,6 +99,7 @@
 		2C51C917288481F7008939F7 /* Taskable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Taskable.swift; sourceTree = "<group>"; };
 		2C51C91928848392008939F7 /* CoreTask+Taskable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTask+Taskable.swift"; sourceTree = "<group>"; };
 		2C750F65288C2F9400026D67 /* CircularProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressBar.swift; sourceTree = "<group>"; };
+		2C750F67288C31CF00026D67 /* ProgressSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressSection.swift; sourceTree = "<group>"; };
 		2CBCE6032881DE240057F4CD /* Tasktive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tasktive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CBCE6062881DE240057F4CD /* TasktiveApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasktiveApp.swift; sourceTree = "<group>"; };
 		2CBCE6082881DE240057F4CD /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -245,6 +247,7 @@
 				2C1505E8288C26170040943A /* DayNumbersRowItem.swift */,
 				2C47E405288371A300FD4469 /* DetailsColumn.swift */,
 				2C1B1986288893F800D734D2 /* Loading.swift */,
+				2C750F67288C31CF00026D67 /* ProgressSection.swift */,
 				2C1B1984288874C100D734D2 /* QuickAddTaskField.swift */,
 				2C47E4032883719000FD4469 /* Sidebar.swift */,
 			);
@@ -584,6 +587,7 @@
 				2C47E4042883719000FD4469 /* Sidebar.swift in Sources */,
 				2CF24AA828842AEB00778BD9 /* AppTabView.swift in Sources */,
 				2CBCE60C2881DE240057F4CD /* Tasktive.xcdatamodeld in Sources */,
+				2C750F68288C31CF00026D67 /* ProgressSection.swift in Sources */,
 				2C1B1975288871AB00D734D2 /* CoreReminder+CoreDataClass.swift in Sources */,
 				2C1B19712888715600D734D2 /* CoreTag+CoreDataProperties.swift in Sources */,
 				2C1B197F2888720300D734D2 /* CoreAttachments+CoreDataProperties.swift in Sources */,
