@@ -23,6 +23,8 @@ struct TaskItemView: View {
                 KRadioCheckBox(checked: task.ticked, size: 16)
             }
             Text(task.title)
+                .strikethrough(task.ticked)
+                .foregroundColor(task.ticked ? .secondary : .primary)
         }
     }
 }

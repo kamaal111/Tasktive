@@ -42,6 +42,7 @@ struct TasksScreen: View {
                         Task { await tasksViewModel.setTickOnTask(task, with: newTickedState) }
                     }
                 )
+                .disabled(tasksViewModel.settingTasks)
             }
             QuickAddTaskField(
                 title: $viewModel.newTitle,
