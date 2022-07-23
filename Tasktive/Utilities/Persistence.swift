@@ -54,6 +54,15 @@ struct PersistenceController {
                 completionDate: nil
             ),
             .init(
+                title: "Second of today",
+                taskDescription: "Doing stuff",
+                notes: "Note taking",
+                dueDate: Date(),
+                ticked: false,
+                id: UUID(uuidString: "29bb34c1-d8ba-48a5-b48a-059d7d2c3a62")!,
+                completionDate: nil
+            ),
+            .init(
                 title: "Second Task",
                 taskDescription: "Doing more stuff",
                 notes: "Taking more notes",

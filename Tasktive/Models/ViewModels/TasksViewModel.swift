@@ -41,7 +41,7 @@ final class TasksViewModel: ObservableObject {
     }
 
     func tasksForDate(_ date: Date) -> [AppTask] {
-        tasks[date] ?? []
+        tasks[getHashDate(from: date)] ?? []
     }
 
     func createTask(with arguments: CoreTask.Arguments) async -> Result<Void, UserErrors> {

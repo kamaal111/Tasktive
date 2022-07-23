@@ -32,11 +32,9 @@ struct TasksScreen: View {
                         Text(localized: .ADD_NEW_TASK)
                             .ktakeWidthEagerly()
                     }
-                    ForEach(tasksViewModel.taskDates, id: \.self) { date in
-                        Section(header: Text(viewModel.formattedDate(date))) {
-                            ForEach(tasksViewModel.tasksForDate(date), id: \.self) { task in
-                                Text(task.title)
-                            }
+                    Section(header: Text(viewModel.formattedCurrentDay)) {
+                        ForEach(tasksViewModel.tasksForDate(viewModel.currentDay), id: \.self) { task in
+                            Text(task.title)
                         }
                     }
                 }
@@ -108,11 +106,16 @@ struct TasksScreen: View {
 extension TasksScreen {
     final class ViewModel: ObservableObject {
         @Published var newTitle = ""
+        @Published private(set) var currentDay = Date()
 
         init() { }
 
         var disableNewTaskSubmitButton: Bool {
             invalidTitle
+        }
+
+        var formattedCurrentDay: String {
+            formattedDate(currentDay)
         }
 
         func submitNewTask() async -> Result<String, ValidationErrors> {
@@ -127,7 +130,11 @@ extension TasksScreen {
             return .success(title)
         }
 
-        func formattedDate(_ date: Date) -> String {
+        private var invalidTitle: Bool {
+            newTitle.trimmingByWhitespacesAndNewLines.isEmpty
+        }
+
+        private func formattedDate(_ date: Date) -> String {
             let now = Date()
 
             if date.isYesterday {
@@ -140,10 +147,6 @@ extension TasksScreen {
                 return TasktiveLocale.Keys.TOMORROW.localized
             }
             return Self.taskDateFormatter.string(from: date)
-        }
-
-        private var invalidTitle: Bool {
-            newTitle.trimmingByWhitespacesAndNewLines.isEmpty
         }
 
         @MainActor
