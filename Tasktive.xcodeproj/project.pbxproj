@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C1505E9288C26170040943A /* DayNumbersRowItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1505E8288C26170040943A /* DayNumbersRowItem.swift */; };
 		2C1B19672888675D00D734D2 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B19662888675D00D734D2 /* MainView.swift */; };
 		2C1B196A2888689700D734D2 /* PopperUp in Frameworks */ = {isa = PBXBuildFile; productRef = 2C1B19692888689700D734D2 /* PopperUp */; };
 		2C1B196C28886CFB00D734D2 /* PopUpError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B196B28886CFB00D734D2 /* PopUpError.swift */; };
@@ -64,6 +65,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2C1505E8288C26170040943A /* DayNumbersRowItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayNumbersRowItem.swift; sourceTree = "<group>"; };
 		2C1B19662888675D00D734D2 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		2C1B196B28886CFB00D734D2 /* PopUpError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpError.swift; sourceTree = "<group>"; };
 		2C1B196E2888715600D734D2 /* CoreTag+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTag+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -237,6 +239,7 @@
 			isa = PBXGroup;
 			children = (
 				2CF24AA728842AEB00778BD9 /* AppTabView.swift */,
+				2C1505E8288C26170040943A /* DayNumbersRowItem.swift */,
 				2C47E405288371A300FD4469 /* DetailsColumn.swift */,
 				2C1B1986288893F800D734D2 /* Loading.swift */,
 				2C1B1984288874C100D734D2 /* QuickAddTaskField.swift */,
@@ -573,6 +576,7 @@
 				2C47E3FB28836A6A00FD4469 /* DeviceModel.swift in Sources */,
 				2C51C90F28847438008939F7 /* Constants.swift in Sources */,
 				2CBCE60E2881DE240057F4CD /* ContentView.swift in Sources */,
+				2C1505E9288C26170040943A /* DayNumbersRowItem.swift in Sources */,
 				2C47E4042883719000FD4469 /* Sidebar.swift in Sources */,
 				2CF24AA828842AEB00778BD9 /* AppTabView.swift in Sources */,
 				2CBCE60C2881DE240057F4CD /* Tasktive.xcdatamodeld in Sources */,

@@ -32,7 +32,29 @@ struct TasksScreen: View {
                         Text(localized: .ADD_NEW_TASK)
                             .ktakeWidthEagerly()
                     }
-                    Section(header: Text(viewModel.formattedCurrentDay)) {
+                    // - TODO: LOCALIZE THIS
+                    Section(header: Text("Progress")) {
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text(viewModel.formattedCurrentDay)
+                                HStack {
+                                    ForEach(viewModel.datesOfWeek, id: \.self) { date in
+                                        DayNumbersRowItem(date: date, activeDate: viewModel.currentDay)
+                                    }
+                                }
+                            }
+                            .ktakeSizeEagerly(alignment: .topLeading)
+                            .padding(.vertical, .small)
+                            .padding(.trailing, .small)
+                            Spacer()
+                            Text("Circle")
+                                .frame(width: 80, height: 80)
+                                .padding(.vertical, .small)
+                                .foregroundColor(.accentColor)
+                        }
+                    }
+                    // - TODO: LOCALIZE THIS
+                    Section(header: Text("Tasks")) {
                         ForEach(tasksViewModel.tasksForDate(viewModel.currentDay), id: \.self) { task in
                             Text(task.title)
                         }
@@ -116,6 +138,10 @@ extension TasksScreen {
 
         var formattedCurrentDay: String {
             formattedDate(currentDay)
+        }
+
+        var datesOfWeek: [Date] {
+            currentDay.datesOfWeek(weekOffset: 0)
         }
 
         func submitNewTask() async -> Result<String, ValidationErrors> {
