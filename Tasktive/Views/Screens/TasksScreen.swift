@@ -26,7 +26,7 @@ struct TasksScreen: View {
             VStack {
                 List {
                     if tasksViewModel.loadingTasks {
-                        Loading()
+                        LoadingView()
                             .ktakeWidthEagerly()
                     } else if tasksViewModel.tasks.isEmpty {
                         Text(localized: .ADD_NEW_TASK)
@@ -36,12 +36,7 @@ struct TasksScreen: View {
                         currentDate: viewModel.currentDay,
                         progress: tasksViewModel.progressForDate(viewModel.currentDay)
                     )
-                    // - TODO: LOCALIZE THIS
-                    Section(header: Text("Tasks")) {
-                        ForEach(tasksViewModel.tasksForDate(viewModel.currentDay), id: \.self) { task in
-                            Text(task.title)
-                        }
-                    }
+                    TasksSection(tasks: tasksViewModel.tasksForDate(viewModel.currentDay))
                 }
             }
             QuickAddTaskField(

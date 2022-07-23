@@ -7,8 +7,8 @@
 
 import SwiftUI
 import SalmonUI
-import ShrimpExtensions
 import TasktiveLocale
+import ShrimpExtensions
 
 struct ProgressSection: View {
     let currentDate: Date

@@ -1,5 +1,5 @@
 //
-//  Loading.swift
+//  LoadingView.swift
 //  Tasktive
 //
 //  Created by Kamaal Farah on 20/07/2022.
@@ -8,7 +8,7 @@
 import SwiftUI
 import SalmonUI
 
-struct Loading: View {
+struct LoadingView: View {
     var body: some View {
         #if os(macOS)
         KActivityIndicator(isAnimating: .constant(true), style: .spinning)
@@ -18,8 +18,8 @@ struct Loading: View {
     }
 }
 
-struct Loading_Previews: PreviewProvider {
+struct LoadingView_Previews: PreviewProvider {
     static var previews: some View {
-        Loading()
+        LoadingView()
     }
 }
