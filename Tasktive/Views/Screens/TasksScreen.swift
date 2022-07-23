@@ -67,7 +67,7 @@ struct TasksScreen: View {
             .navigationBarTitleDisplayMode(.large)
         #endif
             .sheet(isPresented: $viewModel.showTaskDetailsSheet) {
-                Text(viewModel.shownTaskDetails?.title ?? "Oh no")
+                TaskDetailsSheet(task: viewModel.shownTaskDetails)
             }
     }
 

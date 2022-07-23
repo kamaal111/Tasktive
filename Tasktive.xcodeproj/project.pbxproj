@@ -23,6 +23,7 @@
 		2C1B1987288893F800D734D2 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B1986288893F800D734D2 /* LoadingView.swift */; };
 		2C39A919288359A1008BAFD2 /* TasktiveLocale in Frameworks */ = {isa = PBXBuildFile; productRef = 2C39A918288359A1008BAFD2 /* TasktiveLocale */; };
 		2C3B27C6288C77F7007CE538 /* DateControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B27C5288C77F7007CE538 /* DateControlView.swift */; };
+		2C3B27C9288CA274007CE538 /* TaskDetailsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B27C8288CA274007CE538 /* TaskDetailsSheet.swift */; };
 		2C47E3F22883688F00FD4469 /* Text+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47E3F12883688F00FD4469 /* Text+extensions.swift */; };
 		2C47E3FB28836A6A00FD4469 /* DeviceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47E3FA28836A6A00FD4469 /* DeviceModel.swift */; };
 		2C47E3FD28836B2200FD4469 /* NotificationName+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47E3FC28836B2200FD4469 /* NotificationName+extensions.swift */; };
@@ -86,6 +87,7 @@
 		2C39A91728835847008BAFD2 /* TasktiveLocale */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = TasktiveLocale; sourceTree = "<group>"; };
 		2C39A91C28835ADF008BAFD2 /* run.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = run.sh; sourceTree = "<group>"; };
 		2C3B27C5288C77F7007CE538 /* DateControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateControlView.swift; sourceTree = "<group>"; };
+		2C3B27C8288CA274007CE538 /* TaskDetailsSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailsSheet.swift; sourceTree = "<group>"; };
 		2C47E3F12883688F00FD4469 /* Text+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Text+extensions.swift"; sourceTree = "<group>"; };
 		2C47E3F32883692800FD4469 /* locale.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = locale.js; sourceTree = "<group>"; };
 		2C47E3F42883693400FD4469 /* en.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = en.js; sourceTree = "<group>"; };
@@ -207,6 +209,14 @@
 			path = locales;
 			sourceTree = "<group>";
 		};
+		2C3B27C7288CA260007CE538 /* Sheets */ = {
+			isa = PBXGroup;
+			children = (
+				2C3B27C8288CA274007CE538 /* TaskDetailsSheet.swift */,
+			);
+			path = Sheets;
+			sourceTree = "<group>";
+		};
 		2C47E3F02883685D00FD4469 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -240,6 +250,7 @@
 			isa = PBXGroup;
 			children = (
 				2CF24AAF28843FD800778BD9 /* Screens */,
+				2C3B27C7288CA260007CE538 /* Sheets */,
 				2C47E4022883718100FD4469 /* SupportingView */,
 			);
 			path = Views;
@@ -601,6 +612,7 @@
 				2C750F68288C31CF00026D67 /* ProgressSection.swift in Sources */,
 				2C1B1975288871AB00D734D2 /* CoreReminder+CoreDataClass.swift in Sources */,
 				2C1B19712888715600D734D2 /* CoreTag+CoreDataProperties.swift in Sources */,
+				2C3B27C9288CA274007CE538 /* TaskDetailsSheet.swift in Sources */,
 				2C750F6A288C328C00026D67 /* TasksSection.swift in Sources */,
 				2C1B197F2888720300D734D2 /* CoreAttachments+CoreDataProperties.swift in Sources */,
 				2C51C91328847F9E008939F7 /* TasksViewModel.swift in Sources */,
