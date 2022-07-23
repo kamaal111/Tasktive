@@ -38,9 +38,12 @@ struct TasksScreen: View {
                 TasksSection(
                     tasks: tasksViewModel.tasksForDate(viewModel.currentDay),
                     loading: tasksViewModel.loadingTasks,
+                    currentFocusedTaskID: viewModel.currentFocusedTaskID,
                     onTaskTick: { task, newTickedState in
                         Task { await tasksViewModel.setTickOnTask(task, with: newTickedState) }
-                    }
+                    },
+                    focusOnTask: { task in viewModel.setCurrentFocusedTaskID(task.id) },
+                    onDetailsPress: { task in Task { await viewModel.showDetailsSheet(for: task) } }
                 )
                 .disabled(tasksViewModel.settingTasks)
             }
@@ -63,6 +66,9 @@ struct TasksScreen: View {
         #if os(iOS)
             .navigationBarTitleDisplayMode(.large)
         #endif
+            .sheet(isPresented: $viewModel.showTaskDetailsSheet) {
+                Text(viewModel.shownTaskDetails?.title ?? "Oh no")
+            }
     }
 
     private func handleOnAppear() {
@@ -113,8 +119,19 @@ struct TasksScreen: View {
 
 extension TasksScreen {
     final class ViewModel: ObservableObject {
-        @Published var newTitle = ""
+        @Published var newTitle = "" {
+            didSet { newTitleDidSet() }
+        }
+
         @Published private(set) var currentDay = Date()
+        @Published private(set) var currentFocusedTaskID: UUID?
+        @Published private(set) var shownTaskDetails: AppTask? {
+            didSet { Task { await shownTaskDetailsDidSet() } }
+        }
+
+        @Published var showTaskDetailsSheet = false {
+            didSet { Task { await showTaskDetailsSheetDidSet() } }
+        }
 
         init() { }
 
@@ -122,20 +139,36 @@ extension TasksScreen {
             invalidTitle
         }
 
+        @MainActor
+        func setCurrentFocusedTaskID(_ id: UUID?) {
+            guard currentFocusedTaskID != id else { return }
+
+            withAnimation {
+                currentFocusedTaskID = id
+            }
+        }
+
+        func showDetailsSheet(for task: AppTask) async {
+            await setShownTaskDetails(task)
+        }
+
         func goToToday() async {
             let now = Date()
             guard !currentDay.isSameDay(as: now) else { return }
             await setCurrentDay(now)
+            await setCurrentFocusedTaskID(nil)
         }
 
         func goToPreviousDay() async {
             let previousDate = incrementDay(of: currentDay, by: -1)
             await setCurrentDay(previousDate)
+            await setCurrentFocusedTaskID(nil)
         }
 
         func goToNextDay() async {
             let previousDate = incrementDay(of: currentDay, by: 1)
             await setCurrentDay(previousDate)
+            await setCurrentFocusedTaskID(nil)
         }
 
         func submitNewTask() async -> Result<String, ValidationErrors> {
@@ -164,6 +197,30 @@ extension TasksScreen {
             }
 
             return incrementedDate
+        }
+
+        private func newTitleDidSet() { }
+
+        private func shownTaskDetailsDidSet() async {
+            await setShowTaskDetailsSheet(shownTaskDetails != nil)
+        }
+
+        private func showTaskDetailsSheetDidSet() async {
+            if !showTaskDetailsSheet {
+                await setShownTaskDetails(nil)
+            }
+        }
+
+        @MainActor
+        private func setShownTaskDetails(_ task: AppTask?) {
+            shownTaskDetails = task
+        }
+
+        @MainActor
+        private func setShowTaskDetailsSheet(_ state: Bool) {
+            guard showTaskDetailsSheet != state else { return }
+
+            showTaskDetailsSheet = state
         }
 
         @MainActor
