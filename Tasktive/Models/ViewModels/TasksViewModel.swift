@@ -14,7 +14,8 @@ private let logger = Logster(from: TasksViewModel.self)
 
 final class TasksViewModel: ObservableObject {
     @Published private(set) var tasks: [Date: [AppTask]] = [:]
-    @Published var loadingTasks = false
+    @Published private(set) var loadingTasks = false
+    @Published private(set) var settingTasks = false
 
     private let persistenceController: PersistenceController
     private let dataClient = DataClient()
@@ -38,6 +39,50 @@ final class TasksViewModel: ObservableObject {
             .sorted(by: {
                 $0.compare($1) == .orderedAscending
             })
+    }
+
+    func setTickOnTask(_ task: AppTask, with newTickedState: Bool) async -> Result<Void, UserErrors> {
+        await withSettingTasks(completion: {
+            let dateHash = getHashDate(from: task.dueDate)
+            guard let taskIndex = tasks[dateHash]?.findIndex(by: \.id, is: task.id)
+            else { return .failure(.updateFailure) }
+
+            let arguments = task.toggleCoreTaskTickArguments(with: newTickedState)
+            let result = dataClient.update(
+                by: task.id,
+                with: arguments,
+                from: persistenceController.context,
+                of: CoreTask.self
+            )
+            .mapError {
+                let error: Error?
+                switch $0 {
+                case .notFound:
+                    logger.error("task not found")
+                    return UserErrors.updateFailure
+                case let .crud(error: crudError):
+                    error = crudError as? CoreTask.CrudErrors
+                }
+
+                guard let error = error else { return UserErrors.updateFailure }
+
+                logger.error("failed to update this task; error='\(error)'")
+                return UserErrors.updateFailure
+            }
+            let updatedTask: CoreTask.ReturnType
+            switch result {
+            case let .failure(failure):
+                return .failure(failure)
+            case let .success(success):
+                updatedTask = success
+            }
+
+            var mutableTask = tasks
+            mutableTask[dateHash]?[taskIndex] = updatedTask.asAppTask
+            await setTasks(mutableTask)
+
+            return .success(())
+        })
     }
 
     func tasksForDate(_ date: Date) -> [AppTask] {
@@ -154,6 +199,19 @@ final class TasksViewModel: ObservableObject {
         return result
     }
 
+    private func withSettingTasks<T>(completion: () async -> T) async -> T {
+        await setSettingTasks(true)
+        let result = await completion()
+        await setSettingTasks(false)
+        return result
+    }
+
+    @MainActor
+    private func setSettingTasks(_ state: Bool) {
+        guard settingTasks != state else { return }
+        settingTasks = state
+    }
+
     @MainActor
     private func setLoadingTasks(_ state: Bool) {
         guard loadingTasks != state else { return }
@@ -175,6 +233,7 @@ extension TasksViewModel {
     enum UserErrors: PopUpError, Error {
         case getAllFailure
         case createTaskFailure
+        case updateFailure
 
         var style: PopperUpStyles {
             switch self {
@@ -189,6 +248,13 @@ extension TasksViewModel {
                     title: TasktiveLocale.Keys.SOMETHING_WENT_WRONG_ERROR_TITLE.localized,
                     type: .error,
                     description: TasktiveLocale.Keys.CREATE_TASK_ERROR_DESCRIPTION.localized
+                )
+            case .updateFailure:
+                #warning("localize this")
+                return .bottom(
+                    title: TasktiveLocale.Keys.SOMETHING_WENT_WRONG_ERROR_TITLE.localized,
+                    type: .error,
+                    description: "We couldn't update this task"
                 )
             }
         }

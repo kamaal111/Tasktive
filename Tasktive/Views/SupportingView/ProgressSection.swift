@@ -65,6 +65,8 @@ struct ProgressSection: View {
 
 struct ProgressSection_Previews: PreviewProvider {
     static var previews: some View {
-        ProgressSection(currentDate: Date(), progress: 0.2)
+        List {
+            ProgressSection(currentDate: Date(), progress: 0.2)
+        }
     }
 }

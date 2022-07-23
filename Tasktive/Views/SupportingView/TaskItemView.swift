@@ -6,25 +6,34 @@
 //
 
 import SwiftUI
+import SalmonUI
 
 struct TaskItemView: View {
     let task: AppTask
+    let onTaskTick: (_ newTickedState: Bool) -> Void
 
-    init(task: AppTask) {
+    init(task: AppTask, onTaskTick: @escaping (_ ticked: Bool) -> Void) {
         self.task = task
-    }
-
-    init(_ task: AppTask) {
-        self.init(task: task)
+        self.onTaskTick = onTaskTick
     }
 
     var body: some View {
-        Text(task.title)
+        HStack {
+            KTappableButton(action: { onTaskTick(!task.ticked) }) {
+                KRadioCheckBox(checked: task.ticked, size: 16)
+            }
+            Text(task.title)
+        }
     }
 }
 
 struct TaskItemView_Previews: PreviewProvider {
     static var previews: some View {
-        TaskItemView(task: try! CoreTask.list(from: PersistenceController.preview.context).get().first!.asAppTask)
+        let tasks = try! CoreTask.list(from: PersistenceController.preview.context).get()
+
+        return List {
+            TaskItemView(task: tasks[1].asAppTask, onTaskTick: { _ in })
+            TaskItemView(task: tasks[2].asAppTask, onTaskTick: { _ in })
+        }
     }
 }

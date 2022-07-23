@@ -11,6 +11,7 @@ import SalmonUI
 struct TasksSection: View {
     let tasks: [AppTask]
     let loading: Bool
+    let onTaskTick: (_ task: AppTask, _ newTickedState: Bool) -> Void
 
     var body: some View {
         // - TODO: LOCALIZE THIS
@@ -22,13 +23,15 @@ struct TasksSection: View {
                 Text(localized: .ADD_NEW_TASK)
                     .ktakeWidthEagerly()
             }
-            ForEach(tasks, id: \.self, content: TaskItemView.init(_:))
+            ForEach(tasks, id: \.self) { task in
+                TaskItemView(task: task, onTaskTick: { ticked in onTaskTick(task, ticked) })
+            }
         }
     }
 }
 
 struct TasksSection_Previews: PreviewProvider {
     static var previews: some View {
-        TasksSection(tasks: [], loading: false)
+        TasksSection(tasks: [], loading: false, onTaskTick: { _, _ in })
     }
 }

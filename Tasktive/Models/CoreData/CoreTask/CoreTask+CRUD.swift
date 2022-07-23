@@ -70,7 +70,12 @@ extension CoreTask: Crudable {
 
     static func filter(by predicate: NSPredicate,
                        from context: NSManagedObjectContext) -> Result<[CoreTask], CrudErrors> {
-        let request = request(by: predicate)
+        filter(by: predicate, limit: nil, from: context)
+    }
+
+    static func filter(by predicate: NSPredicate, limit: Int?,
+                       from context: NSManagedObjectContext) -> Result<[CoreTask], CrudErrors> {
+        let request = request(by: predicate, limit: limit)
 
         let result: [CoreTask]
         do {
@@ -147,7 +152,6 @@ extension CoreTask: Crudable {
             self.init(title: title, taskDescription: taskDescription, notes: notes, dueDate: dueDate, ticked: false)
         }
 
-        #if DEBUG
         init(
             title: String,
             taskDescription: String?,
@@ -165,7 +169,6 @@ extension CoreTask: Crudable {
             self.id = id
             self.completionDate = completionDate
         }
-        #endif
     }
 
     enum CrudErrors: Error {
@@ -184,15 +187,19 @@ extension CoreTask {
         taskDescription = arguments.taskDescription
         notes = arguments.notes
         dueDate = arguments.dueDate
+        completionDate = arguments.completionDate
         updateDate = Date()
 
         return self
     }
 
-    private static func request(by predicate: NSPredicate? = nil) -> NSFetchRequest<CoreTask> {
+    private static func request(by predicate: NSPredicate? = nil, limit: Int? = nil) -> NSFetchRequest<CoreTask> {
         let request = NSFetchRequest<CoreTask>(entityName: String(describing: CoreTask.self))
-        if let predicate {
+        if let predicate = predicate {
             request.predicate = predicate
+        }
+        if let limit = limit {
+            request.fetchLimit = limit
         }
         return request
     }

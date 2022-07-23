@@ -24,23 +24,24 @@ struct TasksScreen: View {
 
     var body: some View {
         ZStack {
-            VStack {
-                List {
-                    DateControlView(
-                        goToPreviousDay: { Task { await viewModel.goToPreviousDay() } },
-                        goToToday: { Task { await viewModel.goToToday() } },
-                        goToNextDay: { Task { await viewModel.goToNextDay() } }
-                    )
-                    .disabled(tasksViewModel.loadingTasks)
-                    ProgressSection(
-                        currentDate: viewModel.currentDay,
-                        progress: tasksViewModel.progressForDate(viewModel.currentDay)
-                    )
-                    TasksSection(
-                        tasks: tasksViewModel.tasksForDate(viewModel.currentDay),
-                        loading: tasksViewModel.loadingTasks
-                    )
-                }
+            List {
+                DateControlView(
+                    goToPreviousDay: { Task { await viewModel.goToPreviousDay() } },
+                    goToToday: { Task { await viewModel.goToToday() } },
+                    goToNextDay: { Task { await viewModel.goToNextDay() } }
+                )
+                .disabled(tasksViewModel.loadingTasks)
+                ProgressSection(
+                    currentDate: viewModel.currentDay,
+                    progress: tasksViewModel.progressForDate(viewModel.currentDay)
+                )
+                TasksSection(
+                    tasks: tasksViewModel.tasksForDate(viewModel.currentDay),
+                    loading: tasksViewModel.loadingTasks,
+                    onTaskTick: { task, newTickedState in
+                        Task { await tasksViewModel.setTickOnTask(task, with: newTickedState) }
+                    }
+                )
             }
             QuickAddTaskField(
                 title: $viewModel.newTitle,
