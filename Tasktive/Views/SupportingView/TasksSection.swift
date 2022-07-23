@@ -14,7 +14,7 @@ struct TasksSection: View {
         // - TODO: LOCALIZE THIS
         Section(header: Text("Tasks")) {
             ForEach(tasks, id: \.self) { task in
-                Text(task.title)
+                TaskItemView(task: task)
             }
         }
     }
