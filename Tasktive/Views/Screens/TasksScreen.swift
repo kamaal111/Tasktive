@@ -70,9 +70,34 @@ struct TasksScreen: View {
                 TaskDetailsSheet(
                     task: viewModel.shownTaskDetails,
                     onClose: { Task { await viewModel.closeDetailsSheet() } },
-                    onDone: { _ in }
+                    onDone: handleTaskEditedInDetailsSheet(_:)
                 )
+                .withPopperUp(popperUpManager)
             }
+    }
+
+    private func handleTaskEditedInDetailsSheet(_ arguments: CoreTask.Arguments?) {
+        guard let arguments, let task = viewModel.shownTaskDetails else {
+            let message = "task or/and arguments are missing"
+            let argumentsLog = "arguments='\(arguments as Any)'"
+            let taskLog = "task='\(viewModel.shownTaskDetails as Any)'"
+            let loggingMessage = [message, argumentsLog, taskLog].joined(separator: "; ")
+            logger.warning(loggingMessage)
+            return
+        }
+
+        Task {
+            let result = await tasksViewModel.updateTask(task, with: arguments)
+            switch result {
+            case .failure(let failure):
+                popperUpManager.showPopup(style: failure.style, timeout: failure.timeout)
+                return
+            case .success:
+                break
+            }
+
+            await viewModel.closeDetailsSheet()
+        }
     }
 
     private func handleOnAppear() {

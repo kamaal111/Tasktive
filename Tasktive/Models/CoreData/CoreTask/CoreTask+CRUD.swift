@@ -130,7 +130,7 @@ extension CoreTask: Crudable {
     #endif
 
     struct Arguments {
-        let title: String
+        var title: String
         let taskDescription: String?
         let notes: String?
         var dueDate: Date

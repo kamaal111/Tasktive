@@ -42,47 +42,7 @@ final class TasksViewModel: ObservableObject {
     }
 
     func setTickOnTask(_ task: AppTask, with newTickedState: Bool) async -> Result<Void, UserErrors> {
-        await withSettingTasks(completion: {
-            let dateHash = getHashDate(from: task.dueDate)
-            guard let taskIndex = tasks[dateHash]?.findIndex(by: \.id, is: task.id)
-            else { return .failure(.updateFailure) }
-
-            let arguments = task.toggleCoreTaskTickArguments(with: newTickedState)
-            let result = dataClient.update(
-                by: task.id,
-                with: arguments,
-                from: persistenceController.context,
-                of: CoreTask.self
-            )
-            .mapError {
-                let error: Error?
-                switch $0 {
-                case .notFound:
-                    logger.error("task not found")
-                    return UserErrors.updateFailure
-                case let .crud(error: crudError):
-                    error = crudError as? CoreTask.CrudErrors
-                }
-
-                guard let error = error else { return UserErrors.updateFailure }
-
-                logger.error("failed to update this task; error='\(error)'")
-                return UserErrors.updateFailure
-            }
-            let updatedTask: CoreTask.ReturnType
-            switch result {
-            case let .failure(failure):
-                return .failure(failure)
-            case let .success(success):
-                updatedTask = success
-            }
-
-            var mutableTask = tasks
-            mutableTask[dateHash]?[taskIndex] = updatedTask.asAppTask
-            await setTasks(mutableTask)
-
-            return .success(())
-        })
+        await updateTask(task, with: task.toggleCoreTaskTickArguments(with: newTickedState))
     }
 
     func tasksForDate(_ date: Date) -> [AppTask] {
@@ -161,6 +121,63 @@ final class TasksViewModel: ObservableObject {
         }
     }
 
+    func updateTask(_ task: AppTask, with arguments: CoreTask.Arguments) async -> Result<Void, UserErrors> {
+        await withSettingTasks(completion: {
+            let validationResult = validateTaskArguments(arguments)
+            switch validationResult {
+            case .failure(let failure):
+                return .failure(failure)
+            case .success:
+                break
+            }
+
+            let dateHash = getHashDate(from: task.dueDate)
+            guard let taskIndex = tasks[dateHash]?.findIndex(by: \.id, is: task.id)
+            else { return .failure(.updateFailure) }
+
+            let result = dataClient.update(
+                by: task.id,
+                with: arguments,
+                from: persistenceController.context,
+                of: CoreTask.self
+            )
+            .mapError {
+                let error: Error?
+                switch $0 {
+                case .notFound:
+                    logger.error("task not found")
+                    return UserErrors.updateFailure
+                case let .crud(error: crudError):
+                    error = crudError as? CoreTask.CrudErrors
+                }
+
+                guard let error = error else { return UserErrors.updateFailure }
+
+                logger.error("failed to update this task; error='\(error)'")
+                return UserErrors.updateFailure
+            }
+            let updatedTask: CoreTask.ReturnType
+            switch result {
+            case let .failure(failure):
+                return .failure(failure)
+            case let .success(success):
+                updatedTask = success
+            }
+
+            var mutableTask = tasks
+            mutableTask[dateHash]?[taskIndex] = updatedTask.asAppTask
+            await setTasks(mutableTask)
+
+            return .success(())
+        })
+    }
+
+    private func validateTaskArguments(_ arguments: CoreTask.Arguments) -> Result<Void, UserErrors> {
+        guard !arguments.title.trimmingByWhitespacesAndNewLines.isEmpty else { return .failure(.invalidTitle) }
+
+        return .success(())
+    }
+
     private func updateDueDateOfTasksIfNeeded(_ tasks: [AppTask]) -> [AppTask] {
         let tasksGroupedByDueDateIsBeforeToday = Dictionary(grouping: tasks, by: {
             $0.dueDate.isBeforeToday && !$0.ticked
@@ -234,6 +251,7 @@ extension TasksViewModel {
         case getAllFailure
         case createTaskFailure
         case updateFailure
+        case invalidTitle
 
         var style: PopperUpStyles {
             switch self {
@@ -255,6 +273,13 @@ extension TasksViewModel {
                     title: TasktiveLocale.Keys.SOMETHING_WENT_WRONG_ERROR_TITLE.localized,
                     type: .error,
                     description: "We couldn't update this task"
+                )
+            case .invalidTitle:
+                #warning("localize this")
+                return .bottom(
+                    title: "Oops",
+                    type: .warning,
+                    description: "Invalid title"
                 )
             }
         }
