@@ -11,15 +11,21 @@ import TasktiveLocale
 import ShrimpExtensions
 
 struct ProgressSection: View {
-    let currentDate: Date
+    @Binding var currentDate: Date
+
     let progress: Double
+
+    private static let circleSize: CGSize = .squared(80)
 
     var body: some View {
         // - TODO: LOCALIZE THIS
         Section(header: Text("Progress")) {
             HStack {
                 VStack(alignment: .leading) {
-                    Text(formattedDate)
+                    DatePicker("", selection: $currentDate, displayedComponents: .date)
+                        .datePickerStyle(.compact)
+                        .labelsHidden()
+                        .id(currentDate)
                     HStack {
                         ForEach(currentDate.datesOfWeek(weekOffset: 0), id: \.self) { date in
                             DayNumbersRowItem(date: date, activeDate: currentDate)
@@ -34,39 +40,18 @@ struct ProgressSection: View {
                     progress: progress,
                     lineWidth: 8
                 )
-                .frame(width: 80, height: 80)
+                .frame(width: Self.circleSize.width, height: Self.circleSize.height)
                 .padding(.vertical, .small)
                 .foregroundColor(.accentColor)
             }
         }
     }
-
-    var formattedDate: String {
-        let now = Date()
-
-        if currentDate.isYesterday {
-            return TasktiveLocale.Keys.YESTERDAY.localized
-        }
-        if currentDate.isSameDay(as: now) {
-            return TasktiveLocale.Keys.TODAY.localized
-        }
-        if currentDate.isTomorrow {
-            return TasktiveLocale.Keys.TOMORROW.localized
-        }
-        return Self.taskDateFormatter.string(from: currentDate)
-    }
-
-    private static let taskDateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        return formatter
-    }()
 }
 
 struct ProgressSection_Previews: PreviewProvider {
     static var previews: some View {
         List {
-            ProgressSection(currentDate: Date(), progress: 0.2)
+            ProgressSection(currentDate: .constant(Date()), progress: 0.2)
         }
     }
 }

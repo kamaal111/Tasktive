@@ -16,4 +16,8 @@ extension Text {
     init(localized: TasktiveLocale.Keys, with variables: CVarArg...) {
         self.init(localized.localized(with: variables))
     }
+
+    static func empty() -> Text {
+        self.init("")
+    }
 }

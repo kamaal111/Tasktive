@@ -10,8 +10,6 @@ extension TasktiveLocale {
         case TASKS
         case SCENES
         case TODAY
-        case TOMORROW
-        case YESTERDAY
         case NEW_TASK_INPUT_TITLE
         case SUBMIT
         case ADD_NEW_TASK

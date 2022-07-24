@@ -85,7 +85,7 @@ final class TasksViewModel: ObservableObject {
         if tempTasks[hashDate] == nil {
             tempTasks[hashDate] = [task]
         } else {
-            tempTasks[hashDate] = tempTasks[hashDate] ?? [] + [task]
+            tempTasks[hashDate] = (tempTasks[hashDate] ?? []) + [task]
         }
 
         await setTasks(tempTasks)

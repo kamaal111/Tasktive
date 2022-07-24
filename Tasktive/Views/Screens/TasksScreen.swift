@@ -32,7 +32,7 @@ struct TasksScreen: View {
                 )
                 .disabled(tasksViewModel.loadingTasks)
                 ProgressSection(
-                    currentDate: viewModel.currentDay,
+                    currentDate: $viewModel.currentDay,
                     progress: tasksViewModel.progressForDate(viewModel.currentDay)
                 )
                 TasksSection(
@@ -152,7 +152,7 @@ extension TasksScreen {
             didSet { newTitleDidSet() }
         }
 
-        @Published private(set) var currentDay = Date()
+        @Published var currentDay = Date()
         @Published private(set) var currentFocusedTaskID: UUID?
         @Published private(set) var shownTaskDetails: AppTask? {
             didSet { Task { await shownTaskDetailsDidSet() } }
