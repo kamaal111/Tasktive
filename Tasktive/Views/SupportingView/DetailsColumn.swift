@@ -15,6 +15,8 @@ struct DetailsColumn: View {
         switch currentSelection {
         case .tasks, .none:
             TasksScreen()
+        case .settings:
+            SettingsScreen()
         }
     }
 

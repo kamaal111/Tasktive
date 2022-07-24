@@ -74,6 +74,7 @@ final class NamiNavigator: ObservableObject {
 extension NamiNavigator {
     enum Screens: Int, Hashable, CaseIterable {
         case tasks = 0
+        case settings = 1
 
         var tag: Int {
             rawValue
@@ -81,14 +82,14 @@ extension NamiNavigator {
 
         var isTab: Bool {
             switch self {
-            case .tasks:
+            case .tasks, .settings:
                 return true
             }
         }
 
         var isSidebarButton: Bool {
             switch self {
-            case .tasks:
+            case .tasks, .settings:
                 return true
             }
         }
@@ -97,6 +98,8 @@ extension NamiNavigator {
             switch self {
             case .tasks:
                 return TasktiveLocale.Keys.TASKS.localized
+            case .settings:
+                return TasktiveLocale.Keys.SETTINGS.localized
             }
         }
 
@@ -104,6 +107,8 @@ extension NamiNavigator {
             switch self {
             case .tasks:
                 return "doc.text.image"
+            case .settings:
+                return "gearshape"
             }
         }
     }

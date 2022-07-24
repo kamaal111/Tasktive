@@ -23,57 +23,55 @@ struct TasksScreen: View {
     @StateObject private var viewModel = ViewModel()
 
     var body: some View {
-        ZStack {
-            List {
-                DateControlView(
-                    goToPreviousDay: { Task { await viewModel.goToPreviousDay() } },
-                    goToToday: { Task { await viewModel.goToToday() } },
-                    goToNextDay: { Task { await viewModel.goToNextDay() } }
+        ScreenWrapper(screen: SCREEN) {
+            ZStack {
+                List {
+                    DateControlView(
+                        goToPreviousDay: { Task { await viewModel.goToPreviousDay() } },
+                        goToToday: { Task { await viewModel.goToToday() } },
+                        goToNextDay: { Task { await viewModel.goToNextDay() } }
+                    )
+                    .disabled(tasksViewModel.loadingTasks)
+                    ProgressSection(
+                        currentDate: $viewModel.currentDay,
+                        progress: tasksViewModel.progressForDate(viewModel.currentDay)
+                    )
+                    TasksSection(
+                        tasks: tasksViewModel.tasksForDate(viewModel.currentDay),
+                        loading: tasksViewModel.loadingTasks,
+                        currentFocusedTaskID: viewModel.currentFocusedTaskID,
+                        onTaskTick: { task, newTickedState in
+                            Task { await tasksViewModel.setTickOnTask(task, with: newTickedState) }
+                        },
+                        focusOnTask: { task in viewModel.setCurrentFocusedTaskID(task.id) },
+                        onDetailsPress: { task in Task { await viewModel.showDetailsSheet(for: task) } }
+                    )
+                    .disabled(tasksViewModel.settingTasks)
+                }
+                QuickAddTaskField(
+                    title: $viewModel.newTitle,
+                    disableSubmit: viewModel.disableNewTaskSubmitButton,
+                    submit: onNewTaskSubmit
                 )
-                .disabled(tasksViewModel.loadingTasks)
-                ProgressSection(
-                    currentDate: $viewModel.currentDay,
-                    progress: tasksViewModel.progressForDate(viewModel.currentDay)
-                )
-                TasksSection(
-                    tasks: tasksViewModel.tasksForDate(viewModel.currentDay),
-                    loading: tasksViewModel.loadingTasks,
-                    currentFocusedTaskID: viewModel.currentFocusedTaskID,
-                    onTaskTick: { task, newTickedState in
-                        Task { await tasksViewModel.setTickOnTask(task, with: newTickedState) }
-                    },
-                    focusOnTask: { task in viewModel.setCurrentFocusedTaskID(task.id) },
-                    onDetailsPress: { task in Task { await viewModel.showDetailsSheet(for: task) } }
-                )
-                .disabled(tasksViewModel.settingTasks)
+                .padding(.horizontal, .medium)
+                #if os(macOS)
+                    .padding(.vertical, .medium)
+                #else
+                    .padding(.vertical, .small)
+                #endif
+                    .background(colorScheme == .dark ? Color.black : Color.white)
+                    .ktakeSizeEagerly(alignment: .bottom)
             }
-            QuickAddTaskField(
-                title: $viewModel.newTitle,
-                disableSubmit: viewModel.disableNewTaskSubmitButton,
-                submit: onNewTaskSubmit
-            )
-            .padding(.horizontal, .medium)
-            #if os(macOS)
-                .padding(.vertical, .medium)
-            #else
-                .padding(.vertical, .small)
-            #endif
-                .background(colorScheme == .dark ? Color.black : Color.white)
-                .ktakeSizeEagerly(alignment: .bottom)
         }
-        .navigationTitle(Text(SCREEN.title))
         .onAppear(perform: handleOnAppear)
-        #if os(iOS)
-            .navigationBarTitleDisplayMode(.large)
-        #endif
-            .sheet(isPresented: $viewModel.showTaskDetailsSheet) {
-                TaskDetailsSheet(
-                    task: viewModel.shownTaskDetails,
-                    onClose: { Task { await viewModel.closeDetailsSheet() } },
-                    onDone: handleTaskEditedInDetailsSheet(_:)
-                )
-                .withPopperUp(popperUpManager)
-            }
+        .sheet(isPresented: $viewModel.showTaskDetailsSheet) {
+            TaskDetailsSheet(
+                task: viewModel.shownTaskDetails,
+                onClose: { Task { await viewModel.closeDetailsSheet() } },
+                onDone: handleTaskEditedInDetailsSheet(_:)
+            )
+            .withPopperUp(popperUpManager)
+        }
     }
 
     private func handleTaskEditedInDetailsSheet(_ arguments: CoreTask.Arguments?) {

@@ -18,4 +18,5 @@ module.exports = {
 	DONE: "Done",
 	TITLE_INPUT_TITLE: "Title",
 	PROGRESS: "Progress",
+	SETTINGS: "Settings",
 };

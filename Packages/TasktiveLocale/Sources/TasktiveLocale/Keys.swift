@@ -24,5 +24,6 @@ extension TasktiveLocale {
         case DONE
         case TITLE_INPUT_TITLE
         case PROGRESS
+        case SETTINGS
     }
 }
