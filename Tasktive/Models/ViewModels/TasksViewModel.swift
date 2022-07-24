@@ -123,9 +123,11 @@ final class TasksViewModel: ObservableObject {
 
     func updateTask(_ task: AppTask, with arguments: CoreTask.Arguments) async -> Result<Void, UserErrors> {
         await withSettingTasks(completion: {
+            guard task.coreTaskArguments != arguments else { return .success(()) }
+
             let validationResult = validateTaskArguments(arguments)
             switch validationResult {
-            case .failure(let failure):
+            case let .failure(failure):
                 return .failure(failure)
             case .success:
                 break

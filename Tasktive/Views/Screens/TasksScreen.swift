@@ -89,7 +89,7 @@ struct TasksScreen: View {
         Task {
             let result = await tasksViewModel.updateTask(task, with: arguments)
             switch result {
-            case .failure(let failure):
+            case let .failure(failure):
                 popperUpManager.showPopup(style: failure.style, timeout: failure.timeout)
                 return
             case .success:
