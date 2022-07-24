@@ -42,6 +42,7 @@
 		2C750F68288C31CF00026D67 /* ProgressSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C750F67288C31CF00026D67 /* ProgressSection.swift */; };
 		2C750F6A288C328C00026D67 /* TasksSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C750F69288C328C00026D67 /* TasksSection.swift */; };
 		2C750F6C288C335A00026D67 /* TaskItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C750F6B288C335A00026D67 /* TaskItemView.swift */; };
+		2CAF4E41288DD036007C2D1A /* SettingsUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2CAF4E40288DD036007C2D1A /* SettingsUI */; };
 		2CBCE6072881DE240057F4CD /* TasktiveApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCE6062881DE240057F4CD /* TasktiveApp.swift */; };
 		2CBCE6092881DE240057F4CD /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCE6082881DE240057F4CD /* Persistence.swift */; };
 		2CBCE60C2881DE240057F4CD /* Tasktive.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCE60A2881DE240057F4CD /* Tasktive.xcdatamodeld */; };
@@ -112,6 +113,7 @@
 		2C750F67288C31CF00026D67 /* ProgressSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressSection.swift; sourceTree = "<group>"; };
 		2C750F69288C328C00026D67 /* TasksSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksSection.swift; sourceTree = "<group>"; };
 		2C750F6B288C335A00026D67 /* TaskItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskItemView.swift; sourceTree = "<group>"; };
+		2CAF4E3F288DCEFE007C2D1A /* SettingsUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SettingsUI; path = ../../../../../../Desktop/SettingsUI; sourceTree = "<group>"; };
 		2CBCE6032881DE240057F4CD /* Tasktive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tasktive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CBCE6062881DE240057F4CD /* TasktiveApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasktiveApp.swift; sourceTree = "<group>"; };
 		2CBCE6082881DE240057F4CD /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 			files = (
 				2C47E40128836FBF00FD4469 /* SalmonUI in Frameworks */,
 				2CF24AAE28842F9A00778BD9 /* ShrimpExtensions in Frameworks */,
+				2CAF4E41288DD036007C2D1A /* SettingsUI in Frameworks */,
 				2C39A919288359A1008BAFD2 /* TasktiveLocale in Frameworks */,
 				2C1B196A2888689700D734D2 /* PopperUp in Frameworks */,
 			);
@@ -191,6 +194,7 @@
 		2C39A916288357CA008BAFD2 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
+				2CAF4E3F288DCEFE007C2D1A /* SettingsUI */,
 				2C39A91728835847008BAFD2 /* TasktiveLocale */,
 			);
 			path = Packages;
@@ -466,6 +470,7 @@
 				2C47E40028836FBF00FD4469 /* SalmonUI */,
 				2CF24AAD28842F9A00778BD9 /* ShrimpExtensions */,
 				2C1B19692888689700D734D2 /* PopperUp */,
+				2CAF4E40288DD036007C2D1A /* SettingsUI */,
 			);
 			productName = Tasktive;
 			productReference = 2CBCE6032881DE240057F4CD /* Tasktive.app */;
@@ -956,6 +961,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2C47E3FF28836FBF00FD4469 /* XCRemoteSwiftPackageReference "SalmonUI" */;
 			productName = SalmonUI;
+		};
+		2CAF4E40288DD036007C2D1A /* SettingsUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SettingsUI;
 		};
 		2CCCADC72881FECB0033E2EF /* Quick */ = {
 			isa = XCSwiftPackageProductDependency;

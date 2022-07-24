@@ -49,6 +49,16 @@
                ReferencedContainer = "container:Packages/TasktiveLocale">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "SettingsUITests"
+               BuildableName = "SettingsUITests"
+               BlueprintName = "SettingsUITests"
+               ReferencedContainer = "container:../../../../../Desktop/SettingsUI">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
