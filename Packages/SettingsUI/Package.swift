@@ -8,12 +8,13 @@ let package = Package(
     defaultLocalization: "en",
     platforms: [
         .iOS(.v14),
-        .macOS(.v10_15)
+        .macOS(.v10_15),
     ],
     products: [
         .library(
             name: "SettingsUI",
-            targets: ["SettingsUI"]),
+            targets: ["SettingsUI"]
+        ),
     ],
     dependencies: [],
     targets: [
@@ -26,6 +27,7 @@ let package = Package(
         ),
         .testTarget(
             name: "SettingsUITests",
-            dependencies: ["SettingsUI"]),
+            dependencies: ["SettingsUI"]
+        ),
     ]
 )

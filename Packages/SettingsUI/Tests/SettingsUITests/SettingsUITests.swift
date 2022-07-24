@@ -1,6 +1,6 @@
 //
 //  SettingsUITests.swift
-//  
+//
 //
 //  Created by Kamaal Farah on 24/07/2022.
 //

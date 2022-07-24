@@ -15,7 +15,9 @@ struct DataClient {
         type.list(from: context)
     }
 
-    func filter<T: Crudable>(by predicate: NSPredicate, limit: Int? = nil, from context: T.Context,
+    func filter<T: Crudable>(by predicate: NSPredicate,
+                             limit: Int? = nil,
+                             from context: T.Context,
                              of type: T.Type) -> Result<[T.ReturnType], T.CrudErrors> {
         type.filter(by: predicate, limit: limit, from: context)
     }
@@ -26,7 +28,9 @@ struct DataClient {
         type.create(with: arguments, from: context)
     }
 
-    func update<T: Crudable>(by id: UUID, with arguments: T.ReturnType.Arguments, from context: T.Context,
+    func update<T: Crudable>(by id: UUID,
+                             with arguments: T.ReturnType.Arguments,
+                             from context: T.Context,
                              of type: T.Type) -> Result<T.ReturnType.ReturnType, UpdateErrors> {
         let predicate = NSPredicate(format: "id == %@", id.nsString)
         let result = filter(by: predicate, from: context, of: type)

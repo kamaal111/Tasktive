@@ -74,6 +74,7 @@ extension TaskDetailsSheet {
 struct TaskDetailsSheet_Previews: PreviewProvider {
     static var previews: some View {
         TaskDetailsSheet(
+            // swiftlint:disable force_try
             task: try! CoreTask.list(from: PersistenceController.preview.context).get().first!.asAppTask,
             onClose: { },
             onDone: { _ in }

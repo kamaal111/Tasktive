@@ -53,6 +53,7 @@ struct TaskItemView: View {
 
 struct TaskItemView_Previews: PreviewProvider {
     static var previews: some View {
+        // swiftlint:disable force_try
         let tasks = try! CoreTask.list(from: PersistenceController.preview.context).get()
 
         return List {
