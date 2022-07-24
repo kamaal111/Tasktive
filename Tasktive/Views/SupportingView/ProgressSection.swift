@@ -18,8 +18,7 @@ struct ProgressSection: View {
     private static let circleSize: CGSize = .squared(80)
 
     var body: some View {
-        // - TODO: LOCALIZE THIS
-        Section(header: Text("Progress")) {
+        Section(header: Text(localized: .PROGRESS)) {
             HStack {
                 VStack(alignment: .leading) {
                     DatePicker("", selection: $currentDate, displayedComponents: .date)

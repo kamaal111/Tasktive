@@ -17,8 +17,7 @@ struct TasksSection: View {
     let onDetailsPress: (_ task: AppTask) -> Void
 
     var body: some View {
-        // - TODO: LOCALIZE THIS
-        Section(header: Text("Tasks")) {
+        Section(header: Text(localized: .TASKS)) {
             if loading {
                 LoadingView()
                     .ktakeWidthEagerly()

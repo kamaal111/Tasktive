@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SalmonUI
+import TasktiveLocale
 
 private let logger = Logster(from: TaskDetailsSheet.self)
 
@@ -21,17 +22,14 @@ struct TaskDetailsSheet: View {
         KSheetStack(
             title: viewModel.title,
             leadingNavigationButton: {
-                // - TODO: LOCALIZE THIS
-                ToolbarButton(text: "Close", action: onClose)
+                ToolbarButton(localized: .CLOSE, action: onClose)
             },
             trailingNavigationButton: {
-                // - TODO: LOCALIZE THIS
-                ToolbarButton(text: "Done", action: { onDone(viewModel.makeCoreTaskArguments(using: task)) })
+                ToolbarButton(localized: .DONE, action: { onDone(viewModel.makeCoreTaskArguments(using: task)) })
             }
         ) {
             VStack {
-                // - TODO: LOCALIZE THIS
-                KFloatingTextField(text: $viewModel.title, title: "Title")
+                KFloatingTextField(text: $viewModel.title, title: TasktiveLocale.Keys.TITLE_INPUT_TITLE.localized)
             }
             .padding(.vertical, .medium)
         }

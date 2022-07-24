@@ -270,18 +270,16 @@ extension TasksViewModel {
                     description: TasktiveLocale.Keys.CREATE_TASK_ERROR_DESCRIPTION.localized
                 )
             case .updateFailure:
-                #warning("localize this")
                 return .bottom(
                     title: TasktiveLocale.Keys.SOMETHING_WENT_WRONG_ERROR_TITLE.localized,
                     type: .error,
-                    description: "We couldn't update this task"
+                    description: TasktiveLocale.Keys.UPDATE_TASK_ERROR_DESCRIPTION.localized
                 )
             case .invalidTitle:
-                #warning("localize this")
                 return .bottom(
-                    title: "Oops",
+                    title: TasktiveLocale.Keys.GENERAL_WARNING_TITLE.localized,
                     type: .warning,
-                    description: "Invalid title"
+                    description: TasktiveLocale.Keys.INVALID_TITLE_WARNING_DESCRIPTION.localized
                 )
             }
         }

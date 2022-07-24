@@ -11,4 +11,11 @@ module.exports = {
 	SOMETHING_WENT_WRONG_ERROR_TITLE: "Something went wrong",
 	GET_ALL_TASKS_ERROR_DESCRIPTION: "We couldn't get your tasks",
 	CREATE_TASK_ERROR_DESCRIPTION: "We couldn't create this task",
+	UPDATE_TASK_ERROR_DESCRIPTION: "We couldn't update this task",
+	GENERAL_WARNING_TITLE: "Oops",
+	INVALID_TITLE_WARNING_DESCRIPTION: "Invalid title",
+	CLOSE: "Close",
+	DONE: "Done",
+	TITLE_INPUT_TITLE: "Title",
+	PROGRESS: "Progress",
 };
