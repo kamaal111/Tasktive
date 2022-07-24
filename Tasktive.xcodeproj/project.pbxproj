@@ -113,7 +113,7 @@
 		2C750F67288C31CF00026D67 /* ProgressSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressSection.swift; sourceTree = "<group>"; };
 		2C750F69288C328C00026D67 /* TasksSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksSection.swift; sourceTree = "<group>"; };
 		2C750F6B288C335A00026D67 /* TaskItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskItemView.swift; sourceTree = "<group>"; };
-		2CAF4E3F288DCEFE007C2D1A /* SettingsUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SettingsUI; path = ../../../../../../Desktop/SettingsUI; sourceTree = "<group>"; };
+		2C8B0CDD288DD73A00041EF8 /* SettingsUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SettingsUI; sourceTree = "<group>"; };
 		2CBCE6032881DE240057F4CD /* Tasktive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tasktive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CBCE6062881DE240057F4CD /* TasktiveApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasktiveApp.swift; sourceTree = "<group>"; };
 		2CBCE6082881DE240057F4CD /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -194,7 +194,7 @@
 		2C39A916288357CA008BAFD2 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				2CAF4E3F288DCEFE007C2D1A /* SettingsUI */,
+				2C8B0CDD288DD73A00041EF8 /* SettingsUI */,
 				2C39A91728835847008BAFD2 /* TasktiveLocale */,
 			);
 			path = Packages;
