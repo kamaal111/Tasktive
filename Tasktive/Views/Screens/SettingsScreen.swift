@@ -18,6 +18,8 @@ struct SettingsScreen: View {
         ScreenWrapper(screen: SCREEN) {
             Form {
                 // - TODO: LOCALIZE THIS
+                Section(header: Text("Feedback")) { }
+                // - TODO: LOCALIZE THIS
                 Section(header: Text("About")) {
                     SettingsUI.VersionRowView()
                 }
@@ -27,15 +29,7 @@ struct SettingsScreen: View {
 }
 
 extension SettingsScreen {
-    final class ViewModel: ObservableObject {
-        var versionText: String? {
-            Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
-        }
-
-        var buildNumber: String? {
-            Bundle.main.infoDictionary?["CFBundleVersion"] as? String
-        }
-    }
+    final class ViewModel: ObservableObject { }
 }
 
 struct SettingsScreen_Previews: PreviewProvider {
