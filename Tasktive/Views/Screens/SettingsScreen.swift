@@ -22,10 +22,6 @@ struct SettingsScreen: View {
                     SettingsUI.VersionRowView()
                 }
             }
-            // - TODO: LOCALIZE THIS
-            Text("Made by Kamaal")
-                .foregroundColor(.secondary)
-                .ktakeSizeEagerly(alignment: .bottom)
         }
     }
 }
