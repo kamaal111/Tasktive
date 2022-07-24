@@ -29,7 +29,7 @@ struct TaskDetailsSheet: View {
             }
         ) {
             VStack {
-                KFloatingTextField(text: $viewModel.title, title: TasktiveLocale.Keys.TITLE_INPUT_TITLE.localized)
+                KFloatingTextField(text: $viewModel.title, title: TasktiveLocale.getText(.TITLE_INPUT_TITLE))
             }
             .padding(.vertical, .medium)
         }

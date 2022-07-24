@@ -259,27 +259,27 @@ extension TasksViewModel {
             switch self {
             case .getAllFailure:
                 return .bottom(
-                    title: TasktiveLocale.Keys.SOMETHING_WENT_WRONG_ERROR_TITLE.localized,
+                    title: TasktiveLocale.getText(.SOMETHING_WENT_WRONG_ERROR_TITLE),
                     type: .error,
-                    description: TasktiveLocale.Keys.GET_ALL_TASKS_ERROR_DESCRIPTION.localized
+                    description: TasktiveLocale.getText(.GET_ALL_TASKS_ERROR_DESCRIPTION)
                 )
             case .createTaskFailure:
                 return .bottom(
-                    title: TasktiveLocale.Keys.SOMETHING_WENT_WRONG_ERROR_TITLE.localized,
+                    title: TasktiveLocale.getText(.SOMETHING_WENT_WRONG_ERROR_TITLE),
                     type: .error,
-                    description: TasktiveLocale.Keys.CREATE_TASK_ERROR_DESCRIPTION.localized
+                    description: TasktiveLocale.getText(.CREATE_TASK_ERROR_DESCRIPTION)
                 )
             case .updateFailure:
                 return .bottom(
-                    title: TasktiveLocale.Keys.SOMETHING_WENT_WRONG_ERROR_TITLE.localized,
+                    title: TasktiveLocale.getText(.SOMETHING_WENT_WRONG_ERROR_TITLE),
                     type: .error,
-                    description: TasktiveLocale.Keys.UPDATE_TASK_ERROR_DESCRIPTION.localized
+                    description: TasktiveLocale.getText(.UPDATE_TASK_ERROR_DESCRIPTION)
                 )
             case .invalidTitle:
                 return .bottom(
-                    title: TasktiveLocale.Keys.GENERAL_WARNING_TITLE.localized,
+                    title: TasktiveLocale.getText(.GENERAL_WARNING_TITLE),
                     type: .warning,
-                    description: TasktiveLocale.Keys.INVALID_TITLE_WARNING_DESCRIPTION.localized
+                    description: TasktiveLocale.getText(.INVALID_TITLE_WARNING_DESCRIPTION)
                 )
             }
         }

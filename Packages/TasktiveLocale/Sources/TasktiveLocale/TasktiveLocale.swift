@@ -10,6 +10,13 @@ import Foundation
 /// Main Localization util struct.
 public struct TasktiveLocale {
     private init() { }
+
+    /// Depending on the key returns a localized string
+    /// - Parameter key: the key to get the localized string
+    /// - Returns: a localized string
+    public static func getText(_ key: Keys) -> String {
+        key.localized
+    }
 }
 
 extension TasktiveLocale.Keys {

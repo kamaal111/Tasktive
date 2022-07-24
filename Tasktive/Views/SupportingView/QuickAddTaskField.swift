@@ -21,7 +21,7 @@ struct QuickAddTaskField: View {
                 .padding(.top, 12)
             KFloatingTextField(
                 text: $title,
-                title: TasktiveLocale.Keys.NEW_TASK_INPUT_TITLE.localized,
+                title: TasktiveLocale.getText(.NEW_TASK_INPUT_TITLE),
                 onCommit: {
                     guard !disableSubmit else { return }
                     submit()

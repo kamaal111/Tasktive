@@ -97,9 +97,9 @@ extension NamiNavigator {
         var title: String {
             switch self {
             case .tasks:
-                return TasktiveLocale.Keys.TASKS.localized
+                return TasktiveLocale.getText(.TASKS)
             case .settings:
-                return TasktiveLocale.Keys.SETTINGS.localized
+                return TasktiveLocale.getText(.SETTINGS)
             }
         }
 

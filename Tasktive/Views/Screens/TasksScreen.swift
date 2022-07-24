@@ -286,7 +286,7 @@ extension TasksScreen.ViewModel {
         private var title: String {
             switch self {
             case .invalidTitle:
-                return TasktiveLocale.Keys.INVALID_TITLE_ERROR_TITLE.localized
+                return TasktiveLocale.getText(.INVALID_TITLE_ERROR_TITLE)
             }
         }
 
