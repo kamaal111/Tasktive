@@ -37,6 +37,18 @@ struct AppTask: Hashable, Identifiable, Taskable {
         self.source = source
     }
 
+    var coreTaskArguments: CoreTask.Arguments {
+        .init(
+            title: title,
+            taskDescription: taskDescription,
+            notes: notes,
+            dueDate: dueDate,
+            ticked: ticked,
+            id: id,
+            completionDate: completionDate
+        )
+    }
+
     func toggleCoreTaskTickArguments(with newTickState: Bool) -> CoreTask.Arguments {
         .init(
             title: title,

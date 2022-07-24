@@ -67,7 +67,11 @@ struct TasksScreen: View {
             .navigationBarTitleDisplayMode(.large)
         #endif
             .sheet(isPresented: $viewModel.showTaskDetailsSheet) {
-                TaskDetailsSheet(task: viewModel.shownTaskDetails)
+                TaskDetailsSheet(
+                    task: viewModel.shownTaskDetails,
+                    onClose: { Task { await viewModel.closeDetailsSheet() } },
+                    onDone: { _ in }
+                )
             }
     }
 
@@ -150,6 +154,10 @@ extension TasksScreen {
 
         func showDetailsSheet(for task: AppTask) async {
             await setShownTaskDetails(task)
+        }
+
+        func closeDetailsSheet() async {
+            await setShownTaskDetails(nil)
         }
 
         func goToToday() async {
