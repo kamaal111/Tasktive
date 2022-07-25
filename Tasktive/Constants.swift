@@ -11,5 +11,6 @@ import ShrimpExtensions
 enum Constants {
     enum UI {
         static let mainViewMinimumSize: CGSize = .squared(300)
+        static let mainViewHorizontalWidth: CGFloat = AppSizes.medium.rawValue
     }
 }

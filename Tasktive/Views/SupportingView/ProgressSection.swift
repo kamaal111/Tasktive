@@ -25,6 +25,9 @@ struct ProgressSection: View {
                         .datePickerStyle(.compact)
                         .labelsHidden()
                         .id(currentDate)
+                    #if os(macOS)
+                        .frame(maxWidth: Constants.UI.mainViewMinimumSize.width / 2)
+                    #endif
                     HStack {
                         ForEach(currentDate.datesOfWeek(weekOffset: 0), id: \.self) { date in
                             DayNumbersRowItem(date: date, activeDate: currentDate)
@@ -44,6 +47,11 @@ struct ProgressSection: View {
                 .foregroundColor(.accentColor)
             }
         }
+        #if os(macOS)
+        .padding(.horizontal, .small)
+        .background(Color(nsColor: .separatorColor))
+        .cornerRadius(.small)
+        #endif
     }
 }
 

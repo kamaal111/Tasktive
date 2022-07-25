@@ -34,14 +34,14 @@ struct TasksScreen: View {
                     .disabled(tasksViewModel.loadingTasks)
                     #if os(macOS)
                         .padding(.top, .medium)
-                        .padding(.horizontal, .large)
+                        .padding(.horizontal, Constants.UI.mainViewHorizontalWidth)
                     #endif
                     ProgressSection(
                         currentDate: $viewModel.currentDay,
                         progress: tasksViewModel.progressForDate(viewModel.currentDay)
                     )
                     #if os(macOS)
-                    .padding(.horizontal, .large)
+                    .padding(.horizontal, Constants.UI.mainViewHorizontalWidth)
                     #endif
                     TasksSection(
                         tasks: tasksViewModel.tasksForDate(viewModel.currentDay),
@@ -55,7 +55,7 @@ struct TasksScreen: View {
                     )
                     .disabled(tasksViewModel.settingTasks)
                     #if os(macOS)
-                        .padding(.horizontal, .large)
+                        .padding(.horizontal, Constants.UI.mainViewHorizontalWidth)
                     #endif
                 }
                 .ktakeSizeEagerly(alignment: .topLeading)

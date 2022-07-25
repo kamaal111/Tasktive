@@ -15,6 +15,10 @@ extension View {
         padding(edges, length.rawValue)
     }
 
+    func cornerRadius(_ length: AppSizes) -> some View {
+        cornerRadius(length.rawValue)
+    }
+
     #if DEBUG
     func previewEnvironment(withConfiguration configuration: PreviewConfiguration? = nil) -> some View {
         let namiNavigator = NamiNavigator()
