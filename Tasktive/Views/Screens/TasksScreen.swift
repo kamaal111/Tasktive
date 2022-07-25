@@ -32,10 +32,17 @@ struct TasksScreen: View {
                         goToNextDay: { Task { await viewModel.goToNextDay() } }
                     )
                     .disabled(tasksViewModel.loadingTasks)
+                    #if os(macOS)
+                        .padding(.top, .medium)
+                        .padding(.horizontal, .large)
+                    #endif
                     ProgressSection(
                         currentDate: $viewModel.currentDay,
                         progress: tasksViewModel.progressForDate(viewModel.currentDay)
                     )
+                    #if os(macOS)
+                    .padding(.horizontal, .large)
+                    #endif
                     TasksSection(
                         tasks: tasksViewModel.tasksForDate(viewModel.currentDay),
                         loading: tasksViewModel.loadingTasks,
@@ -47,7 +54,11 @@ struct TasksScreen: View {
                         onDetailsPress: { task in Task { await viewModel.showDetailsSheet(for: task) } }
                     )
                     .disabled(tasksViewModel.settingTasks)
+                    #if os(macOS)
+                        .padding(.horizontal, .large)
+                    #endif
                 }
+                .ktakeSizeEagerly(alignment: .topLeading)
                 QuickAddTaskField(
                     title: $viewModel.newTitle,
                     disableSubmit: viewModel.disableNewTaskSubmitButton,
@@ -112,6 +123,7 @@ struct TasksScreen: View {
     }
 
     private func onNewTaskSubmit() {
+        logger.info("submitting new task")
         Task {
             let submitTaskResult = await viewModel.submitNewTask()
             let newTitle: String
