@@ -19,14 +19,11 @@ struct QuickAddTaskField: View {
             Image(systemName: "plus.circle")
                 .bold()
                 .padding(.top, 12)
-            KFloatingTextField(
-                text: $title,
-                title: TasktiveLocale.getText(.NEW_TASK_INPUT_TITLE),
-                onCommit: {
+            KFloatingTextField(text: $title, title: TasktiveLocale.getText(.NEW_TASK_INPUT_TITLE))
+                .onSubmit {
                     guard !disableSubmit else { return }
                     submit()
                 }
-            )
             Button(action: submit) {
                 Text(localized: .SUBMIT)
                     .foregroundColor(.accentColor)
