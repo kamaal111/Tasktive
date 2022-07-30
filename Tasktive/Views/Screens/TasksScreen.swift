@@ -82,6 +82,9 @@ struct TasksScreen: View {
                 onDone: handleTaskEditedInDetailsSheet(_:)
             )
             .withPopperUp(popperUpManager)
+            #if os(macOS)
+            .frame(minWidth: 300, minHeight: 140)
+            #endif
         }
     }
 
