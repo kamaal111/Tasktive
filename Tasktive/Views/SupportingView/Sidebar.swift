@@ -12,19 +12,19 @@ struct Sidebar: View {
     @EnvironmentObject private var namiNavigator: NamiNavigator
 
     var body: some View {
-        VStack(alignment: .leading) {
+        List {
             Section(header: Text(localized: .SCENES)) {
                 ForEach(namiNavigator.sidebarButtons, id: \.self) { screen in
-                    Button(action: { namiNavigator.navigate(to: screen) }) {
-                        Label(screen.title, systemImage: screen.icon)
-                            .foregroundColor(.accentColor)
+                    VStack(alignment: .leading) {
+                        Button(action: { namiNavigator.navigate(to: screen) }) {
+                            Label(screen.title, systemImage: screen.icon)
+                                .foregroundColor(.accentColor)
+                        }
+                        .buttonStyle(.plain)
                     }
-                    .buttonStyle(.plain)
                 }
             }
         }
-        .padding(.horizontal, .medium)
-        .ktakeSizeEagerly(alignment: .topLeading)
     }
 }
 
