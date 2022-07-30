@@ -11,7 +11,7 @@ import Foundation
 @testable import Tasktive
 
 final class CoreTaskSpec: QuickSpec {
-    let viewContext = PersistenceController.preview.container.viewContext
+    let viewContext = PersistenceController.preview.context
 
     override func spec() {
         describe("CRUD operations on CoreTask") {
