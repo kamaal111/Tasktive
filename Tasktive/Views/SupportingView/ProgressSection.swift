@@ -15,10 +15,8 @@ struct ProgressSection: View {
 
     let progress: Double
 
-    private static let circleSize: CGSize = .squared(80)
-
     var body: some View {
-        Section(header: Text(localized: .PROGRESS)) {
+        AppSection(header: .PROGRESS) {
             HStack {
                 VStack(alignment: .leading) {
                     DatePicker("", selection: $currentDate, displayedComponents: .date)
@@ -47,12 +45,9 @@ struct ProgressSection: View {
                 .foregroundColor(.accentColor)
             }
         }
-        #if os(macOS)
-        .padding(.horizontal, .small)
-        .background(Color(nsColor: .separatorColor))
-        .cornerRadius(.small)
-        #endif
     }
+
+    private static let circleSize: CGSize = .squared(80)
 }
 
 struct ProgressSection_Previews: PreviewProvider {
