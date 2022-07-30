@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/kamaal111/Tasktive#readme",
   "devDependencies": {
+    "git-format-staged": "^3.0.0",
     "husky": "^8.0.1"
   }
 }

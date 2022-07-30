@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-swiftformat .
+npx git-format-staged --formatter "swiftformat stdin --stdinpath '{}'" "*.swift"
 
