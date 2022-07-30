@@ -15,24 +15,43 @@ struct DateControlView: View {
 
     var body: some View {
         HStack {
-            KTappableButton(action: goToPreviousDay) {
-                Image(systemName: "arrow.left")
-                    .bold()
-                    .foregroundColor(.accentColor)
-            }
+            button(
+                action: goToPreviousDay,
+                content: Image(systemName: "arrow.left").bold()
+            )
+            #if os(iOS)
             Spacer()
-            KTappableButton(action: goToToday) {
-                Text(localized: .TODAY)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.accentColor)
-            }
+            #endif
+            button(
+                action: goToToday,
+                content: Text(localized: .TODAY).fontWeight(.semibold)
+            )
+            #if os(iOS)
             Spacer()
-            KTappableButton(action: goToNextDay) {
-                Image(systemName: "arrow.right")
-                    .bold()
-                    .foregroundColor(.accentColor)
-            }
+            #endif
+            button(
+                action: goToNextDay,
+                content: Image(systemName: "arrow.right").bold()
+            )
         }
+        #if os(macOS)
+        .ktakeWidthEagerly(alignment: .trailing)
+        #endif
+    }
+
+    private func button(action: @escaping () -> Void, content: some View) -> some View {
+        let modifiedContent = content
+            .foregroundColor(.accentColor)
+
+        #if os(macOS)
+        return Button(action: action) {
+            modifiedContent
+        }
+        #else
+        return KTappableButton(action: action) {
+            modifiedContent
+        }
+        #endif
     }
 }
 

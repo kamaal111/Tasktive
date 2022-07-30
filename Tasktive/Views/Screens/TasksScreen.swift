@@ -83,7 +83,7 @@ struct TasksScreen: View {
             )
             .withPopperUp(popperUpManager)
             #if os(macOS)
-            .frame(minWidth: 300, minHeight: 140)
+                .frame(minWidth: 300, minHeight: 140)
             #endif
         }
     }
