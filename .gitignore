@@ -57,3 +57,6 @@ Pods/
 
 fastlane/Appfile
 .env
+
+node_modules
+

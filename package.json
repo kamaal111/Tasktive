@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "localize": "sh Scripts/GenerateLocales/run.sh"
+    "localize": "sh Scripts/GenerateLocales/run.sh",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/kamaal111/Tasktive/issues"
   },
-  "homepage": "https://github.com/kamaal111/Tasktive#readme"
+  "homepage": "https://github.com/kamaal111/Tasktive#readme",
+  "devDependencies": {
+    "husky": "^8.0.1"
+  }
 }
