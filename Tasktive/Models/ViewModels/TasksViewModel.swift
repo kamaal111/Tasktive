@@ -109,8 +109,14 @@ final class TasksViewModel: ObservableObject {
                 tasks = success
             }
 
-            let maybeUpdatedTasks = updateDueDateOfTasksIfNeeded(tasks.map(\.asAppTask))
+            guard !tasks.isEmpty else { return .success(()) }
 
+            var appTasks: [AppTask] = []
+            await persistenceController.context.perform {
+                appTasks = tasks.map(\.asAppTask)
+            }
+
+            let maybeUpdatedTasks = updateDueDateOfTasksIfNeeded(appTasks)
             let groupedTasks = Dictionary(grouping: maybeUpdatedTasks, by: {
                 getHashDate(from: $0.dueDate)
             })
