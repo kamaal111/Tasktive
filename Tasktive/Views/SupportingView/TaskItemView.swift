@@ -8,6 +8,8 @@
 import SwiftUI
 import SalmonUI
 
+private let RADIO_SIZE: CGFloat = 16
+
 struct TaskItemView: View {
     let task: AppTask
     let isFocused: Bool
@@ -31,13 +33,15 @@ struct TaskItemView: View {
 
     var body: some View {
         HStack {
-            KTappableButton(action: { onTaskTick(!task.ticked) }) {
-                KRadioCheckBox(checked: task.ticked, size: 16)
-            }
-            Button(action: focusOnTask) {
-                Text(task.title)
-                    .strikethrough(task.ticked)
-                    .foregroundColor(task.ticked ? .secondary : .primary)
+            radioButton
+            KJustStack {
+                #if os(macOS)
+                titleView
+                #else
+                Button(action: focusOnTask) {
+                    titleView
+                }
+                #endif
             }
             .ktakeWidthEagerly(alignment: .leading)
             if isFocused {
@@ -48,6 +52,39 @@ struct TaskItemView: View {
                 }
             }
         }
+        .onHover(perform: { isHovering in
+            if isHovering {
+                focusOnTask()
+            }
+        })
+    }
+
+    private var radioButton: some View {
+        #if os(macOS)
+        Button(action: clickOnRadioView) {
+            radioView
+                .frame(width: RADIO_SIZE * 1.5, height: RADIO_SIZE * 1.5)
+        }
+        .buttonStyle(.borderless)
+        #else
+        KTappableButton(action: clickOnRadioView) {
+            radioView
+        }
+        #endif
+    }
+
+    private var radioView: some View {
+        KRadioCheckBox(checked: task.ticked, size: RADIO_SIZE)
+    }
+
+    private var titleView: some View {
+        Text(task.title)
+            .strikethrough(task.ticked)
+            .foregroundColor(task.ticked ? .secondary : .primary)
+    }
+
+    private func clickOnRadioView() {
+        onTaskTick(!task.ticked)
     }
 }
 

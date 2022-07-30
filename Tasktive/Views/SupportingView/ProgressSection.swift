@@ -7,7 +7,6 @@
 
 import SwiftUI
 import SalmonUI
-import TasktiveLocale
 import ShrimpExtensions
 
 struct ProgressSection: View {

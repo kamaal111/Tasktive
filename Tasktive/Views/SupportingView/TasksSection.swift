@@ -17,7 +17,7 @@ struct TasksSection: View {
     let onDetailsPress: (_ task: AppTask) -> Void
 
     var body: some View {
-        Section(header: Text(localized: .TASKS)) {
+        AppSection(header: .TASKS) {
             if loading {
                 LoadingView()
                     .ktakeWidthEagerly()
@@ -26,13 +26,20 @@ struct TasksSection: View {
                     .ktakeWidthEagerly()
             }
             ForEach(tasks, id: \.self) { task in
-                TaskItemView(
-                    task: task,
-                    isFocused: task.id == currentFocusedTaskID,
-                    onTaskTick: { ticked in onTaskTick(task, ticked) },
-                    focusOnTask: { focusOnTask(task) },
-                    onDetailsPress: { onDetailsPress(task) }
-                )
+                VStack {
+                    TaskItemView(
+                        task: task,
+                        isFocused: task.id == currentFocusedTaskID,
+                        onTaskTick: { ticked in onTaskTick(task, ticked) },
+                        focusOnTask: { focusOnTask(task) },
+                        onDetailsPress: { onDetailsPress(task) }
+                    )
+                    #if os(macOS)
+                    if task != tasks.last {
+                        Divider()
+                    }
+                    #endif
+                }
             }
         }
     }
