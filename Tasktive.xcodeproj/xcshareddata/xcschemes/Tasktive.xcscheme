@@ -56,7 +56,7 @@
                BlueprintIdentifier = "SettingsUITests"
                BuildableName = "SettingsUITests"
                BlueprintName = "SettingsUITests"
-               ReferencedContainer = "container:../../../../../Desktop/SettingsUI">
+               ReferencedContainer = "container:Packages/SettingsUI">
             </BuildableReference>
          </TestableReference>
       </Testables>

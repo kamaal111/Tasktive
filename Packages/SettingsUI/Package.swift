@@ -16,11 +16,15 @@ let package = Package(
             targets: ["SettingsUI"]
         ),
     ],
-    dependencies: [],
+    dependencies: [
+        .package(url: "https://github.com/kamaal111/SalmonUI.git", "4.0.0" ..< "5.0.0"),
+    ],
     targets: [
         .target(
             name: "SettingsUI",
-            dependencies: [],
+            dependencies: [
+                "SalmonUI",
+            ],
             resources: [
                 .process("Resources"),
             ]

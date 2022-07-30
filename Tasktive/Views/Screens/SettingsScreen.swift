@@ -17,14 +17,17 @@ struct SettingsScreen: View {
     var body: some View {
         ScreenWrapper(screen: SCREEN) {
             Form {
-                // - TODO: LOCALIZE THIS
-                Section(header: Text("Feedback")) { }
-                // - TODO: LOCALIZE THIS
-                Section(header: Text("About")) {
-                    SettingsUI.VersionRowView()
-                }
+                SettingsUI.FeedbackSection(onFeedbackPress: { style in
+                    print("style", style)
+                })
+                SettingsUI.AboutSection()
             }
         }
+        #if os(macOS)
+        .padding(.vertical, .medium)
+        .padding(.horizontal, .medium)
+        .ktakeSizeEagerly(alignment: .topLeading)
+        #endif
     }
 }
 
