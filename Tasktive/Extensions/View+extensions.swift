@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SalmonUI
 #if DEBUG
 import PopperUp
 #endif
@@ -17,6 +18,26 @@ extension View {
 
     func cornerRadius(_ length: AppSizes) -> some View {
         cornerRadius(length.rawValue)
+    }
+
+    func withNavigation(navigator: NamiNavigator) -> some View {
+        KJustStack {
+            #if os(iOS)
+            self
+            #else
+            if let view = navigator.currentStackScreen {
+                KJustStack {
+                    switch view {
+                    case .feedback:
+                        Text("Feedback")
+                    }
+                }
+                .environmentObject(navigator)
+            } else {
+                self
+            }
+            #endif
+        }
     }
 
     #if DEBUG

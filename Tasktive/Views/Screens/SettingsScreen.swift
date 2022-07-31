@@ -12,21 +12,25 @@ import SettingsUI
 private let SCREEN: NamiNavigator.Screens = .settings
 
 struct SettingsScreen: View {
+    @EnvironmentObject private var namiNavigator: NamiNavigator
+
     @StateObject private var viewModel = ViewModel()
 
     var body: some View {
         ScreenWrapper(screen: SCREEN) {
             Form {
                 SettingsUI.FeedbackSection(onFeedbackPress: { style in
+                    namiNavigator.navigate(to: .feedback)
                     print("style", style)
                 })
                 SettingsUI.AboutSection()
             }
         }
+        .withNavigation(navigator: namiNavigator)
         #if os(macOS)
-        .padding(.vertical, .medium)
-        .padding(.horizontal, .medium)
-        .ktakeSizeEagerly(alignment: .topLeading)
+            .padding(.vertical, .medium)
+            .padding(.horizontal, .medium)
+            .ktakeSizeEagerly(alignment: .topLeading)
         #endif
     }
 }

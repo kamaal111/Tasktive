@@ -6,17 +6,20 @@
 //
 
 import SwiftUI
+import SalmonUI
 
 struct DetailsColumn: View {
     @EnvironmentObject private var namiNavigator: NamiNavigator
     @EnvironmentObject private var deviceModel: DeviceModel
 
     var body: some View {
-        switch currentSelection {
-        case .tasks, .none:
-            TasksScreen()
-        case .settings:
-            SettingsScreen()
+        KJustStack {
+            switch currentSelection {
+            case .tasks, .none:
+                TasksScreen()
+            case .settings:
+                SettingsScreen()
+            }
         }
     }
 

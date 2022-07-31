@@ -16,7 +16,7 @@ struct Sidebar: View {
             Section(header: Text(localized: .SCENES)) {
                 ForEach(namiNavigator.sidebarButtons, id: \.self) { screen in
                     VStack(alignment: .leading) {
-                        Button(action: { namiNavigator.navigate(to: screen) }) {
+                        Button(action: { namiNavigator.navigateOnSidebar(to: screen) }) {
                             Label(screen.title, systemImage: screen.icon)
                                 .foregroundColor(.accentColor)
                         }

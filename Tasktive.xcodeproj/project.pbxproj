@@ -89,6 +89,7 @@
 		2C1B19812888723A00D734D2 /* CoreTask+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTask+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2C1B1984288874C100D734D2 /* QuickAddTaskField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAddTaskField.swift; sourceTree = "<group>"; };
 		2C1B1986288893F800D734D2 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		2C21A68E2896818000693CF2 /* yarn.lock */ = {isa = PBXFileReference; lastKnownFileType = text; path = yarn.lock; sourceTree = "<group>"; };
 		2C39A91728835847008BAFD2 /* TasktiveLocale */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = TasktiveLocale; sourceTree = "<group>"; };
 		2C39A91C28835ADF008BAFD2 /* run.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = run.sh; sourceTree = "<group>"; };
 		2C3B27C5288C77F7007CE538 /* DateControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateControlView.swift; sourceTree = "<group>"; };
@@ -310,6 +311,7 @@
 			children = (
 				2CCCADAB2881F1750033E2EF /* LICENSE */,
 				2CF24AAB28842E2600778BD9 /* package.json */,
+				2C21A68E2896818000693CF2 /* yarn.lock */,
 				2CCCADAA2881EFB60033E2EF /* README.md */,
 				2CCCADCC2882010F0033E2EF /* Frameworks */,
 				2C39A916288357CA008BAFD2 /* Packages */,
