@@ -101,10 +101,8 @@ final class NamiNavigator: ObservableObject {
         do {
             data = try JSONEncoder().encode(path.codable)
         } catch {
-            logger
-                .error(
-                    "error while encoding stack screen; error='\(error)'; localizedDescription='\(error.localizedDescription)'"
-                )
+            let label = "error while encoding stack screen"
+            logger.error("\(label); error='\(error)'; localizedDescription='\(error.localizedDescription)'")
             return nil
         }
 
@@ -115,10 +113,8 @@ final class NamiNavigator: ObservableObject {
                 return StackScreens(rawValue: screenNumber)
             }
         } catch {
-            logger
-                .error(
-                    "error while decoding stack screen; error='\(error)'; localizedDescription='\(error.localizedDescription)'"
-                )
+            let label = "error while decoding stack screen"
+            logger.error("\(label); error='\(error)'; localizedDescription='\(error.localizedDescription)'")
             return nil
         }
 
