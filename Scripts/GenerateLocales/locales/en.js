@@ -19,4 +19,5 @@ module.exports = {
 	TITLE_INPUT_TITLE: "Title",
 	PROGRESS: "Progress",
 	SETTINGS: "Settings",
+	NEW_TASK_SAVED: "New task saved",
 };
