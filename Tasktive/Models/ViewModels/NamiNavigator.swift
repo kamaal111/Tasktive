@@ -106,17 +106,21 @@ final class NamiNavigator: ObservableObject {
             return nil
         }
 
-        let decodedStackScreens: [StackScreens]
+        let decodedPath: [String]
         do {
-            decodedStackScreens = try JSONDecoder().decode([String].self, from: data).compactMap {
-                guard let screenNumber = Int($0) else { return nil }
-                return StackScreens(rawValue: screenNumber)
-            }
+            decodedPath = try JSONDecoder().decode([String].self, from: data)
         } catch {
             let label = "error while decoding stack screen"
             logger.error("\(label); error='\(error)'; localizedDescription='\(error.localizedDescription)'")
             return nil
         }
+
+        let decodedStackScreens: [StackScreens] = decodedPath
+            .compactMap {
+                guard let screenNumber = Int($0) else { return nil }
+
+                return StackScreens(rawValue: screenNumber)
+            }
 
         logger.info("decoded screen = \(decodedStackScreens)")
 
