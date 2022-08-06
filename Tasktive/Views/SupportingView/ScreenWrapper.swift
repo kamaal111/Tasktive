@@ -29,13 +29,6 @@ struct ScreenWrapper<Content: View>: View {
             #endif
         }
         .onChange(of: path) { newValue in
-//            var newPath = newValue
-//            if DeviceModel.deviceType.shouldHaveSidebar {
-//                while !newPath.isEmpty {
-//                    newPath.removeLast()
-//                }
-//            }
-//            self.path = newPath
             logger.info("current path is \(newValue) for \(screen)")
         }
     }
