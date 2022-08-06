@@ -13,7 +13,14 @@ private let logger = Logster(from: NamiNavigator.self)
 
 final class NamiNavigator: ObservableObject {
     @Published var tabSelection: Screens
+    #if DEBUG
     @Published var sidebarSelection: Screens?
+    #else
+    @Published private(set) var sidebarSelection: Screens?
+    #endif
+    @Published private(set) var pendingSidebarSelection: Screens?
+
+    private var needsToNavigate = false
 
     init() {
         self.tabSelection = STARTING_SCREEN
@@ -32,11 +39,30 @@ final class NamiNavigator: ObservableObject {
             .filter(\.isSidebarButton)
     }
 
+    func clearToNavigate() async {
+        guard needsToNavigate else { return }
+
+        needsToNavigate = false
+        await setSidebarSelection(pendingSidebarSelection)
+        await setPendingSidebarSelection(.none)
+    }
+
     @MainActor
     func navigateOnSidebar(to screen: Screens?) {
         guard screen != sidebarSelection else { return }
 
-        sidebarSelection = screen
+        needsToNavigate = true
+        setPendingSidebarSelection(screen)
+    }
+
+    @MainActor
+    func setSidebarSelection(_ selection: Screens?) {
+        sidebarSelection = selection
+    }
+
+    @MainActor
+    private func setPendingSidebarSelection(_ selection: Screens?) {
+        pendingSidebarSelection = selection
     }
 }
 

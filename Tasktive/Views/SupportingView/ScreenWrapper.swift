@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-private let logger = Logster(label: "ScreenWrapper")
-
 struct ScreenWrapper<Content: View>: View {
-    @State private var path = NavigationPath()
+    @EnvironmentObject private var namiNavigator: NamiNavigator
+
+    @StateObject private var stackNavigator = StackNavigator()
 
     let screen: NamiNavigator.Screens
     let content: Content
@@ -21,15 +21,22 @@ struct ScreenWrapper<Content: View>: View {
     }
 
     var body: some View {
-        NavigationStack(path: $path) {
+        NavigationStack(path: $stackNavigator.path) {
             content
                 .navigationTitle(Text(screen.title))
             #if os(iOS)
                 .navigationBarTitleDisplayMode(.large)
             #endif
+                .environmentObject(stackNavigator)
         }
-        .onChange(of: path) { newValue in
-            logger.info("current path is \(newValue) for \(screen)")
+        .onChange(of: namiNavigator.pendingSidebarSelection) { _ in
+            // Shouldn't come here if device should not have sidebar anyway, but just to be sure lets guard it.
+            guard DeviceModel.deviceType.shouldHaveSidebar else { return }
+
+            Task {
+                await stackNavigator.clearPath()
+                await namiNavigator.clearToNavigate()
+            }
         }
     }
 }

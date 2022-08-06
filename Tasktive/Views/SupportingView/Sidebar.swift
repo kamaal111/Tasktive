@@ -25,7 +25,23 @@ struct Sidebar: View {
                 }
             }
         }
+        #if os(macOS)
+        .toolbar(content: {
+            Button(action: toggleSidebar) {
+                #warning("LOCALIZE THIS")
+                Label("Toggle Sidebar", systemImage: "sidebar.left")
+                    .foregroundColor(.accentColor)
+            }
+        })
+        #endif
     }
+
+    #if os(macOS)
+    private func toggleSidebar() {
+        guard let firstResponder = NSApp.keyWindow?.firstResponder else { return }
+        firstResponder.tryToPerform(#selector(NSSplitViewController.toggleSidebar(_:)), with: nil)
+    }
+    #endif
 }
 
 #if DEBUG
