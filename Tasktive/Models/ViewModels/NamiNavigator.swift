@@ -33,11 +33,9 @@ final class NamiNavigator: ObservableObject {
         didSet {
             guard let path = navigationPaths[currentScreen] else { return }
 
-            currentStackScreen = getCurrentStackScreen(of: path)
+            logger.info("current path is \(path)")
         }
     }
-
-    @Published private(set) var currentStackScreen: StackScreens?
 
     init() {
         self.tabSelection = STARTING_SCREEN
@@ -55,15 +53,6 @@ final class NamiNavigator: ObservableObject {
         NamiNavigator.Screens
             .allCases
             .filter(\.isSidebarButton)
-    }
-
-    @MainActor
-    func navigate(to screen: StackScreens?) {
-        if let screen {
-            navigationPaths[currentScreen]?.append(screen)
-        } else {
-            navigationPaths[currentScreen]?.removeLast()
-        }
     }
 
     @MainActor
@@ -95,45 +84,10 @@ final class NamiNavigator: ObservableObject {
 
         return tabSelection
     }
-
-    private func getCurrentStackScreen(of path: NavigationPath) -> StackScreens? {
-        let data: Data
-        do {
-            data = try JSONEncoder().encode(path.codable)
-        } catch {
-            let label = "error while encoding stack screen"
-            logger.error("\(label); error='\(error)'; localizedDescription='\(error.localizedDescription)'")
-            return nil
-        }
-
-        let decodedPath: [String]
-        do {
-            decodedPath = try JSONDecoder().decode([String].self, from: data)
-        } catch {
-            let label = "error while decoding stack screen"
-            logger.error("\(label); error='\(error)'; localizedDescription='\(error.localizedDescription)'")
-            return nil
-        }
-
-        let decodedStackScreens: [StackScreens] = decodedPath
-            .compactMap {
-                guard let screenNumber = Int($0) else { return nil }
-
-                return StackScreens(rawValue: screenNumber)
-            }
-
-        logger.info("decoded screen = \(decodedStackScreens)")
-
-        return decodedStackScreens.last
-    }
 }
 
 extension NamiNavigator {
-    enum StackScreens: Int, Hashable, Codable, CaseIterable {
-        case feedback = 0
-    }
-
-    enum Screens: Int, Hashable, CaseIterable {
+    enum Screens: Int, Hashable, Codable, CaseIterable {
         case tasks = 0
         case settings = 1
 

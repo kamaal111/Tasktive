@@ -19,18 +19,14 @@ struct SettingsScreen: View {
     var body: some View {
         ScreenWrapper(screen: SCREEN) {
             Form {
-                SettingsUI.FeedbackSection(onFeedbackPress: { style in
-                    namiNavigator.navigate(to: .feedback)
-                    print("style", style)
-                })
+                SettingsUI.FeedbackSection()
                 SettingsUI.AboutSection()
             }
         }
-        .withNavigation(navigator: namiNavigator)
         #if os(macOS)
-            .padding(.vertical, .medium)
-            .padding(.horizontal, .medium)
-            .ktakeSizeEagerly(alignment: .topLeading)
+        .padding(.vertical, .medium)
+        .padding(.horizontal, .medium)
+        .ktakeSizeEagerly(alignment: .topLeading)
         #endif
     }
 }
@@ -42,7 +38,7 @@ extension SettingsScreen {
 struct SettingsScreen_Previews: PreviewProvider {
     static var previews: some View {
         var configuration = PreviewConfiguration()
-        configuration.screen = .settings
+        configuration.screen = SCREEN
 
         return ForEach(ColorScheme.allCases, id: \.self) { scheme in
             MainView()

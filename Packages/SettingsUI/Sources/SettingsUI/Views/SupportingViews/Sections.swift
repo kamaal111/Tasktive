@@ -20,26 +20,35 @@ extension SettingsUI {
         }
     }
 
-    @available(macOS 12.0, *)
+    @available(macOS 13.0, iOS 16.0, *)
     public struct FeedbackSection: View {
-        public let onFeedbackPress: (_ style: FeedbackStyles) -> Void
-
-        public init(onFeedbackPress: @escaping (_ style: FeedbackStyles) -> Void) {
-            self.onFeedbackPress = onFeedbackPress
-        }
+        public init() { }
 
         public var body: some View {
             SectionView(header: NSLocalizedString("Feedback", bundle: .module, comment: "")) {
                 ForEach(FeedbackStyles.allCases, id: \.self) { style in
                     VStack {
-                        SettingsButton(action: { onFeedbackPress(style) }) {
+                        feedbackButtonWrapper(
+                            style,
                             RowImageTextView(label: style.title, imageSystemName: style.imageSystemName)
-                        }
+                        )
+                        #if os(macOS)
                         if style != FeedbackStyles.allCases.last {
                             Divider()
                         }
+                        #endif
+                    }
+                    .navigationDestination(for: FeedbackStyles.self) { style in
+                        FeedbackScreen(style: style)
                     }
                 }
+            }
+        }
+
+        private func feedbackButtonWrapper(_ style: FeedbackStyles, _ view: some View) -> some View {
+            NavigationLink(value: style) {
+                view
+                    .foregroundColor(.accentColor)
             }
         }
     }
