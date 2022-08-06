@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+private let logger = Logster(label: "ScreenWrapper")
+
 struct ScreenWrapper<Content: View>: View {
     @State private var path = NavigationPath()
 
@@ -25,6 +27,16 @@ struct ScreenWrapper<Content: View>: View {
             #if os(iOS)
                 .navigationBarTitleDisplayMode(.large)
             #endif
+        }
+        .onChange(of: path) { newValue in
+//            var newPath = newValue
+//            if DeviceModel.deviceType.shouldHaveSidebar {
+//                while !newPath.isEmpty {
+//                    newPath.removeLast()
+//                }
+//            }
+//            self.path = newPath
+            logger.info("current path is \(newValue) for \(screen)")
         }
     }
 }

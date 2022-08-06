@@ -17,9 +17,8 @@ struct MainView: View {
     var body: some View {
         KJustStack {
             if DeviceModel.deviceType.shouldHaveSidebar {
-                NavigationSplitView(sidebar: {
+                NavigationView {
                     Sidebar()
-                }) {
                     DetailsColumn()
                 }
             } else {

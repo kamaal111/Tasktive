@@ -12,7 +12,11 @@ struct Logster {
     let logger: Logger
 
     init<T>(from type: T.Type) {
-        self.logger = .init(subsystem: Bundle.main.bundleIdentifier!, category: String(describing: type))
+        self.init(label: String(describing: type))
+    }
+
+    init(label: String) {
+        self.logger = .init(subsystem: Bundle.main.bundleIdentifier!, category: label)
     }
 
     func error(_ message: String) {
