@@ -7,12 +7,15 @@
 
 import SwiftUI
 import SalmonUI
+import ShrimpExtensions
 
 struct DayNumbersRowItem: View {
     @Environment(\.colorScheme) var colorScheme
 
     let date: Date
     let activeDate: Date
+
+    private let circleSize: CGSize = .squared(20)
 
     init(date: Date, activeDate: Date) {
         self.date = date
@@ -24,12 +27,11 @@ struct DayNumbersRowItem: View {
             .font(.callout)
             .foregroundColor(numberColor)
             .background(backgroundView)
+            .padding(.horizontal, .extraExtraSmall)
     }
 
     private var backgroundView: some View {
-        let circleSize: CGSize = .squared(26)
-
-        return KJustStack {
+        KJustStack {
             if date.isSameDay(as: activeDate) {
                 Circle()
                     .frame(width: circleSize.width, height: circleSize.height)

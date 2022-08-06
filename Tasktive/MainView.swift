@@ -18,9 +18,9 @@ struct MainView: View {
         KJustStack {
             if DeviceModel.deviceType.shouldHaveSidebar {
                 #if os(iOS) // if iPad
-                #warning("After navigating back navigation just breaks")
                 NavigationSplitView(sidebar: { Sidebar() }, detail: { DetailsColumn() })
                 #else // if mac
+                // Can't use `NavigationSplitView` yet because the sidebar breaks the navigation on macOS
                 NavigationView {
                     Sidebar()
                     DetailsColumn()
