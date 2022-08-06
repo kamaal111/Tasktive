@@ -8,7 +8,7 @@
 import SwiftUI
 import TasktiveLocale
 
-private let STARTING_SCREEN: NamiNavigator.Screens = .tasks
+let STARTING_SCREEN: NamiNavigator.Screens = .tasks
 private let logger = Logster(from: NamiNavigator.self)
 
 final class NamiNavigator: ObservableObject {

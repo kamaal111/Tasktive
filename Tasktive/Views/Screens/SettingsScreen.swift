@@ -17,11 +17,9 @@ struct SettingsScreen: View {
     @StateObject private var viewModel = ViewModel()
 
     var body: some View {
-        ScreenWrapper(screen: SCREEN) {
-            Form {
-                SettingsUI.FeedbackSection()
-                SettingsUI.AboutSection()
-            }
+        Form {
+            SettingsUI.FeedbackSection()
+            SettingsUI.AboutSection()
         }
         #if os(macOS)
         .padding(.vertical, .medium)

@@ -6,21 +6,25 @@
 //
 
 import SwiftUI
+import SalmonUI
 
 struct DetailsColumn: View {
     @EnvironmentObject private var namiNavigator: NamiNavigator
 
     var body: some View {
-        switch currentSelection {
-        case .tasks, .none:
-            TasksScreen()
-        case .settings:
-            SettingsScreen()
+        ScreenWrapper(screen: currentSelection ?? STARTING_SCREEN) {
+            switch currentSelection ?? STARTING_SCREEN {
+            case .tasks:
+                TasksScreen()
+            case .settings:
+                SettingsScreen()
+            }
         }
     }
 
     private var currentSelection: NamiNavigator.Screens? {
         if DeviceModel.deviceType.shouldHaveSidebar {
+            print("namiNavigator.sidebarSelection", namiNavigator.sidebarSelection)
             return namiNavigator.sidebarSelection
         }
         return namiNavigator.tabSelection

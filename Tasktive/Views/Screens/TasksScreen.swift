@@ -23,56 +23,54 @@ struct TasksScreen: View {
     @StateObject private var viewModel = ViewModel()
 
     var body: some View {
-        ScreenWrapper(screen: SCREEN) {
-            ZStack {
-                List {
-                    DateControlView(
-                        goToPreviousDay: { Task { await viewModel.goToPreviousDay() } },
-                        goToToday: { Task { await viewModel.goToToday() } },
-                        goToNextDay: { Task { await viewModel.goToNextDay() } }
-                    )
-                    .disabled(tasksViewModel.loadingTasks)
-                    #if os(macOS)
-                        .padding(.top, .medium)
-                        .padding(.horizontal, Constants.UI.mainViewHorizontalWidth)
-                    #endif
-                    ProgressSection(
-                        currentDate: $viewModel.currentDay,
-                        progress: tasksViewModel.progressForDate(viewModel.currentDay)
-                    )
-                    #if os(macOS)
-                    .padding(.horizontal, Constants.UI.mainViewHorizontalWidth)
-                    #endif
-                    TasksSection(
-                        tasks: tasksViewModel.tasksForDate(viewModel.currentDay),
-                        loading: tasksViewModel.loadingTasks,
-                        currentFocusedTaskID: viewModel.currentFocusedTaskID,
-                        onTaskTick: { task, newTickedState in
-                            Task { await tasksViewModel.setTickOnTask(task, with: newTickedState) }
-                        },
-                        focusOnTask: { task in viewModel.setCurrentFocusedTaskID(task.id) },
-                        onDetailsPress: { task in Task { await viewModel.showDetailsSheet(for: task) } }
-                    )
-                    .disabled(tasksViewModel.settingTasks)
-                    #if os(macOS)
-                        .padding(.horizontal, Constants.UI.mainViewHorizontalWidth)
-                    #endif
-                }
-                .ktakeSizeEagerly(alignment: .topLeading)
-                QuickAddTaskField(
-                    title: $viewModel.newTitle,
-                    disableSubmit: viewModel.disableNewTaskSubmitButton,
-                    submit: onNewTaskSubmit
+        ZStack {
+            List {
+                DateControlView(
+                    goToPreviousDay: { Task { await viewModel.goToPreviousDay() } },
+                    goToToday: { Task { await viewModel.goToToday() } },
+                    goToNextDay: { Task { await viewModel.goToNextDay() } }
                 )
-                .padding(.horizontal, .medium)
+                .disabled(tasksViewModel.loadingTasks)
                 #if os(macOS)
-                    .padding(.vertical, .medium)
-                #else
-                    .padding(.vertical, .small)
+                    .padding(.top, .medium)
+                    .padding(.horizontal, Constants.UI.mainViewHorizontalWidth)
                 #endif
-                    .background(colorScheme == .dark ? Color.black : Color.white)
-                    .ktakeSizeEagerly(alignment: .bottom)
+                ProgressSection(
+                    currentDate: $viewModel.currentDay,
+                    progress: tasksViewModel.progressForDate(viewModel.currentDay)
+                )
+                #if os(macOS)
+                .padding(.horizontal, Constants.UI.mainViewHorizontalWidth)
+                #endif
+                TasksSection(
+                    tasks: tasksViewModel.tasksForDate(viewModel.currentDay),
+                    loading: tasksViewModel.loadingTasks,
+                    currentFocusedTaskID: viewModel.currentFocusedTaskID,
+                    onTaskTick: { task, newTickedState in
+                        Task { await tasksViewModel.setTickOnTask(task, with: newTickedState) }
+                    },
+                    focusOnTask: { task in viewModel.setCurrentFocusedTaskID(task.id) },
+                    onDetailsPress: { task in Task { await viewModel.showDetailsSheet(for: task) } }
+                )
+                .disabled(tasksViewModel.settingTasks)
+                #if os(macOS)
+                    .padding(.horizontal, Constants.UI.mainViewHorizontalWidth)
+                #endif
             }
+            .ktakeSizeEagerly(alignment: .topLeading)
+            QuickAddTaskField(
+                title: $viewModel.newTitle,
+                disableSubmit: viewModel.disableNewTaskSubmitButton,
+                submit: onNewTaskSubmit
+            )
+            .padding(.horizontal, .medium)
+            #if os(macOS)
+                .padding(.vertical, .medium)
+            #else
+                .padding(.vertical, .small)
+            #endif
+                .background(colorScheme == .dark ? Color.black : Color.white)
+                .ktakeSizeEagerly(alignment: .bottom)
         }
         .onAppear(perform: handleOnAppear)
         .sheet(isPresented: $viewModel.showTaskDetailsSheet) {

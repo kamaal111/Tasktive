@@ -17,12 +17,17 @@ struct MainView: View {
     var body: some View {
         KJustStack {
             if DeviceModel.deviceType.shouldHaveSidebar {
+                #if os(iOS) // if iPad
+                #warning("After navigating back navigation just breaks")
+                NavigationSplitView(sidebar: { Sidebar() }, detail: { DetailsColumn() })
+                #else // if mac
                 NavigationView {
                     Sidebar()
                     DetailsColumn()
                 }
+                #endif
             } else {
-                AppTabView()
+                AppTabView() // if iPhone
             }
         }
     }
