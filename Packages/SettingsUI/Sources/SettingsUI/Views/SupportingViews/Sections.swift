@@ -22,7 +22,11 @@ extension SettingsUI {
 
     @available(macOS 13.0, iOS 16.0, *)
     public struct FeedbackSection: View {
-        public init() { }
+        public let onFeedbackPress: (_ style: FeedbackStyles) -> Void
+
+        public init(onFeedbackPress: @escaping (_: FeedbackStyles) -> Void) {
+            self.onFeedbackPress = onFeedbackPress
+        }
 
         public var body: some View {
             SectionView(header: NSLocalizedString("Feedback", bundle: .module, comment: "")) {
@@ -38,15 +42,12 @@ extension SettingsUI {
                         }
                         #endif
                     }
-                    .navigationDestination(for: FeedbackStyles.self) { style in
-                        FeedbackScreen(style: style)
-                    }
                 }
             }
         }
 
         private func feedbackButtonWrapper(_ style: FeedbackStyles, _ view: some View) -> some View {
-            NavigationLink(value: style) {
+            Button(action: { onFeedbackPress(style) }) {
                 view
                     .foregroundColor(.accentColor)
             }

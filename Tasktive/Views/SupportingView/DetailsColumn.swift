@@ -24,7 +24,6 @@ struct DetailsColumn: View {
 
     private var currentSelection: NamiNavigator.Screens? {
         if DeviceModel.deviceType.shouldHaveSidebar {
-            print("namiNavigator.sidebarSelection", namiNavigator.sidebarSelection)
             return namiNavigator.sidebarSelection
         }
         return namiNavigator.tabSelection

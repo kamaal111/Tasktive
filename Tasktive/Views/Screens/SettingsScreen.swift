@@ -13,13 +13,19 @@ private let SCREEN: NamiNavigator.Screens = .settings
 
 struct SettingsScreen: View {
     @EnvironmentObject private var namiNavigator: NamiNavigator
+    @EnvironmentObject private var stackNavigator: StackNavigator
 
     @StateObject private var viewModel = ViewModel()
 
     var body: some View {
         Form {
-            SettingsUI.FeedbackSection()
+            SettingsUI.FeedbackSection(onFeedbackPress: { style in
+                stackNavigator.navigate(to: style)
+            })
             SettingsUI.AboutSection()
+        }
+        .navigationDestination(for: FeedbackStyles.self) { style in
+            SettingsUI.FeedbackScreen(style: style)
         }
         #if os(macOS)
         .padding(.vertical, .medium)

@@ -18,6 +18,9 @@ extension SettingsUI {
         public var body: some View {
             Text(style.title)
                 .navigationTitle(Text(NSLocalizedString("Feedback", bundle: .module, comment: "")))
+            #if os(iOS)
+                .navigationBarTitleDisplayMode(.inline)
+            #endif
         }
     }
 }

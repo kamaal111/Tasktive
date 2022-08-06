@@ -18,6 +18,11 @@ final class StackNavigator: ObservableObject {
 
     init() { }
 
+    @MainActor
+    func navigate<T: Codable & Hashable>(to screen: T) {
+        path.append(screen)
+    }
+
     func clearPath() async {
         var path = path
         while !path.isEmpty {
