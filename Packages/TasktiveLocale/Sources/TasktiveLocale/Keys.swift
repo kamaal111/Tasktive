@@ -26,5 +26,6 @@ extension TasktiveLocale {
         case PROGRESS
         case SETTINGS
         case NEW_TASK_SAVED
+        case TOGGLE_SIDEBAR
     }
 }

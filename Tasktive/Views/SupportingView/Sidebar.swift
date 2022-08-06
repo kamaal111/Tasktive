@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SalmonUI
+import TasktiveLocale
 
 struct Sidebar: View {
     @EnvironmentObject private var namiNavigator: NamiNavigator
@@ -28,8 +29,7 @@ struct Sidebar: View {
         #if os(macOS)
         .toolbar(content: {
             Button(action: toggleSidebar) {
-                #warning("LOCALIZE THIS")
-                Label("Toggle Sidebar", systemImage: "sidebar.left")
+                Label(TasktiveLocale.getText(.TOGGLE_SIDEBAR), systemImage: "sidebar.left")
                     .foregroundColor(.accentColor)
             }
         })

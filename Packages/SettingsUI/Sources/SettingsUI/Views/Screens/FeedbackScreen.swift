@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SalmonUI
+import GitHubAPI
 
 extension SettingsUI {
     public struct FeedbackScreen: View {
@@ -74,8 +75,11 @@ extension SettingsUI.FeedbackScreen {
 
         let configuration: FeedbackConfiguration
 
+        private let gitHubAPI: GitHubAPI
+
         init(configuration: FeedbackConfiguration) {
             self.configuration = configuration
+            self.gitHubAPI = .init(token: configuration.gitHubToken, username: configuration.gitHubUsername)
         }
 
         var disableSubmit: Bool {
@@ -84,7 +88,6 @@ extension SettingsUI.FeedbackScreen {
 
         func submit() async throws {
             try await withLoading(completion: {
-                #warning("Handle submit logic")
                 let jsonEncoder = JSONEncoder()
                 jsonEncoder.outputFormatting = .prettyPrinted
                 let additionalFeedbackDataJSON = try jsonEncoder.encode(configuration.additionalFeedbackData)
@@ -101,7 +104,38 @@ extension SettingsUI.FeedbackScreen {
                 \(additionalFeedbackDataJSONString)
                 ```
                 """
+
+                let result = await gitHubAPI.repos.createIssue(
+                    username: configuration.gitHubUsername,
+                    repoName: configuration.repoName,
+                    title: title,
+                    description: descriptionWithAdditionalFeedback,
+                    assignee: configuration.gitHubUsername,
+                    labels: configuration.allLabels
+                )
+                switch result {
+                case let .failure(failure):
+                    switch failure {
+                    case let .parsingError(error: error):
+                        #if DEBUG
+                        print("parsing error after creating issue; error='\(error)'")
+                        #else
+                        break
+                        #endif
+                    default:
+                        throw failure
+                    }
+                case .success: break
+                }
+
+                await resetValues()
             })
+        }
+
+        @MainActor
+        private func resetValues() {
+            title = ""
+            description = ""
         }
 
         private func withLoading<T>(completion: () async throws -> T) async throws -> T {
@@ -132,13 +166,30 @@ extension SettingsUI.FeedbackScreen {
 
     public struct FeedbackConfiguration {
         public let style: FeedbackStyles
+        public let gitHubToken: String
+        public let gitHubUsername: String
+        public let repoName: String
         public let additionalFeedbackData: Encodable
         public let additionalIssueLabels: [String]
 
-        public init(style: FeedbackStyles, additionalFeedbackData: Encodable, additionalIssueLabels: [String] = []) {
+        public init(
+            style: FeedbackStyles,
+            gitHubToken: String,
+            gitHubUsername: String,
+            repoName: String,
+            additionalFeedbackData: Encodable,
+            additionalIssueLabels: [String] = []
+        ) {
             self.style = style
+            self.gitHubToken = gitHubToken
+            self.gitHubUsername = gitHubUsername
+            self.repoName = repoName
             self.additionalFeedbackData = additionalFeedbackData
             self.additionalIssueLabels = additionalIssueLabels
+        }
+
+        var allLabels: [String] {
+            additionalIssueLabels + style.labels
         }
     }
 }

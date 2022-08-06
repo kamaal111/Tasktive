@@ -60,3 +60,4 @@ fastlane/Appfile
 
 node_modules
 
+Tasktive/Resources/Tokens.json

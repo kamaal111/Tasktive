@@ -30,9 +30,12 @@ struct SettingsScreen: View {
                 onDone: { maybeError in
                     if let error = maybeError {
                         #warning("handle this error occordingly")
+                        print("error", error)
                         return
                     }
+
                     stackNavigator.goBack()
+                    #warning("handle success occordingly")
                 }
             )
         }
@@ -51,6 +54,9 @@ extension SettingsScreen {
         func feedbackConfiguration(withStyle style: FeedbackStyles) -> SettingsUI.FeedbackScreen.FeedbackConfiguration {
             .init(
                 style: style,
+                gitHubToken: TokensHolder.shared.tokens?.gitHubToken ?? "",
+                gitHubUsername: Constants.gitHubUsername,
+                repoName: Constants.repoName,
                 additionalFeedbackData: FeedbackMetadata(),
                 additionalIssueLabels: [DeviceModel.deviceType.issueLabel]
             )

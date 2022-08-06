@@ -20,4 +20,5 @@ module.exports = {
 	PROGRESS: "Progress",
 	SETTINGS: "Settings",
 	NEW_TASK_SAVED: "New task saved",
+	TOGGLE_SIDEBAR: "Toggle Sidebar",
 };
