@@ -25,7 +25,16 @@ struct SettingsScreen: View {
             SettingsUI.AboutSection()
         }
         .navigationDestination(for: FeedbackStyles.self) { style in
-            SettingsUI.FeedbackScreen(style: style)
+            SettingsUI.FeedbackScreen(
+                configuration: viewModel.feedbackConfiguration(withStyle: style),
+                onDone: { maybeError in
+                    if let error = maybeError {
+                        #warning("handle this error occordingly")
+                        return
+                    }
+                    stackNavigator.goBack()
+                }
+            )
         }
         #if os(macOS)
         .padding(.vertical, .medium)
@@ -36,7 +45,17 @@ struct SettingsScreen: View {
 }
 
 extension SettingsScreen {
-    final class ViewModel: ObservableObject { }
+    final class ViewModel: ObservableObject {
+        init() { }
+
+        func feedbackConfiguration(withStyle style: FeedbackStyles) -> SettingsUI.FeedbackScreen.FeedbackConfiguration {
+            .init(
+                style: style,
+                additionalFeedbackData: FeedbackMetadata(),
+                additionalIssueLabels: [DeviceModel.deviceType.issueLabel]
+            )
+        }
+    }
 }
 
 struct SettingsScreen_Previews: PreviewProvider {

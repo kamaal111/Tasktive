@@ -23,6 +23,11 @@ final class StackNavigator: ObservableObject {
         path.append(screen)
     }
 
+    @MainActor
+    func goBack() {
+        path.removeLast()
+    }
+
     func clearPath() async {
         var path = path
         while !path.isEmpty {

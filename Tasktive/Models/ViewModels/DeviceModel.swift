@@ -23,16 +23,7 @@ final class DeviceModel: ObservableObject {
         removeNotifications()
     }
 
-    static let deviceType: DeviceType = {
-        #if canImport(UIKit)
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            return .iPad
-        }
-        return .iPhone
-        #else
-        return .mac
-        #endif
-    }()
+    static let deviceType: DeviceType = .current
 
     private func setupNotifications() {
         #if canImport(UIKit)
@@ -92,7 +83,7 @@ enum DeviceOrientation {
     case flat
 }
 
-enum DeviceType {
+enum DeviceType: String {
     case iPhone
     case iPad
     case mac
@@ -100,4 +91,19 @@ enum DeviceType {
     var shouldHaveSidebar: Bool {
         self != .iPhone
     }
+
+    var issueLabel: String {
+        rawValue
+    }
+
+    fileprivate static let current: DeviceType = {
+        #if canImport(UIKit)
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            return .iPad
+        }
+        return .iPhone
+        #else
+        return .mac
+        #endif
+    }()
 }
