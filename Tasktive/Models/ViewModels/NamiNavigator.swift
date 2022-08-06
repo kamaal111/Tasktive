@@ -9,38 +9,15 @@ import SwiftUI
 import TasktiveLocale
 
 private let STARTING_SCREEN: NamiNavigator.Screens = .tasks
-private let UNVIEWED_NAVIGATION_PATH = NavigationPath()
 private let logger = Logster(from: NamiNavigator.self)
 
 final class NamiNavigator: ObservableObject {
-    @Published var tabSelection: Screens {
-        didSet {
-            if navigationPaths[tabSelection] == nil {
-                navigationPaths[tabSelection] = NavigationPath()
-            }
-        }
-    }
-
-    @Published var sidebarSelection: Screens? {
-        didSet {
-            if let sidebarSelection, navigationPaths[sidebarSelection] == nil {
-                navigationPaths[sidebarSelection] = NavigationPath()
-            }
-        }
-    }
-
-    @Published private(set) var navigationPaths: [Screens: NavigationPath] {
-        didSet {
-            guard let path = navigationPaths[currentScreen] else { return }
-
-            logger.info("current path is \(path)")
-        }
-    }
+    @Published var tabSelection: Screens
+    @Published var sidebarSelection: Screens?
 
     init() {
         self.tabSelection = STARTING_SCREEN
         self.sidebarSelection = STARTING_SCREEN
-        self.navigationPaths = [STARTING_SCREEN: NavigationPath()]
     }
 
     var tabs: [Screens] {
@@ -60,29 +37,6 @@ final class NamiNavigator: ObservableObject {
         guard screen != sidebarSelection else { return }
 
         sidebarSelection = screen
-    }
-
-    func screenPath(_ screen: Screens?) -> Binding<NavigationPath> {
-        Binding(
-            get: {
-                guard let screen else { return UNVIEWED_NAVIGATION_PATH }
-
-                return self.navigationPaths[screen] ?? UNVIEWED_NAVIGATION_PATH
-            },
-            set: {
-                guard let screen else { return }
-
-                self.navigationPaths[screen] = $0
-            }
-        )
-    }
-
-    private var currentScreen: Screens {
-        if DeviceModel.deviceType.shouldHaveSidebar {
-            return sidebarSelection ?? STARTING_SCREEN
-        }
-
-        return tabSelection
     }
 }
 

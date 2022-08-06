@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum FeedbackStyles: CaseIterable, Hashable, Codable {
+public enum FeedbackStyles: Hashable, Codable, CaseIterable {
     case feature
     case bug
     case other

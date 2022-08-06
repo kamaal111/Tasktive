@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ScreenWrapper<Content: View>: View {
+    @State private var path = NavigationPath()
+
     let screen: NamiNavigator.Screens
     let content: Content
 
@@ -17,11 +19,13 @@ struct ScreenWrapper<Content: View>: View {
     }
 
     var body: some View {
-        content
-            .navigationTitle(Text(screen.title))
-        #if os(iOS)
-            .navigationBarTitleDisplayMode(.large)
-        #endif
+        NavigationStack(path: $path) {
+            content
+                .navigationTitle(Text(screen.title))
+            #if os(iOS)
+                .navigationBarTitleDisplayMode(.large)
+            #endif
+        }
     }
 }
 

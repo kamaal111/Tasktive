@@ -13,13 +13,11 @@ struct DetailsColumn: View {
     @EnvironmentObject private var deviceModel: DeviceModel
 
     var body: some View {
-        KJustStack {
-            switch currentSelection {
-            case .tasks, .none:
-                TasksScreen()
-            case .settings:
-                SettingsScreen()
-            }
+        switch currentSelection {
+        case .tasks, .none:
+            TasksScreen()
+        case .settings:
+            SettingsScreen()
         }
     }
 

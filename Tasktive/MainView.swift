@@ -20,9 +20,7 @@ struct MainView: View {
                 NavigationSplitView(sidebar: {
                     Sidebar()
                 }) {
-                    NavigationStack(path: namiNavigator.screenPath(namiNavigator.sidebarSelection)) {
-                        DetailsColumn()
-                    }
+                    DetailsColumn()
                 }
             } else {
                 AppTabView()

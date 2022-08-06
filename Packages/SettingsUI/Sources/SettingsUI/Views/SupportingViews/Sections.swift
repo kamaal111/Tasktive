@@ -50,6 +50,7 @@ extension SettingsUI {
                 view
                     .foregroundColor(.accentColor)
             }
+            .buttonStyle(.plain)
         }
     }
 

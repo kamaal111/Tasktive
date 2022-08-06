@@ -16,14 +16,12 @@ struct AppTabView: View {
     var body: some View {
         TabView(selection: $namiNavigator.tabSelection) {
             ForEach(namiNavigator.tabs, id: \.self) { screen in
-                NavigationStack(path: namiNavigator.screenPath(screen)) {
-                    DetailsColumn()
-                }
-                .tabItem {
-                    Image(systemName: screen.icon)
-                    Text(screen.title)
-                }
-                .tag(screen.tag)
+                DetailsColumn()
+                    .tabItem {
+                        Image(systemName: screen.icon)
+                        Text(screen.title)
+                    }
+                    .tag(screen.tag)
             }
         }
     }
