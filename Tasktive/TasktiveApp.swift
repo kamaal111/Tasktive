@@ -10,6 +10,7 @@ import SwiftUI
 @main
 struct TasktiveApp: App {
     @StateObject private var tasksViewModel = TasksViewModel()
+    @StateObject private var settingsStackNavigator = StackNavigator()
 
     private let persistenceController = PersistenceController.shared
 
@@ -18,6 +19,16 @@ struct TasktiveApp: App {
             ContentView()
                 .environment(\.managedObjectContext, persistenceController.context)
                 .environmentObject(tasksViewModel)
+        }
+        Settings {
+            NavigationStack(path: $settingsStackNavigator.path) {
+                SettingsScreen()
+                    .frame(
+                        minWidth: Constants.UI.settingsViewMinimumSize.width,
+                        minHeight: Constants.UI.settingsViewMinimumSize.height
+                    )
+                    .environmentObject(settingsStackNavigator)
+            }
         }
     }
 }
