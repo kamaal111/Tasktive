@@ -21,4 +21,6 @@ module.exports = {
 	SETTINGS: "Settings",
 	NEW_TASK_SAVED: "New task saved",
 	TOGGLE_SIDEBAR: "Toggle Sidebar",
+    FEEDBACK_ERROR_DESCRIPTION: "Could not send feedback",
+    FEEDBACK_SENT: "Feedback sent",
 };

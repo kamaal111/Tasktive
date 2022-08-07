@@ -23,6 +23,10 @@ struct Logster {
         logger.error("\(message)")
     }
 
+    func error(label: String, error: Error) {
+        self.error([label, "description='\(error.localizedDescription)'", "error='\(error)'"].joined(separator: "; "))
+    }
+
     func warning(_ message: String) {
         logger.warning("\(message)")
     }

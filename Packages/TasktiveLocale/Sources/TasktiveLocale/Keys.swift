@@ -27,5 +27,7 @@ extension TasktiveLocale {
         case SETTINGS
         case NEW_TASK_SAVED
         case TOGGLE_SIDEBAR
+        case FEEDBACK_ERROR_DESCRIPTION
+        case FEEDBACK_SENT
     }
 }

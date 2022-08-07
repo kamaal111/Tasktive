@@ -7,12 +7,15 @@
 
 import SwiftUI
 import SalmonUI
+import PopperUp
 import SettingsUI
+import TasktiveLocale
 
 private let SCREEN: NamiNavigator.Screens = .settings
+private let logger = Logster(from: SettingsScreen.self)
 
 struct SettingsScreen: View {
-    @EnvironmentObject private var namiNavigator: NamiNavigator
+    @EnvironmentObject private var popperUpManager: PopperUpManager
     @EnvironmentObject private var stackNavigator: StackNavigator
 
     @StateObject private var viewModel = ViewModel()
@@ -27,16 +30,7 @@ struct SettingsScreen: View {
         .navigationDestination(for: FeedbackStyles.self) { style in
             SettingsUI.FeedbackScreen(
                 configuration: viewModel.feedbackConfiguration(withStyle: style),
-                onDone: { maybeError in
-                    if let error = maybeError {
-                        #warning("handle this error occordingly")
-                        print("error", error)
-                        return
-                    }
-
-                    stackNavigator.goBack()
-                    #warning("handle success occordingly")
-                }
+                onDone: onFeedbackSend(_:)
             )
         }
         #if os(macOS)
@@ -44,6 +38,26 @@ struct SettingsScreen: View {
         .padding(.horizontal, .medium)
         .ktakeSizeEagerly(alignment: .topLeading)
         #endif
+    }
+
+    private func onFeedbackSend(_ maybeError: Error?) {
+        if let error = maybeError {
+            logger.error(label: "error while sending feedback", error: error)
+            popperUpManager.showPopup(
+                style: .bottom(
+                    title: TasktiveLocale.getText(.SOMETHING_WENT_WRONG_ERROR_TITLE),
+                    type: .error,
+                    description: TasktiveLocale.getText(.FEEDBACK_ERROR_DESCRIPTION)
+                ), timeout: 3
+            )
+            return
+        }
+
+        stackNavigator.goBack()
+        popperUpManager.showPopup(
+            style: .bottom(title: TasktiveLocale.getText(.FEEDBACK_SENT), type: .success, description: nil),
+            timeout: 3
+        )
     }
 }
 
