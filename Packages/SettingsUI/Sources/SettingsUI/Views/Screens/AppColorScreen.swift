@@ -6,14 +6,43 @@
 //
 
 import SwiftUI
+import SalmonUI
 
 extension SettingsUI {
+    @available(macOS 12.0, *)
     public struct AppColorScreen: View {
-        public init() { }
+        @Environment(\.colorScheme) private var colorScheme
 
-        #warning("Finish of this screen")
+        public let onColorSelect: (_ color: AppColor) -> Void
+
+        public init(onColorSelect: @escaping (_: AppColor) -> Void) {
+            self.onColorSelect = onColorSelect
+        }
+
         public var body: some View {
-            Text("App Color")
+            ScrollView(.vertical, showsIndicators: false) {
+                SectionView(header: NSLocalizedString("Colors", bundle: .module, comment: "")) {
+                    ForEach(AppColor.defaultColors) { color in
+                        RowViewColorButton(
+                            action: { onColorSelect(color) },
+                            label: color.title,
+                            color: colorScheme == .dark ? color.variants.dark.color : color.variants.light.color
+                        )
+                        #if os(macOS)
+                        if color != AppColor.defaultColors.last {
+                            Divider()
+                        }
+                        #endif
+                    }
+                }
+                .padding(.vertical, 16)
+                .padding(.horizontal, 16)
+            }
+            .ktakeSizeEagerly(alignment: .topLeading)
+            .navigationTitle(Text(NSLocalizedString("App colors", bundle: .module, comment: "")))
+            #if os(iOS)
+                .navigationBarTitleDisplayMode(.inline)
+            #endif
         }
     }
 }

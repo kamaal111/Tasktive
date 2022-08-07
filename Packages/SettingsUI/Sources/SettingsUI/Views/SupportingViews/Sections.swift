@@ -30,14 +30,11 @@ extension SettingsUI {
 
         public var body: some View {
             SectionView(header: NSLocalizedString("Personalization", bundle: .module, comment: "")) {
-                RowViewValueButton(
+                RowViewColorButton(
                     action: onChangeAppColorPress,
-                    label: NSLocalizedString("Change app color", bundle: .module, comment: "")
-                ) {
-                    Color.accentColor
-                        .frame(width: 28, height: 28)
-                        .cornerRadius(8)
-                }
+                    label: NSLocalizedString("Change app color", bundle: .module, comment: ""),
+                    color: .accentColor
+                )
             }
         }
     }

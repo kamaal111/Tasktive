@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SalmonUI
 
 extension SettingsUI {
     /// A row with the bundle version and build number in it
@@ -18,7 +19,7 @@ extension SettingsUI {
                 RowViewValueView(label: NSLocalizedString("Version", bundle: .module, comment: "")) {
                     Text(versionText)
                     if let buildNumber = buildNumber {
-                        Text("(\(buildNumber))")
+                        Text(buildNumber)
                             .foregroundColor(.secondary)
                             .font(.subheadline)
                     }
@@ -35,6 +36,7 @@ extension SettingsUI {
         }
     }
 
+    @available(macOS 12.0, *)
     public struct RowImageTextButton: View {
         public let label: String
         public let imageSystemName: String
@@ -47,14 +49,34 @@ extension SettingsUI {
         }
 
         public var body: some View {
-            Button(action: action) {
+            RowViewValueButton(action: action, label: label) {
                 RowImageTextView(label: label, imageSystemName: imageSystemName)
-                    .foregroundColor(.accentColor)
             }
-            .buttonStyle(.plain)
         }
     }
 
+    @available(macOS 12.0, *)
+    public struct RowViewColorButton: View {
+        public let label: String
+        public let color: Color
+        public let action: () -> Void
+
+        public init(action: @escaping () -> Void, label: String, color: Color) {
+            self.label = label
+            self.color = color
+            self.action = action
+        }
+
+        public var body: some View {
+            RowViewValueButton(action: action, label: label) {
+                color
+                    .frame(width: 28, height: 28)
+                    .cornerRadius(8)
+            }
+        }
+    }
+
+    @available(macOS 12.0, *)
     public struct RowViewValueButton<Value: View>: View {
         public let label: String
         public let value: Value
@@ -72,6 +94,9 @@ extension SettingsUI {
                     value
                 })
                 .foregroundColor(.accentColor)
+                #if os(macOS)
+                    .background(Color(nsColor: .separatorColor).opacity(0.1))
+                #endif
             }
             .buttonStyle(.plain)
         }
