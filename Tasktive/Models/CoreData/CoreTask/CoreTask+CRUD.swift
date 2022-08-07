@@ -81,7 +81,7 @@ extension CoreTask: Crudable {
         do {
             result = try context.fetch(request)
         } catch {
-            logger.error("error while fetching tasks; error=\(error)")
+            logger.error(label: "error while fetching tasks", error: error)
             return .failure(.fetchFailure)
         }
 
@@ -101,7 +101,7 @@ extension CoreTask: Crudable {
         do {
             try context.execute(request)
         } catch {
-            logger.error("error while updating multiple tasks; error=\(error)")
+            logger.error(label: "error while updating multiple tasks", error: error)
             return .failure(.updateManyFailure)
         }
 
@@ -121,7 +121,7 @@ extension CoreTask: Crudable {
         do {
             try context.execute(deleteRequest)
         } catch {
-            logger.error("error while deleting tasks; error=\(error)")
+            logger.error(label: "error while deleting tasks", error: error)
             return .failure(.clearFailure)
         }
 
@@ -208,7 +208,7 @@ extension CoreTask {
         do {
             try context.save()
         } catch {
-            logger.error("error while creating a task; error=\(error)")
+            logger.error(label: "error while creating a task", error: error)
             return .failure(.saveFailure)
         }
 

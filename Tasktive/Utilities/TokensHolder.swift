@@ -20,11 +20,7 @@ final class TokensHolder {
         do {
             tokensData = try Data(contentsOf: urlToTokens)
         } catch {
-            let message = "failed while getting tokens data"
-            let description = "localizedDescription='\(error.localizedDescription)'"
-            let errorLabel = "error='\(error)'"
-            let errorToLog = [message, description, errorLabel].joined(separator: "; ")
-            logger.error(errorToLog)
+            logger.error(label: "failed while getting tokens data", error: error)
             return
         }
 
@@ -32,11 +28,7 @@ final class TokensHolder {
         do {
             tokens = try JSONDecoder().decode(Tokens.self, from: tokensData)
         } catch {
-            let message = "failed while decoding tokens data"
-            let description = "localizedDescription='\(error.localizedDescription)'"
-            let errorLabel = "error='\(error)'"
-            let errorToLog = [message, description, errorLabel].joined(separator: "; ")
-            logger.error(errorToLog)
+            logger.error(label: "failed while decoding tokens data", error: error)
             return
         }
 

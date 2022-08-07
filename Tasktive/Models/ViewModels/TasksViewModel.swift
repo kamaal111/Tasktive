@@ -67,7 +67,7 @@ final class TasksViewModel: ObservableObject {
     func createTask(with arguments: CoreTask.Arguments) async -> Result<Void, UserErrors> {
         let result = dataClient.create(with: arguments, from: persistenceController.context, of: CoreTask.self)
             .mapError {
-                logger.error("failed to create this task; error='\($0)'")
+                logger.error(label: "failed to create this task", error: $0)
                 return UserErrors.createTaskFailure
             }
             .map(\.asAppTask)
@@ -97,7 +97,7 @@ final class TasksViewModel: ObservableObject {
         await withLoadingTasks {
             let tasksResult = dataClient.list(from: persistenceController.context, of: CoreTask.self)
                 .mapError {
-                    logger.error("failed to get all tasks; error='\($0)'")
+                    logger.error(label: "failed to get all tasks", error: $0)
                     return UserErrors.getAllFailure
                 }
 
@@ -161,7 +161,7 @@ final class TasksViewModel: ObservableObject {
 
                 guard let error = error else { return UserErrors.updateFailure }
 
-                logger.error("failed to update this task; error='\(error)'")
+                logger.error(label: "failed to update this task", error: error)
                 return UserErrors.updateFailure
             }
             let updatedTask: CoreTask.ReturnType
@@ -201,7 +201,7 @@ final class TasksViewModel: ObservableObject {
 
         switch updateResult {
         case let .failure(failure):
-            logger.error("failed to updated outdated tasks; error='\(failure)'")
+            logger.error(label: "failed to updated outdated tasks", error: failure)
         case .success:
             break
         }
