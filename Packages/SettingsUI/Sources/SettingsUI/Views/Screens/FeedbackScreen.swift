@@ -75,11 +75,13 @@ extension SettingsUI.FeedbackScreen {
 
         let configuration: FeedbackConfiguration
 
-        private let gitHubAPI: GitHubAPI
+        private var gitHubAPI: GitHubAPI?
 
         init(configuration: FeedbackConfiguration) {
             self.configuration = configuration
-            self.gitHubAPI = .init(token: configuration.gitHubToken, username: configuration.gitHubUsername)
+            if let gitHubToken = configuration.gitHubToken {
+                self.gitHubAPI = .init(token: gitHubToken, username: configuration.gitHubUsername)
+            }
         }
 
         var disableSubmit: Bool {
@@ -87,6 +89,8 @@ extension SettingsUI.FeedbackScreen {
         }
 
         func submit() async throws {
+            guard let gitHubAPI = gitHubAPI else { return }
+
             try await withLoading(completion: {
                 let jsonEncoder = JSONEncoder()
                 jsonEncoder.outputFormatting = .prettyPrinted
@@ -166,7 +170,7 @@ extension SettingsUI.FeedbackScreen {
 
     public struct FeedbackConfiguration {
         public let style: FeedbackStyles
-        public let gitHubToken: String
+        public let gitHubToken: String?
         public let gitHubUsername: String
         public let repoName: String
         public let additionalFeedbackData: Encodable
@@ -174,7 +178,7 @@ extension SettingsUI.FeedbackScreen {
 
         public init(
             style: FeedbackStyles,
-            gitHubToken: String,
+            gitHubToken: String?,
             gitHubUsername: String,
             repoName: String,
             additionalFeedbackData: Encodable,

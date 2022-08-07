@@ -22,9 +22,11 @@ struct SettingsScreen: View {
 
     var body: some View {
         Form {
-            SettingsUI.FeedbackSection(onFeedbackPress: { style in
-                stackNavigator.navigate(to: style)
-            })
+            if viewModel.showFeedbackSection {
+                SettingsUI.FeedbackSection(onFeedbackPress: { style in
+                    stackNavigator.navigate(to: style)
+                })
+            }
             SettingsUI.AboutSection()
         }
         .navigationDestination(for: FeedbackStyles.self) { style in
@@ -65,15 +67,23 @@ extension SettingsScreen {
     final class ViewModel: ObservableObject {
         init() { }
 
+        var showFeedbackSection: Bool {
+            gitHubToken != nil
+        }
+
         func feedbackConfiguration(withStyle style: FeedbackStyles) -> SettingsUI.FeedbackScreen.FeedbackConfiguration {
             .init(
                 style: style,
-                gitHubToken: TokensHolder.shared.tokens?.gitHubToken ?? "",
+                gitHubToken: gitHubToken,
                 gitHubUsername: Constants.gitHubUsername,
                 repoName: Constants.repoName,
                 additionalFeedbackData: FeedbackMetadata(),
                 additionalIssueLabels: [DeviceModel.deviceType.issueLabel]
             )
+        }
+
+        private var gitHubToken: String? {
+            TokensHolder.shared.tokens?.gitHubToken
         }
     }
 }
