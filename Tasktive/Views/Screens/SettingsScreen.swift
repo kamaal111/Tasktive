@@ -27,9 +27,9 @@ struct SettingsScreen: View {
                     stackNavigator.navigate(to: SettingsScreens.feedback(style: style))
                 })
             }
-            SettingsUI
-                .PersonalizationSection(onChangeAppColorPress: { stackNavigator.navigate(to: SettingsScreens.appColor)
-                })
+            SettingsUI.PersonalizationSection(onChangeAppColorPress: {
+                stackNavigator.navigate(to: SettingsScreens.appColor)
+            })
             SettingsUI.AboutSection()
         }
         .navigationDestination(for: SettingsScreens.self) { screen in

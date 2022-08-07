@@ -14,14 +14,6 @@
 		2C1B19672888675D00D734D2 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B19662888675D00D734D2 /* MainView.swift */; };
 		2C1B196A2888689700D734D2 /* PopperUp in Frameworks */ = {isa = PBXBuildFile; productRef = 2C1B19692888689700D734D2 /* PopperUp */; };
 		2C1B196C28886CFB00D734D2 /* PopUpError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B196B28886CFB00D734D2 /* PopUpError.swift */; };
-		2C1B19702888715600D734D2 /* CoreTag+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B196E2888715600D734D2 /* CoreTag+CoreDataClass.swift */; };
-		2C1B19712888715600D734D2 /* CoreTag+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B196F2888715600D734D2 /* CoreTag+CoreDataProperties.swift */; };
-		2C1B1975288871AB00D734D2 /* CoreReminder+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B1973288871AB00D734D2 /* CoreReminder+CoreDataClass.swift */; };
-		2C1B1976288871AB00D734D2 /* CoreReminder+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B1974288871AB00D734D2 /* CoreReminder+CoreDataProperties.swift */; };
-		2C1B197E2888720300D734D2 /* CoreAttachments+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B197C2888720300D734D2 /* CoreAttachments+CoreDataClass.swift */; };
-		2C1B197F2888720300D734D2 /* CoreAttachments+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B197D2888720300D734D2 /* CoreAttachments+CoreDataProperties.swift */; };
-		2C1B19822888723A00D734D2 /* CoreTask+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B19802888723A00D734D2 /* CoreTask+CoreDataClass.swift */; };
-		2C1B19832888723A00D734D2 /* CoreTask+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B19812888723A00D734D2 /* CoreTask+CoreDataProperties.swift */; };
 		2C1B1985288874C100D734D2 /* QuickAddTaskField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B1984288874C100D734D2 /* QuickAddTaskField.swift */; };
 		2C1B1987288893F800D734D2 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B1986288893F800D734D2 /* LoadingView.swift */; };
 		2C346CA4289EB1C900F1AD17 /* StackNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C346CA3289EB1C900F1AD17 /* StackNavigator.swift */; };
@@ -61,6 +53,18 @@
 		2CCCADCE2882010F0033E2EF /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = 2CCCADCD2882010F0033E2EF /* Nimble */; };
 		2CCCADD1288203720033E2EF /* Logster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCCADD0288203720033E2EF /* Logster.swift */; };
 		2CCCADD4288204100033E2EF /* Crudable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCCADD3288204100033E2EF /* Crudable.swift */; };
+		2CDC17E828A02E5400F07CF0 /* CoreBase+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDC17E628A02E5400F07CF0 /* CoreBase+CoreDataClass.swift */; };
+		2CDC17E928A02E5400F07CF0 /* CoreBase+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDC17E728A02E5400F07CF0 /* CoreBase+CoreDataProperties.swift */; };
+		2CDC17F028A02F8D00F07CF0 /* CoreTaskList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDC17EE28A02F8D00F07CF0 /* CoreTaskList+CoreDataClass.swift */; };
+		2CDC17F128A02F8D00F07CF0 /* CoreTaskList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDC17EF28A02F8D00F07CF0 /* CoreTaskList+CoreDataProperties.swift */; };
+		2CDC17F428A0300400F07CF0 /* CoreTask+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDC17F228A0300400F07CF0 /* CoreTask+CoreDataClass.swift */; };
+		2CDC17F528A0300400F07CF0 /* CoreTask+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDC17F328A0300400F07CF0 /* CoreTask+CoreDataProperties.swift */; };
+		2CDC17F828A030D600F07CF0 /* CoreAttachments+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDC17F628A030D600F07CF0 /* CoreAttachments+CoreDataClass.swift */; };
+		2CDC17F928A030D600F07CF0 /* CoreAttachments+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDC17F728A030D600F07CF0 /* CoreAttachments+CoreDataProperties.swift */; };
+		2CDC17FC28A031AF00F07CF0 /* CoreReminder+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDC17FA28A031AF00F07CF0 /* CoreReminder+CoreDataClass.swift */; };
+		2CDC17FD28A031AF00F07CF0 /* CoreReminder+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDC17FB28A031AF00F07CF0 /* CoreReminder+CoreDataProperties.swift */; };
+		2CDC180028A0321B00F07CF0 /* CoreTag+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDC17FE28A0321B00F07CF0 /* CoreTag+CoreDataClass.swift */; };
+		2CDC180128A0321B00F07CF0 /* CoreTag+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDC17FF28A0321B00F07CF0 /* CoreTag+CoreDataProperties.swift */; };
 		2CDC6DA6288D616B00BF8E06 /* ToolbarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDC6DA5288D616B00BF8E06 /* ToolbarButton.swift */; };
 		2CF24AA62884289100778BD9 /* NamiNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF24AA52884289100778BD9 /* NamiNavigator.swift */; };
 		2CF24AA828842AEB00778BD9 /* AppTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF24AA728842AEB00778BD9 /* AppTabView.swift */; };
@@ -89,14 +93,6 @@
 		2C157592289F03B800425CDD /* TokensHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensHolder.swift; sourceTree = "<group>"; };
 		2C1B19662888675D00D734D2 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		2C1B196B28886CFB00D734D2 /* PopUpError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpError.swift; sourceTree = "<group>"; };
-		2C1B196E2888715600D734D2 /* CoreTag+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTag+CoreDataClass.swift"; sourceTree = "<group>"; };
-		2C1B196F2888715600D734D2 /* CoreTag+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTag+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		2C1B1973288871AB00D734D2 /* CoreReminder+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreReminder+CoreDataClass.swift"; sourceTree = "<group>"; };
-		2C1B1974288871AB00D734D2 /* CoreReminder+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreReminder+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		2C1B197C2888720300D734D2 /* CoreAttachments+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreAttachments+CoreDataClass.swift"; sourceTree = "<group>"; };
-		2C1B197D2888720300D734D2 /* CoreAttachments+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreAttachments+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		2C1B19802888723A00D734D2 /* CoreTask+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTask+CoreDataClass.swift"; sourceTree = "<group>"; };
-		2C1B19812888723A00D734D2 /* CoreTask+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTask+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2C1B1984288874C100D734D2 /* QuickAddTaskField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAddTaskField.swift; sourceTree = "<group>"; };
 		2C1B1986288893F800D734D2 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		2C21A68E2896818000693CF2 /* yarn.lock */ = {isa = PBXFileReference; lastKnownFileType = text; path = yarn.lock; sourceTree = "<group>"; };
@@ -145,6 +141,18 @@
 		2CCCADBF2881FCF00033E2EF /* CoreTaskSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreTaskSpec.swift; sourceTree = "<group>"; };
 		2CCCADD0288203720033E2EF /* Logster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logster.swift; sourceTree = "<group>"; };
 		2CCCADD3288204100033E2EF /* Crudable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crudable.swift; sourceTree = "<group>"; };
+		2CDC17E628A02E5400F07CF0 /* CoreBase+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreBase+CoreDataClass.swift"; sourceTree = "<group>"; };
+		2CDC17E728A02E5400F07CF0 /* CoreBase+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreBase+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		2CDC17EE28A02F8D00F07CF0 /* CoreTaskList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTaskList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		2CDC17EF28A02F8D00F07CF0 /* CoreTaskList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTaskList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		2CDC17F228A0300400F07CF0 /* CoreTask+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTask+CoreDataClass.swift"; sourceTree = "<group>"; };
+		2CDC17F328A0300400F07CF0 /* CoreTask+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTask+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		2CDC17F628A030D600F07CF0 /* CoreAttachments+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreAttachments+CoreDataClass.swift"; sourceTree = "<group>"; };
+		2CDC17F728A030D600F07CF0 /* CoreAttachments+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreAttachments+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		2CDC17FA28A031AF00F07CF0 /* CoreReminder+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreReminder+CoreDataClass.swift"; sourceTree = "<group>"; };
+		2CDC17FB28A031AF00F07CF0 /* CoreReminder+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreReminder+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		2CDC17FE28A0321B00F07CF0 /* CoreTag+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTag+CoreDataClass.swift"; sourceTree = "<group>"; };
+		2CDC17FF28A0321B00F07CF0 /* CoreTag+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTag+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2CDC6DA5288D616B00BF8E06 /* ToolbarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarButton.swift; sourceTree = "<group>"; };
 		2CF24AA52884289100778BD9 /* NamiNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamiNavigator.swift; sourceTree = "<group>"; };
 		2CF24AA728842AEB00778BD9 /* AppTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabView.swift; sourceTree = "<group>"; };
@@ -208,8 +216,8 @@
 		2C1B196D2888712B00D734D2 /* CoreTag */ = {
 			isa = PBXGroup;
 			children = (
-				2C1B196E2888715600D734D2 /* CoreTag+CoreDataClass.swift */,
-				2C1B196F2888715600D734D2 /* CoreTag+CoreDataProperties.swift */,
+				2CDC17FE28A0321B00F07CF0 /* CoreTag+CoreDataClass.swift */,
+				2CDC17FF28A0321B00F07CF0 /* CoreTag+CoreDataProperties.swift */,
 			);
 			path = CoreTag;
 			sourceTree = "<group>";
@@ -217,8 +225,8 @@
 		2C1B19722888716700D734D2 /* CoreReminder */ = {
 			isa = PBXGroup;
 			children = (
-				2C1B1973288871AB00D734D2 /* CoreReminder+CoreDataClass.swift */,
-				2C1B1974288871AB00D734D2 /* CoreReminder+CoreDataProperties.swift */,
+				2CDC17FA28A031AF00F07CF0 /* CoreReminder+CoreDataClass.swift */,
+				2CDC17FB28A031AF00F07CF0 /* CoreReminder+CoreDataProperties.swift */,
 			);
 			path = CoreReminder;
 			sourceTree = "<group>";
@@ -226,8 +234,8 @@
 		2C1B1977288871BA00D734D2 /* CoreAttachments */ = {
 			isa = PBXGroup;
 			children = (
-				2C1B197C2888720300D734D2 /* CoreAttachments+CoreDataClass.swift */,
-				2C1B197D2888720300D734D2 /* CoreAttachments+CoreDataProperties.swift */,
+				2CDC17F628A030D600F07CF0 /* CoreAttachments+CoreDataClass.swift */,
+				2CDC17F728A030D600F07CF0 /* CoreAttachments+CoreDataProperties.swift */,
 			);
 			path = CoreAttachments;
 			sourceTree = "<group>";
@@ -423,9 +431,11 @@
 			isa = PBXGroup;
 			children = (
 				2C1B1977288871BA00D734D2 /* CoreAttachments */,
+				2CDC17E428A02DC100F07CF0 /* CoreBase */,
 				2C1B19722888716700D734D2 /* CoreReminder */,
 				2C1B196D2888712B00D734D2 /* CoreTag */,
 				2CCCADB12881F6920033E2EF /* CoreTask */,
+				2CDC17E528A02DD000F07CF0 /* CoreTaskList */,
 				2CBCE60A2881DE240057F4CD /* Tasktive.xcdatamodeld */,
 			);
 			path = CoreData;
@@ -434,8 +444,8 @@
 		2CCCADB12881F6920033E2EF /* CoreTask */ = {
 			isa = PBXGroup;
 			children = (
-				2C1B19802888723A00D734D2 /* CoreTask+CoreDataClass.swift */,
-				2C1B19812888723A00D734D2 /* CoreTask+CoreDataProperties.swift */,
+				2CDC17F228A0300400F07CF0 /* CoreTask+CoreDataClass.swift */,
+				2CDC17F328A0300400F07CF0 /* CoreTask+CoreDataProperties.swift */,
 				2CCCADB62881F94D0033E2EF /* CoreTask+CRUD.swift */,
 				2C51C91928848392008939F7 /* CoreTask+Taskable.swift */,
 			);
@@ -484,6 +494,24 @@
 				2C51C917288481F7008939F7 /* Taskable.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		2CDC17E428A02DC100F07CF0 /* CoreBase */ = {
+			isa = PBXGroup;
+			children = (
+				2CDC17E628A02E5400F07CF0 /* CoreBase+CoreDataClass.swift */,
+				2CDC17E728A02E5400F07CF0 /* CoreBase+CoreDataProperties.swift */,
+			);
+			path = CoreBase;
+			sourceTree = "<group>";
+		};
+		2CDC17E528A02DD000F07CF0 /* CoreTaskList */ = {
+			isa = PBXGroup;
+			children = (
+				2CDC17EE28A02F8D00F07CF0 /* CoreTaskList+CoreDataClass.swift */,
+				2CDC17EF28A02F8D00F07CF0 /* CoreTaskList+CoreDataProperties.swift */,
+			);
+			path = CoreTaskList;
 			sourceTree = "<group>";
 		};
 		2CF24AAF28843FD800778BD9 /* Screens */ = {
@@ -644,46 +672,50 @@
 				2CCCADD1288203720033E2EF /* Logster.swift in Sources */,
 				2C5AB1B9288D7C870069911C /* ScreenWrapper.swift in Sources */,
 				2C47E3FD28836B2200FD4469 /* NotificationName+extensions.swift in Sources */,
-				2C1B197E2888720300D734D2 /* CoreAttachments+CoreDataClass.swift in Sources */,
-				2C1B1976288871AB00D734D2 /* CoreReminder+CoreDataProperties.swift in Sources */,
-				2C1B19702888715600D734D2 /* CoreTag+CoreDataClass.swift in Sources */,
 				2CF24AA62884289100778BD9 /* NamiNavigator.swift in Sources */,
 				2C750F6C288C335A00026D67 /* TaskItemView.swift in Sources */,
 				2C51C91128847C3B008939F7 /* DataClient.swift in Sources */,
 				2CCCADB72881F94D0033E2EF /* CoreTask+CRUD.swift in Sources */,
 				2CBCE6072881DE240057F4CD /* TasktiveApp.swift in Sources */,
 				2C3B27C6288C77F7007CE538 /* DateControlView.swift in Sources */,
-				2C1B19832888723A00D734D2 /* CoreTask+CoreDataProperties.swift in Sources */,
 				2C51C918288481F7008939F7 /* Taskable.swift in Sources */,
-				2C1B19822888723A00D734D2 /* CoreTask+CoreDataClass.swift in Sources */,
 				2CBCE6092881DE240057F4CD /* Persistence.swift in Sources */,
 				2CCCADD4288204100033E2EF /* Crudable.swift in Sources */,
 				2C750F66288C2F9400026D67 /* CircularProgressBar.swift in Sources */,
+				2CDC17F128A02F8D00F07CF0 /* CoreTaskList+CoreDataProperties.swift in Sources */,
 				2C51C916288481A9008939F7 /* AppTask.swift in Sources */,
 				2C15758C289EF43E00425CDD /* FeedbackMetadata.swift in Sources */,
 				2C51C91A28848392008939F7 /* CoreTask+Taskable.swift in Sources */,
 				2CF24AB128843FE800778BD9 /* TasksScreen.swift in Sources */,
 				2CADF16D2895AAA300F5F6B7 /* AppSection.swift in Sources */,
+				2CDC180028A0321B00F07CF0 /* CoreTag+CoreDataClass.swift in Sources */,
 				2C47E3F22883688F00FD4469 /* Text+extensions.swift in Sources */,
 				2CF24AAA28842B5B00778BD9 /* View+extensions.swift in Sources */,
 				2C1B1985288874C100D734D2 /* QuickAddTaskField.swift in Sources */,
 				2C47E3FB28836A6A00FD4469 /* DeviceModel.swift in Sources */,
+				2CDC17FD28A031AF00F07CF0 /* CoreReminder+CoreDataProperties.swift in Sources */,
 				2C51C90F28847438008939F7 /* Constants.swift in Sources */,
+				2CDC17F428A0300400F07CF0 /* CoreTask+CoreDataClass.swift in Sources */,
 				2CBCE60E2881DE240057F4CD /* ContentView.swift in Sources */,
+				2CDC17E828A02E5400F07CF0 /* CoreBase+CoreDataClass.swift in Sources */,
+				2CDC17F028A02F8D00F07CF0 /* CoreTaskList+CoreDataClass.swift in Sources */,
 				2C346CA4289EB1C900F1AD17 /* StackNavigator.swift in Sources */,
 				2C1505E9288C26170040943A /* DayNumbersRowItem.swift in Sources */,
 				2C47E4042883719000FD4469 /* Sidebar.swift in Sources */,
+				2CDC17FC28A031AF00F07CF0 /* CoreReminder+CoreDataClass.swift in Sources */,
 				2C157593289F03B800425CDD /* TokensHolder.swift in Sources */,
+				2CDC17E928A02E5400F07CF0 /* CoreBase+CoreDataProperties.swift in Sources */,
+				2CDC17F828A030D600F07CF0 /* CoreAttachments+CoreDataClass.swift in Sources */,
 				2CF24AA828842AEB00778BD9 /* AppTabView.swift in Sources */,
 				2CBCE60C2881DE240057F4CD /* Tasktive.xcdatamodeld in Sources */,
+				2CDC17F928A030D600F07CF0 /* CoreAttachments+CoreDataProperties.swift in Sources */,
 				2C750F68288C31CF00026D67 /* ProgressSection.swift in Sources */,
 				2CDC6DA6288D616B00BF8E06 /* ToolbarButton.swift in Sources */,
-				2C1B1975288871AB00D734D2 /* CoreReminder+CoreDataClass.swift in Sources */,
-				2C1B19712888715600D734D2 /* CoreTag+CoreDataProperties.swift in Sources */,
+				2CDC180128A0321B00F07CF0 /* CoreTag+CoreDataProperties.swift in Sources */,
 				2C3B27C9288CA274007CE538 /* TaskDetailsSheet.swift in Sources */,
+				2CDC17F528A0300400F07CF0 /* CoreTask+CoreDataProperties.swift in Sources */,
 				2C750F6A288C328C00026D67 /* TasksSection.swift in Sources */,
 				2CC79CE3288D78A400FD5792 /* SettingsScreen.swift in Sources */,
-				2C1B197F2888720300D734D2 /* CoreAttachments+CoreDataProperties.swift in Sources */,
 				2C51C91328847F9E008939F7 /* TasksViewModel.swift in Sources */,
 				2C1B196C28886CFB00D734D2 /* PopUpError.swift in Sources */,
 			);

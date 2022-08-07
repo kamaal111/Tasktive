@@ -11,6 +11,7 @@ extension SettingsUI {
     public struct AppColorScreen: View {
         public init() { }
 
+        #warning("Finish of this screen")
         public var body: some View {
             Text("App Color")
         }

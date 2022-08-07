@@ -2,7 +2,7 @@
 //  CoreReminder+CoreDataProperties.swift
 //  Tasktive
 //
-//  Created by Kamaal Farah on 20/07/2022.
+//  Created by Kamaal M Farah on 07/08/2022.
 //
 //
 
@@ -14,13 +14,8 @@ extension CoreReminder {
         NSFetchRequest<CoreReminder>(entityName: "CoreReminder")
     }
 
-    @NSManaged public var creationDate: Date
-    @NSManaged public var id: UUID
-    @NSManaged public var updateDate: Date
-    @NSManaged public var title: String
-    @NSManaged public var reminderDescription: String?
+    @NSManaged public var reminderDescription: String
     @NSManaged public var time: Date
-    @NSManaged public var task: CoreTask?
+    @NSManaged public var title: String
+    @NSManaged public var task: CoreTask
 }
-
-extension CoreReminder: Identifiable { }

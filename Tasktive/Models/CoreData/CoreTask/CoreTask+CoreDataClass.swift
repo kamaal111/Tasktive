@@ -2,7 +2,7 @@
 //  CoreTask+CoreDataClass.swift
 //  Tasktive
 //
-//  Created by Kamaal Farah on 20/07/2022.
+//  Created by Kamaal M Farah on 07/08/2022.
 //
 //
 
@@ -10,4 +10,4 @@ import CoreData
 import Foundation
 
 @objc(CoreTask)
-public class CoreTask: NSManagedObject { }
+public class CoreTask: CoreBase { }

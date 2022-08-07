@@ -1,5 +1,5 @@
 //
-//  CoreTag+CoreDataProperties.swift
+//  CoreTaskList+CoreDataProperties.swift
 //  Tasktive
 //
 //  Created by Kamaal M Farah on 07/08/2022.
@@ -9,18 +9,19 @@
 import CoreData
 import Foundation
 
-extension CoreTag {
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<CoreTag> {
-        NSFetchRequest<CoreTag>(entityName: "CoreTag")
+extension CoreTaskList {
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<CoreTaskList> {
+        NSFetchRequest<CoreTaskList>(entityName: "CoreTaskList")
     }
 
-    @NSManaged public var value: String
+    @NSManaged public var name: String
+    @NSManaged public var listDescription: String?
     @NSManaged public var tasks: NSSet?
 }
 
 // MARK: Generated accessors for tasks
 
-extension CoreTag {
+extension CoreTaskList {
     @objc(addTasksObject:)
     @NSManaged public func addToTasks(_ value: CoreTask)
 
