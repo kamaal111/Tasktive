@@ -40,4 +40,8 @@ final class TokensHolder {
 
 struct Tokens: Codable {
     let gitHubToken: String?
+
+    enum CodingKeys: String, CodingKey {
+        case gitHubToken = "github_token"
+    }
 }
