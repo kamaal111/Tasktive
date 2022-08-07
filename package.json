@@ -19,6 +19,15 @@
   "homepage": "https://github.com/kamaal111/Tasktive#readme",
   "devDependencies": {
     "git-format-staged": "^3.0.0",
-    "husky": "^8.0.1"
+    "husky": "^8.0.1",
+    "prettier": "^2.7.1"
+  },
+  "prettier": {
+    "trailingComma": "all",
+    "tabWidth": 4,
+    "semi": true,
+    "singleQuote": true,
+    "bracketSpacing": true,
+    "printWidth": 80
   }
 }
