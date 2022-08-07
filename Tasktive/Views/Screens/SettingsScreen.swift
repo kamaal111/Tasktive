@@ -36,6 +36,8 @@ struct SettingsScreen: View {
                     configuration: viewModel.feedbackConfiguration(withStyle: style),
                     onDone: onFeedbackSend(_:)
                 )
+            case .appColor:
+                SettingsUI.AppColorScreen()
             }
         }
         #if os(macOS)

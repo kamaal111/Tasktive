@@ -1,5 +1,5 @@
 //
-//  FeedbackStyles.swift
+//  SettingsScreens.swift
 //
 //
 //  Created by Kamaal M Farah on 30/07/2022.
@@ -9,6 +9,7 @@ import Foundation
 
 public enum SettingsScreens: Hashable, Codable {
     case feedback(style: FeedbackStyles)
+    case appColor
 }
 
 public enum FeedbackStyles: Hashable, Codable, CaseIterable {
