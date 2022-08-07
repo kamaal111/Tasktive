@@ -7,6 +7,10 @@
 
 import Foundation
 
+public enum SettingsScreens: Hashable, Codable {
+    case feedback(style: FeedbackStyles)
+}
+
 public enum FeedbackStyles: Hashable, Codable, CaseIterable {
     case feature
     case bug

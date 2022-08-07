@@ -24,16 +24,19 @@ struct SettingsScreen: View {
         Form {
             if viewModel.showFeedbackSection {
                 SettingsUI.FeedbackSection(onFeedbackPress: { style in
-                    stackNavigator.navigate(to: style)
+                    stackNavigator.navigate(to: SettingsScreens.feedback(style: style))
                 })
             }
             SettingsUI.AboutSection()
         }
-        .navigationDestination(for: FeedbackStyles.self) { style in
-            SettingsUI.FeedbackScreen(
-                configuration: viewModel.feedbackConfiguration(withStyle: style),
-                onDone: onFeedbackSend(_:)
-            )
+        .navigationDestination(for: SettingsScreens.self) { screen in
+            switch screen {
+            case let .feedback(style: style):
+                SettingsUI.FeedbackScreen(
+                    configuration: viewModel.feedbackConfiguration(withStyle: style),
+                    onDone: onFeedbackSend(_:)
+                )
+            }
         }
         #if os(macOS)
         .padding(.vertical, .medium)
