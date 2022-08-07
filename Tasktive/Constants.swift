@@ -15,6 +15,6 @@ enum Constants {
     enum UI {
         static let mainViewMinimumSize: CGSize = .squared(300)
         static let mainViewHorizontalWidth: CGFloat = AppSizes.medium.rawValue
-        static let settingsViewMinimumSize: CGSize = .squared(250)
+        static let settingsViewMinimumSize = CGSize(width: 250, height: 300)
     }
 }

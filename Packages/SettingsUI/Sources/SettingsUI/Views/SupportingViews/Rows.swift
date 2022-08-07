@@ -35,7 +35,48 @@ extension SettingsUI {
         }
     }
 
-    @available(macOS 11.0, *)
+    public struct RowImageTextButton: View {
+        public let label: String
+        public let imageSystemName: String
+        public let action: () -> Void
+
+        public init(action: @escaping () -> Void, label: String, imageSystemName: String) {
+            self.action = action
+            self.label = label
+            self.imageSystemName = imageSystemName
+        }
+
+        public var body: some View {
+            Button(action: action) {
+                RowImageTextView(label: label, imageSystemName: imageSystemName)
+                    .foregroundColor(.accentColor)
+            }
+            .buttonStyle(.plain)
+        }
+    }
+
+    public struct RowViewValueButton<Value: View>: View {
+        public let label: String
+        public let value: Value
+        public let action: () -> Void
+
+        public init(action: @escaping () -> Void, label: String, @ViewBuilder value: () -> Value) {
+            self.action = action
+            self.label = label
+            self.value = value()
+        }
+
+        public var body: some View {
+            Button(action: action) {
+                RowViewValueView(label: label, value: {
+                    value
+                })
+                .foregroundColor(.accentColor)
+            }
+            .buttonStyle(.plain)
+        }
+    }
+
     public struct RowImageTextView: View {
         public let label: String
         public let imageSystemName: String

@@ -27,18 +27,27 @@ struct SettingsScreen: View {
                     stackNavigator.navigate(to: SettingsScreens.feedback(style: style))
                 })
             }
+            SettingsUI
+                .PersonalizationSection(onChangeAppColorPress: { stackNavigator.navigate(to: SettingsScreens.appColor)
+                })
             SettingsUI.AboutSection()
         }
         .navigationDestination(for: SettingsScreens.self) { screen in
-            switch screen {
-            case let .feedback(style: style):
-                SettingsUI.FeedbackScreen(
-                    configuration: viewModel.feedbackConfiguration(withStyle: style),
-                    onDone: onFeedbackSend(_:)
-                )
-            case .appColor:
-                SettingsUI.AppColorScreen()
+            KJustStack {
+                switch screen {
+                case let .feedback(style: style):
+                    SettingsUI.FeedbackScreen(
+                        configuration: viewModel.feedbackConfiguration(withStyle: style),
+                        onDone: onFeedbackSend(_:)
+                    )
+                case .appColor:
+                    SettingsUI.AppColorScreen()
+                }
             }
+            .frame(
+                minWidth: Constants.UI.settingsViewMinimumSize.width,
+                minHeight: Constants.UI.settingsViewMinimumSize.height
+            )
         }
         #if os(macOS)
         .padding(.vertical, .medium)

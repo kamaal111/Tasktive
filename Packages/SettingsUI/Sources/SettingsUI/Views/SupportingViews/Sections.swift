@@ -20,7 +20,29 @@ extension SettingsUI {
         }
     }
 
-    @available(macOS 13.0, iOS 16.0, *)
+    @available(macOS 12.0, *)
+    public struct PersonalizationSection: View {
+        public let onChangeAppColorPress: () -> Void
+
+        public init(onChangeAppColorPress: @escaping () -> Void) {
+            self.onChangeAppColorPress = onChangeAppColorPress
+        }
+
+        public var body: some View {
+            SectionView(header: NSLocalizedString("Personalization", bundle: .module, comment: "")) {
+                RowViewValueButton(
+                    action: onChangeAppColorPress,
+                    label: NSLocalizedString("Change app color", bundle: .module, comment: "")
+                ) {
+                    Color.accentColor
+                        .frame(width: 28, height: 28)
+                        .cornerRadius(8)
+                }
+            }
+        }
+    }
+
+    @available(macOS 12.0, *)
     public struct FeedbackSection: View {
         public let onFeedbackPress: (_ style: FeedbackStyles) -> Void
 
@@ -32,9 +54,10 @@ extension SettingsUI {
             SectionView(header: NSLocalizedString("Feedback", bundle: .module, comment: "")) {
                 ForEach(FeedbackStyles.allCases, id: \.self) { style in
                     VStack {
-                        feedbackButtonWrapper(
-                            style,
-                            RowImageTextView(label: style.title, imageSystemName: style.imageSystemName)
+                        RowImageTextButton(
+                            action: { onFeedbackPress(style) },
+                            label: style.title,
+                            imageSystemName: style.imageSystemName
                         )
                         #if os(macOS)
                         if style != FeedbackStyles.allCases.last {
@@ -44,14 +67,6 @@ extension SettingsUI {
                     }
                 }
             }
-        }
-
-        private func feedbackButtonWrapper(_ style: FeedbackStyles, _ view: some View) -> some View {
-            Button(action: { onFeedbackPress(style) }) {
-                view
-                    .foregroundColor(.accentColor)
-            }
-            .buttonStyle(.plain)
         }
     }
 
