@@ -7,7 +7,8 @@
     "localize": "sh Scripts/GenerateLocales/run.sh",
     "prepare": "husky install",
     "generate-tokens": "yarn build:generate-tokens && Scripts/generate_tokens/target/debug/generate_tokens",
-    "build:generate-tokens": "cargo build --manifest-path=Scripts/generate_tokens/Cargo.toml"
+    "build:generate-tokens": "cargo build --manifest-path=Scripts/generate_tokens/Cargo.toml",
+    "clear-mac-data": "sh Scripts/clear_mac_data.sh"
   },
   "repository": {
     "type": "git",

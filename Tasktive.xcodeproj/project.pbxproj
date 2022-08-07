@@ -87,6 +87,7 @@
 		2C03068628A006E70071F0CA /* Cargo.toml */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cargo.toml; sourceTree = "<group>"; };
 		2C03071428A006E80071F0CA /* Cargo.lock */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cargo.lock; sourceTree = "<group>"; };
 		2C03071628A006E80071F0CA /* main.rs */ = {isa = PBXFileReference; lastKnownFileType = text; path = main.rs; sourceTree = "<group>"; };
+		2C07056028A0393E0058F646 /* clear_mac_data.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = clear_mac_data.sh; sourceTree = "<group>"; };
 		2C1505E8288C26170040943A /* DayNumbersRowItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayNumbersRowItem.swift; sourceTree = "<group>"; };
 		2C15758B289EF43E00425CDD /* FeedbackMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackMetadata.swift; sourceTree = "<group>"; };
 		2C157590289F02E900425CDD /* Tokens.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Tokens.json; sourceTree = "<group>"; };
@@ -410,6 +411,7 @@
 		2CCCADAC2881F1970033E2EF /* Scripts */ = {
 			isa = PBXGroup;
 			children = (
+				2C07056028A0393E0058F646 /* clear_mac_data.sh */,
 				2CCCADAD2881F1CC0033E2EF /* pre_compile.sh */,
 				2C03068528A006E70071F0CA /* generate_tokens */,
 				2C39A91A28835AAD008BAFD2 /* GenerateLocales */,

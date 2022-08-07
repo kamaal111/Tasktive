@@ -13,15 +13,27 @@ struct PersistenceController {
 
     init(inMemory: Bool = false) {
         self.container = NSPersistentContainer(name: "Tasktive")
+
         if inMemory {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
+        } else if let defaultURL = container.persistentStoreDescriptions.first?.url {
+            let defaultStore = NSPersistentStoreDescription(url: defaultURL)
+            defaultStore.configuration = "Default"
+            defaultStore.shouldMigrateStoreAutomatically = false
+            defaultStore.shouldInferMappingModelAutomatically = true
+        } else {
+            #if DEBUG
+            fatalError("default url not found")
+            #endif
         }
+
+        container.viewContext.automaticallyMergesChangesFromParent = true
+
         container.loadPersistentStores(completionHandler: { _, error in
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
-        container.viewContext.automaticallyMergesChangesFromParent = true
     }
 
     var context: NSManagedObjectContext {
