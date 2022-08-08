@@ -20,7 +20,7 @@ extension SettingsUI {
         }
 
         public var body: some View {
-            ScrollView(.vertical, showsIndicators: false) {
+            ScrollView(.vertical, showsIndicators: true) {
                 SectionView(header: NSLocalizedString("Colors", bundle: .module, comment: "")) {
                     ForEach(AppColor.defaultColors) { color in
                         RowViewColorButton(

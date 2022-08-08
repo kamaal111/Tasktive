@@ -36,6 +36,41 @@ public struct AppColor: Hashable, Identifiable, Codable {
             title: NSLocalizedString("Teal", bundle: .module, comment: ""),
             variants: .init(light: RGB(red: 89, green: 173, blue: 196), dark: RGB(red: 105, green: 196, blue: 220))
         ),
+        .init(
+            id: UUID(uuidString: "c5b39ff8-091a-4c46-a067-0bc5b1df4caf")!,
+            title: NSLocalizedString("Purple", bundle: .module, comment: ""),
+            variants: .init(light: RGB(red: 175, green: 82, blue: 222), dark: RGB(red: 191, green: 90, blue: 242))
+        ),
+        .init(
+            id: UUID(uuidString: "1d2a4931-f1c2-42bf-b097-27908e1fa39a")!,
+            title: NSLocalizedString("Green", bundle: .module, comment: ""),
+            variants: .init(light: RGB(red: 0, green: 191, blue: 0), dark: RGB(red: 50, green: 215, blue: 75))
+        ),
+        .init(
+            id: UUID(uuidString: "bab5b0eb-d672-4ece-bdc7-4453daf64379")!,
+            title: NSLocalizedString("Yellow", bundle: .module, comment: ""),
+            variants: .init(light: RGB(red: 255, green: 204, blue: 0), dark: RGB(red: 255, green: 214, blue: 10))
+        ),
+        .init(
+            id: UUID(uuidString: "7a664baf-b0ac-4764-86b4-3860773fe9c4")!,
+            title: NSLocalizedString("Pink", bundle: .module, comment: ""),
+            variants: .init(light: RGB(red: 255, green: 44, blue: 85), dark: RGB(red: 255, green: 55, blue: 95))
+        ),
+        .init(
+            id: UUID(uuidString: "ab3aa7c5-c9e3-45a9-a2ef-f82603f11eab")!,
+            title: NSLocalizedString("Orange", bundle: .module, comment: ""),
+            variants: .init(light: RGB(red: 255, green: 69, blue: 58), dark: RGB(red: 255, green: 149, blue: 0))
+        ),
+        .init(
+            id: UUID(uuidString: "0125142b-4a50-4f7f-b02c-a4963a6e4633")!,
+            title: NSLocalizedString("Red", bundle: .module, comment: ""),
+            variants: .init(light: RGB(red: 255, green: 59, blue: 48), dark: RGB(red: 255, green: 69, blue: 58))
+        ),
+        .init(
+            id: UUID(uuidString: "eb82e779-a7ba-4c75-a6e2-53d35332b940")!,
+            title: NSLocalizedString("Blue", bundle: .module, comment: ""),
+            variants: .init(light: RGB(red: 0, green: 122, blue: 255), dark: RGB(red: 10, green: 132, blue: 255))
+        ),
     ]
 
     private static func hexToRGB(_ hex: String) -> RGB? {
