@@ -16,8 +16,8 @@ private let logger = Logster(from: TasksScreen.self)
 
 struct TasksScreen: View {
     @Environment(\.colorScheme) private var colorScheme
-    @Environment(\.appColorAccent) private var appColorAccent
 
+    @EnvironmentObject private var theme: Theme
     @EnvironmentObject private var tasksViewModel: TasksViewModel
     @EnvironmentObject private var popperUpManager: PopperUpManager
 
@@ -80,7 +80,7 @@ struct TasksScreen: View {
                 onClose: { Task { await viewModel.closeDetailsSheet() } },
                 onDone: handleTaskEditedInDetailsSheet(_:)
             )
-            .accentColor(appColorAccent.currentAccentColor)
+            .accentColor(theme.currentAccentColor)
             .withPopperUp(popperUpManager)
             #if os(macOS)
                 .frame(minWidth: 300, minHeight: 140)

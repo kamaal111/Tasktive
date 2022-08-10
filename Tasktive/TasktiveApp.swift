@@ -12,31 +12,28 @@ import SettingsUI
 struct TasktiveApp: App {
     @StateObject private var tasksViewModel = TasksViewModel()
     @StateObject private var settingsStackNavigator = StackNavigator()
-
-    @State private var appColorAccent = AppColorAccent(appColor: .none)
+    @StateObject private var theme = Theme()
 
     private let persistenceController = PersistenceController.shared
 
     var body: some Scene {
         WindowGroup {
-            AppColorAccentWrapper(appColorAccent: $appColorAccent) {
-                ContentView()
-            }
-            .environment(\.managedObjectContext, persistenceController.context)
-            .environmentObject(tasksViewModel)
+            ContentView()
+                .environment(\.managedObjectContext, persistenceController.context)
+                .environmentObject(tasksViewModel)
+                .environmentObject(theme)
         }
         #if os(macOS)
         Settings {
-            AppColorAccentWrapper(appColorAccent: $appColorAccent) {
-                NavigationStack(path: $settingsStackNavigator.path) {
-                    SettingsScreen()
-                        .frame(
-                            minWidth: Constants.UI.settingsViewMinimumSize.width,
-                            minHeight: Constants.UI.settingsViewMinimumSize.height
-                        )
-                        .environmentObject(settingsStackNavigator)
-                }
+            NavigationStack(path: $settingsStackNavigator.path) {
+                SettingsScreen()
+                    .frame(
+                        minWidth: Constants.UI.settingsViewMinimumSize.width,
+                        minHeight: Constants.UI.settingsViewMinimumSize.height
+                    )
+                    .environmentObject(settingsStackNavigator)
             }
+            .environmentObject(theme)
         }
         #endif
     }

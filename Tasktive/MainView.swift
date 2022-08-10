@@ -9,10 +9,9 @@ import SwiftUI
 import SalmonUI
 
 struct MainView: View {
-    @Environment(\.appColorAccent) private var appColorAccent
-
     @EnvironmentObject private var deviceModel: DeviceModel
     @EnvironmentObject private var namiNavigator: NamiNavigator
+    @EnvironmentObject private var theme: Theme
 
     init() { }
 
@@ -25,7 +24,7 @@ struct MainView: View {
                 // Can't use `NavigationSplitView` yet because the sidebar breaks the navigation on macOS
                 NavigationView {
                     Sidebar()
-                        .accentColor(appColorAccent.currentAccentColor)
+                        .accentColor(theme.currentAccentColor)
                     DetailsColumn()
                 }
                 #endif
