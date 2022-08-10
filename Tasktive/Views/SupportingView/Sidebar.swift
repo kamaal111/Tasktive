@@ -10,6 +10,8 @@ import SalmonUI
 import TasktiveLocale
 
 struct Sidebar: View {
+    @Environment(\.appColorAccent) private var appColorAccent
+
     @EnvironmentObject private var namiNavigator: NamiNavigator
 
     var body: some View {
@@ -19,7 +21,7 @@ struct Sidebar: View {
                     VStack(alignment: .leading) {
                         Button(action: { namiNavigator.navigateOnSidebar(to: screen) }) {
                             Label(screen.title, systemImage: screen.icon)
-                                .foregroundColor(.accentColor)
+                                .accentColor(appColorAccent.currentAccentColor)
                         }
                         .buttonStyle(.plain)
                     }

@@ -12,7 +12,7 @@ private let RGB_MAX = 255.0
 public struct AppColor: Hashable, Identifiable, Codable {
     public let id: UUID
     public let title: String
-    public let variants: RGBVariants
+    public let variants: RGBVariants?
 
     public init?(id: UUID, title: String, hexString: (light: String, dark: String)) {
         guard let lightRGB = Self.hexToRGB(hexString.light),
@@ -30,7 +30,17 @@ public struct AppColor: Hashable, Identifiable, Codable {
         self.variants = variants
     }
 
+    public init(id: UUID, title: String) {
+        self.id = id
+        self.title = title
+        self.variants = nil
+    }
+
     public static let defaultColors: [AppColor] = [
+        .init(
+            id: UUID(uuidString: "1f6f9ac4-1ca6-4f77-880b-01580881a9b4")!,
+            title: NSLocalizedString("Default", bundle: .module, comment: "")
+        ),
         .init(
             id: UUID(uuidString: "57547f06-2d3e-4f3d-a639-59c13a5433bb")!,
             title: NSLocalizedString("Teal", bundle: .module, comment: ""),

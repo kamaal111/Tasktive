@@ -41,7 +41,7 @@ struct SettingsScreen: View {
                         onDone: onFeedbackSend(_:)
                     )
                 case .appColor:
-                    SettingsUI.AppColorScreen(onColorSelect: { color in
+                    SettingsUI.AppColorScreen(defaultColor: Color("AccentColor"), onColorSelect: { color in
                         #warning("handle color select")
                         print("color", color)
                     })

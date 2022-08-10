@@ -16,7 +16,7 @@ struct Logster {
     }
 
     init(label: String) {
-        self.logger = .init(subsystem: Bundle.main.bundleIdentifier!, category: label)
+        self.logger = .init(subsystem: Constants.bundleIdentifier, category: label)
     }
 
     func error(_ message: String) {

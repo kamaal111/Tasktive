@@ -5,12 +5,15 @@
 //  Created by Kamaal M Farah on 17/07/2022.
 //
 
+import Foundation
 import CoreGraphics
 import ShrimpExtensions
 
 enum Constants {
     static let gitHubUsername = "kamaal111"
     static let repoName = "Tasktive"
+    static let bundleIdentifier = Bundle.main.bundleIdentifier!
+    static let appGroupIdentifier = "group.DXUKH9VF73.io.kamaal.Tasktive"
 
     enum UI {
         static let mainViewMinimumSize: CGSize = .squared(300)

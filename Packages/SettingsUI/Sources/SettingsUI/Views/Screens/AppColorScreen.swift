@@ -13,9 +13,11 @@ extension SettingsUI {
     public struct AppColorScreen: View {
         @Environment(\.colorScheme) private var colorScheme
 
+        public let defaultColor: Color
         public let onColorSelect: (_ color: AppColor) -> Void
 
-        public init(onColorSelect: @escaping (_: AppColor) -> Void) {
+        public init(defaultColor: Color, onColorSelect: @escaping (_: AppColor) -> Void) {
+            self.defaultColor = defaultColor
             self.onColorSelect = onColorSelect
         }
 
@@ -23,11 +25,19 @@ extension SettingsUI {
             ScrollView(.vertical, showsIndicators: true) {
                 SectionView(header: NSLocalizedString("Colors", bundle: .module, comment: "")) {
                     ForEach(AppColor.defaultColors) { color in
-                        RowViewColorButton(
-                            action: { onColorSelect(color) },
-                            label: color.title,
-                            color: colorScheme == .dark ? color.variants.dark.color : color.variants.light.color
-                        )
+                        if let variants = color.variants {
+                            RowViewColorButton(
+                                action: { onColorSelect(color) },
+                                label: color.title,
+                                color: colorScheme == .dark ? variants.dark.color : variants.light.color
+                            )
+                        } else {
+                            RowViewColorButton(
+                                action: { onColorSelect(color) },
+                                label: color.title,
+                                color: defaultColor
+                            )
+                        }
                         #if os(macOS)
                         if color != AppColor.defaultColors.last {
                             Divider()
