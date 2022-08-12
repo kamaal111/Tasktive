@@ -56,6 +56,25 @@ extension SettingsUI {
     }
 
     @available(macOS 12.0, *)
+    public struct RowViewColorView: View {
+        public let label: String
+        public let color: Color
+
+        public init(label: String, color: Color) {
+            self.label = label
+            self.color = color
+        }
+
+        public var body: some View {
+            RowViewValueView(label: label) {
+                color
+                    .frame(width: 28, height: 28)
+                    .cornerRadius(8)
+            }
+        }
+    }
+
+    @available(macOS 12.0, *)
     public struct RowViewColorButton: View {
         public let label: String
         public let color: Color

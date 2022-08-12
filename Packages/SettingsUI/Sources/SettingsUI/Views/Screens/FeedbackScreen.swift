@@ -17,8 +17,12 @@ extension SettingsUI {
 
         public let onDone: (_ maybeError: Error?) -> Void
 
-        public init(configuration: FeedbackConfiguration, onDone: @escaping (_ maybeError: Error?) -> Void) {
-            self._viewModel = StateObject(wrappedValue: ViewModel(configuration: configuration))
+        public init(
+            configuration: FeedbackConfiguration,
+            style: FeedbackStyles,
+            onDone: @escaping (_ maybeError: Error?) -> Void
+        ) {
+            self._viewModel = StateObject(wrappedValue: ViewModel(configuration: configuration, style: style))
             self.onDone = onDone
         }
 
@@ -47,7 +51,7 @@ extension SettingsUI {
             }
             .padding(.vertical, 16)
             .padding(.horizontal, 16)
-            .navigationTitle(Text(viewModel.configuration.style.title))
+            .navigationTitle(Text(viewModel.style.title))
             #if os(iOS)
                 .navigationBarTitleDisplayMode(.inline)
             #endif
@@ -74,14 +78,14 @@ extension SettingsUI.FeedbackScreen {
         @Published var loading = false
 
         let configuration: FeedbackConfiguration
+        let style: FeedbackStyles
 
         private var gitHubAPI: GitHubAPI?
 
-        init(configuration: FeedbackConfiguration) {
+        init(configuration: FeedbackConfiguration, style: FeedbackStyles) {
             self.configuration = configuration
-            if let gitHubToken = configuration.gitHubToken {
-                self.gitHubAPI = .init(token: gitHubToken, username: configuration.gitHubUsername)
-            }
+            self.style = style
+            self.gitHubAPI = .init(token: configuration.gitHubToken, username: configuration.gitHubUsername)
         }
 
         var disableSubmit: Bool {
@@ -115,7 +119,7 @@ extension SettingsUI.FeedbackScreen {
                     title: title,
                     description: descriptionWithAdditionalFeedback,
                     assignee: configuration.gitHubUsername,
-                    labels: configuration.allLabels
+                    labels: configuration.additionalIssueLabels + style.labels
                 )
                 switch result {
                 case let .failure(failure):
@@ -165,35 +169,6 @@ extension SettingsUI.FeedbackScreen {
         @MainActor
         private func setLoading(_ state: Bool) {
             loading = state
-        }
-    }
-
-    public struct FeedbackConfiguration {
-        public let style: FeedbackStyles
-        public let gitHubToken: String?
-        public let gitHubUsername: String
-        public let repoName: String
-        public let additionalFeedbackData: Encodable
-        public let additionalIssueLabels: [String]
-
-        public init(
-            style: FeedbackStyles,
-            gitHubToken: String?,
-            gitHubUsername: String,
-            repoName: String,
-            additionalFeedbackData: Encodable,
-            additionalIssueLabels: [String] = []
-        ) {
-            self.style = style
-            self.gitHubToken = gitHubToken
-            self.gitHubUsername = gitHubUsername
-            self.repoName = repoName
-            self.additionalFeedbackData = additionalFeedbackData
-            self.additionalIssueLabels = additionalIssueLabels
-        }
-
-        var allLabels: [String] {
-            additionalIssueLabels + style.labels
         }
     }
 }

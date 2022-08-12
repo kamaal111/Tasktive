@@ -22,40 +22,14 @@ struct SettingsScreen: View {
     @StateObject private var viewModel = ViewModel()
 
     var body: some View {
-        Form {
-            if viewModel.showFeedbackSection {
-                SettingsUI.FeedbackSection(onFeedbackPress: { style in
-                    stackNavigator.navigate(to: SettingsScreens.feedback(style: style))
-                })
-            }
-            SettingsUI.PersonalizationSection(onChangeAppColorPress: {
-                stackNavigator.navigate(to: SettingsScreens.appColor)
-            })
-            SettingsUI.AboutSection()
-        }
-        .navigationDestination(for: SettingsScreens.self) { screen in
-            KJustStack {
-                switch screen {
-                case let .feedback(style: style):
-                    SettingsUI.FeedbackScreen(
-                        configuration: viewModel.feedbackConfiguration(withStyle: style),
-                        onDone: onFeedbackSend(_:)
-                    )
-                case .appColor:
-                    SettingsUI.AppColorScreen(defaultColor: .AccentColor, onColorSelect: onColorSelect(_:))
-                }
-            }
-            .accentColor(theme.currentAccentColor)
-            .frame(
-                minWidth: Constants.UI.settingsViewMinimumSize.width,
-                minHeight: Constants.UI.settingsViewMinimumSize.height
-            )
-        }
-        #if os(macOS)
-        .padding(.vertical, .medium)
-        .padding(.horizontal, .medium)
-        .ktakeSizeEagerly(alignment: .topLeading)
-        #endif
+        SettingsUI.SettingsScreen(
+            appColor: theme.currentAccentColor,
+            defaultAppColor: .AccentColor,
+            viewSize: Constants.UI.settingsViewMinimumSize,
+            feedbackConfiguration: viewModel.feedbackConfiguration,
+            onFeedbackSend: onFeedbackSend(_:),
+            onColorSelect: onColorSelect(_:)
+        )
     }
 
     private func onColorSelect(_ color: AppColor) {
@@ -88,13 +62,10 @@ extension SettingsScreen {
     final class ViewModel: ObservableObject {
         init() { }
 
-        var showFeedbackSection: Bool {
-            gitHubToken != nil
-        }
+        var feedbackConfiguration: FeedbackConfiguration? {
+            guard let gitHubToken = gitHubToken else { return nil }
 
-        func feedbackConfiguration(withStyle style: FeedbackStyles) -> SettingsUI.FeedbackScreen.FeedbackConfiguration {
-            .init(
-                style: style,
+            return .init(
                 gitHubToken: gitHubToken,
                 gitHubUsername: Constants.gitHubUsername,
                 repoName: Constants.repoName,

@@ -20,42 +20,37 @@ extension SettingsUI {
         }
     }
 
-    @available(macOS 12.0, *)
+    @available(macOS 13.0, *)
     public struct PersonalizationSection: View {
-        public let onChangeAppColorPress: () -> Void
+        private let label = NSLocalizedString("Change app color", bundle: .module, comment: "")
+        private let color: Color = .accentColor
 
-        public init(onChangeAppColorPress: @escaping () -> Void) {
-            self.onChangeAppColorPress = onChangeAppColorPress
-        }
+        public init() { }
 
         public var body: some View {
             SectionView(header: NSLocalizedString("Personalization", bundle: .module, comment: "")) {
-                RowViewColorButton(
-                    action: onChangeAppColorPress,
-                    label: NSLocalizedString("Change app color", bundle: .module, comment: ""),
-                    color: .accentColor
-                )
+                NavigationLink(value: SettingsScreens.appColor) {
+                    RowViewColorView(label: label, color: color)
+                        .foregroundColor(.accentColor)
+                }
+                .buttonStyle(.plain)
             }
         }
     }
 
-    @available(macOS 12.0, *)
+    @available(macOS 13.0, *)
     public struct FeedbackSection: View {
-        public let onFeedbackPress: (_ style: FeedbackStyles) -> Void
-
-        public init(onFeedbackPress: @escaping (_: FeedbackStyles) -> Void) {
-            self.onFeedbackPress = onFeedbackPress
-        }
+        public init() { }
 
         public var body: some View {
             SectionView(header: NSLocalizedString("Feedback", bundle: .module, comment: "")) {
                 ForEach(FeedbackStyles.allCases, id: \.self) { style in
                     VStack {
-                        RowImageTextButton(
-                            action: { onFeedbackPress(style) },
-                            label: style.title,
-                            imageSystemName: style.imageSystemName
-                        )
+                        NavigationLink(value: SettingsScreens.feedback(style: style)) {
+                            RowImageTextView(label: style.title, imageSystemName: style.imageSystemName)
+                                .foregroundColor(.accentColor)
+                        }
+                        .buttonStyle(.plain)
                         #if os(macOS)
                         if style != FeedbackStyles.allCases.last {
                             Divider()
