@@ -8,6 +8,7 @@
 import SwiftUI
 import SettingsUI
 
+/// &#128511;
 @main
 struct TasktiveApp: App {
     @StateObject private var tasksViewModel = TasksViewModel()

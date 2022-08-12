@@ -11,6 +11,8 @@ import SalmonUI
 extension SettingsUI {
     @available(macOS 13.0, *)
     public struct SettingsScreen: View {
+        @StateObject private var store = Store()
+
         public let appColor: Color
         public let defaultAppColor: Color
         public let viewSize: CGSize
