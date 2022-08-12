@@ -24,7 +24,6 @@ struct MainView: View {
                 // Can't use `NavigationSplitView` yet because the sidebar breaks the navigation on macOS
                 NavigationView {
                     Sidebar()
-                        .accentColor(theme.currentAccentColor)
                     DetailsColumn()
                 }
                 #endif

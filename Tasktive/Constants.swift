@@ -14,6 +14,7 @@ enum Constants {
     static let repoName = "Tasktive"
     static let bundleIdentifier = Bundle.main.bundleIdentifier!
     static let appGroupIdentifier = "group.DXUKH9VF73.io.kamaal.Tasktive"
+    static let appAccentColorKey = "AccentColor"
 
     enum UI {
         static let mainViewMinimumSize: CGSize = .squared(300)

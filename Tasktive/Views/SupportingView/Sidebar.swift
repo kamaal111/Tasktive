@@ -33,6 +33,7 @@ struct Sidebar: View {
                 Label(TasktiveLocale.getText(.TOGGLE_SIDEBAR), systemImage: "sidebar.left")
                     .foregroundColor(.accentColor)
             }
+            .accentColor(theme.currentAccentColor)
         })
         #endif
     }

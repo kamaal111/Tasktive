@@ -17,6 +17,7 @@ private let logger = Logster(from: SettingsScreen.self)
 struct SettingsScreen: View {
     @EnvironmentObject private var popperUpManager: PopperUpManager
     @EnvironmentObject private var stackNavigator: StackNavigator
+    @EnvironmentObject private var theme: Theme
 
     @StateObject private var viewModel = ViewModel()
 
@@ -41,12 +42,10 @@ struct SettingsScreen: View {
                         onDone: onFeedbackSend(_:)
                     )
                 case .appColor:
-                    SettingsUI.AppColorScreen(defaultColor: Color("AccentColor"), onColorSelect: { color in
-                        #warning("handle color select")
-                        print("color", color)
-                    })
+                    SettingsUI.AppColorScreen(defaultColor: .AccentColor, onColorSelect: onColorSelect(_:))
                 }
             }
+            .accentColor(theme.currentAccentColor)
             .frame(
                 minWidth: Constants.UI.settingsViewMinimumSize.width,
                 minHeight: Constants.UI.settingsViewMinimumSize.height
@@ -57,6 +56,11 @@ struct SettingsScreen: View {
         .padding(.horizontal, .medium)
         .ktakeSizeEagerly(alignment: .topLeading)
         #endif
+    }
+
+    private func onColorSelect(_ color: AppColor) {
+        theme.setAppColor(color)
+        stackNavigator.goBack()
     }
 
     private func onFeedbackSend(_ maybeError: Error?) {

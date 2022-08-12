@@ -13,17 +13,23 @@ final class Theme: ObservableObject {
 
     @Published private(set) var appColor: AppColor?
 
-    init(appColor: AppColor? = nil) {
-        self.appColor = appColor
+    init() {
+        self.appColor = UserDefaults.appColor
     }
 
     var currentAccentColor: Color {
-        guard let varients = appColor?.variants else { return Color("AccentColor") }
+        guard let varients = appColor?.variants else { return .AccentColor }
 
         if colorScheme == .dark {
             return varients.dark.color
         }
 
         return varients.light.color
+    }
+
+    @MainActor
+    func setAppColor(_ color: AppColor) {
+        appColor = color
+        UserDefaults.appColor = color
     }
 }

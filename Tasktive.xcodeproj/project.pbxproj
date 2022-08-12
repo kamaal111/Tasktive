@@ -66,6 +66,7 @@
 		2CDC180028A0321B00F07CF0 /* CoreTag+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDC17FE28A0321B00F07CF0 /* CoreTag+CoreDataClass.swift */; };
 		2CDC180128A0321B00F07CF0 /* CoreTag+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDC17FF28A0321B00F07CF0 /* CoreTag+CoreDataProperties.swift */; };
 		2CDC6DA6288D616B00BF8E06 /* ToolbarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDC6DA5288D616B00BF8E06 /* ToolbarButton.swift */; };
+		2CDFB1B028A6DA53004ACED7 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDFB1AF28A6DA53004ACED7 /* Colors.swift */; };
 		2CF24AA62884289100778BD9 /* NamiNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF24AA52884289100778BD9 /* NamiNavigator.swift */; };
 		2CF24AA828842AEB00778BD9 /* AppTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF24AA728842AEB00778BD9 /* AppTabView.swift */; };
 		2CF24AAA28842B5B00778BD9 /* View+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF24AA928842B5B00778BD9 /* View+extensions.swift */; };
@@ -157,6 +158,7 @@
 		2CDC17FE28A0321B00F07CF0 /* CoreTag+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTag+CoreDataClass.swift"; sourceTree = "<group>"; };
 		2CDC17FF28A0321B00F07CF0 /* CoreTag+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTag+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2CDC6DA5288D616B00BF8E06 /* ToolbarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarButton.swift; sourceTree = "<group>"; };
+		2CDFB1AF28A6DA53004ACED7 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		2CF24AA52884289100778BD9 /* NamiNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamiNavigator.swift; sourceTree = "<group>"; };
 		2CF24AA728842AEB00778BD9 /* AppTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabView.swift; sourceTree = "<group>"; };
 		2CF24AA928842B5B00778BD9 /* View+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+extensions.swift"; sourceTree = "<group>"; };
@@ -283,10 +285,11 @@
 		2C47E3F02883685D00FD4469 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				2CDFB1AF28A6DA53004ACED7 /* Colors.swift */,
 				2C47E3FC28836B2200FD4469 /* NotificationName+extensions.swift */,
 				2C47E3F12883688F00FD4469 /* Text+extensions.swift */,
-				2CF24AA928842B5B00778BD9 /* View+extensions.swift */,
 				2CFEB90228A43F75000B1667 /* UserDefaults+extensions.swift */,
+				2CF24AA928842B5B00778BD9 /* View+extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -690,6 +693,7 @@
 				2CBCE6092881DE240057F4CD /* Persistence.swift in Sources */,
 				2CCCADD4288204100033E2EF /* Crudable.swift in Sources */,
 				2C750F66288C2F9400026D67 /* CircularProgressBar.swift in Sources */,
+				2CDFB1B028A6DA53004ACED7 /* Colors.swift in Sources */,
 				2CDC17F128A02F8D00F07CF0 /* CoreTaskList+CoreDataProperties.swift in Sources */,
 				2C51C916288481A9008939F7 /* AppTask.swift in Sources */,
 				2C15758C289EF43E00425CDD /* FeedbackMetadata.swift in Sources */,

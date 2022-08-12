@@ -19,6 +19,7 @@ struct TasktiveApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .accentColor(theme.currentAccentColor)
                 .environment(\.managedObjectContext, persistenceController.context)
                 .environmentObject(tasksViewModel)
                 .environmentObject(theme)
@@ -27,6 +28,7 @@ struct TasktiveApp: App {
         Settings {
             NavigationStack(path: $settingsStackNavigator.path) {
                 SettingsScreen()
+                    .accentColor(theme.currentAccentColor)
                     .frame(
                         minWidth: Constants.UI.settingsViewMinimumSize.width,
                         minHeight: Constants.UI.settingsViewMinimumSize.height
