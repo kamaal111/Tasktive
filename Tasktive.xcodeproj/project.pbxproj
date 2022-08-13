@@ -161,6 +161,8 @@
 		2CDC17FF28A0321B00F07CF0 /* CoreTag+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTag+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2CDC6DA5288D616B00BF8E06 /* ToolbarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarButton.swift; sourceTree = "<group>"; };
 		2CDFB1AF28A6DA53004ACED7 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		2CE0C86C28A8621200B54EC9 /* bootstrap.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = bootstrap.sh; sourceTree = "<group>"; };
+		2CE0C86D28A8625500B54EC9 /* Brewfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Brewfile; sourceTree = "<group>"; };
 		2CF24AA52884289100778BD9 /* NamiNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamiNavigator.swift; sourceTree = "<group>"; };
 		2CF24AA728842AEB00778BD9 /* AppTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabView.swift; sourceTree = "<group>"; };
 		2CF24AA928842B5B00778BD9 /* View+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+extensions.swift"; sourceTree = "<group>"; };
@@ -369,6 +371,7 @@
 		2CBCE5FA2881DE240057F4CD = {
 			isa = PBXGroup;
 			children = (
+				2CE0C86D28A8625500B54EC9 /* Brewfile */,
 				2CCCADAB2881F1750033E2EF /* LICENSE */,
 				2CF24AAB28842E2600778BD9 /* package.json */,
 				2C21A68E2896818000693CF2 /* yarn.lock */,
@@ -423,6 +426,7 @@
 		2CCCADAC2881F1970033E2EF /* Scripts */ = {
 			isa = PBXGroup;
 			children = (
+				2CE0C86C28A8621200B54EC9 /* bootstrap.sh */,
 				2C07056028A0393E0058F646 /* clear_mac_data.sh */,
 				2CCCADAD2881F1CC0033E2EF /* pre_compile.sh */,
 				2C03068528A006E70071F0CA /* generate_tokens */,
