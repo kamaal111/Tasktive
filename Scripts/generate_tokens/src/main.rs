@@ -11,6 +11,10 @@ struct Args {
 
 fn main() {
     let tokens_file_path =  Path::new("Tasktive/Resources/Tokens.json");
+    if tokens_file_path.exists() {
+        println!("file already exists");
+        return;
+    }
 
     let args = Args::parse();
     let serialized_args = serde_json::to_string_pretty(&args).unwrap();
