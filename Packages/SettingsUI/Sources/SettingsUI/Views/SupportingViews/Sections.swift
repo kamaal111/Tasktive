@@ -9,7 +9,6 @@ import SwiftUI
 import SalmonUI
 
 extension SettingsUI {
-    @available(macOS 12.0, *)
     public struct AboutSection: View {
         public init() { }
 
@@ -20,7 +19,7 @@ extension SettingsUI {
         }
     }
 
-    @available(macOS 13.0, *)
+    @available(macOS 13.0, iOS 16.0, *)
     public struct PersonalizationSection: View {
         private let label = NSLocalizedString("Change app color", bundle: .module, comment: "")
         private let color: Color = .accentColor
@@ -29,16 +28,12 @@ extension SettingsUI {
 
         public var body: some View {
             SectionView(header: NSLocalizedString("Personalization", bundle: .module, comment: "")) {
-                NavigationLink(value: SettingsScreens.appColor) {
-                    RowViewColorView(label: label, color: color)
-                        .foregroundColor(.accentColor)
-                }
-                .buttonStyle(.plain)
+                RowViewColorNavigationLink(label: label, color: color, destination: .appColor)
             }
         }
     }
 
-    @available(macOS 13.0, *)
+    @available(macOS 13.0, iOS 16.0, *)
     public struct FeedbackSection: View {
         public init() { }
 
@@ -46,11 +41,11 @@ extension SettingsUI {
             SectionView(header: NSLocalizedString("Feedback", bundle: .module, comment: "")) {
                 ForEach(FeedbackStyles.allCases, id: \.self) { style in
                     VStack {
-                        NavigationLink(value: SettingsScreens.feedback(style: style)) {
-                            RowImageTextView(label: style.title, imageSystemName: style.imageSystemName)
-                                .foregroundColor(.accentColor)
-                        }
-                        .buttonStyle(.plain)
+                        RowImageTextNavigationLink(
+                            label: style.title,
+                            imageSystemName: style.imageSystemName,
+                            destination: .feedback(style: style)
+                        )
                         #if os(macOS)
                         if style != FeedbackStyles.allCases.last {
                             Divider()
@@ -62,7 +57,6 @@ extension SettingsUI {
         }
     }
 
-    @available(macOS 12.0, *)
     public struct SectionView<Content: View>: View {
         public let header: String?
         public let content: Content

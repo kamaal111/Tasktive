@@ -9,4 +9,8 @@ import StoreAPI
 import Foundation
 import StoreKit
 
-final class Store: ObservableObject { }
+final class Store: ObservableObject {
+    var hasDonations: Bool {
+        true
+    }
+}

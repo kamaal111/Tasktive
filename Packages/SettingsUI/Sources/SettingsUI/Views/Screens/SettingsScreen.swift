@@ -9,7 +9,7 @@ import SwiftUI
 import SalmonUI
 
 extension SettingsUI {
-    @available(macOS 13.0, *)
+    @available(macOS 13.0, iOS 16.0, *)
     public struct SettingsScreen: View {
         @StateObject private var store = Store()
 
@@ -38,6 +38,7 @@ extension SettingsUI {
 
         public var body: some View {
             Form {
+                if store.hasDonations { }
                 if showFeedbackSection {
                     SettingsUI.FeedbackSection()
                 }

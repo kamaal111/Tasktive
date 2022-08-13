@@ -36,7 +36,6 @@ extension SettingsUI {
         }
     }
 
-    @available(macOS 12.0, *)
     public struct RowImageTextButton: View {
         public let label: String
         public let imageSystemName: String
@@ -55,7 +54,25 @@ extension SettingsUI {
         }
     }
 
-    @available(macOS 12.0, *)
+    @available(macOS 13.0, iOS 16.0, *)
+    public struct RowViewColorNavigationLink: View {
+        public let label: String
+        public let color: Color
+        public let destination: SettingsScreens
+
+        public init(label: String, color: Color, destination: SettingsScreens) {
+            self.label = label
+            self.color = color
+            self.destination = destination
+        }
+
+        public var body: some View {
+            RowNavigationLink(destination: destination) {
+                RowViewColorView(label: label, color: color)
+            }
+        }
+    }
+
     public struct RowViewColorView: View {
         public let label: String
         public let color: Color
@@ -74,7 +91,6 @@ extension SettingsUI {
         }
     }
 
-    @available(macOS 12.0, *)
     public struct RowViewColorButton: View {
         public let label: String
         public let color: Color
@@ -95,7 +111,6 @@ extension SettingsUI {
         }
     }
 
-    @available(macOS 12.0, *)
     public struct RowViewValueButton<Value: View>: View {
         public let label: String
         public let value: Value
@@ -116,6 +131,44 @@ extension SettingsUI {
                 #if os(macOS)
                     .background(Color(nsColor: .separatorColor).opacity(0.1))
                 #endif
+            }
+            .buttonStyle(.plain)
+        }
+    }
+
+    @available(macOS 13.0, iOS 16.0, *)
+    public struct RowImageTextNavigationLink: View {
+        public let label: String
+        public let imageSystemName: String
+        public let destination: SettingsScreens
+
+        public init(label: String, imageSystemName: String, destination: SettingsScreens) {
+            self.label = label
+            self.imageSystemName = imageSystemName
+            self.destination = destination
+        }
+
+        public var body: some View {
+            RowNavigationLink(destination: destination) {
+                RowImageTextView(label: label, imageSystemName: imageSystemName)
+            }
+        }
+    }
+
+    @available(macOS 13.0, iOS 16.0, *)
+    public struct RowNavigationLink<Value: View>: View {
+        public let destination: SettingsScreens
+        public let value: Value
+
+        public init(destination: SettingsScreens, @ViewBuilder value: () -> Value) {
+            self.destination = destination
+            self.value = value()
+        }
+
+        public var body: some View {
+            NavigationLink(value: destination) {
+                value
+                    .foregroundColor(.accentColor)
             }
             .buttonStyle(.plain)
         }
