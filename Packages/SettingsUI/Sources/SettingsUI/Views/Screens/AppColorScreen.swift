@@ -49,7 +49,6 @@ extension SettingsUI {
                 .padding(.horizontal, 16)
             }
             .ktakeSizeEagerly(alignment: .topLeading)
-            .navigationTitle(Text(NSLocalizedString("App colors", bundle: .module, comment: "")))
             #if os(iOS)
                 .navigationBarTitleDisplayMode(.inline)
             #endif

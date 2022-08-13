@@ -10,6 +10,18 @@ import Foundation
 public enum SettingsScreens: Hashable, Codable {
     case feedback(style: FeedbackStyles)
     case appColor
+    case supportAuthor
+
+    public var title: String {
+        switch self {
+        case let .feedback(style):
+            return style.title
+        case .appColor:
+            return NSLocalizedString("App colors", bundle: .module, comment: "")
+        case .supportAuthor:
+            return NSLocalizedString("Buy me coffee", bundle: .module, comment: "")
+        }
+    }
 }
 
 public enum FeedbackStyles: Hashable, Codable, CaseIterable {

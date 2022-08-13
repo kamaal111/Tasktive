@@ -38,12 +38,14 @@ extension SettingsUI {
 
         public var body: some View {
             Form {
-                if store.hasDonations { }
-                if showFeedbackSection {
-                    SettingsUI.FeedbackSection()
+                if store.hasDonations {
+                    SupportAuthorSection()
                 }
-                SettingsUI.PersonalizationSection()
-                SettingsUI.AboutSection()
+                if showFeedbackSection {
+                    FeedbackSection()
+                }
+                PersonalizationSection()
+                AboutSection()
             }
             .navigationDestination(for: SettingsScreens.self) { screen in
                 KJustStack {
@@ -59,14 +61,17 @@ extension SettingsUI {
                             Text(NSLocalizedString("Sorry something went wrong", bundle: .module, comment: ""))
                         }
                     case .appColor:
-                        SettingsUI.AppColorScreen(
+                        AppColorScreen(
                             defaultColor: defaultAppColor,
                             onColorSelect: { color in onColorSelect(color) }
                         )
+                    case .supportAuthor:
+                        SupportAuthorScreen()
                     }
                 }
                 .frame(minWidth: viewSize.width, minHeight: viewSize.height)
                 .accentColor(appColor)
+                .navigationTitle(Text(screen.title))
             }
             #if os(macOS)
             .padding(.vertical, 16)

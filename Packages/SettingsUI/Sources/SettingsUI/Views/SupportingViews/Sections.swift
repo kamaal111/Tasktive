@@ -9,6 +9,21 @@ import SwiftUI
 import SalmonUI
 
 extension SettingsUI {
+    @available(macOS 13.0, iOS 16.0, *)
+    public struct SupportAuthorSection: View {
+        public init() { }
+
+        public var body: some View {
+            SectionView(header: NSLocalizedString("Support Author", bundle: .module, comment: "")) {
+                RowImageTextNavigationLink(
+                    label: SettingsScreens.supportAuthor.title,
+                    imageSystemName: "cup.and.saucer.fill",
+                    destination: .supportAuthor
+                )
+            }
+        }
+    }
+
     public struct AboutSection: View {
         public init() { }
 
@@ -21,14 +36,15 @@ extension SettingsUI {
 
     @available(macOS 13.0, iOS 16.0, *)
     public struct PersonalizationSection: View {
-        private let label = NSLocalizedString("Change app color", bundle: .module, comment: "")
-        private let color: Color = .accentColor
-
         public init() { }
 
         public var body: some View {
             SectionView(header: NSLocalizedString("Personalization", bundle: .module, comment: "")) {
-                RowViewColorNavigationLink(label: label, color: color, destination: .appColor)
+                RowViewColorNavigationLink(
+                    label: SettingsScreens.appColor.title,
+                    color: .accentColor,
+                    destination: .appColor
+                )
             }
         }
     }

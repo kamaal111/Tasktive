@@ -51,7 +51,6 @@ extension SettingsUI {
             }
             .padding(.vertical, 16)
             .padding(.horizontal, 16)
-            .navigationTitle(Text(viewModel.style.title))
             #if os(iOS)
                 .navigationBarTitleDisplayMode(.inline)
             #endif
