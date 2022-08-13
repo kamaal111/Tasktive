@@ -34,6 +34,7 @@
 		2C51C918288481F7008939F7 /* Taskable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C917288481F7008939F7 /* Taskable.swift */; };
 		2C51C91A28848392008939F7 /* CoreTask+Taskable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C91928848392008939F7 /* CoreTask+Taskable.swift */; };
 		2C5AB1B9288D7C870069911C /* ScreenWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5AB1B8288D7C870069911C /* ScreenWrapper.swift */; };
+		2C62FA2F28A7E95F00200BF9 /* StoreKitDonation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C62FA2E28A7E95F00200BF9 /* StoreKitDonation.swift */; };
 		2C750F66288C2F9400026D67 /* CircularProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C750F65288C2F9400026D67 /* CircularProgressBar.swift */; };
 		2C750F68288C31CF00026D67 /* ProgressSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C750F67288C31CF00026D67 /* ProgressSection.swift */; };
 		2C750F6A288C328C00026D67 /* TasksSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C750F69288C328C00026D67 /* TasksSection.swift */; };
@@ -122,6 +123,7 @@
 		2C51C917288481F7008939F7 /* Taskable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Taskable.swift; sourceTree = "<group>"; };
 		2C51C91928848392008939F7 /* CoreTask+Taskable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTask+Taskable.swift"; sourceTree = "<group>"; };
 		2C5AB1B8288D7C870069911C /* ScreenWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenWrapper.swift; sourceTree = "<group>"; };
+		2C62FA2E28A7E95F00200BF9 /* StoreKitDonation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitDonation.swift; sourceTree = "<group>"; };
 		2C750F65288C2F9400026D67 /* CircularProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressBar.swift; sourceTree = "<group>"; };
 		2C750F67288C31CF00026D67 /* ProgressSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressSection.swift; sourceTree = "<group>"; };
 		2C750F69288C328C00026D67 /* TasksSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksSection.swift; sourceTree = "<group>"; };
@@ -359,6 +361,7 @@
 			children = (
 				2C51C915288481A9008939F7 /* AppTask.swift */,
 				2C15758B289EF43E00425CDD /* FeedbackMetadata.swift */,
+				2C62FA2E28A7E95F00200BF9 /* StoreKitDonation.swift */,
 			);
 			path = Structures;
 			sourceTree = "<group>";
@@ -707,6 +710,7 @@
 				2C47E3FB28836A6A00FD4469 /* DeviceModel.swift in Sources */,
 				2CDC17FD28A031AF00F07CF0 /* CoreReminder+CoreDataProperties.swift in Sources */,
 				2C51C90F28847438008939F7 /* Constants.swift in Sources */,
+				2C62FA2F28A7E95F00200BF9 /* StoreKitDonation.swift in Sources */,
 				2CDC17F428A0300400F07CF0 /* CoreTask+CoreDataClass.swift in Sources */,
 				2CBCE60E2881DE240057F4CD /* ContentView.swift in Sources */,
 				2CDC17E828A02E5400F07CF0 /* CoreBase+CoreDataClass.swift in Sources */,

@@ -16,7 +16,7 @@ extension SettingsUI {
         public var body: some View {
             SectionView(header: NSLocalizedString("Support Author", bundle: .module, comment: "")) {
                 RowImageTextNavigationLink(
-                    label: SettingsScreens.supportAuthor.title,
+                    label: NSLocalizedString("Buy me coffee", bundle: .module, comment: ""),
                     imageSystemName: "cup.and.saucer.fill",
                     destination: .supportAuthor
                 )

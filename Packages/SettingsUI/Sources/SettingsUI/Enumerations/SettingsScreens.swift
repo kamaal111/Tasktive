@@ -19,7 +19,7 @@ public enum SettingsScreens: Hashable, Codable {
         case .appColor:
             return NSLocalizedString("App colors", bundle: .module, comment: "")
         case .supportAuthor:
-            return NSLocalizedString("Buy me coffee", bundle: .module, comment: "")
+            return NSLocalizedString("Support Author", bundle: .module, comment: "")
         }
     }
 }

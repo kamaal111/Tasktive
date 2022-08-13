@@ -27,6 +27,7 @@ struct SettingsScreen: View {
             defaultAppColor: .AccentColor,
             viewSize: Constants.UI.settingsViewMinimumSize,
             feedbackConfiguration: viewModel.feedbackConfiguration,
+            storeKitDonations: [] as [StoreKitDonation],
             onFeedbackSend: onFeedbackSend(_:),
             onColorSelect: onColorSelect(_:)
         )

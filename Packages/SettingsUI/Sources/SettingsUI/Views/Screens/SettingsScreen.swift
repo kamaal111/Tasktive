@@ -11,7 +11,7 @@ import SalmonUI
 extension SettingsUI {
     @available(macOS 13.0, iOS 16.0, *)
     public struct SettingsScreen: View {
-        @StateObject private var store = Store()
+        @StateObject private var store: Store
 
         public let appColor: Color
         public let defaultAppColor: Color
@@ -25,6 +25,7 @@ extension SettingsUI {
             defaultAppColor: Color,
             viewSize: CGSize,
             feedbackConfiguration: FeedbackConfiguration?,
+            storeKitDonations: [some StoreKitDonatable],
             onFeedbackSend: @escaping (_: Error?) -> Void,
             onColorSelect: @escaping (_: AppColor) -> Void
         ) {
@@ -34,6 +35,7 @@ extension SettingsUI {
             self.feedbackConfiguration = feedbackConfiguration
             self.onFeedbackSend = onFeedbackSend
             self.onColorSelect = onColorSelect
+            self._store = StateObject(wrappedValue: Store(storeKitDonations: storeKitDonations))
         }
 
         public var body: some View {
@@ -67,21 +69,35 @@ extension SettingsUI {
                         )
                     case .supportAuthor:
                         SupportAuthorScreen()
+                            .environmentObject(store)
                     }
                 }
                 .frame(minWidth: viewSize.width, minHeight: viewSize.height)
                 .accentColor(appColor)
                 .navigationTitle(Text(screen.title))
             }
+            .onAppear(perform: handleAppear)
             #if os(macOS)
-            .padding(.vertical, 16)
-            .padding(.horizontal, 16)
-            .ktakeSizeEagerly(alignment: .topLeading)
+                .padding(.vertical, 16)
+                .padding(.horizontal, 16)
+                .ktakeSizeEagerly(alignment: .topLeading)
             #endif
         }
 
         private var showFeedbackSection: Bool {
             feedbackConfiguration?.gitHubToken != nil
+        }
+
+        private func handleAppear() {
+            Task {
+                let result = await store.requestProducts()
+                switch result {
+                case let .failure(failure):
+                    print(failure)
+                case .success:
+                    print("success")
+                }
+            }
         }
     }
 }
