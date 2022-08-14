@@ -16,9 +16,9 @@ enum Constants {
     static let appGroupIdentifier = "group.DXUKH9VF73.io.kamaal.Tasktive"
     static let appAccentColorKey = "AccentColor"
     static let donations: [StoreKitDonation] = [
-        .init(id: "io.kamaal.Tasktivity.donation.Soda", emoji: "🥤", weight: 0),
-        .init(id: "io.kamaal.Tasktivity.donation.Coffee", emoji: "☕️", weight: 1),
-        .init(id: "io.kamaal.Tasktivity.donation.Meal", emoji: "🍜", weight: 2),
+        .init(id: "io.kamaal.Tasktivity.donation.Soda", emoji: "🥤", weight: 1),
+        .init(id: "io.kamaal.Tasktivity.donation.Coffee", emoji: "☕️", weight: 2),
+        .init(id: "io.kamaal.Tasktivity.donation.Meal", emoji: "🍜", weight: 3),
     ]
 
     enum UI {
