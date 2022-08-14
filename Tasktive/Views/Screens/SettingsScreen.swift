@@ -28,7 +28,8 @@ struct SettingsScreen: View {
             feedbackConfiguration: feedbackConfiguration,
             storeKitDonations: Constants.donations,
             onFeedbackSend: onFeedbackSend(_:),
-            onColorSelect: onColorSelect(_:)
+            onColorSelect: onColorSelect(_:),
+            onPurchaseFailure: onPurchaseFailure(_:)
         )
     }
 
@@ -46,6 +47,18 @@ struct SettingsScreen: View {
 
     private var gitHubToken: String? {
         TokensHolder.shared.tokens?.gitHubToken
+    }
+
+    private func onPurchaseFailure(_ error: Error) {
+        logger.error(label: "failed to purchase", error: error)
+        popperUpManager.showPopup(
+            style: .bottom(
+                title: TasktiveLocale.getText(.SOMETHING_WENT_WRONG_ERROR_TITLE),
+                type: .error,
+                description: TasktiveLocale.getText(.PURCHASE_ERROR_DESCRIPTION)
+            ),
+            timeout: 3
+        )
     }
 
     private func onColorSelect(_ color: AppColor) {

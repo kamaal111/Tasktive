@@ -29,5 +29,6 @@ extension TasktiveLocale {
         case TOGGLE_SIDEBAR
         case FEEDBACK_ERROR_DESCRIPTION
         case FEEDBACK_SENT
+        case PURCHASE_ERROR_DESCRIPTION
     }
 }

@@ -28,6 +28,7 @@ extension SettingsUI {
         public let feedbackConfiguration: FeedbackConfiguration?
         public let onFeedbackSend: (_ maybeError: Error?) -> Void
         public let onColorSelect: (_ color: AppColor) -> Void
+        public let onPurchaseFailure: (_ error: Error) -> Void
 
         public init(
             navigationPath: Binding<NavigationPath>,
@@ -37,7 +38,8 @@ extension SettingsUI {
             feedbackConfiguration: FeedbackConfiguration?,
             storeKitDonations: [some StoreKitDonatable],
             onFeedbackSend: @escaping (_: Error?) -> Void,
-            onColorSelect: @escaping (_: AppColor) -> Void
+            onColorSelect: @escaping (_: AppColor) -> Void,
+            onPurchaseFailure: @escaping (_ error: Error) -> Void
         ) {
             self._navigationPath = navigationPath
             self.appColor = appColor
@@ -46,6 +48,7 @@ extension SettingsUI {
             self.feedbackConfiguration = feedbackConfiguration
             self.onFeedbackSend = onFeedbackSend
             self.onColorSelect = onColorSelect
+            self.onPurchaseFailure = onPurchaseFailure
             self._store = StateObject(wrappedValue: Store(storeKitDonations: storeKitDonations))
         }
 
@@ -79,7 +82,7 @@ extension SettingsUI {
                             onColorSelect: { color in onColorSelect(color) }
                         )
                     case .supportAuthor:
-                        SupportAuthorScreen(navigationPath: $navigationPath)
+                        SupportAuthorScreen(navigationPath: $navigationPath, handlePurchaseFailure: onPurchaseFailure)
                             .environmentObject(store)
                     }
                 }

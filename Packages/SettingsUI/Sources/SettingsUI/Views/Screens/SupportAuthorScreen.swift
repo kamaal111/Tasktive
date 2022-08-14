@@ -27,8 +27,12 @@ extension SettingsUI {
 
         @Binding public var navigationPath: NavigationPath
 
-        public init(navigationPath: Binding<NavigationPath>) {
+        let handlePurchaseFailure: (_ error: Store.Errors) -> Void
+
+        public init(navigationPath: Binding<NavigationPath>,
+                    handlePurchaseFailure: @escaping (_ error: Error) -> Void) {
             self._navigationPath = navigationPath
+            self.handlePurchaseFailure = handlePurchaseFailure
         }
 
         public var body: some View {
@@ -67,8 +71,7 @@ extension SettingsUI {
             store.purchaseDonation(donation, completion: { result in
                 switch result {
                 case let .failure(failure):
-                    // - TODO: HANDLE ERROR
-                    print(failure)
+                    handlePurchaseFailure(failure)
                     return
                 case .success:
                     break
