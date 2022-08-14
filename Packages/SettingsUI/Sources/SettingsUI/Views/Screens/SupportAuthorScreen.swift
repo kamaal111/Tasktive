@@ -8,6 +8,7 @@
 import os.log
 import SwiftUI
 import SalmonUI
+import ConfettiSwiftUI
 
 @available(macOS 13.0, iOS 16.0, *)
 private let logger = Logger(
@@ -19,6 +20,10 @@ extension SettingsUI {
     @available(macOS 13.0, iOS 16.0, *)
     public struct SupportAuthorScreen: View {
         @EnvironmentObject private var store: Store
+
+        @State private var confettiTimesRun = 0
+        @State private var numberOfConfettis = 20
+        @State private var confettiRepetitions = 0
 
         @Binding public var navigationPath: NavigationPath
 
@@ -55,6 +60,7 @@ extension SettingsUI {
             }
             .ktakeSizeEagerly(alignment: .topLeading)
             .onAppear(perform: handleAppear)
+            .confettiCannon(counter: $confettiTimesRun, num: numberOfConfettis, repetitions: confettiRepetitions)
         }
 
         private func handlePurchase(_ donation: CustomProduct) {
@@ -63,11 +69,23 @@ extension SettingsUI {
                 case let .failure(failure):
                     // - TODO: HANDLE ERROR
                     print(failure)
-                case let .success(success):
-                    // - TODO: CONFETTI TIME
-                    print(success)
+                    return
+                case .success:
+                    break
                 }
+
+                shootConfetti(for: donation)
             })
+        }
+
+        private func shootConfetti(for donation: CustomProduct) {
+            let weight = donation.weight
+
+            DispatchQueue.main.async {
+                numberOfConfettis = (20 * weight)
+                confettiRepetitions = weight < 1 ? 0 : (weight - 1)
+                confettiTimesRun += 1
+            }
         }
 
         private func handleAppear() {

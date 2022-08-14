@@ -20,6 +20,7 @@ let package = Package(
         .package(url: "https://github.com/kamaal111/SalmonUI.git", "4.0.0" ..< "5.0.0"),
         .package(url: "https://github.com/kamaal111/GitHubAPI.git", "0.1.1" ..< "0.2.0"),
         .package(url: "https://github.com/kamaal111/StoreAPIClient.git", "0.1.0" ..< "0.2.0"),
+        .package(url: "https://github.com/simibac/ConfettiSwiftUI.git", "1.0.1" ..< "1.0.2"),
     ],
     targets: [
         .target(
@@ -28,6 +29,7 @@ let package = Package(
                 .product(name: "StoreAPI", package: "StoreAPIClient"),
                 "SalmonUI",
                 "GitHubAPI",
+                "ConfettiSwiftUI",
             ],
             resources: [
                 .process("Resources"),
