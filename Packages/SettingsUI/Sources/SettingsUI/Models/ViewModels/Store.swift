@@ -24,7 +24,7 @@ extension Store {
 
 /// ViewModel to handle donations logic.
 @available(iOS 15.0, *)
-final class Store: ObservableObject {
+final class Store: NSObject, ObservableObject {
     /// Loading state. View should indicate there is a proccess loading.
     @Published private(set) var isLoading = false
     /// Requested donations from StoreKit.
@@ -37,7 +37,9 @@ final class Store: ObservableObject {
     private var purchasedIdentifiersToTimesPurchased: [String: Int] = [:]
     private var updateListenerTask: Task<Void, Never>?
 
-    let storeKitDonations: [StoreKitDonation.ID: StoreKitDonation]
+    var storeKitDonations: [StoreKitDonation.ID: StoreKitDonation] = [:]
+
+    override init() { }
 
     init<T: StoreKitDonatable>(storeKitDonations: [T]) {
         self.storeKitDonations = storeKitDonations
@@ -46,6 +48,8 @@ final class Store: ObservableObject {
                 mutableResult[donation.id] = StoreKitDonation(fromDonation: donation)
                 return mutableResult
             }
+
+        super.init()
 
         self.updateListenerTask = listenForTransactions()
     }
@@ -249,5 +253,23 @@ final class Store: ObservableObject {
         let result = await completion()
         isLoading = false
         return result
+    }
+}
+
+extension Store: SKPaymentTransactionObserver {
+    func paymentQueue(_: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
+        let purchasedOrRestoredOriginalTransactionID = transactions
+            .filter { $0.transactionState == .purchased || $0.transactionState == .restored }
+            .compactMap { $0.original?.transactionIdentifier }
+        logger.info("purchasedOrRestoredOriginalTransactionID='\(purchasedOrRestoredOriginalTransactionID)'")
+    }
+
+    func paymentQueue(_: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
+        let message = [
+            "failed to restore transactions",
+            "description='\(error.localizedDescription)'",
+            "error='\(error)'",
+        ]
+        logger.error("\(message)")
     }
 }
