@@ -10,8 +10,10 @@ import StoreAPI
 import StoreKit
 import Foundation
 
+@available(iOS 15.0, *)
 private let logger = Logger(subsystem: "io.kamaal.SettingsUI", category: String(describing: Store.self))
 
+@available(iOS 15.0, *)
 final class Store: ObservableObject {
     @Published private(set) var isLoading = false
     @Published private(set) var donations: [CustomProduct] = []
