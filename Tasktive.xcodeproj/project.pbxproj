@@ -73,6 +73,8 @@
 		2CF24AAA28842B5B00778BD9 /* View+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF24AA928842B5B00778BD9 /* View+extensions.swift */; };
 		2CF24AAE28842F9A00778BD9 /* ShrimpExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 2CF24AAD28842F9A00778BD9 /* ShrimpExtensions */; };
 		2CF24AB128843FE800778BD9 /* TasksScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF24AB028843FE800778BD9 /* TasksScreen.swift */; };
+		2CFCA0A428A977CE007A08F2 /* AppDelegate_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFCA0A328A977CE007A08F2 /* AppDelegate_macOS.swift */; };
+		2CFCA0A628A97842007A08F2 /* AppDelegate_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFCA0A528A97842007A08F2 /* AppDelegate_iOS.swift */; };
 		2CFEB90128A43905000B1667 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFEB90028A43905000B1667 /* Theme.swift */; };
 		2CFEB90328A43F75000B1667 /* UserDefaults+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFEB90228A43F75000B1667 /* UserDefaults+extensions.swift */; };
 /* End PBXBuildFile section */
@@ -169,6 +171,8 @@
 		2CF24AA928842B5B00778BD9 /* View+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+extensions.swift"; sourceTree = "<group>"; };
 		2CF24AAB28842E2600778BD9 /* package.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = package.json; sourceTree = "<group>"; };
 		2CF24AB028843FE800778BD9 /* TasksScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksScreen.swift; sourceTree = "<group>"; };
+		2CFCA0A328A977CE007A08F2 /* AppDelegate_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate_macOS.swift; sourceTree = "<group>"; };
+		2CFCA0A528A97842007A08F2 /* AppDelegate_iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate_iOS.swift; sourceTree = "<group>"; };
 		2CFEB90028A43905000B1667 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		2CFEB90228A43F75000B1667 /* UserDefaults+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -272,12 +276,12 @@
 			path = GenerateLocales;
 			sourceTree = "<group>";
 		};
-		2C39A91B28835AC1008BAFD2 /* locales */ = {
+		2C39A91B28835AC1008BAFD2 /* Locales */ = {
 			isa = PBXGroup;
 			children = (
 				2C47E3F42883693400FD4469 /* en.js */,
 			);
-			path = locales;
+			path = Locales;
 			sourceTree = "<group>";
 		};
 		2C3B27C7288CA260007CE538 /* Sheets */ = {
@@ -387,7 +391,7 @@
 				2C21A68E2896818000693CF2 /* yarn.lock */,
 				2CCCADAA2881EFB60033E2EF /* README.md */,
 				2CCCADCC2882010F0033E2EF /* Frameworks */,
-				2C39A91B28835AC1008BAFD2 /* locales */,
+				2C39A91B28835AC1008BAFD2 /* Locales */,
 				2C39A916288357CA008BAFD2 /* Packages */,
 				2CBCE6042881DE240057F4CD /* Products */,
 				2CCCADAC2881F1970033E2EF /* Scripts */,
@@ -409,6 +413,8 @@
 			isa = PBXGroup;
 			children = (
 				2CBCE6112881DE270057F4CD /* Tasktive.entitlements */,
+				2CFCA0A528A97842007A08F2 /* AppDelegate_iOS.swift */,
+				2CFCA0A328A977CE007A08F2 /* AppDelegate_macOS.swift */,
 				2C51C90E28847438008939F7 /* Constants.swift */,
 				2CBCE60D2881DE240057F4CD /* ContentView.swift */,
 				2C1B19662888675D00D734D2 /* MainView.swift */,
@@ -707,6 +713,7 @@
 				2CBCE6072881DE240057F4CD /* TasktiveApp.swift in Sources */,
 				2C3B27C6288C77F7007CE538 /* DateControlView.swift in Sources */,
 				2C51C918288481F7008939F7 /* Taskable.swift in Sources */,
+				2CFCA0A628A97842007A08F2 /* AppDelegate_iOS.swift in Sources */,
 				2CBCE6092881DE240057F4CD /* Persistence.swift in Sources */,
 				2CCCADD4288204100033E2EF /* Crudable.swift in Sources */,
 				2C750F66288C2F9400026D67 /* CircularProgressBar.swift in Sources */,
@@ -717,6 +724,7 @@
 				2C51C91A28848392008939F7 /* CoreTask+Taskable.swift in Sources */,
 				2CF24AB128843FE800778BD9 /* TasksScreen.swift in Sources */,
 				2CADF16D2895AAA300F5F6B7 /* AppSection.swift in Sources */,
+				2CFCA0A428A977CE007A08F2 /* AppDelegate_macOS.swift in Sources */,
 				2CDC180028A0321B00F07CF0 /* CoreTag+CoreDataClass.swift in Sources */,
 				2C47E3F22883688F00FD4469 /* Text+extensions.swift in Sources */,
 				2CF24AAA28842B5B00778BD9 /* View+extensions.swift in Sources */,

@@ -11,6 +11,12 @@ import SettingsUI
 /// &#128511;
 @main
 struct TasktiveApp: App {
+    #if os(macOS)
+    @NSApplicationDelegateAdaptor private var appDelegate: AppDelegate
+    #else
+    @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
+    #endif
+
     @StateObject private var tasksViewModel = TasksViewModel()
     @StateObject private var settingsStackNavigator = StackNavigator()
     @StateObject private var theme = Theme()

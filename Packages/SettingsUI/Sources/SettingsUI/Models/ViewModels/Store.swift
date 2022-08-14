@@ -13,6 +13,7 @@ import Foundation
 @available(iOS 15.0, *)
 private let logger = Logger(subsystem: "io.kamaal.SettingsUI", category: String(describing: Store.self))
 
+@available(iOS 15.0, *)
 extension Store {
     enum Errors: Error {
         case failedVerification
@@ -256,6 +257,7 @@ final class Store: NSObject, ObservableObject {
     }
 }
 
+@available(iOS 15.0, *)
 extension Store: SKPaymentTransactionObserver {
     func paymentQueue(_: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         let purchasedOrRestoredOriginalTransactionID = transactions
