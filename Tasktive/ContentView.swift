@@ -17,6 +17,9 @@ struct ContentView: View {
 
     var body: some View {
         MainView()
+            .onChange(of: namiNavigator.currentSelection, perform: { newValue in
+                NotificationCenter.default.post(name: .currentScreenChanged, object: newValue)
+            })
             .environmentObject(deviceModel)
             .environmentObject(namiNavigator)
             .withPopperUp(popperUpManager)

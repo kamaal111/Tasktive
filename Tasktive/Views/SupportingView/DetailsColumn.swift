@@ -12,21 +12,14 @@ struct DetailsColumn: View {
     @EnvironmentObject private var namiNavigator: NamiNavigator
 
     var body: some View {
-        ScreenWrapper(screen: currentSelection ?? STARTING_SCREEN) {
-            switch currentSelection ?? STARTING_SCREEN {
+        ScreenWrapper(screen: namiNavigator.currentSelection) {
+            switch namiNavigator.currentSelection {
             case .tasks:
                 TasksScreen()
             case .settings:
                 SettingsScreen()
             }
         }
-    }
-
-    private var currentSelection: NamiNavigator.Screens? {
-        if DeviceModel.deviceType.shouldHaveSidebar {
-            return namiNavigator.sidebarSelection
-        }
-        return namiNavigator.tabSelection
     }
 }
 

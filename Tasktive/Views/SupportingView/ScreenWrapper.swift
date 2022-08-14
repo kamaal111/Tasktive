@@ -10,7 +10,7 @@ import SwiftUI
 struct ScreenWrapper<Content: View>: View {
     @EnvironmentObject private var namiNavigator: NamiNavigator
 
-    @StateObject private var stackNavigator = StackNavigator()
+    @StateObject private var stackNavigator: StackNavigator
 
     let screen: NamiNavigator.Screens
     let content: Content
@@ -18,6 +18,7 @@ struct ScreenWrapper<Content: View>: View {
     init(screen: NamiNavigator.Screens, @ViewBuilder content: () -> Content) {
         self.screen = screen
         self.content = content()
+        self._stackNavigator = StateObject(wrappedValue: StackNavigator(screen: screen))
     }
 
     var body: some View {
@@ -26,6 +27,14 @@ struct ScreenWrapper<Content: View>: View {
                 .navigationTitle(Text(screen.title))
             #if os(iOS)
                 .navigationBarTitleDisplayMode(.large)
+            #endif
+            #if DEBUG
+                .navigationDestination(for: StackNavigator.Screens.self) { screen in
+                    switch screen {
+                    case .playground:
+                        PlaygroundScreen()
+                    }
+                }
             #endif
                 .environmentObject(stackNavigator)
         }

@@ -21,10 +21,26 @@ final class NamiNavigator: ObservableObject {
     @Published private(set) var pendingSidebarSelection: Screens?
 
     private var needsToNavigate = false
+    private let notifications: [Notification.Name] = [
+        .navigateToPlayground,
+    ]
 
     init() {
         self.tabSelection = STARTING_SCREEN
         self.sidebarSelection = STARTING_SCREEN
+
+        setupObservers()
+    }
+
+    deinit {
+        removeObservers()
+    }
+
+    var currentSelection: NamiNavigator.Screens {
+        if DeviceModel.deviceType.shouldHaveSidebar {
+            return sidebarSelection ?? STARTING_SCREEN
+        }
+        return tabSelection
     }
 
     var tabs: [Screens] {
@@ -47,12 +63,13 @@ final class NamiNavigator: ObservableObject {
         await setPendingSidebarSelection(.none)
     }
 
-    @MainActor
-    func navigateOnSidebar(to screen: Screens?) {
-        guard screen != sidebarSelection else { return }
-
-        needsToNavigate = true
-        setPendingSidebarSelection(screen)
+    func navigate(to screen: Screens?) async {
+        if DeviceModel.deviceType.shouldHaveSidebar {
+            await navigateOnSidebar(to: screen)
+        } else {
+            guard let screen = screen else { return }
+            await setTabSelection(screen)
+        }
     }
 
     @MainActor
@@ -61,8 +78,47 @@ final class NamiNavigator: ObservableObject {
     }
 
     @MainActor
+    func setTabSelection(_ selection: Screens) {
+        tabSelection = selection
+    }
+
+    @MainActor
+    private func navigateOnSidebar(to screen: Screens?) {
+        guard screen != sidebarSelection else { return }
+
+        needsToNavigate = true
+        setPendingSidebarSelection(screen)
+    }
+
+    @MainActor
     private func setPendingSidebarSelection(_ selection: Screens?) {
         pendingSidebarSelection = selection
+    }
+
+    private func setupObservers() {
+        notifications.forEach { notification in
+            NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(handleNotification),
+                name: notification,
+                object: .none
+            )
+        }
+    }
+
+    private func removeObservers() {
+        notifications.forEach { notification in
+            NotificationCenter.default.removeObserver(self, name: notification, object: .none)
+        }
+    }
+
+    @objc
+    private func handleNotification(_ notification: Notification) {
+        let name = notification.name
+        switch name {
+        default:
+            break
+        }
     }
 }
 

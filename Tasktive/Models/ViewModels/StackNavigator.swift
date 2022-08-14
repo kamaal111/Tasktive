@@ -16,7 +16,21 @@ final class StackNavigator: ObservableObject {
         }
     }
 
-    init() { }
+    let screen: NamiNavigator.Screens
+
+    private let notifications: [Notification.Name] = [
+        .navigateToPlayground,
+    ]
+
+    init(screen: NamiNavigator.Screens) {
+        self.screen = screen
+
+        setupObservers()
+    }
+
+    deinit {
+        removeObservers()
+    }
 
     @MainActor
     func navigate<T: Codable & Hashable>(to screen: T) {
@@ -36,8 +50,49 @@ final class StackNavigator: ObservableObject {
         await setPath(path)
     }
 
+    private func setupObservers() {
+        notifications.forEach { notification in
+            NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(handleNotification),
+                name: notification,
+                object: .none
+            )
+        }
+    }
+
+    private func removeObservers() {
+        notifications.forEach { notification in
+            NotificationCenter.default.removeObserver(self, name: notification, object: .none)
+        }
+    }
+
+    @objc
+    private func handleNotification(_ notification: Notification) {
+        let name = notification.name
+        switch name {
+        #if DEBUG
+        case .navigateToPlayground:
+            #warning("for some reason still not navigating in a specific stack, but not a real bug for now")
+            if screen == notification.object as? NamiNavigator.Screens {
+                Task { await navigate(to: StackNavigator.Screens.playground) }
+            }
+        #endif
+        default:
+            break
+        }
+    }
+
     @MainActor
     private func setPath(_ path: NavigationPath) {
         self.path = path
     }
+}
+
+extension StackNavigator {
+    #if DEBUG
+    enum Screens: Int, Hashable, Codable, CaseIterable {
+        case playground
+    }
+    #endif
 }

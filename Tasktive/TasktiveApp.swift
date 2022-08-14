@@ -18,19 +18,38 @@ struct TasktiveApp: App {
     #endif
 
     @StateObject private var tasksViewModel = TasksViewModel()
-    @StateObject private var settingsStackNavigator = StackNavigator()
+    @StateObject private var settingsStackNavigator = StackNavigator(screen: .settings)
     @StateObject private var theme = Theme()
+
+    @State private var currentScreen = STARTING_SCREEN
 
     private let persistenceController = PersistenceController.shared
 
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .onReceive(NotificationCenter.default.publisher(for: .currentScreenChanged), perform: { notification in
+                    guard let currentScreen = notification.object as? NamiNavigator.Screens else { return }
+
+                    self.currentScreen = currentScreen
+                })
                 .accentColor(theme.currentAccentColor)
                 .environment(\.managedObjectContext, persistenceController.context)
                 .environmentObject(tasksViewModel)
                 .environmentObject(theme)
         }
+        #if DEBUG
+            .commands(content: {
+                CommandGroup(replacing: .help) {
+                    // Send notification to NamiNavigator to navigate to playground where there are no laws 🤠
+                    Button(action: {
+                        NotificationCenter.default.post(name: .navigateToPlayground, object: currentScreen)
+                    }) {
+                        Text("Playground")
+                    }
+                }
+            })
+        #endif
         #if os(macOS)
         Settings {
             NavigationStack(path: $settingsStackNavigator.path) {
