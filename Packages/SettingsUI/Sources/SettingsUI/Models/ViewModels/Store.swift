@@ -36,6 +36,10 @@ final class Store: ObservableObject {
         SKPaymentQueue.canMakePayments() && !isLoading
     }
 
+    func purchaseDonation(_: CustomProduct) {
+        print("purchasing")
+    }
+
     func requestProducts() async -> Result<Void, Error> {
         guard !hasDonations, !storeKitDonations.isEmpty else { return .success(()) }
 

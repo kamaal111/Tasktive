@@ -35,7 +35,9 @@ extension SettingsUI {
                                 .ktakeSizeEagerly()
                         }
                         ForEach(store.donations) { donation in
-                            Text(donation.displayName)
+                            DonationsButton(donation: donation, action: store.purchaseDonation(_:))
+                                .padding(.vertical, 4)
+                                .disabled(!store.canMakePayments)
                         }
                     }
                     if store.isPurchasing {
@@ -48,6 +50,8 @@ extension SettingsUI {
                         .ktakeSizeEagerly()
                     }
                 }
+                .padding(.vertical, 16)
+                .padding(.horizontal, 16)
             }
             .ktakeSizeEagerly(alignment: .topLeading)
             .onAppear(perform: handleAppear)
