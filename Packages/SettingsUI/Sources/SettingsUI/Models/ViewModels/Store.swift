@@ -13,11 +13,22 @@ import Foundation
 @available(iOS 15.0, *)
 private let logger = Logger(subsystem: "io.kamaal.SettingsUI", category: String(describing: Store.self))
 
-/// ViewModel to handle donations logic
+extension Store {
+    enum Errors: Error {
+        case failedVerification
+        case getProducts
+        case purchaseError(causeError: Error?)
+    }
+}
+
+/// ViewModel to handle donations logic.
 @available(iOS 15.0, *)
 final class Store: ObservableObject {
+    /// Loading state. View should indicate there is a proccess loading.
     @Published private(set) var isLoading = false
+    /// Requested donations from StoreKit.
     @Published private(set) var donations: [CustomProduct] = []
+    /// Purchasing state. View should indicate user is currently purchasing.
     @Published private(set) var isPurchasing = false
 
     private var purchasingTask: Task<Void, Never>?
@@ -61,10 +72,12 @@ final class Store: ObservableObject {
             switch result {
             case let .failure(failure):
                 // - TODO: HANDLE ERROR
-                logger
-                    .error(
-                        "failed to verify or purchase product; description='\(failure.localizedDescription)'; error='\(failure)'"
-                    )
+                let message = [
+                    "failed to verify or purchase product",
+                    "description='\(failure.localizedDescription)'",
+                    "error='\(failure)'",
+                ].joined(separator: ";")
+                logger.error("\(message)")
                 return
             case let .success(success):
                 transaction = success
@@ -75,7 +88,7 @@ final class Store: ObservableObject {
         }
     }
 
-    func requestProducts() async -> Result<Void, Error> {
+    func requestProducts() async -> Result<Void, Errors> {
         guard !hasDonations, !storeKitDonations.isEmpty else { return .success(()) }
 
         logger.info("requesting products")
@@ -88,7 +101,7 @@ final class Store: ObservableObject {
                 products = try await Product.products(for: storeKitDonationsIDs)
             } catch {
                 logger.error("failed to get products; description='\(error.localizedDescription)'; error='\(error)'")
-                return .failure(error)
+                return .failure(.getProducts)
             }
 
             let donations: [CustomProduct] = products
@@ -118,7 +131,7 @@ final class Store: ObservableObject {
         })
     }
 
-    private func verifyAndPurchase(_ product: Product) async -> Result<Transaction?, Error> {
+    private func verifyAndPurchase(_ product: Product) async -> Result<Transaction?, Errors> {
         await withIsPurchasing(completion: {
             await withLoading(completion: {
                 logger.info("purchasing product with id \(product.id)")
@@ -127,7 +140,13 @@ final class Store: ObservableObject {
                 do {
                     purchaseResult = try await product.purchase()
                 } catch {
-                    return .failure(error)
+                    let message = [
+                        "failed to purchase product",
+                        "description='\(error.localizedDescription)'",
+                        "error='\(error)'",
+                    ].joined(separator: ";")
+                    logger.error("\(message)")
+                    return .failure(.purchaseError(causeError: error))
                 }
 
                 let verification: VerificationResult<Transaction>
@@ -137,9 +156,14 @@ final class Store: ObservableObject {
                 default: return .success(.none)
                 }
 
-                let transaction: Transaction? = checkVerified(verification)
-                // - TODO: WILL LATER ON BE AN ACTUAL VALUE OR ERROR
-                guard let transaction = transaction else { return .success(.none) }
+                let transaction: Transaction
+                switch checkVerified(verification) {
+                case let .failure(failure):
+                    return .failure(failure)
+                case let .success(success):
+                    transaction = success
+                }
+
                 await updatePurchasedIdentifiers(transaction)
 
                 await transaction.finish()
@@ -150,15 +174,22 @@ final class Store: ObservableObject {
         })
     }
 
+    /// Update transactions regularly on a detached task for whenever the user makes a transaction outside of the app
+    /// - Returns: a Task result that does not return anything and does not fail
     private func listenForTransactions() -> Task<Void, Never> {
         Task.detached { [weak self] in
             guard let self = self else { return }
 
             // Iterate through any transactions which didn't come from a direct call to `purchase()`.
             for await result in Transaction.updates {
-                let transaction: Transaction? = self.checkVerified(result)
-                // - TODO: WILL LATER ON BE AN ACTUAL VALUE OR ERROR
-                guard let transaction = transaction else { continue }
+                let transaction: Transaction
+                switch self.checkVerified(result) {
+                case let .failure(failure):
+                    logger.error("failed to verify transaction; error='\(failure)'")
+                    continue
+                case let .success(success):
+                    transaction = success
+                }
 
                 await self.updatePurchasedIdentifiers(transaction)
 
@@ -186,13 +217,12 @@ final class Store: ObservableObject {
         purchasedIdentifiersToTimesPurchased[identifier] = value + increment
     }
 
-    private func checkVerified<T>(_ result: VerificationResult<T>) -> T? {
+    private func checkVerified<T>(_ result: VerificationResult<T>) -> Result<T, Errors> {
         switch result {
         // StoreKit has parsed the JWS but failed verification. Don't deliver content to the user.
-        // - TODO: ACTUALLY THROW ERROR INSTEAD
-        case .unverified: return nil
+        case .unverified: return .failure(.failedVerification)
         // If the transaction is verified, unwrap and return it.
-        case let .verified(safe): return safe
+        case let .verified(safe): return .success(safe)
         }
     }
 

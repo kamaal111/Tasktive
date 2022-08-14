@@ -62,10 +62,11 @@ extension SettingsUI {
                 let result = await store.requestProducts()
                 switch result {
                 case let .failure(failure):
-                    logger
-                        .error(
-                            "failed to get donations; description='\(failure.localizedDescription)'; error='\(failure)'"
-                        )
+                    let message = [
+                        "failed to get donations",
+                        "error='\(failure)'",
+                    ].joined(separator: ";")
+                    logger.error("\(message)")
                     // Navigate back
                     navigationPath.removeLast()
                 case .success:
