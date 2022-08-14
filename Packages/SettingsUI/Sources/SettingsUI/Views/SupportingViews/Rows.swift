@@ -129,7 +129,9 @@ extension SettingsUI {
                 })
                 .foregroundColor(.accentColor)
                 #if os(macOS)
-                    .background(Color(nsColor: .separatorColor).opacity(0.1))
+                    // Hack: need the following 2 lines to be fully clickable on macOS
+                    .ktakeWidthEagerly()
+                    .background(Color(nsColor: .separatorColor).opacity(0.01))
                 #endif
             }
             .buttonStyle(.plain)
@@ -169,6 +171,11 @@ extension SettingsUI {
             NavigationLink(value: destination) {
                 value
                     .foregroundColor(.accentColor)
+                #if os(macOS)
+                    // Hack: need the following 2 lines to be fully clickable on macOS
+                    .ktakeWidthEagerly()
+                    .background(Color(nsColor: .separatorColor).opacity(0.01))
+                #endif
             }
             .buttonStyle(.plain)
         }
