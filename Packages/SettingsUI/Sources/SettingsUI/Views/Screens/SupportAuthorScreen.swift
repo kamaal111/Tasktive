@@ -35,7 +35,7 @@ extension SettingsUI {
                                 .ktakeSizeEagerly()
                         }
                         ForEach(store.donations) { donation in
-                            DonationsButton(donation: donation, action: store.purchaseDonation(_:))
+                            DonationsButton(donation: donation, action: handlePurchase(_:))
                                 .padding(.vertical, 4)
                                 .disabled(!store.canMakePayments)
                         }
@@ -55,6 +55,19 @@ extension SettingsUI {
             }
             .ktakeSizeEagerly(alignment: .topLeading)
             .onAppear(perform: handleAppear)
+        }
+
+        private func handlePurchase(_ donation: CustomProduct) {
+            store.purchaseDonation(donation, completion: { result in
+                switch result {
+                case let .failure(failure):
+                    // - TODO: HANDLE ERROR
+                    print(failure)
+                case let .success(success):
+                    // - TODO: CONFETTI TIME
+                    print(success)
+                }
+            })
         }
 
         private func handleAppear() {

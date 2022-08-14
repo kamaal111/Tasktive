@@ -18,6 +18,7 @@ extension Store {
         case failedVerification
         case getProducts
         case purchaseError(causeError: Error?)
+        case noTransactionMade
     }
 }
 
@@ -61,7 +62,7 @@ final class Store: ObservableObject {
         SKPaymentQueue.canMakePayments() && (!isLoading || !isPurchasing)
     }
 
-    func purchaseDonation(_ donation: CustomProduct) {
+    func purchaseDonation(_ donation: CustomProduct, completion: @escaping (Result<Transaction, Errors>) -> Void) {
         guard canMakePayments, let foundProduct = products.first(where: { $0.id == donation.id }) else { return }
 
         purchasingTask?.cancel()
@@ -71,20 +72,23 @@ final class Store: ObservableObject {
             let transaction: Transaction?
             switch result {
             case let .failure(failure):
-                // - TODO: HANDLE ERROR
                 let message = [
                     "failed to verify or purchase product",
                     "description='\(failure.localizedDescription)'",
                     "error='\(failure)'",
                 ].joined(separator: ";")
                 logger.error("\(message)")
+                completion(.failure(failure))
                 return
             case let .success(success):
                 transaction = success
             }
-            guard transaction != nil else { return }
+            guard let transaction = transaction else {
+                completion(.failure(.noTransactionMade))
+                return
+            }
 
-            // - TODO: CONFETTI TIME
+            completion(.success(transaction))
         }
     }
 
