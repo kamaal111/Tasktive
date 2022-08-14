@@ -49,9 +49,6 @@ extension SettingsUI {
                 .padding(.horizontal, 16)
             }
             .ktakeSizeEagerly(alignment: .topLeading)
-            #if os(iOS)
-                .navigationBarTitleDisplayMode(.inline)
-            #endif
         }
     }
 }

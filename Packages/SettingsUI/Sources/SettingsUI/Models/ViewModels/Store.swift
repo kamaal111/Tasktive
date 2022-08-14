@@ -17,11 +17,15 @@ final class Store: ObservableObject {
     @Published private(set) var donations: [CustomProduct] = []
     @Published private(set) var isPurchasing = false
 
-    let storeKitDonations: [StoreKitDonation]
+    let storeKitDonations: [StoreKitDonation.ID: StoreKitDonation]
 
     init<T: StoreKitDonatable>(storeKitDonations: [T]) {
         self.storeKitDonations = storeKitDonations
-            .map(StoreKitDonation.init(_:))
+            .reduce([:]) { result, donation in
+                var mutableResult = result
+                mutableResult[donation.id] = StoreKitDonation(fromDonation: donation)
+                return mutableResult
+            }
     }
 
     var hasDonations: Bool {
@@ -38,7 +42,7 @@ final class Store: ObservableObject {
         logger.info("requesting products")
 
         return await withLoading(completion: {
-            let storeKitDonationsIDs = storeKitDonations.map(\.id)
+            let storeKitDonationsIDs = storeKitDonations.map(\.value.id)
 
             let products: [Product]
             do {
@@ -48,13 +52,13 @@ final class Store: ObservableObject {
                 return .failure(error)
             }
 
-            donations = products
+            let donations: [CustomProduct] = products
                 .compactMap { product in
                     let displayName = product.displayName
 
                     guard !displayName.isEmpty,
                           product.type == .consumable,
-                          let donationItem = storeKitDonations.first(where: { $0.id == product.id }) else { return nil }
+                          let donationItem = storeKitDonations[product.id] else { return nil }
 
                     return CustomProduct(
                         id: product.id,
@@ -66,10 +70,17 @@ final class Store: ObservableObject {
                         description: product.description
                     )
                 }
-                .sorted(by: { $0.price < $1.price })
+                .sorted(by: { $0.weight < $1.weight })
+
+            await setDonations(donations)
 
             return .success(())
         })
+    }
+
+    @MainActor
+    private func setDonations(_ donations: [CustomProduct]) {
+        self.donations = donations
     }
 
     @MainActor

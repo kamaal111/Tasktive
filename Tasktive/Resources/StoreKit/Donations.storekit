@@ -1,0 +1,63 @@
+{
+  "identifier" : "978D97EA",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "4BC6CC47",
+      "localizations" : [
+        {
+          "description" : "Support development (tear 1)",
+          "displayName" : "Soda",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "io.kamaal.Tasktivity.donation.Soda",
+      "referenceName" : "Soda",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "4.99",
+      "familyShareable" : false,
+      "internalID" : "91060CCA",
+      "localizations" : [
+        {
+          "description" : "Support development (tear 2)",
+          "displayName" : "Coffee",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "io.kamaal.Tasktivity.donation.Coffee",
+      "referenceName" : "Coffee",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "8.99",
+      "familyShareable" : false,
+      "internalID" : "30331518",
+      "localizations" : [
+        {
+          "description" : "Support development (tear 3)",
+          "displayName" : "Meal",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "io.kamaal.Tasktivity.donation.Meal",
+      "referenceName" : "Meal",
+      "type" : "Consumable"
+    }
+  ],
+  "settings" : {
+
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 2,
+    "minor" : 0
+  }
+}

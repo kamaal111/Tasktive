@@ -5,13 +5,22 @@
 //  Created by Kamaal M Farah on 12/08/2022.
 //
 
+import os.log
 import SwiftUI
 import SalmonUI
+
+@available(macOS 13.0, iOS 16.0, *)
+private let logger = Logger(
+    subsystem: "io.kamaal.SettingsUI",
+    category: String(describing: SettingsUI.SettingsScreen.self)
+)
 
 extension SettingsUI {
     @available(macOS 13.0, iOS 16.0, *)
     public struct SettingsScreen: View {
         @StateObject private var store: Store
+
+        @Binding public var navigationPath: NavigationPath
 
         public let appColor: Color
         public let defaultAppColor: Color
@@ -21,6 +30,7 @@ extension SettingsUI {
         public let onColorSelect: (_ color: AppColor) -> Void
 
         public init(
+            navigationPath: Binding<NavigationPath>,
             appColor: Color,
             defaultAppColor: Color,
             viewSize: CGSize,
@@ -29,6 +39,7 @@ extension SettingsUI {
             onFeedbackSend: @escaping (_: Error?) -> Void,
             onColorSelect: @escaping (_: AppColor) -> Void
         ) {
+            self._navigationPath = navigationPath
             self.appColor = appColor
             self.defaultAppColor = defaultAppColor
             self.viewSize = viewSize
@@ -68,13 +79,16 @@ extension SettingsUI {
                             onColorSelect: { color in onColorSelect(color) }
                         )
                     case .supportAuthor:
-                        SupportAuthorScreen()
+                        SupportAuthorScreen(navigationPath: $navigationPath)
                             .environmentObject(store)
                     }
                 }
                 .frame(minWidth: viewSize.width, minHeight: viewSize.height)
                 .accentColor(appColor)
                 .navigationTitle(Text(screen.title))
+                #if os(iOS)
+                    .navigationBarTitleDisplayMode(.inline)
+                #endif
             }
             .onAppear(perform: handleAppear)
             #if os(macOS)
@@ -93,9 +107,12 @@ extension SettingsUI {
                 let result = await store.requestProducts()
                 switch result {
                 case let .failure(failure):
-                    print(failure)
+                    logger
+                        .error(
+                            "failed to get donations; description='\(failure.localizedDescription)'; error='\(failure)'"
+                        )
                 case .success:
-                    print("success")
+                    break
                 }
             }
         }

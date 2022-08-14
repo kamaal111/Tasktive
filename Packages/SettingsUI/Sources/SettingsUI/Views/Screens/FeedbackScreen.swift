@@ -51,9 +51,6 @@ extension SettingsUI {
             }
             .padding(.vertical, 16)
             .padding(.horizontal, 16)
-            #if os(iOS)
-                .navigationBarTitleDisplayMode(.inline)
-            #endif
         }
 
         private func onSendPress() {

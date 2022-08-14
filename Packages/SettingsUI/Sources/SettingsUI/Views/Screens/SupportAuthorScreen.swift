@@ -5,14 +5,26 @@
 //  Created by Kamaal M Farah on 13/08/2022.
 //
 
+import os.log
 import SwiftUI
 import SalmonUI
 
+@available(macOS 13.0, iOS 16.0, *)
+private let logger = Logger(
+    subsystem: "io.kamaal.SettingsUI",
+    category: String(describing: SettingsUI.SupportAuthorScreen.self)
+)
+
 extension SettingsUI {
+    @available(macOS 13.0, iOS 16.0, *)
     public struct SupportAuthorScreen: View {
         @EnvironmentObject private var store: Store
 
-        public init() { }
+        @Binding public var navigationPath: NavigationPath
+
+        public init(navigationPath: Binding<NavigationPath>) {
+            self._navigationPath = navigationPath
+        }
 
         public var body: some View {
             ScrollView(.vertical, showsIndicators: true) {
@@ -38,9 +50,24 @@ extension SettingsUI {
                 }
             }
             .ktakeSizeEagerly(alignment: .topLeading)
-            #if os(iOS)
-                .navigationBarTitleDisplayMode(.inline)
-            #endif
+            .onAppear(perform: handleAppear)
+        }
+
+        private func handleAppear() {
+            Task {
+                let result = await store.requestProducts()
+                switch result {
+                case let .failure(failure):
+                    logger
+                        .error(
+                            "failed to get donations; description='\(failure.localizedDescription)'; error='\(failure)'"
+                        )
+                    // Navigate back
+                    navigationPath.removeLast()
+                case .success:
+                    break
+                }
+            }
         }
     }
 }

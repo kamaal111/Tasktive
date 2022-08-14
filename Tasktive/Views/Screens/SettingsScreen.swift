@@ -19,18 +19,33 @@ struct SettingsScreen: View {
     @EnvironmentObject private var stackNavigator: StackNavigator
     @EnvironmentObject private var theme: Theme
 
-    @StateObject private var viewModel = ViewModel()
-
     var body: some View {
         SettingsUI.SettingsScreen(
+            navigationPath: $stackNavigator.path,
             appColor: theme.currentAccentColor,
             defaultAppColor: .AccentColor,
             viewSize: Constants.UI.settingsViewMinimumSize,
-            feedbackConfiguration: viewModel.feedbackConfiguration,
-            storeKitDonations: [] as [StoreKitDonation],
+            feedbackConfiguration: feedbackConfiguration,
+            storeKitDonations: Constants.donations,
             onFeedbackSend: onFeedbackSend(_:),
             onColorSelect: onColorSelect(_:)
         )
+    }
+
+    private var feedbackConfiguration: FeedbackConfiguration? {
+        guard let gitHubToken = gitHubToken else { return nil }
+
+        return .init(
+            gitHubToken: gitHubToken,
+            gitHubUsername: Constants.gitHubUsername,
+            repoName: Constants.repoName,
+            additionalFeedbackData: FeedbackMetadata(),
+            additionalIssueLabels: [DeviceModel.deviceType.issueLabel]
+        )
+    }
+
+    private var gitHubToken: String? {
+        TokensHolder.shared.tokens?.gitHubToken
     }
 
     private func onColorSelect(_ color: AppColor) {
@@ -56,28 +71,6 @@ struct SettingsScreen: View {
             style: .bottom(title: TasktiveLocale.getText(.FEEDBACK_SENT), type: .success, description: nil),
             timeout: 3
         )
-    }
-}
-
-extension SettingsScreen {
-    final class ViewModel: ObservableObject {
-        init() { }
-
-        var feedbackConfiguration: FeedbackConfiguration? {
-            guard let gitHubToken = gitHubToken else { return nil }
-
-            return .init(
-                gitHubToken: gitHubToken,
-                gitHubUsername: Constants.gitHubUsername,
-                repoName: Constants.repoName,
-                additionalFeedbackData: FeedbackMetadata(),
-                additionalIssueLabels: [DeviceModel.deviceType.issueLabel]
-            )
-        }
-
-        private var gitHubToken: String? {
-            TokensHolder.shared.tokens?.gitHubToken
-        }
     }
 }
 
