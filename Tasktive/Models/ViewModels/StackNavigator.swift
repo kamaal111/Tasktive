@@ -10,12 +10,7 @@ import SwiftUI
 private let logger = Logster(from: StackNavigator.self)
 
 final class StackNavigator: ObservableObject {
-    @Published var path = NavigationPath() {
-        didSet {
-            logger.info("current path is \(path) on \(screen)")
-        }
-    }
-
+    @Published var path = NavigationPath()
     @Published private(set) var screen: NamiNavigator.Screens
 
     private let notifications: [Notification.Name] = [
@@ -41,6 +36,7 @@ final class StackNavigator: ObservableObject {
 
     @MainActor
     func navigate<T: Codable & Hashable>(to screen: T) {
+        // - TODO: Check if incoming is same last screen using `path.asDictionaryArray` and not navigate if it's the same screen
         path.append(screen)
     }
 
