@@ -222,21 +222,6 @@
 			path = src;
 			sourceTree = "<group>";
 		};
-		2C12686E28A982D1003D1E56 /* SwiftUI */ = {
-			isa = PBXGroup;
-			children = (
-				2C12686F28A982DA003D1E56 /* Commands */,
-			);
-			path = SwiftUI;
-			sourceTree = "<group>";
-		};
-		2C12686F28A982DA003D1E56 /* Commands */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Commands;
-			sourceTree = "<group>";
-		};
 		2C12687028A984E3003D1E56 /* Playground */ = {
 			isa = PBXGroup;
 			children = (
@@ -451,7 +436,6 @@
 				2CBCE6122881DE270057F4CD /* Preview Content */,
 				2CCCADD2288204040033E2EF /* Protocols */,
 				2C15758D289F026000425CDD /* Resources */,
-				2C12686E28A982D1003D1E56 /* SwiftUI */,
 				2CCCADCF288203480033E2EF /* Utilities */,
 				2C47E3FE28836F6200FD4469 /* Views */,
 			);

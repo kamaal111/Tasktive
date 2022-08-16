@@ -47,6 +47,7 @@ struct TasktiveApp: App {
                     }) {
                         Text("Playground")
                     }
+                    .keyboardShortcut("D", modifiers: [.command, .shift])
                 }
             })
         #endif

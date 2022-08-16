@@ -12,11 +12,11 @@ private let logger = Logster(from: StackNavigator.self)
 final class StackNavigator: ObservableObject {
     @Published var path = NavigationPath() {
         didSet {
-            logger.info("current path is \(path)")
+            logger.info("current path is \(path) on \(screen)")
         }
     }
 
-    let screen: NamiNavigator.Screens
+    @Published private(set) var screen: NamiNavigator.Screens
 
     private let notifications: [Notification.Name] = [
         .navigateToPlayground,
@@ -30,6 +30,13 @@ final class StackNavigator: ObservableObject {
 
     deinit {
         removeObservers()
+    }
+
+    @MainActor
+    func changeScreen(to screen: NamiNavigator.Screens) {
+        guard self.screen != screen else { return }
+
+        self.screen = screen
     }
 
     @MainActor
@@ -73,8 +80,7 @@ final class StackNavigator: ObservableObject {
         switch name {
         #if DEBUG
         case .navigateToPlayground:
-            #warning("for some reason still not navigating in a specific stack, but not a real bug for now")
-            if screen == notification.object as? NamiNavigator.Screens {
+            if let notificationScreen = notification.object as? NamiNavigator.Screens, screen == notificationScreen {
                 Task { await navigate(to: StackNavigator.Screens.playground) }
             }
         #endif
