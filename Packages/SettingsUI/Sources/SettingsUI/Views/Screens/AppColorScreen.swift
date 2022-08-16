@@ -22,7 +22,7 @@ extension SettingsUI {
         }
 
         public var body: some View {
-            ScrollView(.vertical, showsIndicators: true) {
+            ScrollableForm {
                 SectionView(header: NSLocalizedString("Colors", bundle: .module, comment: "")) {
                     ForEach(AppColor.defaultColors) { color in
                         if let variants = color.variants {
@@ -45,8 +45,10 @@ extension SettingsUI {
                         #endif
                     }
                 }
+                #if os(macOS)
                 .padding(.vertical, 16)
                 .padding(.horizontal, 16)
+                #endif
             }
             .ktakeSizeEagerly(alignment: .topLeading)
         }

@@ -53,7 +53,7 @@ extension SettingsUI {
         }
 
         public var body: some View {
-            Form {
+            ScrollableForm {
                 if store.hasDonations {
                     SupportAuthorSection()
                 }
