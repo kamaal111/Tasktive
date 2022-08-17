@@ -7,10 +7,13 @@
 
 #if DEBUG
 import SwiftUI
+import SalmonUI
 
 struct PlaygroundScreen: View {
     var body: some View {
-        Text("Hello, World!")
+        KScrollableForm {
+            Text("Hello, World!")
+        }
     }
 }
 

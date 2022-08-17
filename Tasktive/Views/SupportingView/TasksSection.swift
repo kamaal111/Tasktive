@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SalmonUI
+import TasktiveLocale
 
 struct TasksSection: View {
     let tasks: [AppTask]
@@ -17,9 +18,9 @@ struct TasksSection: View {
     let onDetailsPress: (_ task: AppTask) -> Void
 
     var body: some View {
-        AppSection(header: .TASKS) {
+        KSection(header: TasktiveLocale.getText(.TASKS)) {
             if loading {
-                LoadingView()
+                KLoading()
                     .ktakeWidthEagerly()
             } else if tasks.isEmpty {
                 Text(localized: .ADD_NEW_TASK)

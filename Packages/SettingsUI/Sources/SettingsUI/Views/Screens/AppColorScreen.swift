@@ -22,8 +22,8 @@ extension SettingsUI {
         }
 
         public var body: some View {
-            ScrollableForm {
-                SectionView(header: NSLocalizedString("Colors", bundle: .module, comment: "")) {
+            KScrollableForm {
+                KSection(header: NSLocalizedString("Colors", bundle: .module, comment: "")) {
                     ForEach(AppColor.defaultColors) { color in
                         if let variants = color.variants {
                             RowViewColorButton(

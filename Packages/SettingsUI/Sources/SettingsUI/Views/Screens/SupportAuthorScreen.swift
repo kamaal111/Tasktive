@@ -40,7 +40,7 @@ extension SettingsUI {
                 ZStack {
                     VStack {
                         if store.isLoading, !store.hasDonations {
-                            LoadingView()
+                            KLoading()
                                 .ktakeSizeEagerly()
                         }
                         ForEach(store.donations) { donation in
@@ -51,7 +51,7 @@ extension SettingsUI {
                     }
                     if store.isPurchasing {
                         HStack {
-                            LoadingView()
+                            KLoading()
                             Text(NSLocalizedString("Purchasing", bundle: .module, comment: ""))
                                 .font(.headline)
                                 .bold()

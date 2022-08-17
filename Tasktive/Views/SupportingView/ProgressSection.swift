@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SalmonUI
+import TasktiveLocale
 import ShrimpExtensions
 
 struct ProgressSection: View {
@@ -15,7 +16,7 @@ struct ProgressSection: View {
     let progress: Double
 
     var body: some View {
-        AppSection(header: .PROGRESS) {
+        KSection(header: TasktiveLocale.getText(.PROGRESS)) {
             HStack {
                 VStack(alignment: .leading) {
                     DatePicker("", selection: $currentDate, displayedComponents: .date)

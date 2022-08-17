@@ -53,7 +53,7 @@ extension SettingsUI {
         }
 
         public var body: some View {
-            ScrollableForm {
+            KScrollableForm {
                 if store.hasDonations {
                     SupportAuthorSection()
                 }
