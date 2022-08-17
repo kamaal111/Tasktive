@@ -33,6 +33,9 @@ struct TasktiveApp: App {
 
                     self.currentScreen = currentScreen
                 })
+            #if os(iOS)
+                .onShake(perform: navigateToPlayground)
+            #endif
                 .accentColor(theme.currentAccentColor)
                 .environment(\.managedObjectContext, persistenceController.context)
                 .environmentObject(tasksViewModel)
@@ -41,10 +44,7 @@ struct TasktiveApp: App {
         #if DEBUG
             .commands(content: {
                 CommandGroup(replacing: .help) {
-                    // Send notification to NamiNavigator to navigate to playground where there are no laws 🤠
-                    Button(action: {
-                        NotificationCenter.default.post(name: .navigateToPlayground, object: currentScreen)
-                    }) {
+                    Button(action: navigateToPlayground) {
                         Text("Playground")
                     }
                     .keyboardShortcut("D", modifiers: [.command, .shift])
@@ -64,6 +64,13 @@ struct TasktiveApp: App {
             }
             .environmentObject(theme)
         }
+        #endif
+    }
+
+    /// Send notification to ``StackNavigator`` to navigate to playground where there are no laws 🤠
+    private func navigateToPlayground() {
+        #if DEBUG
+        NotificationCenter.default.post(name: .navigateToPlayground, object: currentScreen)
         #endif
     }
 }

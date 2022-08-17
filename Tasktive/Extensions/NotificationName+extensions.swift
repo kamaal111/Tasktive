@@ -10,6 +10,8 @@ import Foundation
 extension Notification.Name {
     static let navigateToPlayground = makeNotificationName(withKey: "navigate_to_playground")
     static let currentScreenChanged = makeNotificationName(withKey: "current_screen_changed")
+    /// What happens if you shake your mac? 😋
+    static let deviceDidShake = makeNotificationName(withKey: "device_did_shake")
 
     private static func makeNotificationName(withKey key: String) -> Notification.Name {
         Notification.Name("\(Constants.bundleIdentifier).notifications.\(key)")

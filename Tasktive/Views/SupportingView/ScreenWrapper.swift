@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SalmonUI
 
 struct ScreenWrapper<Content: View>: View {
     @EnvironmentObject private var namiNavigator: NamiNavigator
@@ -30,12 +31,18 @@ struct ScreenWrapper<Content: View>: View {
             #endif
             #if DEBUG
                 .navigationDestination(for: StackNavigator.Screens.self) { screen in
-                    switch screen {
-                    case .playground:
-                        PlaygroundScreen()
-                    case .appLogoCreator:
-                        AppLogoCreator()
-                    }
+                    KJustStack(content: {
+                        switch screen {
+                        case .playground:
+                            PlaygroundScreen()
+                        case .appLogoCreator:
+                            AppLogoCreator()
+                        }
+                    })
+                    .navigationTitle(Text(screen.title))
+                    #if os(iOS)
+                        .navigationBarTitleDisplayMode(.inline)
+                    #endif
                 }
             #endif
                 .environmentObject(stackNavigator)

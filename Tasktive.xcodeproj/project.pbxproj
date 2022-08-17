@@ -70,6 +70,7 @@
 		2CDFB1B028A6DA53004ACED7 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDFB1AF28A6DA53004ACED7 /* Colors.swift */; };
 		2CE9EFB728AD629500C89888 /* AppLogoCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE9EFB628AD629500C89888 /* AppLogoCreator.swift */; };
 		2CE9EFB928AD639500C89888 /* WideNavigationLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE9EFB828AD639500C89888 /* WideNavigationLink.swift */; };
+		2CE9EFBC28AD667300C89888 /* DeviceShakeViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE9EFBB28AD667300C89888 /* DeviceShakeViewModifier.swift */; };
 		2CF24AA62884289100778BD9 /* NamiNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF24AA52884289100778BD9 /* NamiNavigator.swift */; };
 		2CF24AA828842AEB00778BD9 /* AppTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF24AA728842AEB00778BD9 /* AppTabView.swift */; };
 		2CF24AAA28842B5B00778BD9 /* View+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF24AA928842B5B00778BD9 /* View+extensions.swift */; };
@@ -170,6 +171,7 @@
 		2CE0C86D28A8625500B54EC9 /* Brewfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Brewfile; sourceTree = "<group>"; };
 		2CE9EFB628AD629500C89888 /* AppLogoCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogoCreator.swift; sourceTree = "<group>"; };
 		2CE9EFB828AD639500C89888 /* WideNavigationLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WideNavigationLink.swift; sourceTree = "<group>"; };
+		2CE9EFBB28AD667300C89888 /* DeviceShakeViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceShakeViewModifier.swift; sourceTree = "<group>"; };
 		2CF24AA52884289100778BD9 /* NamiNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamiNavigator.swift; sourceTree = "<group>"; };
 		2CF24AA728842AEB00778BD9 /* AppTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabView.swift; sourceTree = "<group>"; };
 		2CF24AA928842B5B00778BD9 /* View+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+extensions.swift"; sourceTree = "<group>"; };
@@ -344,6 +346,7 @@
 				2CF24AAF28843FD800778BD9 /* Screens */,
 				2C3B27C7288CA260007CE538 /* Sheets */,
 				2C47E4022883718100FD4469 /* SupportingView */,
+				2CE9EFBA28AD665F00C89888 /* ViewModifiers */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -570,6 +573,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		2CE9EFBA28AD665F00C89888 /* ViewModifiers */ = {
+			isa = PBXGroup;
+			children = (
+				2CE9EFBB28AD667300C89888 /* DeviceShakeViewModifier.swift */,
+			);
+			path = ViewModifiers;
+			sourceTree = "<group>";
+		};
 		2CF24AAF28843FD800778BD9 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
@@ -733,6 +744,7 @@
 				2CE9EFB728AD629500C89888 /* AppLogoCreator.swift in Sources */,
 				2CCCADB72881F94D0033E2EF /* CoreTask+CRUD.swift in Sources */,
 				2CBCE6072881DE240057F4CD /* TasktiveApp.swift in Sources */,
+				2CE9EFBC28AD667300C89888 /* DeviceShakeViewModifier.swift in Sources */,
 				2C3B27C6288C77F7007CE538 /* DateControlView.swift in Sources */,
 				2C51C918288481F7008939F7 /* Taskable.swift in Sources */,
 				2CFCA0A628A97842007A08F2 /* AppDelegate_iOS.swift in Sources */,

@@ -96,6 +96,15 @@ extension StackNavigator {
     enum Screens: Int, Hashable, Codable, CaseIterable {
         case playground = 420
         case appLogoCreator = 421
+
+        var title: String {
+            switch self {
+            case .playground:
+                return "Playground"
+            case .appLogoCreator:
+                return "App logo creator"
+            }
+        }
     }
     #endif
 }

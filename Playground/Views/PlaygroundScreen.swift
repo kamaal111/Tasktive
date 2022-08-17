@@ -9,31 +9,41 @@
 import SwiftUI
 import SalmonUI
 
+private let SCREEN: StackNavigator.Screens = .playground
+
 struct PlaygroundScreen: View {
     var body: some View {
         KScrollableForm {
-            VStack {
-                KSection(header: "Personalization") {
-                    WideNavigationLink(destination: StackNavigator.Screens.appLogoCreator) {
-                        HStack {
-                            Text("App logo creator")
-                            Spacer()
-                            Image(systemName: "chevron.right")
-                                .foregroundColor(.secondary)
-                        }
-                        .ktakeWidthEagerly()
+            KSection(header: "Personalization") {
+                WideNavigationLink(destination: StackNavigator.Screens.appLogoCreator) {
+                    HStack {
+                        Text("App logo creator")
+                        Spacer()
+                        #if os(macOS)
+                        Image(systemName: "chevron.right")
+                            .foregroundColor(.secondary)
+                        #endif
                     }
+                    .ktakeWidthEagerly()
                 }
             }
-            .padding(.vertical, .medium)
-            .padding(.horizontal, .medium)
         }
+        #if os(macOS)
+        .padding(.vertical, .medium)
+        .padding(.horizontal, .medium)
+        #endif
     }
 }
 
 struct PlaygroundScreen_Previews: PreviewProvider {
     static var previews: some View {
-        PlaygroundScreen()
+        NavigationStack {
+            PlaygroundScreen()
+                .navigationTitle(Text(SCREEN.title))
+            #if os(iOS)
+                .navigationBarTitleDisplayMode(.inline)
+            #endif
+        }
     }
 }
 #endif

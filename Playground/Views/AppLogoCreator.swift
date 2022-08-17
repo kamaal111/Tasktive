@@ -8,6 +8,8 @@
 #if DEBUG
 import SwiftUI
 
+private let SCREEN: StackNavigator.Screens = .appLogoCreator
+
 struct AppLogoCreator: View {
     var body: some View {
         Text("Hello, World!")
@@ -16,7 +18,13 @@ struct AppLogoCreator: View {
 
 struct AppLogoCreator_Previews: PreviewProvider {
     static var previews: some View {
-        AppLogoCreator()
+        NavigationStack {
+            AppLogoCreator()
+                .navigationTitle(Text(SCREEN.title))
+            #if os(iOS)
+                .navigationBarTitleDisplayMode(.inline)
+            #endif
+        }
     }
 }
 #endif
