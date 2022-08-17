@@ -33,6 +33,8 @@ struct ScreenWrapper<Content: View>: View {
                     switch screen {
                     case .playground:
                         PlaygroundScreen()
+                    case .appLogoCreator:
+                        AppLogoCreator()
                     }
                 }
             #endif

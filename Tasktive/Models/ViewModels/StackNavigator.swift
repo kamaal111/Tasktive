@@ -94,7 +94,8 @@ final class StackNavigator: ObservableObject {
 extension StackNavigator {
     #if DEBUG
     enum Screens: Int, Hashable, Codable, CaseIterable {
-        case playground
+        case playground = 420
+        case appLogoCreator = 421
     }
     #endif
 }

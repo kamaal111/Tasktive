@@ -68,6 +68,8 @@
 		2CDC180128A0321B00F07CF0 /* CoreTag+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDC17FF28A0321B00F07CF0 /* CoreTag+CoreDataProperties.swift */; };
 		2CDC6DA6288D616B00BF8E06 /* ToolbarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDC6DA5288D616B00BF8E06 /* ToolbarButton.swift */; };
 		2CDFB1B028A6DA53004ACED7 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDFB1AF28A6DA53004ACED7 /* Colors.swift */; };
+		2CE9EFB728AD629500C89888 /* AppLogoCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE9EFB628AD629500C89888 /* AppLogoCreator.swift */; };
+		2CE9EFB928AD639500C89888 /* WideNavigationLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE9EFB828AD639500C89888 /* WideNavigationLink.swift */; };
 		2CF24AA62884289100778BD9 /* NamiNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF24AA52884289100778BD9 /* NamiNavigator.swift */; };
 		2CF24AA828842AEB00778BD9 /* AppTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF24AA728842AEB00778BD9 /* AppTabView.swift */; };
 		2CF24AAA28842B5B00778BD9 /* View+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF24AA928842B5B00778BD9 /* View+extensions.swift */; };
@@ -166,6 +168,8 @@
 		2CDFB1AF28A6DA53004ACED7 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		2CE0C86C28A8621200B54EC9 /* bootstrap.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = bootstrap.sh; sourceTree = "<group>"; };
 		2CE0C86D28A8625500B54EC9 /* Brewfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Brewfile; sourceTree = "<group>"; };
+		2CE9EFB628AD629500C89888 /* AppLogoCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogoCreator.swift; sourceTree = "<group>"; };
+		2CE9EFB828AD639500C89888 /* WideNavigationLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WideNavigationLink.swift; sourceTree = "<group>"; };
 		2CF24AA52884289100778BD9 /* NamiNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamiNavigator.swift; sourceTree = "<group>"; };
 		2CF24AA728842AEB00778BD9 /* AppTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabView.swift; sourceTree = "<group>"; };
 		2CF24AA928842B5B00778BD9 /* View+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+extensions.swift"; sourceTree = "<group>"; };
@@ -223,7 +227,7 @@
 		2C12687028A984E3003D1E56 /* Playground */ = {
 			isa = PBXGroup;
 			children = (
-				2C12687128A984FE003D1E56 /* PlaygroundScreen.swift */,
+				2CE9EFB528AD628200C89888 /* Views */,
 			);
 			path = Playground;
 			sourceTree = "<group>";
@@ -359,6 +363,7 @@
 				2C750F6B288C335A00026D67 /* TaskItemView.swift */,
 				2C750F69288C328C00026D67 /* TasksSection.swift */,
 				2CDC6DA5288D616B00BF8E06 /* ToolbarButton.swift */,
+				2CE9EFB828AD639500C89888 /* WideNavigationLink.swift */,
 			);
 			path = SupportingView;
 			sourceTree = "<group>";
@@ -556,6 +561,15 @@
 			path = CoreTaskList;
 			sourceTree = "<group>";
 		};
+		2CE9EFB528AD628200C89888 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2CE9EFB628AD629500C89888 /* AppLogoCreator.swift */,
+				2C12687128A984FE003D1E56 /* PlaygroundScreen.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		2CF24AAF28843FD800778BD9 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
@@ -716,6 +730,7 @@
 				2CF24AA62884289100778BD9 /* NamiNavigator.swift in Sources */,
 				2C750F6C288C335A00026D67 /* TaskItemView.swift in Sources */,
 				2C51C91128847C3B008939F7 /* DataClient.swift in Sources */,
+				2CE9EFB728AD629500C89888 /* AppLogoCreator.swift in Sources */,
 				2CCCADB72881F94D0033E2EF /* CoreTask+CRUD.swift in Sources */,
 				2CBCE6072881DE240057F4CD /* TasktiveApp.swift in Sources */,
 				2C3B27C6288C77F7007CE538 /* DateControlView.swift in Sources */,
@@ -755,6 +770,7 @@
 				2CF24AA828842AEB00778BD9 /* AppTabView.swift in Sources */,
 				2CBCE60C2881DE240057F4CD /* Tasktive.xcdatamodeld in Sources */,
 				2CDC17F928A030D600F07CF0 /* CoreAttachments+CoreDataProperties.swift in Sources */,
+				2CE9EFB928AD639500C89888 /* WideNavigationLink.swift in Sources */,
 				2C12687228A984FE003D1E56 /* PlaygroundScreen.swift in Sources */,
 				2C750F68288C31CF00026D67 /* ProgressSection.swift in Sources */,
 				2CDC6DA6288D616B00BF8E06 /* ToolbarButton.swift in Sources */,
