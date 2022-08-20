@@ -242,6 +242,7 @@ extension AppLogoCreatorScreen {
             return logoView(size: size)
         }
 
+        #if canImport(Cocoa)
         private func onIconSaveBegin(response: NSApplication.ModalResponse, saveURL: URL?, iconSetURL: URL) throws {
             guard response == .OK else {
                 logger.warning("could not save file; response='\(response.rawValue)'")
@@ -258,6 +259,7 @@ extension AppLogoCreatorScreen {
 
             logger.info("file saved")
         }
+        #endif
     }
 }
 
