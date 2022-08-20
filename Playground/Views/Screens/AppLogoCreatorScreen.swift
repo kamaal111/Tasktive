@@ -63,7 +63,7 @@ struct AppLogoCreatorScreen: View {
                         }
                         .padding(.bottom, -(AppSizes.small.rawValue))
                     }
-                    #if canImport(Cocoa)
+                    #if canImport(Cocoa) && !targetEnvironment(macCatalyst)
                     HStack {
                         Button(action: viewModel.exportLogo) {
                             Text("Export logo")
@@ -153,7 +153,7 @@ extension AppLogoCreatorScreen {
             exportLogoSize == "800"
         }
 
-        #if canImport(Cocoa)
+        #if canImport(Cocoa) && !targetEnvironment(macCatalyst)
         func exportLogo() {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
@@ -242,7 +242,7 @@ extension AppLogoCreatorScreen {
             return logoView(size: size)
         }
 
-        #if canImport(Cocoa)
+        #if canImport(Cocoa) && !targetEnvironment(macCatalyst)
         private func onIconSaveBegin(response: NSApplication.ModalResponse, saveURL: URL?, iconSetURL: URL) throws {
             guard response == .OK else {
                 logger.warning("could not save file; response='\(response.rawValue)'")

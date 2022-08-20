@@ -14,7 +14,7 @@ import Cocoa
 struct SavePanel {
     private init() { }
 
-    #if canImport(Cocoa)
+    #if canImport(Cocoa) && !targetEnvironment(macCatalyst)
     /// Lets you save items using `NSSavePanel`.
     /// - Parameter filename: Name of file to save.
     /// - Returns: Result to reference location to save and panel.

@@ -20,7 +20,7 @@ extension View {
         cornerRadius(length.rawValue)
     }
 
-    #if canImport(Cocoa)
+    #if canImport(Cocoa) && !targetEnvironment(macCatalyst)
     func snapshot() -> NSImage {
         let controller = NSHostingController(rootView: self)
         let view = controller.view

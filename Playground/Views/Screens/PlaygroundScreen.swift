@@ -15,17 +15,10 @@ struct PlaygroundScreen: View {
     var body: some View {
         KScrollableForm {
             KSection(header: "Personalization") {
-                WideNavigationLink(destination: StackNavigator.Screens.appLogoCreator) {
-                    HStack {
-                        Text("App logo creator")
-                        Spacer()
-                        #if os(macOS)
-                        Image(systemName: "chevron.right")
-                            .foregroundColor(.secondary)
-                        #endif
-                    }
-                    .ktakeWidthEagerly()
-                }
+                PlaygroundNavigationButton(title: "App logo creator", destination: .appLogoCreator)
+            }
+            KSection(header: "Data") {
+                PlaygroundNavigationButton(title: "Core Data viewer", destination: .coreDataViewer)
             }
         }
         #if os(macOS)

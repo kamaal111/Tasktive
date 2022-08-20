@@ -8,7 +8,7 @@
 import Foundation
 
 extension Data {
-    #if canImport(Cocoa)
+    #if canImport(Cocoa) && !targetEnvironment(macCatalyst)
     func download(filename: String) async {
         let (result, pannel) = await SavePanel.savePanel(filename: filename)
         guard result == .OK else {
