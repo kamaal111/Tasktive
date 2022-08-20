@@ -11,6 +11,7 @@ import SalmonUI
 import ShrimpExtensions
 
 private let SCREEN: StackNavigator.Screens = .appLogoCreator
+private let logger = Logster(from: AppLogoCreatorScreen.self)
 
 let PLAYGROUND_SELECTABLE_COLORS: [Color] = [
     .black,
@@ -99,8 +100,16 @@ struct AppLogoCreatorScreen: View {
             }
             .padding(.bottom, .medium)
             .disabled(viewModel.disableHasCurveToggle)
-            AppLogoColorFormRow(title: "Curve size") {
-                Stepper("\(Int(viewModel.curvedCornersSize))", value: $viewModel.curvedCornersSize)
+            HStack {
+                AppLogoColorFormRow(title: "Curve size") {
+                    Stepper("\(Int(viewModel.curvedCornersSize))", value: $viewModel.curvedCornersSize)
+                }
+                Button(action: { viewModel.curvedCornersSize = 64 }) {
+                    Text("mac corners")
+                }
+                Button(action: { viewModel.curvedCornersSize = 16 }) {
+                    Text("iOS corners")
+                }
             }
             .disabled(viewModel.disableCurvesSize)
         }
@@ -117,7 +126,14 @@ extension AppLogoCreatorScreen {
         @Published var primaryColor = PLAYGROUND_SELECTABLE_COLORS[2]
         @Published var lineColor = PLAYGROUND_SELECTABLE_COLORS[3]
         @Published var gradientColor = PLAYGROUND_SELECTABLE_COLORS[1]
-        @Published var exportLogoSize = "400"
+        @Published var exportLogoSize = "400" {
+            didSet {
+                let filteredExportLogoSize = exportLogoSize.filter(\.isNumber)
+                if exportLogoSize != filteredExportLogoSize {
+                    exportLogoSize = filteredExportLogoSize
+                }
+            }
+        }
 
         init() { }
 
@@ -150,7 +166,53 @@ extension AppLogoCreatorScreen {
             }
         }
 
-        func exportLogoAsIconSet() { }
+        func exportLogoAsIconSet() {
+            guard let pngData = logoToExport.snapshot().pngData,
+                  let temporaryDirectoryURL = NSURL.fileURL(withPathComponents: [NSTemporaryDirectory()]) else {
+                return
+            }
+
+            switch Shell.runAppIconGenerator(input: pngData, output: temporaryDirectoryURL) {
+            case let .failure(failure):
+                logger.error(label: "failed to run app icon generator", error: failure)
+                return
+            case let .success(success):
+                logger.info("successfully ran app icon generator; output='\(success)'")
+            }
+
+            let iconSetName = "AppIcon.appiconset"
+            let iconSetURL: URL?
+            do {
+                iconSetURL = try FileManager.default.findDirectoryOrFile(
+                    inDirectory: temporaryDirectoryURL,
+                    searchPath: iconSetName
+                )
+            } catch {
+                logger.error(label: "failed to find directory or file", error: error)
+                return
+            }
+            guard let iconSetURL = iconSetURL else { return }
+
+            Task {
+                let (result, panel) = await SavePanel.savePanel(filename: iconSetName)
+                var maybeError: Error?
+                do {
+                    try await onIconSaveBegin(response: result, saveURL: panel.url, iconSetURL: iconSetURL)
+                } catch {
+                    maybeError = error
+                }
+
+                if let maybeError = maybeError {
+                    logger.error(label: "failed to save icon set", error: maybeError)
+
+                    do {
+                        try FileManager.default.removeItem(at: iconSetURL)
+                    } catch {
+                        logger.error(label: "failed to remove icon set", error: error)
+                    }
+                }
+            }
+        }
         #endif
 
         @MainActor
@@ -179,8 +241,94 @@ extension AppLogoCreatorScreen {
             let size = Double(exportLogoSize)!.cgFloat
             return logoView(size: size)
         }
+
+        private func onIconSaveBegin(response: NSApplication.ModalResponse, saveURL: URL?, iconSetURL: URL) throws {
+            guard response == .OK else {
+                logger.warning("could not save file; response='\(response.rawValue)'")
+                return
+            }
+
+            guard let saveURL = saveURL else { return }
+
+            if FileManager.default.fileExists(atPath: saveURL.path) {
+                try FileManager.default.removeItem(at: saveURL)
+            }
+
+            try FileManager.default.moveItem(at: iconSetURL, to: saveURL)
+
+            logger.info("file saved")
+        }
     }
 }
+
+#if os(macOS)
+extension Shell {
+    enum AppIconGeneratorErrors: Error {
+        case resourceNotFound(name: String)
+        case generalError(error: Error)
+        case temporaryFileWentWrong
+    }
+
+    @discardableResult
+    static func runAppIconGenerator(input: Data, output: URL) -> Result<String, AppIconGeneratorErrors> {
+        guard let temporaryFileURL = NSURL.fileURL(withPathComponents: [
+            NSTemporaryDirectory(),
+            "\(UUID().uuidString).png",
+        ]) else {
+            return .failure(.temporaryFileWentWrong)
+        }
+
+        do {
+            try input.write(to: temporaryFileURL)
+        } catch {
+            return .failure(.generalError(error: error))
+        }
+
+        let bundleResourceURL = Bundle.main.resourceURL!
+        let appIconGeneratorName = "app-icon-generator"
+        let appIconGenerator: URL?
+        do {
+            appIconGenerator = try FileManager.default.findDirectoryOrFile(
+                inDirectory: bundleResourceURL,
+                searchPath: appIconGeneratorName
+            )
+        } catch {
+            switch cleanUp(temporaryFileURL: temporaryFileURL) {
+            case let .failure(failure): return .failure(failure)
+            case .success: break
+            }
+            return .failure(.generalError(error: error))
+        }
+
+        guard let appIconGenerator = appIconGenerator else {
+            switch cleanUp(temporaryFileURL: temporaryFileURL) {
+            case let .failure(failure): return .failure(failure)
+            case .success: break
+            }
+            return .failure(.resourceNotFound(name: appIconGeneratorName))
+        }
+
+        let appIconGeneratorPath = appIconGenerator.relativePath.shellEncodedURL
+        let command = "\(appIconGeneratorPath) -o \(output.relativePath) -i \(temporaryFileURL.relativePath) -v"
+        let output = Shell.zsh(command)
+
+        switch cleanUp(temporaryFileURL: temporaryFileURL) {
+        case let .failure(failure): return .failure(failure)
+        case .success: break
+        }
+        return .success(output)
+    }
+
+    private static func cleanUp(temporaryFileURL: URL) -> Result<Void, AppIconGeneratorErrors> {
+        do {
+            try FileManager.default.removeItem(at: temporaryFileURL)
+        } catch {
+            return .failure(.generalError(error: error))
+        }
+        return .success(())
+    }
+}
+#endif
 
 struct AppLogoCreatorScreen_Previews: PreviewProvider {
     static var previews: some View {

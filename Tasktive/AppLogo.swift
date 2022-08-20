@@ -33,9 +33,9 @@ struct AppLogo: View {
                             .foregroundColor(primaryColor)
                         Rectangle()
                             .foregroundColor(lineColor)
-                            .frame(height: circleSize.height / 8)
+                            .frame(height: circleSize.height / 2.5)
                     }
-                    .padding(.vertical, size / 30)
+                    .padding(.vertical, size / 20)
                     .padding(.horizontal, paperSize.width / 2.5)
                 }
             }
@@ -57,7 +57,7 @@ struct AppLogo: View {
     }
 
     private var circleSize: CGSize {
-        .squared(size / 20)
+        .squared(size / 15)
     }
 
     private var paperSize: CGSize {

@@ -18,7 +18,7 @@ struct SavePanel {
     /// Lets you save items using `NSSavePanel`.
     /// - Parameter filename: Name of file to save.
     /// - Returns: Result to reference location to save and panel.
-    public static func savePanel(filename: String) async -> (NSApplication.ModalResponse, NSSavePanel) {
+    static func savePanel(filename: String) async -> (NSApplication.ModalResponse, NSSavePanel) {
         await withCheckedContinuation { continuation in
             save(filename: filename) { result, panel in
                 continuation.resume(returning: (result, panel))
