@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SalmonUI
 
 struct MainView: View {
     @EnvironmentObject private var deviceModel: DeviceModel
@@ -16,7 +15,7 @@ struct MainView: View {
     init() { }
 
     var body: some View {
-        KJustStack {
+        SplashScreenStack(enabled: DeviceModel.deviceType != .mac) {
             if DeviceModel.deviceType.shouldHaveSidebar {
                 #if os(iOS) // if iPad
                 NavigationSplitView(sidebar: { Sidebar() }, detail: { DetailsColumn() })
