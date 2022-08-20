@@ -34,4 +34,6 @@ struct Logster {
     func info(_ message: String) {
         logger.info("\(message)")
     }
+
+    static let general = Logster(label: "Tasktive")
 }

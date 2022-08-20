@@ -20,6 +20,29 @@ extension View {
         cornerRadius(length.rawValue)
     }
 
+    #if canImport(Cocoa)
+    func snapshot() -> NSImage {
+        let controller = NSHostingController(rootView: self)
+        let view = controller.view
+
+        let targetSize = view.intrinsicContentSize
+        let targetPoint = CGPoint(x: -(targetSize.width / 2), y: -(targetSize.height / 2))
+        let targetBounds = CGRect(origin: targetPoint, size: targetSize)
+        guard let bitmapRep = view.bitmapImageRepForCachingDisplay(in: targetBounds)
+        else {
+            Logster.general.error("could not get bitmap representation")
+            return NSImage()
+        }
+        bitmapRep.size = targetSize
+        view.cacheDisplay(in: targetBounds, to: bitmapRep)
+
+        let image = NSImage(size: targetSize)
+        image.addRepresentation(bitmapRep)
+
+        return image
+    }
+    #endif
+
     #if DEBUG
     func previewEnvironment(withConfiguration configuration: PreviewConfiguration? = nil) -> some View {
         let namiNavigator = NamiNavigator()

@@ -43,6 +43,9 @@
 		2C750F6A288C328C00026D67 /* TasksSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C750F69288C328C00026D67 /* TasksSection.swift */; };
 		2C750F6C288C335A00026D67 /* TaskItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C750F6B288C335A00026D67 /* TaskItemView.swift */; };
 		2C79879828AC30DF00F36C59 /* NavigationPath+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C79879728AC30DF00F36C59 /* NavigationPath+extensions.swift */; };
+		2C98E3C628B125710048149F /* Image+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C98E3C528B125710048149F /* Image+extensions.swift */; };
+		2C98E3C828B125CA0048149F /* Data+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C98E3C728B125CA0048149F /* Data+extensions.swift */; };
+		2C98E3CA28B126620048149F /* SavePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C98E3C928B126620048149F /* SavePanel.swift */; };
 		2CAF4E41288DD036007C2D1A /* SettingsUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2CAF4E40288DD036007C2D1A /* SettingsUI */; };
 		2CBCE6072881DE240057F4CD /* TasktiveApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCE6062881DE240057F4CD /* TasktiveApp.swift */; };
 		2CBCE6092881DE240057F4CD /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCE6082881DE240057F4CD /* Persistence.swift */; };
@@ -142,6 +145,10 @@
 		2C750F6B288C335A00026D67 /* TaskItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskItemView.swift; sourceTree = "<group>"; };
 		2C79879728AC30DF00F36C59 /* NavigationPath+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NavigationPath+extensions.swift"; sourceTree = "<group>"; };
 		2C8B0CDD288DD73A00041EF8 /* SettingsUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SettingsUI; sourceTree = "<group>"; };
+		2C98E3C528B125710048149F /* Image+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+extensions.swift"; sourceTree = "<group>"; };
+		2C98E3C728B125CA0048149F /* Data+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+extensions.swift"; sourceTree = "<group>"; };
+		2C98E3C928B126620048149F /* SavePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavePanel.swift; sourceTree = "<group>"; };
+		2C98E3CB28B12B080048149F /* TasktiveDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TasktiveDebug.entitlements; sourceTree = "<group>"; };
 		2CA7A02F28A8F5910031C219 /* Donations.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Donations.storekit; sourceTree = "<group>"; };
 		2CBCE6032881DE240057F4CD /* Tasktive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tasktive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CBCE6062881DE240057F4CD /* TasktiveApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasktiveApp.swift; sourceTree = "<group>"; };
@@ -336,6 +343,8 @@
 			isa = PBXGroup;
 			children = (
 				2CDFB1AF28A6DA53004ACED7 /* Colors.swift */,
+				2C98E3C728B125CA0048149F /* Data+extensions.swift */,
+				2C98E3C528B125710048149F /* Image+extensions.swift */,
 				2C79879728AC30DF00F36C59 /* NavigationPath+extensions.swift */,
 				2C47E3FC28836B2200FD4469 /* NotificationName+extensions.swift */,
 				2C47E3F12883688F00FD4469 /* Text+extensions.swift */,
@@ -454,6 +463,7 @@
 		2CBCE6052881DE240057F4CD /* Tasktive */ = {
 			isa = PBXGroup;
 			children = (
+				2C98E3CB28B12B080048149F /* TasktiveDebug.entitlements */,
 				2CBCE6112881DE270057F4CD /* Tasktive.entitlements */,
 				2CFCA0A528A97842007A08F2 /* AppDelegate_iOS.swift */,
 				2CFCA0A328A977CE007A08F2 /* AppDelegate_macOS.swift */,
@@ -558,6 +568,7 @@
 				2C51C91028847C3B008939F7 /* DataClient.swift */,
 				2CCCADD0288203720033E2EF /* Logster.swift */,
 				2CBCE6082881DE240057F4CD /* Persistence.swift */,
+				2C98E3C928B126620048149F /* SavePanel.swift */,
 				2C157592289F03B800425CDD /* TokensHolder.swift */,
 			);
 			path = Utilities;
@@ -767,6 +778,7 @@
 				2C5AB1B9288D7C870069911C /* ScreenWrapper.swift in Sources */,
 				2C47E3FD28836B2200FD4469 /* NotificationName+extensions.swift in Sources */,
 				2CF24AA62884289100778BD9 /* NamiNavigator.swift in Sources */,
+				2C98E3CA28B126620048149F /* SavePanel.swift in Sources */,
 				2C750F6C288C335A00026D67 /* TaskItemView.swift in Sources */,
 				2C51C91128847C3B008939F7 /* DataClient.swift in Sources */,
 				2CE9EFB728AD629500C89888 /* AppLogoCreatorScreen.swift in Sources */,
@@ -777,6 +789,7 @@
 				2C51C918288481F7008939F7 /* Taskable.swift in Sources */,
 				2CFCA0A628A97842007A08F2 /* AppDelegate_iOS.swift in Sources */,
 				2CBCE6092881DE240057F4CD /* Persistence.swift in Sources */,
+				2C98E3C828B125CA0048149F /* Data+extensions.swift in Sources */,
 				2CCCADD4288204100033E2EF /* Crudable.swift in Sources */,
 				2C750F66288C2F9400026D67 /* CircularProgressBar.swift in Sources */,
 				2CDFB1B028A6DA53004ACED7 /* Colors.swift in Sources */,
@@ -797,6 +810,7 @@
 				2CDC17FD28A031AF00F07CF0 /* CoreReminder+CoreDataProperties.swift in Sources */,
 				2C51C90F28847438008939F7 /* Constants.swift in Sources */,
 				2C62FA2F28A7E95F00200BF9 /* StoreKitDonation.swift in Sources */,
+				2C98E3C628B125710048149F /* Image+extensions.swift in Sources */,
 				2CDC17F428A0300400F07CF0 /* CoreTask+CoreDataClass.swift in Sources */,
 				2CC325F328B0E68F0091EC3E /* Navigatable.swift in Sources */,
 				2CBCE60E2881DE240057F4CD /* ContentView.swift in Sources */,
@@ -962,7 +976,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Tasktive/Tasktive.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Tasktive/TasktiveDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Tasktive/Preview Content\"";

@@ -25,42 +25,84 @@ struct AppLogoCreatorScreen: View {
     var body: some View {
         KScrollableForm {
             KJustStack {
-                KSection(header: "Logo") {
-                    HStack(alignment: .top) {
-                        viewModel.logoView(size: 150)
-                        Spacer()
-                    }
-                }
-                KSection(header: "Customization") {
-                    AppLogoColorFormRow(title: "Has a background") {
-                        Toggle(viewModel.hasABackground ? "Yup" : "Nope", isOn: $viewModel.hasABackground)
-                    }
-                    .padding(.bottom, .medium)
-                    .padding(.vertical, .small)
-                    AppLogoColorSelector(color: $viewModel.backgroundColor, title: "Background color")
-                        .padding(.bottom, .medium)
-                    AppLogoColorSelector(color: $viewModel.gradientColor, title: "Gradient color")
-                        .padding(.bottom, .medium)
-                    AppLogoColorSelector(color: $viewModel.paperColor, title: "Paper color")
-                        .padding(.bottom, .medium)
-                    AppLogoColorSelector(color: $viewModel.lineColor, title: "Line color")
-                        .padding(.bottom, .medium)
-                    AppLogoColorFormRow(title: "Has curves") {
-                        Toggle(viewModel.hasCurves ? "Yup" : "Nope", isOn: $viewModel.hasCurves)
-                    }
-                    .padding(.bottom, .medium)
-                    .disabled(viewModel.disableHasCurveToggle)
-                    AppLogoColorFormRow(title: "Curve size") {
-                        Stepper("\(Int(viewModel.curvedCornersSize))", value: $viewModel.curvedCornersSize)
-                    }
-                    .disabled(viewModel.disableCurvesSize)
-                }
+                logoSection
+                customizationSection
             }
             #if os(macOS)
             .padding(.vertical, .medium)
             .padding(.horizontal, .medium)
             .ktakeSizeEagerly(alignment: .topLeading)
             #endif
+        }
+    }
+
+    private var logoSection: some View {
+        KSection(header: "Logo") {
+            HStack(alignment: .top) {
+                viewModel.logoView(size: 150)
+                Spacer()
+                VStack(alignment: .leading) {
+                    HStack {
+                        KFloatingTextField(
+                            text: $viewModel.exportLogoSize,
+                            title: "Export logo size",
+                            textFieldType: .numbers
+                        )
+                        HStack {
+                            Button(action: { viewModel.setRecommendedLogoSize() }) {
+                                Text("Logo size")
+                                    .foregroundColor(.accentColor)
+                            }
+                            .disabled(viewModel.disableLogoSizeButton)
+                            Button(action: { viewModel.setRecommendedAppIconSize() }) {
+                                Text("Icon size")
+                                    .foregroundColor(.accentColor)
+                            }
+                            .disabled(viewModel.disableAppIconSizeButton)
+                        }
+                        .padding(.bottom, -(AppSizes.small.rawValue))
+                    }
+                    #if canImport(Cocoa)
+                    HStack {
+                        Button(action: viewModel.exportLogo) {
+                            Text("Export logo")
+                                .foregroundColor(.accentColor)
+                        }
+                        Button(action: viewModel.exportLogoAsIconSet) {
+                            Text("Export logo as IconSet")
+                                .foregroundColor(.accentColor)
+                        }
+                    }
+                    #endif
+                }
+            }
+        }
+    }
+
+    private var customizationSection: some View {
+        KSection(header: "Customization") {
+            AppLogoColorFormRow(title: "Has a background") {
+                Toggle(viewModel.hasABackground ? "Yup" : "Nope", isOn: $viewModel.hasABackground)
+            }
+            .padding(.bottom, .medium)
+            .padding(.vertical, .small)
+            AppLogoColorSelector(color: $viewModel.backgroundColor, title: "Background color")
+                .padding(.bottom, .medium)
+            AppLogoColorSelector(color: $viewModel.gradientColor, title: "Gradient color")
+                .padding(.bottom, .medium)
+            AppLogoColorSelector(color: $viewModel.paperColor, title: "Paper color")
+                .padding(.bottom, .medium)
+            AppLogoColorSelector(color: $viewModel.lineColor, title: "Line color")
+                .padding(.bottom, .medium)
+            AppLogoColorFormRow(title: "Has curves") {
+                Toggle(viewModel.hasCurves ? "Yup" : "Nope", isOn: $viewModel.hasCurves)
+            }
+            .padding(.bottom, .medium)
+            .disabled(viewModel.disableHasCurveToggle)
+            AppLogoColorFormRow(title: "Curve size") {
+                Stepper("\(Int(viewModel.curvedCornersSize))", value: $viewModel.curvedCornersSize)
+            }
+            .disabled(viewModel.disableCurvesSize)
         }
     }
 }
@@ -75,6 +117,7 @@ extension AppLogoCreatorScreen {
         @Published var primaryColor = PLAYGROUND_SELECTABLE_COLORS[2]
         @Published var lineColor = PLAYGROUND_SELECTABLE_COLORS[3]
         @Published var gradientColor = PLAYGROUND_SELECTABLE_COLORS[1]
+        @Published var exportLogoSize = "400"
 
         init() { }
 
@@ -84,6 +127,40 @@ extension AppLogoCreatorScreen {
 
         var disableHasCurveToggle: Bool {
             !hasABackground
+        }
+
+        var disableLogoSizeButton: Bool {
+            exportLogoSize == "400"
+        }
+
+        var disableAppIconSizeButton: Bool {
+            exportLogoSize == "800"
+        }
+
+        #if canImport(Cocoa)
+        func exportLogo() {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+
+                Task {
+                    await self.logoToExport
+                        .snapshot()
+                        .download(filename: "logo.png")
+                }
+            }
+        }
+
+        func exportLogoAsIconSet() { }
+        #endif
+
+        @MainActor
+        func setRecommendedLogoSize() {
+            withAnimation { exportLogoSize = "400" }
+        }
+
+        @MainActor
+        func setRecommendedAppIconSize() {
+            withAnimation { exportLogoSize = "800" }
         }
 
         func logoView(size: CGFloat) -> some View {
@@ -96,6 +173,11 @@ extension AppLogoCreatorScreen {
                 primaryColor: primaryColor,
                 lineColor: lineColor
             )
+        }
+
+        private var logoToExport: some View {
+            let size = Double(exportLogoSize)!.cgFloat
+            return logoView(size: size)
         }
     }
 }
