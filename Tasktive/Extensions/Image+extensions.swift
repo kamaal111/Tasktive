@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-#if canImport(Cocoa)
+#if canImport(Cocoa) && !targetEnvironment(macCatalyst)
 extension NSImage {
     var pngData: Data? {
         guard let tiffRepresentation = tiffRepresentation,
