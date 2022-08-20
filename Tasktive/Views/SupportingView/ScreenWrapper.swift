@@ -48,17 +48,10 @@ struct ScreenWrapper<Content: View>: View {
                 .environmentObject(stackNavigator)
         }
         .onChange(of: namiNavigator.currentSelection, perform: { newValue in
-            stackNavigator.changeScreen(to: newValue)
-        })
-        .onChange(of: namiNavigator.pendingSidebarSelection) { _ in
-            // Shouldn't come here if device should not have sidebar anyway, but just to be sure lets guard it.
-            guard DeviceModel.deviceType.shouldHaveSidebar else { return }
-
             Task {
-                await stackNavigator.clearPath()
-                await namiNavigator.clearToNavigate()
+                await stackNavigator.changeScreen(to: newValue)
             }
-        }
+        })
     }
 }
 

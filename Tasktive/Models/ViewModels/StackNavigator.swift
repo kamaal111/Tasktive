@@ -28,9 +28,12 @@ final class StackNavigator: ObservableObject {
     }
 
     @MainActor
-    func changeScreen(to screen: NamiNavigator.Screens) {
+    func changeScreen(to screen: NamiNavigator.Screens) async {
         guard self.screen != screen else { return }
 
+        // I know it's not the best user experience to lose state of the path of a stack but currently don't know a way
+        // to change "stacks" and keep the path state and not mess everything up.
+        await clearPath()
         self.screen = screen
     }
 
@@ -72,8 +75,7 @@ final class StackNavigator: ObservableObject {
 
     @objc
     private func handleNotification(_ notification: Notification) {
-        let name = notification.name
-        switch name {
+        switch notification.name {
         #if DEBUG
         case .navigateToPlayground:
             if let notificationScreen = notification.object as? NamiNavigator.Screens, screen == notificationScreen {

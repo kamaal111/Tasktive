@@ -18,7 +18,6 @@ final class NamiNavigator: ObservableObject {
     #else
     @Published private(set) var sidebarSelection: Screens?
     #endif
-    @Published private(set) var pendingSidebarSelection: Screens?
 
     private var needsToNavigate = false
     private let notifications: [Notification.Name] = [
@@ -55,14 +54,6 @@ final class NamiNavigator: ObservableObject {
             .filter(\.isSidebarButton)
     }
 
-    func clearToNavigate() async {
-        guard needsToNavigate else { return }
-
-        needsToNavigate = false
-        await setSidebarSelection(pendingSidebarSelection)
-        await setPendingSidebarSelection(.none)
-    }
-
     func navigate(to screen: Screens?) async {
         if DeviceModel.deviceType.shouldHaveSidebar {
             await navigateOnSidebar(to: screen)
@@ -73,12 +64,12 @@ final class NamiNavigator: ObservableObject {
     }
 
     @MainActor
-    func setSidebarSelection(_ selection: Screens?) {
+    private func setSidebarSelection(_ selection: Screens?) {
         sidebarSelection = selection
     }
 
     @MainActor
-    func setTabSelection(_ selection: Screens) {
+    private func setTabSelection(_ selection: Screens) {
         tabSelection = selection
     }
 
@@ -86,13 +77,7 @@ final class NamiNavigator: ObservableObject {
     private func navigateOnSidebar(to screen: Screens?) {
         guard screen != sidebarSelection else { return }
 
-        needsToNavigate = true
-        setPendingSidebarSelection(screen)
-    }
-
-    @MainActor
-    private func setPendingSidebarSelection(_ selection: Screens?) {
-        pendingSidebarSelection = selection
+        setSidebarSelection(screen)
     }
 
     private func setupObservers() {
@@ -114,8 +99,7 @@ final class NamiNavigator: ObservableObject {
 
     @objc
     private func handleNotification(_ notification: Notification) {
-        let name = notification.name
-        switch name {
+        switch notification.name {
         default:
             break
         }
