@@ -54,4 +54,4 @@ type_name:
 identifier_name:
   min_length:
     warning: 2
-  allowed_symbols: "_"
+  allowed_symbols: '_'

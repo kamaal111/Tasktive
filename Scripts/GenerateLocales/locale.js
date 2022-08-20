@@ -6,7 +6,7 @@ const DEFAULT_LOCALE = 'en';
 const locales = { en };
 
 const keysFileTemplate = (input) => {
-    return `//
+  return `//
 //  Keys.swift
 //
 //
@@ -22,7 +22,7 @@ ${input}
 };
 
 const localizableFileTemplate = (input) => {
-    return `/*
+  return `/*
   Localizable.strings
   TasktiveLocale
 
@@ -35,16 +35,16 @@ ${input}
 };
 
 const main = () => {
-    const localize = new Localize(
-        'Packages/TasktiveLocale/Sources/TasktiveLocale/Resources',
-        'Packages/TasktiveLocale/Sources/TasktiveLocale/Keys.swift',
-        locales,
-        DEFAULT_LOCALE,
-        2,
-    );
-    localize.setKeysTemplate(keysFileTemplate);
-    localize.setLocaleFileTemplate(localizableFileTemplate);
-    localize.generateFiles().then(console.log('Done localizing'));
+  const localize = new Localize(
+    'Packages/TasktiveLocale/Sources/TasktiveLocale/Resources',
+    'Packages/TasktiveLocale/Sources/TasktiveLocale/Keys.swift',
+    locales,
+    DEFAULT_LOCALE,
+    2,
+  );
+  localize.setKeysTemplate(keysFileTemplate);
+  localize.setLocaleFileTemplate(localizableFileTemplate);
+  localize.generateFiles().then(console.log('Done localizing'));
 };
 
 main();
