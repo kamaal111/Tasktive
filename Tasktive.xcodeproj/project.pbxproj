@@ -47,6 +47,7 @@
 		2CBCE60E2881DE240057F4CD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCE60D2881DE240057F4CD /* ContentView.swift */; };
 		2CBCE6102881DE270057F4CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CBCE60F2881DE270057F4CD /* Assets.xcassets */; };
 		2CBCE6142881DE270057F4CD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CBCE6132881DE270057F4CD /* Preview Assets.xcassets */; };
+		2CC325F328B0E68F0091EC3E /* Navigatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC325F228B0E68F0091EC3E /* Navigatable.swift */; };
 		2CC79CE3288D78A400FD5792 /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC79CE2288D78A400FD5792 /* SettingsScreen.swift */; };
 		2CCCADB72881F94D0033E2EF /* CoreTask+CRUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCCADB62881F94D0033E2EF /* CoreTask+CRUD.swift */; };
 		2CCCADC02881FCF00033E2EF /* CoreTaskSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCCADBF2881FCF00033E2EF /* CoreTaskSpec.swift */; };
@@ -144,6 +145,7 @@
 		2CBCE60F2881DE270057F4CD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2CBCE6112881DE270057F4CD /* Tasktive.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Tasktive.entitlements; sourceTree = "<group>"; };
 		2CBCE6132881DE270057F4CD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		2CC325F228B0E68F0091EC3E /* Navigatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigatable.swift; sourceTree = "<group>"; };
 		2CC79CE2288D78A400FD5792 /* SettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
 		2CCCADAA2881EFB60033E2EF /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		2CCCADAB2881F1750033E2EF /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -540,6 +542,7 @@
 			isa = PBXGroup;
 			children = (
 				2CCCADD3288204100033E2EF /* Crudable.swift */,
+				2CC325F228B0E68F0091EC3E /* Navigatable.swift */,
 				2C1B196B28886CFB00D734D2 /* PopUpError.swift */,
 				2C51C917288481F7008939F7 /* Taskable.swift */,
 			);
@@ -767,6 +770,7 @@
 				2C51C90F28847438008939F7 /* Constants.swift in Sources */,
 				2C62FA2F28A7E95F00200BF9 /* StoreKitDonation.swift in Sources */,
 				2CDC17F428A0300400F07CF0 /* CoreTask+CoreDataClass.swift in Sources */,
+				2CC325F328B0E68F0091EC3E /* Navigatable.swift in Sources */,
 				2CBCE60E2881DE240057F4CD /* ContentView.swift in Sources */,
 				2CDC17E828A02E5400F07CF0 /* CoreBase+CoreDataClass.swift in Sources */,
 				2CDC17F028A02F8D00F07CF0 /* CoreTaskList+CoreDataClass.swift in Sources */,

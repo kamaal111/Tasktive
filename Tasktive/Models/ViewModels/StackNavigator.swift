@@ -38,8 +38,9 @@ final class StackNavigator: ObservableObject {
     }
 
     @MainActor
-    func navigate<T: Codable & Hashable>(to screen: T) {
-        // - TODO: Check if incoming is same last screen using `path.asDictionaryArray` and not navigate if it's the same screen
+    func navigate<T: Codable & Hashable & Navigatable>(to screen: T) throws {
+        guard try shouldNavigate(to: screen) else { return }
+
         path.append(screen)
     }
 
@@ -48,7 +49,15 @@ final class StackNavigator: ObservableObject {
         path.removeLast()
     }
 
-    func clearPath() async {
+    private func shouldNavigate<T: Codable & Hashable & Navigatable>(to screen: T) throws -> Bool {
+        guard let lastPathDictionary = try path.asDictionaryArray?.last,
+              let lastPathItem = lastPathDictionary.first,
+              lastPathItem.key == screen.pathKey else { return true }
+
+        return try screen.shouldNavigate(pathItem: lastPathItem)
+    }
+
+    private func clearPath() async {
         var path = path
         while !path.isEmpty {
             path.removeLast()
@@ -79,7 +88,9 @@ final class StackNavigator: ObservableObject {
         #if DEBUG
         case .navigateToPlayground:
             if let notificationScreen = notification.object as? NamiNavigator.Screens, screen == notificationScreen {
-                Task { await navigate(to: StackNavigator.Screens.playground) }
+                // Who cares if this crashes in debug mode? You're the developer just fix it
+                // swiftlint:disable force_try
+                Task { try! await navigate(to: StackNavigator.Screens.playground) }
             }
         #endif
         default:
@@ -95,7 +106,7 @@ final class StackNavigator: ObservableObject {
 
 extension StackNavigator {
     #if DEBUG
-    enum Screens: Int, Hashable, Codable, CaseIterable {
+    enum Screens: Int, Hashable, Codable, CaseIterable, Navigatable {
         case playground = 420
         case appLogoCreator = 421
 
@@ -106,6 +117,16 @@ extension StackNavigator {
             case .appLogoCreator:
                 return "App logo creator"
             }
+        }
+
+        var pathKey: String {
+            "Tasktive.StackNavigator.Screens"
+        }
+
+        func shouldNavigate(pathItem: Dictionary<String, String>.Element) throws -> Bool {
+            guard let screenNumber = Int(pathItem.value),
+                  let stackNavigatorScreen = Self(rawValue: screenNumber) else { return false }
+            return self != stackNavigatorScreen
         }
     }
     #endif
