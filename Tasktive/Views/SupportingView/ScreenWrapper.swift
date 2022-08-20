@@ -36,7 +36,7 @@ struct ScreenWrapper<Content: View>: View {
                         case .playground:
                             PlaygroundScreen()
                         case .appLogoCreator:
-                            AppLogoCreator()
+                            AppLogoCreatorScreen()
                         }
                     })
                     .navigationTitle(Text(screen.title))
