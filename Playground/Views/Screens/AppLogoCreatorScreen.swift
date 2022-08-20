@@ -15,6 +15,8 @@ private let SCREEN: StackNavigator.Screens = .appLogoCreator
 let PLAYGROUND_SELECTABLE_COLORS: [Color] = [
     .black,
     .white,
+    .AccentColor,
+    .gray,
 ]
 
 struct AppLogoCreatorScreen: View {
@@ -25,7 +27,7 @@ struct AppLogoCreatorScreen: View {
             KJustStack {
                 KSection(header: "Logo") {
                     HStack(alignment: .top) {
-                        viewModel.logoView(size: .squared(150))
+                        viewModel.logoView(size: 150)
                         Spacer()
                     }
                 }
@@ -37,12 +39,19 @@ struct AppLogoCreatorScreen: View {
                     .padding(.vertical, .small)
                     AppLogoColorSelector(color: $viewModel.backgroundColor, title: "Background color")
                         .padding(.bottom, .medium)
+                    AppLogoColorSelector(color: $viewModel.gradientColor, title: "Gradient color")
+                        .padding(.bottom, .medium)
+                    AppLogoColorSelector(color: $viewModel.paperColor, title: "Paper color")
+                        .padding(.bottom, .medium)
+                    AppLogoColorSelector(color: $viewModel.lineColor, title: "Line color")
+                        .padding(.bottom, .medium)
                     AppLogoColorFormRow(title: "Has curves") {
                         Toggle(viewModel.hasCurves ? "Yup" : "Nope", isOn: $viewModel.hasCurves)
                     }
                     .padding(.bottom, .medium)
+                    .disabled(viewModel.disableHasCurveToggle)
                     AppLogoColorFormRow(title: "Curve size") {
-                        Stepper("\(viewModel.curvedCornersSize)", value: $viewModel.curvedCornersSize)
+                        Stepper("\(Int(viewModel.curvedCornersSize))", value: $viewModel.curvedCornersSize)
                     }
                     .disabled(viewModel.disableCurvesSize)
                 }
@@ -60,20 +69,32 @@ extension AppLogoCreatorScreen {
     final class ViewModel: ObservableObject {
         @Published var curvedCornersSize: CGFloat = 16
         @Published var hasCurves = true
-        @Published var backgroundColor = PLAYGROUND_SELECTABLE_COLORS.first!
+        @Published var backgroundColor = PLAYGROUND_SELECTABLE_COLORS[2]
         @Published var hasABackground = true
+        @Published var paperColor = PLAYGROUND_SELECTABLE_COLORS[1]
+        @Published var primaryColor = PLAYGROUND_SELECTABLE_COLORS[2]
+        @Published var lineColor = PLAYGROUND_SELECTABLE_COLORS[3]
+        @Published var gradientColor = PLAYGROUND_SELECTABLE_COLORS[1]
 
         init() { }
 
         var disableCurvesSize: Bool {
-            !hasCurves
+            !hasCurves || disableHasCurveToggle
         }
 
-        func logoView(size: CGSize) -> some View {
+        var disableHasCurveToggle: Bool {
+            !hasABackground
+        }
+
+        func logoView(size: CGFloat) -> some View {
             AppLogo(
                 size: size,
                 curvedCornersSize: hasCurves ? curvedCornersSize : nil,
-                backgroundColor: hasABackground ? backgroundColor : nil
+                backgroundColor: hasABackground ? backgroundColor : nil,
+                gradientColor: gradientColor,
+                paperColor: paperColor,
+                primaryColor: primaryColor,
+                lineColor: lineColor
             )
         }
     }
