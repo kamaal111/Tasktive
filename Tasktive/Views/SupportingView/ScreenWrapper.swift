@@ -37,6 +37,8 @@ struct ScreenWrapper<Content: View>: View {
                             PlaygroundScreen()
                         case .appLogoCreator:
                             AppLogoCreatorScreen()
+                        case .coreDataViewer:
+                            CoreDataViewerScreen()
                         }
                     })
                     .navigationTitle(Text(screen.title))

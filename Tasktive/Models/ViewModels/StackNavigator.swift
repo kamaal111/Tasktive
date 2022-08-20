@@ -109,6 +109,7 @@ extension StackNavigator {
     enum Screens: Int, Hashable, Codable, CaseIterable, Navigatable {
         case playground = 420
         case appLogoCreator = 421
+        case coreDataViewer = 422
 
         var title: String {
             switch self {
@@ -116,6 +117,8 @@ extension StackNavigator {
                 return "Playground"
             case .appLogoCreator:
                 return "App logo creator"
+            case .coreDataViewer:
+                return "Core Data viewer"
             }
         }
 

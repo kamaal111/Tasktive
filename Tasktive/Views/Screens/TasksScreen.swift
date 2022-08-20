@@ -32,7 +32,7 @@ struct TasksScreen: View {
                     goToNextDay: { Task { await viewModel.goToNextDay() } }
                 )
                 .disabled(tasksViewModel.loadingTasks)
-                #if os(macOS)
+                #if os(macOS) || targetEnvironment(macCatalyst)
                     .padding(.top, .medium)
                     .padding(.horizontal, Constants.UI.mainViewHorizontalWidth)
                 #endif

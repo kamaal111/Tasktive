@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2C98E3D728B12E170048149F"
-               BuildableName = "TasktiveDebug.app"
-               BlueprintName = "TasktiveDebug"
+               BuildableName = "TasktiveMacDebug.app"
+               BlueprintName = "TasktiveMacDebug"
                ReferencedContainer = "container:Tasktive.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,8 +45,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2C98E3D728B12E170048149F"
-            BuildableName = "TasktiveDebug.app"
-            BlueprintName = "TasktiveDebug"
+            BuildableName = "TasktiveMacDebug.app"
+            BlueprintName = "TasktiveMacDebug"
             ReferencedContainer = "container:Tasktive.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -65,8 +65,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2C98E3D728B12E170048149F"
-            BuildableName = "TasktiveDebug.app"
-            BlueprintName = "TasktiveDebug"
+            BuildableName = "TasktiveMacDebug.app"
+            BlueprintName = "TasktiveMacDebug"
             ReferencedContainer = "container:Tasktive.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
