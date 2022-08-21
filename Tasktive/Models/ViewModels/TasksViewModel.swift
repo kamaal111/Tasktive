@@ -100,38 +100,17 @@ final class TasksViewModel: ObservableObject {
         return .success(())
     }
 
+    func getTodaysTasks() async -> Result<Void, UserErrors> {
+        let startDate = getHashDate(from: Date()).asNSDate
+        let endDate = getHashDate(from: Date().incrementByDays(1)).asNSDate
+
+        let predicate = NSPredicate(format: "(dueDate >= %@) AND (dueDate <= %@)", startDate, endDate)
+        return await getTasksByPredicate(predicate, updateNotCompletedTasks: true)
+    }
+
     func getAllTasks() async -> Result<Void, UserErrors> {
-        await withLoadingTasks {
-            let tasksResult = dataClient.list(from: persistenceController.context, of: CoreTask.self)
-                .mapError {
-                    logger.error(label: "failed to get all tasks", error: $0)
-                    return UserErrors.getAllFailure
-                }
-
-            let tasks: [CoreTask]
-            switch tasksResult {
-            case let .failure(failure):
-                return .failure(failure)
-            case let .success(success):
-                tasks = success
-            }
-
-            guard !tasks.isEmpty else { return .success(()) }
-
-            var appTasks: [AppTask] = []
-            await persistenceController.context.perform {
-                appTasks = tasks.map(\.asAppTask)
-            }
-
-            let maybeUpdatedTasks = updateDueDateOfTasksIfNeeded(appTasks)
-            let groupedTasks = Dictionary(grouping: maybeUpdatedTasks, by: {
-                getHashDate(from: $0.dueDate)
-            })
-
-            await setTasks(groupedTasks)
-
-            return .success(())
-        }
+        let predicate = NSPredicate(value: true)
+        return await getTasksByPredicate(predicate, updateNotCompletedTasks: true)
     }
 
     func updateTask(_ task: AppTask, with arguments: CoreTask.Arguments) async -> Result<Void, UserErrors> {
@@ -187,41 +166,79 @@ final class TasksViewModel: ObservableObject {
         })
     }
 
+    private func getTasksByPredicate(_ predicate: NSPredicate,
+                                     updateNotCompletedTasks: Bool) async -> Result<Void, UserErrors> {
+        await withLoadingTasks {
+            let tasksResult = dataClient.filter(by: predicate, from: persistenceController.context, of: CoreTask.self)
+                .mapError {
+                    logger.error(label: "failed to get all tasks", error: $0)
+                    return UserErrors.getAllFailure
+                }
+
+            let tasks: [CoreTask]
+            switch tasksResult {
+            case let .failure(failure):
+                return .failure(failure)
+            case let .success(success):
+                tasks = success
+            }
+
+            guard !tasks.isEmpty else { return .success(()) }
+
+            var appTasks: [AppTask] = []
+            await persistenceController.context.perform {
+                appTasks = tasks.map(\.asAppTask)
+            }
+
+            let maybeUpdatedTasks = updateDueDateOfTasksIfNeeded(appTasks, enabled: updateNotCompletedTasks)
+            let groupedTasks = Dictionary(grouping: maybeUpdatedTasks, by: {
+                getHashDate(from: $0.dueDate)
+            })
+
+            await setTasks(groupedTasks)
+
+            return .success(())
+        }
+    }
+
     private func validateTaskArguments(_ arguments: CoreTask.Arguments) -> Result<Void, UserErrors> {
         guard !arguments.title.trimmingByWhitespacesAndNewLines.isEmpty else { return .failure(.invalidTitle) }
 
         return .success(())
     }
 
-    private func updateDueDateOfTasksIfNeeded(_ tasks: [AppTask]) -> [AppTask] {
-        let tasksGroupedByDueDateIsBeforeToday = Dictionary(grouping: tasks, by: {
-            $0.dueDate.isBeforeToday && !$0.ticked
-        })
-        guard let tasksFromDaysBefore = tasksGroupedByDueDateIsBeforeToday[true] else { return tasks }
-
-        let now = Date()
-        let updateResult = dataClient.updateManyTaskDates(
-            by: tasksFromDaysBefore.map(\.id),
-            date: now,
-            context: persistenceController.context
-        )
-
-        switch updateResult {
-        case let .failure(failure):
-            logger.error(label: "failed to updated outdated tasks", error: failure)
-        case .success:
-            break
-        }
-
-        let notUpdatedTasks = tasksGroupedByDueDateIsBeforeToday[false] ?? []
-        let updatedTasks = tasksFromDaysBefore
-            .map {
-                var task = $0
-                task.dueDate = now
-                return task
-            }
-
-        return notUpdatedTasks + updatedTasks
+    private func updateDueDateOfTasksIfNeeded(_ tasks: [AppTask], enabled: Bool) -> [AppTask] {
+        print("need to update stuff", enabled)
+        // - TODO: GET ALL TASKS THAT AREN'T COMPLETED YET AND ARE BEFORE TODAY
+        return tasks
+//        let tasksGroupedByDueDateIsBeforeToday = Dictionary(grouping: tasks, by: {
+//            $0.dueDate.isBeforeToday && !$0.ticked
+//        })
+//        guard let tasksFromDaysBefore = tasksGroupedByDueDateIsBeforeToday[true] else { return tasks }
+//
+//        let now = Date()
+//        let updateResult = dataClient.updateManyTaskDates(
+//            by: tasksFromDaysBefore.map(\.id),
+//            date: now,
+//            context: persistenceController.context
+//        )
+//
+//        switch updateResult {
+//        case let .failure(failure):
+//            logger.error(label: "failed to updated outdated tasks", error: failure)
+//        case .success:
+//            break
+//        }
+//
+//        let notUpdatedTasks = tasksGroupedByDueDateIsBeforeToday[false] ?? []
+//        let updatedTasks = tasksFromDaysBefore
+//            .map {
+//                var task = $0
+//                task.dueDate = now
+//                return task
+//            }
+//
+//        return notUpdatedTasks + updatedTasks
     }
 
     private func withLoadingTasks<T>(completion: () async -> T) async -> T {

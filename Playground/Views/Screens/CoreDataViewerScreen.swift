@@ -19,6 +19,9 @@ struct CoreDataViewerScreen: View {
 
     var body: some View {
         DataViewer(selectedType: $selectedType, recordTypes: recordTypes, databaseItems: databaseItems)
+            .onAppear {
+                Task { try? await tasksViewModel.getTodaysTasks().get() }
+            }
     }
 
     private var databaseItems: [GridItemConfiguration] {

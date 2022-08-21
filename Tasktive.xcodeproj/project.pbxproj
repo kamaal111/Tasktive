@@ -260,6 +260,9 @@
 		2CDC180028A0321B00F07CF0 /* CoreTag+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDC17FE28A0321B00F07CF0 /* CoreTag+CoreDataClass.swift */; };
 		2CDC180128A0321B00F07CF0 /* CoreTag+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDC17FF28A0321B00F07CF0 /* CoreTag+CoreDataProperties.swift */; };
 		2CDC6DA6288D616B00BF8E06 /* ToolbarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDC6DA5288D616B00BF8E06 /* ToolbarButton.swift */; };
+		2CDE6AEB28B2BAFE00924935 /* Date+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE6AEA28B2BAFE00924935 /* Date+extensions.swift */; };
+		2CDE6AEC28B2BAFE00924935 /* Date+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE6AEA28B2BAFE00924935 /* Date+extensions.swift */; };
+		2CDE6AED28B2BAFE00924935 /* Date+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE6AEA28B2BAFE00924935 /* Date+extensions.swift */; };
 		2CDFB1B028A6DA53004ACED7 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDFB1AF28A6DA53004ACED7 /* Colors.swift */; };
 		2CE9EFB728AD629500C89888 /* AppLogoCreatorScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE9EFB628AD629500C89888 /* AppLogoCreatorScreen.swift */; };
 		2CE9EFB928AD639500C89888 /* WideNavigationLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE9EFB828AD639500C89888 /* WideNavigationLink.swift */; };
@@ -388,6 +391,7 @@
 		2CDC17FE28A0321B00F07CF0 /* CoreTag+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTag+CoreDataClass.swift"; sourceTree = "<group>"; };
 		2CDC17FF28A0321B00F07CF0 /* CoreTag+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTag+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2CDC6DA5288D616B00BF8E06 /* ToolbarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarButton.swift; sourceTree = "<group>"; };
+		2CDE6AEA28B2BAFE00924935 /* Date+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+extensions.swift"; sourceTree = "<group>"; };
 		2CDFB1AF28A6DA53004ACED7 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		2CE0C86C28A8621200B54EC9 /* bootstrap.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = bootstrap.sh; sourceTree = "<group>"; };
 		2CE0C86D28A8625500B54EC9 /* Brewfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Brewfile; sourceTree = "<group>"; };
@@ -579,6 +583,7 @@
 			children = (
 				2CDFB1AF28A6DA53004ACED7 /* Colors.swift */,
 				2C98E3C728B125CA0048149F /* Data+extensions.swift */,
+				2CDE6AEA28B2BAFE00924935 /* Date+extensions.swift */,
 				2C98E43A28B1306C0048149F /* FileManager+extensions.swift */,
 				2C98E3C528B125710048149F /* Image+extensions.swift */,
 				2C79879728AC30DF00F36C59 /* NavigationPath+extensions.swift */,
@@ -1184,6 +1189,7 @@
 				2C69A06E28B19BC600D5006D /* Crudable.swift in Sources */,
 				2C69A06F28B19BC600D5006D /* CircularProgressBar.swift in Sources */,
 				2C69A07028B19BC600D5006D /* Colors.swift in Sources */,
+				2CDE6AEC28B2BAFE00924935 /* Date+extensions.swift in Sources */,
 				2C69A07128B19BC600D5006D /* Shell.swift in Sources */,
 				2C69A07228B19BC600D5006D /* CoreTaskList+CoreDataProperties.swift in Sources */,
 				2C69A07328B19BC600D5006D /* AppLogoColorFormRow.swift in Sources */,
@@ -1270,6 +1276,7 @@
 				2C98E3F528B12E170048149F /* Crudable.swift in Sources */,
 				2C98E3F628B12E170048149F /* CircularProgressBar.swift in Sources */,
 				2C98E3F728B12E170048149F /* Colors.swift in Sources */,
+				2CDE6AED28B2BAFE00924935 /* Date+extensions.swift in Sources */,
 				2C98E43828B12FB60048149F /* Shell.swift in Sources */,
 				2C98E3F828B12E170048149F /* CoreTaskList+CoreDataProperties.swift in Sources */,
 				2C98E3F928B12E170048149F /* AppLogoColorFormRow.swift in Sources */,
@@ -1356,6 +1363,7 @@
 				2CCCADD4288204100033E2EF /* Crudable.swift in Sources */,
 				2C750F66288C2F9400026D67 /* CircularProgressBar.swift in Sources */,
 				2CDFB1B028A6DA53004ACED7 /* Colors.swift in Sources */,
+				2CDE6AEB28B2BAFE00924935 /* Date+extensions.swift in Sources */,
 				2C98E43928B1303C0048149F /* Shell.swift in Sources */,
 				2CDC17F128A02F8D00F07CF0 /* CoreTaskList+CoreDataProperties.swift in Sources */,
 				2C1B060728B1083B001E8441 /* AppLogoColorFormRow.swift in Sources */,
