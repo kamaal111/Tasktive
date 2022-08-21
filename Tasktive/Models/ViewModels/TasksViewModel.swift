@@ -41,6 +41,13 @@ final class TasksViewModel: ObservableObject {
             })
     }
 
+    var allTasksSortedByCreationDate: [AppTask] {
+        tasks
+            .values
+            .flatMap { $0 }
+            .sorted(by: \.creationDate, using: .orderedAscending)
+    }
+
     func setTickOnTask(_ task: AppTask, with newTickedState: Bool) async -> Result<Void, UserErrors> {
         await updateTask(task, with: task.toggleCoreTaskTickArguments(with: newTickedState))
     }

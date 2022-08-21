@@ -8,14 +8,15 @@
 import Foundation
 
 struct AppTask: Hashable, Identifiable, Taskable {
-    var id: UUID
+    let id: UUID
     var title: String
     var taskDescription: String?
     var notes: String?
     var ticked: Bool
     var dueDate: Date
     var completionDate: Date?
-    var source: TaskSource
+    let creationDate: Date
+    let source: TaskSource
 
     init(
         id: UUID,
@@ -25,6 +26,7 @@ struct AppTask: Hashable, Identifiable, Taskable {
         ticked: Bool,
         dueDate: Date,
         completionDate: Date?,
+        creationDate: Date,
         source: TaskSource
     ) {
         self.id = id
@@ -34,6 +36,7 @@ struct AppTask: Hashable, Identifiable, Taskable {
         self.ticked = ticked
         self.dueDate = dueDate
         self.completionDate = completionDate
+        self.creationDate = creationDate
         self.source = source
     }
 
