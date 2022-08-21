@@ -133,6 +133,12 @@
 		2C750F6A288C328C00026D67 /* TasksSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C750F69288C328C00026D67 /* TasksSection.swift */; };
 		2C750F6C288C335A00026D67 /* TaskItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C750F6B288C335A00026D67 /* TaskItemView.swift */; };
 		2C79879828AC30DF00F36C59 /* NavigationPath+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C79879728AC30DF00F36C59 /* NavigationPath+extensions.swift */; };
+		2C9435DA28B284E600281AF7 /* GridItemConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9435D928B284E600281AF7 /* GridItemConfiguration.swift */; };
+		2C9435DB28B284E600281AF7 /* GridItemConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9435D928B284E600281AF7 /* GridItemConfiguration.swift */; };
+		2C9435DC28B284E600281AF7 /* GridItemConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9435D928B284E600281AF7 /* GridItemConfiguration.swift */; };
+		2C9435DE28B2868A00281AF7 /* Gridable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9435DD28B2868A00281AF7 /* Gridable.swift */; };
+		2C9435DF28B2868A00281AF7 /* Gridable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9435DD28B2868A00281AF7 /* Gridable.swift */; };
+		2C9435E028B2868A00281AF7 /* Gridable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9435DD28B2868A00281AF7 /* Gridable.swift */; };
 		2C98E3C628B125710048149F /* Image+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C98E3C528B125710048149F /* Image+extensions.swift */; };
 		2C98E3C828B125CA0048149F /* Data+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C98E3C728B125CA0048149F /* Data+extensions.swift */; };
 		2C98E3CA28B126620048149F /* SavePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C98E3C928B126620048149F /* SavePanel.swift */; };
@@ -324,6 +330,8 @@
 		2C750F6B288C335A00026D67 /* TaskItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskItemView.swift; sourceTree = "<group>"; };
 		2C79879728AC30DF00F36C59 /* NavigationPath+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NavigationPath+extensions.swift"; sourceTree = "<group>"; };
 		2C8B0CDD288DD73A00041EF8 /* SettingsUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SettingsUI; sourceTree = "<group>"; };
+		2C9435D928B284E600281AF7 /* GridItemConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridItemConfiguration.swift; sourceTree = "<group>"; };
+		2C9435DD28B2868A00281AF7 /* Gridable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gridable.swift; sourceTree = "<group>"; };
 		2C98E3C528B125710048149F /* Image+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+extensions.swift"; sourceTree = "<group>"; };
 		2C98E3C728B125CA0048149F /* Data+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+extensions.swift"; sourceTree = "<group>"; };
 		2C98E3C928B126620048149F /* SavePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavePanel.swift; sourceTree = "<group>"; };
@@ -639,6 +647,7 @@
 			children = (
 				2C51C915288481A9008939F7 /* AppTask.swift */,
 				2C15758B289EF43E00425CDD /* FeedbackMetadata.swift */,
+				2C9435D928B284E600281AF7 /* GridItemConfiguration.swift */,
 				2C62FA2E28A7E95F00200BF9 /* StoreKitDonation.swift */,
 			);
 			path = Structures;
@@ -834,6 +843,7 @@
 			isa = PBXGroup;
 			children = (
 				2CCCADD3288204100033E2EF /* Crudable.swift */,
+				2C9435DD28B2868A00281AF7 /* Gridable.swift */,
 				2CC325F228B0E68F0091EC3E /* Navigatable.swift */,
 				2C1B196B28886CFB00D734D2 /* PopUpError.swift */,
 				2C51C917288481F7008939F7 /* Taskable.swift */,
@@ -1158,6 +1168,7 @@
 				2C69A06A28B19BC600D5006D /* AppDelegate_iOS.swift in Sources */,
 				2C69A06B28B19BC600D5006D /* Persistence.swift in Sources */,
 				2C69A06C28B19BC600D5006D /* CoreDataViewerScreen.swift in Sources */,
+				2C9435DB28B284E600281AF7 /* GridItemConfiguration.swift in Sources */,
 				2C69A06D28B19BC600D5006D /* Data+extensions.swift in Sources */,
 				2C69A06E28B19BC600D5006D /* Crudable.swift in Sources */,
 				2C69A06F28B19BC600D5006D /* CircularProgressBar.swift in Sources */,
@@ -1214,6 +1225,7 @@
 				2C69A0A228B19BC600D5006D /* TasksViewModel.swift in Sources */,
 				2C69A0A328B19BC600D5006D /* PopUpError.swift in Sources */,
 				2C69A0A428B19BC600D5006D /* NavigationPath+extensions.swift in Sources */,
+				2C9435DF28B2868A00281AF7 /* Gridable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1240,6 +1252,7 @@
 				2C98E3F228B12E170048149F /* AppDelegate_iOS.swift in Sources */,
 				2C98E3F328B12E170048149F /* Persistence.swift in Sources */,
 				2C69A04B28B1932F00D5006D /* CoreDataViewerScreen.swift in Sources */,
+				2C9435DC28B284E600281AF7 /* GridItemConfiguration.swift in Sources */,
 				2C98E3F428B12E170048149F /* Data+extensions.swift in Sources */,
 				2C98E3F528B12E170048149F /* Crudable.swift in Sources */,
 				2C98E3F628B12E170048149F /* CircularProgressBar.swift in Sources */,
@@ -1296,6 +1309,7 @@
 				2C98E42428B12E170048149F /* TasksViewModel.swift in Sources */,
 				2C98E42528B12E170048149F /* PopUpError.swift in Sources */,
 				2C98E42628B12E170048149F /* NavigationPath+extensions.swift in Sources */,
+				2C9435E028B2868A00281AF7 /* Gridable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1322,6 +1336,7 @@
 				2CFCA0A628A97842007A08F2 /* AppDelegate_iOS.swift in Sources */,
 				2CBCE6092881DE240057F4CD /* Persistence.swift in Sources */,
 				2C69A04A28B1932F00D5006D /* CoreDataViewerScreen.swift in Sources */,
+				2C9435DA28B284E600281AF7 /* GridItemConfiguration.swift in Sources */,
 				2C98E3C828B125CA0048149F /* Data+extensions.swift in Sources */,
 				2CCCADD4288204100033E2EF /* Crudable.swift in Sources */,
 				2C750F66288C2F9400026D67 /* CircularProgressBar.swift in Sources */,
@@ -1378,6 +1393,7 @@
 				2C51C91328847F9E008939F7 /* TasksViewModel.swift in Sources */,
 				2C1B196C28886CFB00D734D2 /* PopUpError.swift in Sources */,
 				2C79879828AC30DF00F36C59 /* NavigationPath+extensions.swift in Sources */,
+				2C9435DE28B2868A00281AF7 /* Gridable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

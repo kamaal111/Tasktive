@@ -213,10 +213,10 @@ final class TasksViewModel: ObservableObject {
             break
         }
 
-        let notUpdatedTasks = tasksGroupedByDueDateIsBeforeToday[false]?.map(\.asAppTask) ?? []
+        let notUpdatedTasks = tasksGroupedByDueDateIsBeforeToday[false] ?? []
         let updatedTasks = tasksFromDaysBefore
             .map {
-                var task = $0.asAppTask
+                var task = $0
                 task.dueDate = now
                 return task
             }

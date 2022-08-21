@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct AppTask: Hashable, Identifiable, Taskable {
+struct AppTask: Hashable, Identifiable {
     let id: UUID
     var title: String
     var taskDescription: String?
@@ -62,5 +62,19 @@ struct AppTask: Hashable, Identifiable, Taskable {
             id: id,
             completionDate: newTickState ? Date() : nil
         )
+    }
+}
+
+extension AppTask: Gridable {
+    var dictionary: [String: String] {
+        [
+            "ID": idString,
+            "Title": title,
+            "Ticked": ticked ? "Yes" : "No",
+        ]
+    }
+
+    var idString: String {
+        id.uuidString
     }
 }
