@@ -139,6 +139,9 @@
 		2C9435DE28B2868A00281AF7 /* Gridable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9435DD28B2868A00281AF7 /* Gridable.swift */; };
 		2C9435DF28B2868A00281AF7 /* Gridable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9435DD28B2868A00281AF7 /* Gridable.swift */; };
 		2C9435E028B2868A00281AF7 /* Gridable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9435DD28B2868A00281AF7 /* Gridable.swift */; };
+		2C9435E228B28B9D00281AF7 /* DataViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9435E128B28B9D00281AF7 /* DataViewer.swift */; };
+		2C9435E328B28B9D00281AF7 /* DataViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9435E128B28B9D00281AF7 /* DataViewer.swift */; };
+		2C9435E428B28B9D00281AF7 /* DataViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9435E128B28B9D00281AF7 /* DataViewer.swift */; };
 		2C98E3C628B125710048149F /* Image+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C98E3C528B125710048149F /* Image+extensions.swift */; };
 		2C98E3C828B125CA0048149F /* Data+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C98E3C728B125CA0048149F /* Data+extensions.swift */; };
 		2C98E3CA28B126620048149F /* SavePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C98E3C928B126620048149F /* SavePanel.swift */; };
@@ -332,6 +335,7 @@
 		2C8B0CDD288DD73A00041EF8 /* SettingsUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SettingsUI; sourceTree = "<group>"; };
 		2C9435D928B284E600281AF7 /* GridItemConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridItemConfiguration.swift; sourceTree = "<group>"; };
 		2C9435DD28B2868A00281AF7 /* Gridable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gridable.swift; sourceTree = "<group>"; };
+		2C9435E128B28B9D00281AF7 /* DataViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataViewer.swift; sourceTree = "<group>"; };
 		2C98E3C528B125710048149F /* Image+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+extensions.swift"; sourceTree = "<group>"; };
 		2C98E3C728B125CA0048149F /* Data+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+extensions.swift"; sourceTree = "<group>"; };
 		2C98E3C928B126620048149F /* SavePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavePanel.swift; sourceTree = "<group>"; };
@@ -497,6 +501,7 @@
 			children = (
 				2C1B060628B1083B001E8441 /* AppLogoColorFormRow.swift */,
 				2C1B060828B10A48001E8441 /* AppLogoColorSelector.swift */,
+				2C9435E128B28B9D00281AF7 /* DataViewer.swift */,
 				2C69A04C28B193CB00D5006D /* PlaygroundNavigationButton.swift */,
 			);
 			path = SupportingViews;
@@ -1166,6 +1171,7 @@
 				2C69A06828B19BC600D5006D /* DateControlView.swift in Sources */,
 				2C69A06928B19BC600D5006D /* Taskable.swift in Sources */,
 				2C69A06A28B19BC600D5006D /* AppDelegate_iOS.swift in Sources */,
+				2C9435E328B28B9D00281AF7 /* DataViewer.swift in Sources */,
 				2C69A06B28B19BC600D5006D /* Persistence.swift in Sources */,
 				2C69A06C28B19BC600D5006D /* CoreDataViewerScreen.swift in Sources */,
 				2C9435DB28B284E600281AF7 /* GridItemConfiguration.swift in Sources */,
@@ -1250,6 +1256,7 @@
 				2C98E3F028B12E170048149F /* DateControlView.swift in Sources */,
 				2C98E3F128B12E170048149F /* Taskable.swift in Sources */,
 				2C98E3F228B12E170048149F /* AppDelegate_iOS.swift in Sources */,
+				2C9435E428B28B9D00281AF7 /* DataViewer.swift in Sources */,
 				2C98E3F328B12E170048149F /* Persistence.swift in Sources */,
 				2C69A04B28B1932F00D5006D /* CoreDataViewerScreen.swift in Sources */,
 				2C9435DC28B284E600281AF7 /* GridItemConfiguration.swift in Sources */,
@@ -1334,6 +1341,7 @@
 				2C3B27C6288C77F7007CE538 /* DateControlView.swift in Sources */,
 				2C51C918288481F7008939F7 /* Taskable.swift in Sources */,
 				2CFCA0A628A97842007A08F2 /* AppDelegate_iOS.swift in Sources */,
+				2C9435E228B28B9D00281AF7 /* DataViewer.swift in Sources */,
 				2CBCE6092881DE240057F4CD /* Persistence.swift in Sources */,
 				2C69A04A28B1932F00D5006D /* CoreDataViewerScreen.swift in Sources */,
 				2C9435DA28B284E600281AF7 /* GridItemConfiguration.swift in Sources */,

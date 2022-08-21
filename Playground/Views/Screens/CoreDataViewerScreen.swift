@@ -7,8 +7,6 @@
 
 #if DEBUG
 import SwiftUI
-import SalmonUI
-import ShrimpExtensions
 
 struct CoreDataViewerScreen: View {
     @EnvironmentObject private var tasksViewModel: TasksViewModel
@@ -20,36 +18,7 @@ struct CoreDataViewerScreen: View {
     ]
 
     var body: some View {
-        VStack {
-            Picker(selection: $selectedType, label: Text.empty()) {
-                ForEach(recordTypes, id: \.self) { recordType in
-                    Text(recordType)
-                        .tag(recordType)
-                }
-            }
-            .labelsHidden()
-            .frame(maxWidth: 200)
-            .ktakeWidthEagerly(alignment: .trailing)
-            ScrollView {
-                LazyVGrid(columns: columns, alignment: .leading, spacing: 2) {
-                    ForEach(headerTitles, id: \.self) { title in
-                        gridItemView(text: title)
-                            .background(Color.accentColor)
-                    }
-                    ForEach(databaseItems) { configuration in
-                        ForEach(configuration.gridKeys(sortedWith: headerTitles)) { key in
-                            gridItemView(text: configuration.values[key.keyValue]!)
-                                .background(Color.secondary)
-                        }
-                    }
-                }
-            }
-        }
-        #if os(macOS)
-        .padding(.vertical, .medium)
-        .padding(.horizontal, .medium)
-        .ktakeSizeEagerly(alignment: .topLeading)
-        #endif
+        DataViewer(selectedType: $selectedType, recordTypes: recordTypes, databaseItems: databaseItems)
     }
 
     private var databaseItems: [GridItemConfiguration] {
@@ -62,29 +31,6 @@ struct CoreDataViewerScreen: View {
         default:
             return []
         }
-    }
-
-    private var headerTitles: [String] {
-        databaseItems
-            .first?
-            .values
-            .map(\.key)
-            .sortedAlphabetically(andStartWith: "ID") ?? []
-    }
-
-    private var columns: [GridItem] {
-        (0 ..< headerTitles.count)
-            .map { _ in
-                GridItem(.flexible())
-            }
-    }
-
-    private func gridItemView(text: String) -> some View {
-        Text(text)
-            .lineLimit(1)
-            .padding(.horizontal, .extraSmall)
-            .padding(.vertical, .extraSmall)
-            .ktakeWidthEagerly(alignment: .leading)
     }
 }
 
