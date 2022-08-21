@@ -39,6 +39,8 @@ struct ScreenWrapper<Content: View>: View {
                             AppLogoCreatorScreen()
                         case .coreDataViewer:
                             CoreDataViewerScreen()
+                        case .cloudKitDataViewer:
+                            CloudKitDataViewerScreen()
                         }
                     })
                     .navigationTitle(Text(screen.title))

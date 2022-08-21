@@ -142,6 +142,9 @@
 		2C9435E228B28B9D00281AF7 /* DataViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9435E128B28B9D00281AF7 /* DataViewer.swift */; };
 		2C9435E328B28B9D00281AF7 /* DataViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9435E128B28B9D00281AF7 /* DataViewer.swift */; };
 		2C9435E428B28B9D00281AF7 /* DataViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9435E128B28B9D00281AF7 /* DataViewer.swift */; };
+		2C9435E628B28C8A00281AF7 /* CloudKitDataViewerScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9435E528B28C8A00281AF7 /* CloudKitDataViewerScreen.swift */; };
+		2C9435E728B28C8A00281AF7 /* CloudKitDataViewerScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9435E528B28C8A00281AF7 /* CloudKitDataViewerScreen.swift */; };
+		2C9435E828B28C8A00281AF7 /* CloudKitDataViewerScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9435E528B28C8A00281AF7 /* CloudKitDataViewerScreen.swift */; };
 		2C98E3C628B125710048149F /* Image+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C98E3C528B125710048149F /* Image+extensions.swift */; };
 		2C98E3C828B125CA0048149F /* Data+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C98E3C728B125CA0048149F /* Data+extensions.swift */; };
 		2C98E3CA28B126620048149F /* SavePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C98E3C928B126620048149F /* SavePanel.swift */; };
@@ -336,6 +339,7 @@
 		2C9435D928B284E600281AF7 /* GridItemConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridItemConfiguration.swift; sourceTree = "<group>"; };
 		2C9435DD28B2868A00281AF7 /* Gridable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gridable.swift; sourceTree = "<group>"; };
 		2C9435E128B28B9D00281AF7 /* DataViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataViewer.swift; sourceTree = "<group>"; };
+		2C9435E528B28C8A00281AF7 /* CloudKitDataViewerScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitDataViewerScreen.swift; sourceTree = "<group>"; };
 		2C98E3C528B125710048149F /* Image+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+extensions.swift"; sourceTree = "<group>"; };
 		2C98E3C728B125CA0048149F /* Data+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+extensions.swift"; sourceTree = "<group>"; };
 		2C98E3C928B126620048149F /* SavePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavePanel.swift; sourceTree = "<group>"; };
@@ -490,6 +494,7 @@
 			isa = PBXGroup;
 			children = (
 				2CE9EFB628AD629500C89888 /* AppLogoCreatorScreen.swift */,
+				2C9435E528B28C8A00281AF7 /* CloudKitDataViewerScreen.swift */,
 				2C69A04928B1932F00D5006D /* CoreDataViewerScreen.swift */,
 				2C12687128A984FE003D1E56 /* PlaygroundScreen.swift */,
 			);
@@ -1193,6 +1198,7 @@
 				2C69A07C28B19BC600D5006D /* View+extensions.swift in Sources */,
 				2C69A07D28B19BC600D5006D /* QuickAddTaskField.swift in Sources */,
 				2C69A07E28B19BC600D5006D /* DeviceModel.swift in Sources */,
+				2C9435E728B28C8A00281AF7 /* CloudKitDataViewerScreen.swift in Sources */,
 				2C69A07F28B19BC600D5006D /* AppLogoColorSelector.swift in Sources */,
 				2C69A08028B19BC600D5006D /* CoreReminder+CoreDataProperties.swift in Sources */,
 				2C69A08128B19BC600D5006D /* Constants.swift in Sources */,
@@ -1278,6 +1284,7 @@
 				2C98E40228B12E170048149F /* View+extensions.swift in Sources */,
 				2C98E40328B12E170048149F /* QuickAddTaskField.swift in Sources */,
 				2C98E40428B12E170048149F /* DeviceModel.swift in Sources */,
+				2C9435E828B28C8A00281AF7 /* CloudKitDataViewerScreen.swift in Sources */,
 				2C98E40528B12E170048149F /* AppLogoColorSelector.swift in Sources */,
 				2C98E40628B12E170048149F /* CoreReminder+CoreDataProperties.swift in Sources */,
 				2C98E40728B12E170048149F /* Constants.swift in Sources */,
@@ -1363,6 +1370,7 @@
 				2CF24AAA28842B5B00778BD9 /* View+extensions.swift in Sources */,
 				2C1B1985288874C100D734D2 /* QuickAddTaskField.swift in Sources */,
 				2C47E3FB28836A6A00FD4469 /* DeviceModel.swift in Sources */,
+				2C9435E628B28C8A00281AF7 /* CloudKitDataViewerScreen.swift in Sources */,
 				2C1B060928B10A48001E8441 /* AppLogoColorSelector.swift in Sources */,
 				2CDC17FD28A031AF00F07CF0 /* CoreReminder+CoreDataProperties.swift in Sources */,
 				2C51C90F28847438008939F7 /* Constants.swift in Sources */,
