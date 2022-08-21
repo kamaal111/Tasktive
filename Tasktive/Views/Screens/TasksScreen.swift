@@ -24,6 +24,17 @@ struct TasksScreen: View {
     @StateObject private var viewModel = ViewModel()
 
     var body: some View {
+        let drag = DragGesture(minimumDistance: 0, coordinateSpace: .local)
+            .onEnded({ value in
+                switch(value.translation.width, value.translation.height) {
+                    case (...0, -30...30):
+                        Task { await viewModel.goToPreviousDay() }
+                    case (0..., -30...30):
+                        Task { await viewModel.goToNextDay() }
+                    default: ()
+                }
+            })
+        
         ZStack {
             List {
                 DateControlView(
@@ -36,10 +47,20 @@ struct TasksScreen: View {
                     .padding(.top, .medium)
                     .padding(.horizontal, Constants.UI.mainViewHorizontalWidth)
                 #endif
+                #if os(iOS)
+                .contentShape(Rectangle())
+                .gesture(drag)
+                #endif
+                
                 ProgressSection(
                     currentDate: $viewModel.currentDay,
                     progress: tasksViewModel.progressForDate(viewModel.currentDay)
                 )
+                #if os(iOS)
+                .contentShape(Rectangle())
+                .gesture(drag)
+                #endif
+                
                 #if os(macOS)
                 .padding(.horizontal, Constants.UI.mainViewHorizontalWidth)
                 #endif
