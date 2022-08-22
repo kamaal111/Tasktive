@@ -50,6 +50,12 @@ struct DataClient {
             .mapError { UpdateErrors.crud(error: $0) }
     }
 
+    func updateManyTaskDates(by ids: [UUID],
+                             date: Date,
+                             context: NSManagedObjectContext) -> Result<Void, CoreTask.CrudErrors> {
+        CoreTask.updateManyDates(by: ids, date: date, on: context)
+    }
+
     enum UpdateErrors: Error {
         case crud(error: Error)
         case notFound

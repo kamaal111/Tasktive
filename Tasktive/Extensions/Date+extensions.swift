@@ -16,4 +16,13 @@ extension Date {
 
         return incrementedDate
     }
+
+    func incrementBySeconds(_ seconds: Int) -> Date {
+        var dateComponent = DateComponents()
+        dateComponent.second = seconds
+
+        guard let incrementedDate = Calendar.current.date(byAdding: dateComponent, to: self) else { return self }
+
+        return incrementedDate
+    }
 }

@@ -73,6 +73,9 @@ struct TasksScreen: View {
                 .background(colorScheme == .dark ? Color.black : Color.white)
                 .ktakeSizeEagerly(alignment: .bottom)
         }
+        .onChange(of: viewModel.currentDay, perform: { newValue in
+            Task { await tasksViewModel.getTasks(for: newValue) }
+        })
         .onAppear(perform: handleOnAppear)
         .sheet(isPresented: $viewModel.showTaskDetailsSheet) {
             TaskDetailsSheet(
