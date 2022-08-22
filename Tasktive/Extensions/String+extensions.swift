@@ -18,6 +18,10 @@ extension Array where Element == String {
         guard contains(startingKey) else { return self }
 
         // TODO: THINK OF A MORE EFFICIENT WAY TO DO THIS
-        return [startingKey] + filter { $0 != startingKey }
+        return [startingKey]
+            .concat(filter { $0 != startingKey }
+                .sorted(by: { a, b in
+                    a < b
+                }))
     }
 }

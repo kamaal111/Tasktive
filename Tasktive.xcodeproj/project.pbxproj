@@ -133,6 +133,9 @@
 		2C750F6A288C328C00026D67 /* TasksSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C750F69288C328C00026D67 /* TasksSection.swift */; };
 		2C750F6C288C335A00026D67 /* TaskItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C750F6B288C335A00026D67 /* TaskItemView.swift */; };
 		2C79879828AC30DF00F36C59 /* NavigationPath+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C79879728AC30DF00F36C59 /* NavigationPath+extensions.swift */; };
+		2C7A560628B4157600CF8A7C /* Array+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7A560528B4157600CF8A7C /* Array+extensions.swift */; };
+		2C7A560728B4157600CF8A7C /* Array+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7A560528B4157600CF8A7C /* Array+extensions.swift */; };
+		2C7A560828B4157600CF8A7C /* Array+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7A560528B4157600CF8A7C /* Array+extensions.swift */; };
 		2C9435DA28B284E600281AF7 /* GridItemConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9435D928B284E600281AF7 /* GridItemConfiguration.swift */; };
 		2C9435DB28B284E600281AF7 /* GridItemConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9435D928B284E600281AF7 /* GridItemConfiguration.swift */; };
 		2C9435DC28B284E600281AF7 /* GridItemConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9435D928B284E600281AF7 /* GridItemConfiguration.swift */; };
@@ -338,6 +341,7 @@
 		2C750F69288C328C00026D67 /* TasksSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksSection.swift; sourceTree = "<group>"; };
 		2C750F6B288C335A00026D67 /* TaskItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskItemView.swift; sourceTree = "<group>"; };
 		2C79879728AC30DF00F36C59 /* NavigationPath+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NavigationPath+extensions.swift"; sourceTree = "<group>"; };
+		2C7A560528B4157600CF8A7C /* Array+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+extensions.swift"; sourceTree = "<group>"; };
 		2C8B0CDD288DD73A00041EF8 /* SettingsUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SettingsUI; sourceTree = "<group>"; };
 		2C9435D928B284E600281AF7 /* GridItemConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridItemConfiguration.swift; sourceTree = "<group>"; };
 		2C9435DD28B2868A00281AF7 /* Gridable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gridable.swift; sourceTree = "<group>"; };
@@ -581,6 +585,7 @@
 		2C47E3F02883685D00FD4469 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				2C7A560528B4157600CF8A7C /* Array+extensions.swift */,
 				2CDFB1AF28A6DA53004ACED7 /* Colors.swift */,
 				2C98E3C728B125CA0048149F /* Data+extensions.swift */,
 				2CDE6AEA28B2BAFE00924935 /* Date+extensions.swift */,
@@ -1211,6 +1216,7 @@
 				2C69A08228B19BC600D5006D /* StoreKitDonation.swift in Sources */,
 				2C69A08328B19BC600D5006D /* Image+extensions.swift in Sources */,
 				2C69A08428B19BC600D5006D /* CoreTask+CoreDataClass.swift in Sources */,
+				2C7A560728B4157600CF8A7C /* Array+extensions.swift in Sources */,
 				2C69A08528B19BC600D5006D /* Navigatable.swift in Sources */,
 				2C69A08628B19BC600D5006D /* ContentView.swift in Sources */,
 				2C69A08728B19BC600D5006D /* CoreBase+CoreDataClass.swift in Sources */,
@@ -1298,6 +1304,7 @@
 				2C98E40828B12E170048149F /* StoreKitDonation.swift in Sources */,
 				2C98E40928B12E170048149F /* Image+extensions.swift in Sources */,
 				2C98E40A28B12E170048149F /* CoreTask+CoreDataClass.swift in Sources */,
+				2C7A560828B4157600CF8A7C /* Array+extensions.swift in Sources */,
 				2C98E40B28B12E170048149F /* Navigatable.swift in Sources */,
 				2C98E40C28B12E170048149F /* ContentView.swift in Sources */,
 				2C98E40D28B12E170048149F /* CoreBase+CoreDataClass.swift in Sources */,
@@ -1385,6 +1392,7 @@
 				2C62FA2F28A7E95F00200BF9 /* StoreKitDonation.swift in Sources */,
 				2C98E3C628B125710048149F /* Image+extensions.swift in Sources */,
 				2CDC17F428A0300400F07CF0 /* CoreTask+CoreDataClass.swift in Sources */,
+				2C7A560628B4157600CF8A7C /* Array+extensions.swift in Sources */,
 				2CC325F328B0E68F0091EC3E /* Navigatable.swift in Sources */,
 				2CBCE60E2881DE240057F4CD /* ContentView.swift in Sources */,
 				2CDC17E828A02E5400F07CF0 /* CoreBase+CoreDataClass.swift in Sources */,
