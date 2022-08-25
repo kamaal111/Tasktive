@@ -5,17 +5,22 @@ import PackageDescription
 
 let package = Package(
     name: "Skypiea",
+    platforms: [.macOS(.v10_15)],
     products: [
         .library(
             name: "Skypiea",
             targets: ["Skypiea"]
         ),
     ],
-    dependencies: [],
+    dependencies: [
+        .package(url: "https://github.com/kamaal111/ICloutKit.git", "3.0.0" ..< "4.0.0"),
+    ],
     targets: [
         .target(
             name: "Skypiea",
-            dependencies: []
+            dependencies: [
+                "ICloutKit",
+            ]
         ),
         .testTarget(
             name: "SkypieaTests",

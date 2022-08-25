@@ -386,6 +386,7 @@
 		2CCCADD0288203720033E2EF /* Logster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logster.swift; sourceTree = "<group>"; };
 		2CCCADD3288204100033E2EF /* Crudable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crudable.swift; sourceTree = "<group>"; };
 		2CCF228928B7F9DE00366596 /* Skypiea */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Skypiea; sourceTree = "<group>"; };
+		2CD7EF5728B8076B009FA620 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		2CDC17E628A02E5400F07CF0 /* CoreBase+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreBase+CoreDataClass.swift"; sourceTree = "<group>"; };
 		2CDC17E728A02E5400F07CF0 /* CoreBase+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreBase+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2CDC17EE28A02F8D00F07CF0 /* CoreTaskList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTaskList+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -755,6 +756,7 @@
 			children = (
 				2CBCE6112881DE270057F4CD /* Tasktive.entitlements */,
 				2C98E3CB28B12B080048149F /* TasktiveDebug.entitlements */,
+				2CD7EF5728B8076B009FA620 /* Info.plist */,
 				2C69A04328B189F500D5006D /* LaunchScreen.storyboard */,
 				2CFCA0A528A97842007A08F2 /* AppDelegate_iOS.swift */,
 				2CFCA0A328A977CE007A08F2 /* AppDelegate_macOS.swift */,
@@ -1725,6 +1727,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Tasktive/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Tasktivity;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
@@ -1762,6 +1765,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Tasktive/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Tasktivity;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
