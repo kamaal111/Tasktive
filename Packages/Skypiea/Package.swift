@@ -14,12 +14,14 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/kamaal111/ICloutKit.git", "3.0.0" ..< "4.0.0"),
+        .package(url: "https://github.com/kamaal111/ShrimpExtensions.git", "2.6.0" ..< "3.0.0"),
     ],
     targets: [
         .target(
             name: "Skypiea",
             dependencies: [
                 "ICloutKit",
+                "ShrimpExtensions",
             ]
         ),
         .testTarget(

@@ -23,7 +23,7 @@ public struct Skypiea {
     /// Fetch all of the given record
     /// - Parameter objectType: `CloudKit` object
     /// - Returns: an array of records
-    public func fetchAll(ofType objectType: String) async throws -> [CKRecord] {
+    func fetchAll(ofType objectType: String) async throws -> [CKRecord] {
         let predicate = NSPredicate(value: true)
         return try await fetch(ofType: objectType, withPredicate: predicate)
     }
@@ -33,8 +33,19 @@ public struct Skypiea {
     ///   - objectType: `CloudKit` object
     ///   - predicate: query
     /// - Returns: an array of records
-    public func fetch(ofType objectType: String, withPredicate predicate: NSPredicate) async throws -> [CKRecord] {
-        try await iCloutKit.fetch(ofType: objectType, by: predicate)
+    func fetch(ofType objectType: String, withPredicate predicate: NSPredicate) async throws -> [CKRecord] {
+        guard !preview else { return [] }
+
+        return try await iCloutKit.fetch(ofType: objectType, by: predicate)
+    }
+
+    /// Save the given record on iCloud
+    /// - Parameter record: the record to save
+    /// - Returns: the saved record if it succeeds
+    func save(_ record: CKRecord) async throws -> CKRecord? {
+        guard !preview else { return record }
+
+        return try await iCloutKit.save(record)
     }
 
     /// Singleton class for easy access of ``Skypiea/Skypiea``
