@@ -63,3 +63,4 @@ node_modules
 Tasktive/Resources/Tokens.json
 Scripts/**/target
 Brewfile.lock.json
+Gemfile.lock
