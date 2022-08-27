@@ -19,6 +19,10 @@ struct PlaygroundScreen: View {
             }
             KSection(header: "Data") {
                 PlaygroundNavigationButton(title: "Core Data viewer", destination: .coreDataViewer)
+                #if os(macOS)
+                    .padding(.bottom, .extraSmall)
+                #endif
+                PlaygroundNavigationButton(title: "Cloud Kit data viewer", destination: .cloudKitDataViewer)
             }
         }
         #if os(macOS)

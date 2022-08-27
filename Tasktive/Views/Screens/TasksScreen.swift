@@ -73,6 +73,9 @@ struct TasksScreen: View {
                 .background(colorScheme == .dark ? Color.black : Color.white)
                 .ktakeSizeEagerly(alignment: .bottom)
         }
+        .onChange(of: viewModel.currentDay, perform: { newValue in
+            Task { await tasksViewModel.getTasks(for: newValue) }
+        })
         .onAppear(perform: handleOnAppear)
         .sheet(isPresented: $viewModel.showTaskDetailsSheet) {
             TaskDetailsSheet(
@@ -114,7 +117,7 @@ struct TasksScreen: View {
 
     private func handleOnAppear() {
         Task {
-            let result = await tasksViewModel.getAllTasks()
+            let result = await tasksViewModel.getTodaysTasks()
             switch result {
             case let .failure(failure):
                 popperUpManager.showPopup(style: failure.style, timeout: failure.timeout)
@@ -234,15 +237,7 @@ extension TasksScreen {
         }
 
         private func incrementDay(of date: Date, by increment: Int) -> Date {
-            var dateComponent = DateComponents()
-            dateComponent.day = increment
-
-            guard let incrementedDate = Calendar.current.date(byAdding: dateComponent, to: date) else {
-                logger.error("coul not set previous date")
-                return date
-            }
-
-            return incrementedDate
+            date.incrementByDays(increment)
         }
 
         private func newTitleDidSet() { }
