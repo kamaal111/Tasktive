@@ -9,7 +9,7 @@ import CloudKit
 import Foundation
 import ShrimpExtensions
 
-public struct CloudTask: Identifiable, Hashable {
+public struct CloudTask: Identifiable, Hashable, Cloudable {
     public let id: UUID
     public let creationDate: Date
     public let updateDate: Date
@@ -19,6 +19,7 @@ public struct CloudTask: Identifiable, Hashable {
     public let taskDescription: String?
     public let ticked: Bool
     public let title: String
+    private var _record: CKRecord?
 
     public init(
         id: UUID,
@@ -29,7 +30,8 @@ public struct CloudTask: Identifiable, Hashable {
         notes: String?,
         taskDescription: String?,
         ticked: Bool,
-        title: String
+        title: String,
+        record: CKRecord? = nil
     ) {
         self.id = id
         self.creationDate = creationDate
@@ -40,9 +42,10 @@ public struct CloudTask: Identifiable, Hashable {
         self.taskDescription = taskDescription
         self.ticked = ticked
         self.title = title
+        self._record = record
     }
 
-    init?(fromRecord record: CKRecord) {
+    public static func fromRecord(_ record: CKRecord) -> CloudTask? {
         guard let id = (record[.id] as? NSString)?.uuid,
               let creationDate = record[.creationDate] as? Date,
               let updateDate = record[.updateDate] as? Date,
@@ -50,7 +53,7 @@ public struct CloudTask: Identifiable, Hashable {
               let ticked = (record[.ticked] as? Int64)?.nsNumber.boolValue,
               let title = (record[.title] as? NSString)?.string else { return nil }
 
-        self.init(
+        return self.init(
             id: id,
             creationDate: creationDate,
             updateDate: updateDate,
@@ -59,18 +62,13 @@ public struct CloudTask: Identifiable, Hashable {
             notes: (record[.notes] as? NSString)?.string,
             taskDescription: (record[.taskDescription] as? NSString)?.string,
             ticked: ticked,
-            title: title
+            title: title,
+            record: record
         )
     }
 
-    public static func create(_ task: CloudTask, on context: Skypiea) async throws -> CloudTask? {
-        guard let savedRecord = try await context.save(task.newRecord) else { return nil }
-
-        return CloudTask(fromRecord: savedRecord)
-    }
-
-    var newRecord: CKRecord {
-        let record = CKRecord(recordType: Self.recordType)
+    public var record: CKRecord {
+        let record = _record ?? CKRecord(recordType: Self.recordType)
         record[.id] = id
         record[.creationDate] = creationDate.asNSDate
         record[.updateDate] = updateDate.asNSDate
