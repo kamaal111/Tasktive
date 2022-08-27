@@ -13,10 +13,10 @@ import SettingsUI
 import TasktiveLocale
 
 private let SCREEN: NamiNavigator.Screens = .settings
-@available(macOS 13.0, *)
+@available(macOS 13.0, iOS 16, *)
 private let logger = Logster(from: SettingsScreen.self)
 
-@available(macOS 13.0, *)
+@available(macOS 13.0, iOS 16, *)
 struct SettingsScreen: View {
     @EnvironmentObject private var popperUpManager: PopperUpManager
     @EnvironmentObject private var stackNavigator: StackNavigator

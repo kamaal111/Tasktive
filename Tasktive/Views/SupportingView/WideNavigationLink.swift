@@ -18,7 +18,7 @@ struct WideNavigationLink<Destination: Codable & Hashable, Content: View>: View 
     }
 
     var body: some View {
-        if #available(macOS 13.0, *) {
+        if #available(macOS 13.0, iOS 16, *) {
             NavigationLink(value: destination) {
                 content
                     .foregroundColor(.accentColor)
@@ -37,7 +37,7 @@ struct WideNavigationLink<Destination: Codable & Hashable, Content: View>: View 
 }
 
 #if DEBUG
-@available(macOS 13.0, *)
+@available(macOS 13.0, iOS 16, *)
 struct WideNavigationLink_Previews: PreviewProvider {
     static var previews: some View {
         WideNavigationLink(destination: StackNavigator.Screens.playground, content: {

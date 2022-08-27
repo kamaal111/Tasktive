@@ -9,10 +9,10 @@
 import SwiftUI
 import SalmonUI
 
-@available(macOS 13.0, *)
+@available(macOS 13.0, iOS 16, *)
 private let SCREEN: StackNavigator.Screens = .playground
 
-@available(macOS 13.0, *)
+@available(macOS 13.0, iOS 16, *)
 struct PlaygroundScreen: View {
     var body: some View {
         KScrollableForm {
@@ -34,7 +34,7 @@ struct PlaygroundScreen: View {
     }
 }
 
-@available(macOS 13.0, *)
+@available(macOS 13.0, iOS 16, *)
 struct PlaygroundScreen_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {

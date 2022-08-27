@@ -9,8 +9,8 @@
 import SwiftUI
 import SettingsUI
 
-/// &#128511;
-@available(macOS 13.0, *)
+/// &#128511; Dare you to check!
+@available(macOS 13.0, iOS 16, *)
 @main
 struct TasktiveApp: App {
     #if os(macOS)

@@ -106,7 +106,7 @@ final class StackNavigator: ObservableObject {
     }
 }
 
-@available(macOS 13.0, *)
+@available(macOS 13.0, iOS 16, *)
 extension StackNavigator {
     #if DEBUG
     enum Screens: Int, Hashable, Codable, CaseIterable, Navigatable {
