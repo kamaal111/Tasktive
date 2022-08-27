@@ -310,7 +310,6 @@
 		2C1B19662888675D00D734D2 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		2C1B196B28886CFB00D734D2 /* PopUpError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpError.swift; sourceTree = "<group>"; };
 		2C1B1984288874C100D734D2 /* QuickAddTaskField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAddTaskField.swift; sourceTree = "<group>"; };
-		2C21A68E2896818000693CF2 /* yarn.lock */ = {isa = PBXFileReference; lastKnownFileType = text; path = yarn.lock; sourceTree = "<group>"; };
 		2C346CA3289EB1C900F1AD17 /* StackNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackNavigator.swift; sourceTree = "<group>"; };
 		2C39A91728835847008BAFD2 /* TasktiveLocale */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = TasktiveLocale; sourceTree = "<group>"; };
 		2C39A91C28835ADF008BAFD2 /* run.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = run.sh; sourceTree = "<group>"; };
@@ -386,6 +385,8 @@
 		2CCCADD0288203720033E2EF /* Logster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logster.swift; sourceTree = "<group>"; };
 		2CCCADD3288204100033E2EF /* Crudable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crudable.swift; sourceTree = "<group>"; };
 		2CCF228928B7F9DE00366596 /* Skypiea */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Skypiea; sourceTree = "<group>"; };
+		2CD2EB7728BA41F500C14B18 /* run_ios_tests.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = run_ios_tests.sh; sourceTree = "<group>"; };
+		2CD2EB7828BA423C00C14B18 /* Gemfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Gemfile; sourceTree = "<group>"; };
 		2CD7EF5728B8076B009FA620 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		2CDC17E628A02E5400F07CF0 /* CoreBase+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreBase+CoreDataClass.swift"; sourceTree = "<group>"; };
 		2CDC17E728A02E5400F07CF0 /* CoreBase+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreBase+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -725,9 +726,9 @@
 			isa = PBXGroup;
 			children = (
 				2CE0C86D28A8625500B54EC9 /* Brewfile */,
+				2CD2EB7828BA423C00C14B18 /* Gemfile */,
 				2CCCADAB2881F1750033E2EF /* LICENSE */,
 				2CF24AAB28842E2600778BD9 /* package.json */,
-				2C21A68E2896818000693CF2 /* yarn.lock */,
 				2CCCADAA2881EFB60033E2EF /* README.md */,
 				2CCCADCC2882010F0033E2EF /* Frameworks */,
 				2C39A91B28835AC1008BAFD2 /* Locales */,
@@ -791,6 +792,7 @@
 				2CE0C86C28A8621200B54EC9 /* bootstrap.sh */,
 				2C07056028A0393E0058F646 /* clear_mac_data.sh */,
 				2CCCADAD2881F1CC0033E2EF /* pre_compile.sh */,
+				2CD2EB7728BA41F500C14B18 /* run_ios_tests.sh */,
 				2C98E3CC28B12DFB0048149F /* app-icon-generator */,
 				2C03068528A006E70071F0CA /* generate_tokens */,
 				2C39A91A28835AAD008BAFD2 /* GenerateLocales */,
