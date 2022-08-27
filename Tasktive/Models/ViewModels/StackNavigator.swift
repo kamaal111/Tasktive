@@ -110,6 +110,7 @@ extension StackNavigator {
         case playground = 420
         case appLogoCreator = 421
         case coreDataViewer = 422
+        case cloudKitDataViewer = 423
 
         var title: String {
             switch self {
@@ -119,6 +120,8 @@ extension StackNavigator {
                 return "App logo creator"
             case .coreDataViewer:
                 return "Core Data viewer"
+            case .cloudKitDataViewer:
+                return "Cloud Kit data viewer"
             }
         }
 

@@ -96,7 +96,6 @@ extension CoreTask: Crudable {
 
         let convertedDate = date as NSDate
         request.propertiesToUpdate = ["dueDate": convertedDate]
-        print(ids, date, context)
 
         do {
             try context.execute(request)
