@@ -5,11 +5,12 @@
 //  Created by Kamaal M Farah on 17/08/2022.
 //
 
-#if DEBUG
+#if DEBUG && swift(>=5.7)
 import SwiftUI
 import SalmonUI
 import ShrimpExtensions
 
+@available(macOS 13.0, *)
 private let SCREEN: StackNavigator.Screens = .appLogoCreator
 private let logger = Logster(from: AppLogoCreatorScreen.self)
 
@@ -332,6 +333,7 @@ extension Shell {
 }
 #endif
 
+@available(macOS 13.0, *)
 struct AppLogoCreatorScreen_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {

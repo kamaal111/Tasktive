@@ -5,9 +5,12 @@
 //  Created by Kamaal Farah on 24/07/2022.
 //
 
+#if swift(>=5.7)
+
 import SwiftUI
 import SalmonUI
 
+@available(macOS 13.0, *)
 struct ScreenWrapper<Content: View>: View {
     @EnvironmentObject private var namiNavigator: NamiNavigator
 
@@ -59,6 +62,7 @@ struct ScreenWrapper<Content: View>: View {
     }
 }
 
+@available(macOS 13.0, *)
 struct ScreenWrapper_Previews: PreviewProvider {
     static var previews: some View {
         ScreenWrapper(screen: .tasks, content: {
@@ -66,3 +70,4 @@ struct ScreenWrapper_Previews: PreviewProvider {
         })
     }
 }
+#endif

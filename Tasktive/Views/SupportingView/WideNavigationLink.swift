@@ -18,20 +18,26 @@ struct WideNavigationLink<Destination: Codable & Hashable, Content: View>: View 
     }
 
     var body: some View {
-        NavigationLink(value: destination) {
-            content
-                .foregroundColor(.accentColor)
-            #if os(macOS)
-                // Hack: need the following 2 lines to be fully clickable on macOS
-                .ktakeWidthEagerly()
-                .background(Color(nsColor: .separatorColor).opacity(0.01))
-            #endif
+        if #available(macOS 13.0, *) {
+            NavigationLink(value: destination) {
+                content
+                    .foregroundColor(.accentColor)
+                #if os(macOS)
+                    // Hack: need the following 2 lines to be fully clickable on macOS
+                    .ktakeWidthEagerly()
+                    .background(Color(nsColor: .separatorColor).opacity(0.01))
+                #endif
+            }
+            .buttonStyle(.plain)
+        } else {
+            // - TODO: OLDER NAVIGATION BUTTON
+            Text("Panic alright")
         }
-        .buttonStyle(.plain)
     }
 }
 
 #if DEBUG
+@available(macOS 13.0, *)
 struct WideNavigationLink_Previews: PreviewProvider {
     static var previews: some View {
         WideNavigationLink(destination: StackNavigator.Screens.playground, content: {

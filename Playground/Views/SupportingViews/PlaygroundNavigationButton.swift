@@ -5,10 +5,11 @@
 //  Created by Kamaal M Farah on 21/08/2022.
 //
 
-#if DEBUG
+#if DEBUG && swift(>=5.7)
 import SwiftUI
 import SalmonUI
 
+@available(macOS 13.0, *)
 struct PlaygroundNavigationButton: View {
     let title: String
     let destination: StackNavigator.Screens
@@ -33,6 +34,7 @@ struct PlaygroundNavigationButton: View {
     }
 }
 
+@available(macOS 13.0, *)
 struct PlaygroundNavigationButton_Previews: PreviewProvider {
     static var previews: some View {
         PlaygroundNavigationButton(title: "Yes", destination: .coreDataViewer)

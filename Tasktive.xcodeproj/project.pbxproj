@@ -19,7 +19,7 @@
 		2C1B196A2888689700D734D2 /* PopperUp in Frameworks */ = {isa = PBXBuildFile; productRef = 2C1B19692888689700D734D2 /* PopperUp */; };
 		2C1B196C28886CFB00D734D2 /* PopUpError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B196B28886CFB00D734D2 /* PopUpError.swift */; };
 		2C1B1985288874C100D734D2 /* QuickAddTaskField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B1984288874C100D734D2 /* QuickAddTaskField.swift */; };
-		2C346CA4289EB1C900F1AD17 /* StackNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C346CA3289EB1C900F1AD17 /* StackNavigator.swift */; };
+		2C346CA4289EB1C900F1AD17 /* StackNavigator+13.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C346CA3289EB1C900F1AD17 /* StackNavigator+13.swift */; };
 		2C39A919288359A1008BAFD2 /* TasktiveLocale in Frameworks */ = {isa = PBXBuildFile; productRef = 2C39A918288359A1008BAFD2 /* TasktiveLocale */; };
 		2C3B27C6288C77F7007CE538 /* DateControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B27C5288C77F7007CE538 /* DateControlView.swift */; };
 		2C3B27C9288CA274007CE538 /* TaskDetailsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B27C8288CA274007CE538 /* TaskDetailsSheet.swift */; };
@@ -92,7 +92,7 @@
 		2C69A08628B19BC600D5006D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCE60D2881DE240057F4CD /* ContentView.swift */; };
 		2C69A08728B19BC600D5006D /* CoreBase+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDC17E628A02E5400F07CF0 /* CoreBase+CoreDataClass.swift */; };
 		2C69A08828B19BC600D5006D /* CoreTaskList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDC17EE28A02F8D00F07CF0 /* CoreTaskList+CoreDataClass.swift */; };
-		2C69A08928B19BC600D5006D /* StackNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C346CA3289EB1C900F1AD17 /* StackNavigator.swift */; };
+		2C69A08928B19BC600D5006D /* StackNavigator+13.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C346CA3289EB1C900F1AD17 /* StackNavigator+13.swift */; };
 		2C69A08A28B19BC600D5006D /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFEB90028A43905000B1667 /* Theme.swift */; };
 		2C69A08B28B19BC600D5006D /* UserDefaults+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFEB90228A43F75000B1667 /* UserDefaults+extensions.swift */; };
 		2C69A08C28B19BC600D5006D /* PlaygroundNavigationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C69A04C28B193CB00D5006D /* PlaygroundNavigationButton.swift */; };
@@ -196,7 +196,7 @@
 		2C98E40C28B12E170048149F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCE60D2881DE240057F4CD /* ContentView.swift */; };
 		2C98E40D28B12E170048149F /* CoreBase+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDC17E628A02E5400F07CF0 /* CoreBase+CoreDataClass.swift */; };
 		2C98E40E28B12E170048149F /* CoreTaskList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDC17EE28A02F8D00F07CF0 /* CoreTaskList+CoreDataClass.swift */; };
-		2C98E40F28B12E170048149F /* StackNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C346CA3289EB1C900F1AD17 /* StackNavigator.swift */; };
+		2C98E40F28B12E170048149F /* StackNavigator+13.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C346CA3289EB1C900F1AD17 /* StackNavigator+13.swift */; };
 		2C98E41028B12E170048149F /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFEB90028A43905000B1667 /* Theme.swift */; };
 		2C98E41128B12E170048149F /* UserDefaults+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFEB90228A43F75000B1667 /* UserDefaults+extensions.swift */; };
 		2C98E41228B12E170048149F /* DayNumbersRowItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1505E8288C26170040943A /* DayNumbersRowItem.swift */; };
@@ -273,6 +273,9 @@
 		2CE9EFB728AD629500C89888 /* AppLogoCreatorScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE9EFB628AD629500C89888 /* AppLogoCreatorScreen.swift */; };
 		2CE9EFB928AD639500C89888 /* WideNavigationLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE9EFB828AD639500C89888 /* WideNavigationLink.swift */; };
 		2CE9EFBC28AD667300C89888 /* DeviceShakeViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE9EFBB28AD667300C89888 /* DeviceShakeViewModifier.swift */; };
+		2CED9A5F28BA931F002409C1 /* StackNavigator+14.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CED9A5E28BA931F002409C1 /* StackNavigator+14.swift */; };
+		2CED9A6028BA931F002409C1 /* StackNavigator+14.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CED9A5E28BA931F002409C1 /* StackNavigator+14.swift */; };
+		2CED9A6128BA931F002409C1 /* StackNavigator+14.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CED9A5E28BA931F002409C1 /* StackNavigator+14.swift */; };
 		2CF24AA62884289100778BD9 /* NamiNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF24AA52884289100778BD9 /* NamiNavigator.swift */; };
 		2CF24AA828842AEB00778BD9 /* AppTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF24AA728842AEB00778BD9 /* AppTabView.swift */; };
 		2CF24AAA28842B5B00778BD9 /* View+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF24AA928842B5B00778BD9 /* View+extensions.swift */; };
@@ -310,7 +313,7 @@
 		2C1B19662888675D00D734D2 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		2C1B196B28886CFB00D734D2 /* PopUpError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpError.swift; sourceTree = "<group>"; };
 		2C1B1984288874C100D734D2 /* QuickAddTaskField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAddTaskField.swift; sourceTree = "<group>"; };
-		2C346CA3289EB1C900F1AD17 /* StackNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackNavigator.swift; sourceTree = "<group>"; };
+		2C346CA3289EB1C900F1AD17 /* StackNavigator+13.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StackNavigator+13.swift"; sourceTree = "<group>"; };
 		2C39A91728835847008BAFD2 /* TasktiveLocale */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = TasktiveLocale; sourceTree = "<group>"; };
 		2C39A91C28835ADF008BAFD2 /* run.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = run.sh; sourceTree = "<group>"; };
 		2C3B27C5288C77F7007CE538 /* DateControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateControlView.swift; sourceTree = "<group>"; };
@@ -408,6 +411,7 @@
 		2CE9EFB628AD629500C89888 /* AppLogoCreatorScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogoCreatorScreen.swift; sourceTree = "<group>"; };
 		2CE9EFB828AD639500C89888 /* WideNavigationLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WideNavigationLink.swift; sourceTree = "<group>"; };
 		2CE9EFBB28AD667300C89888 /* DeviceShakeViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceShakeViewModifier.swift; sourceTree = "<group>"; };
+		2CED9A5E28BA931F002409C1 /* StackNavigator+14.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StackNavigator+14.swift"; sourceTree = "<group>"; };
 		2CF24AA52884289100778BD9 /* NamiNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamiNavigator.swift; sourceTree = "<group>"; };
 		2CF24AA728842AEB00778BD9 /* AppTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabView.swift; sourceTree = "<group>"; };
 		2CF24AA928842B5B00778BD9 /* View+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+extensions.swift"; sourceTree = "<group>"; };
@@ -625,7 +629,8 @@
 			children = (
 				2C47E3FA28836A6A00FD4469 /* DeviceModel.swift */,
 				2CF24AA52884289100778BD9 /* NamiNavigator.swift */,
-				2C346CA3289EB1C900F1AD17 /* StackNavigator.swift */,
+				2C346CA3289EB1C900F1AD17 /* StackNavigator+13.swift */,
+				2CED9A5E28BA931F002409C1 /* StackNavigator+14.swift */,
 				2C51C91228847F9E008939F7 /* TasksViewModel.swift */,
 				2CFEB90028A43905000B1667 /* Theme.swift */,
 			);
@@ -1236,7 +1241,7 @@
 				2C69A08628B19BC600D5006D /* ContentView.swift in Sources */,
 				2C69A08728B19BC600D5006D /* CoreBase+CoreDataClass.swift in Sources */,
 				2C69A08828B19BC600D5006D /* CoreTaskList+CoreDataClass.swift in Sources */,
-				2C69A08928B19BC600D5006D /* StackNavigator.swift in Sources */,
+				2C69A08928B19BC600D5006D /* StackNavigator+13.swift in Sources */,
 				2C69A08A28B19BC600D5006D /* Theme.swift in Sources */,
 				2C69A08B28B19BC600D5006D /* UserDefaults+extensions.swift in Sources */,
 				2C69A08C28B19BC600D5006D /* PlaygroundNavigationButton.swift in Sources */,
@@ -1247,6 +1252,7 @@
 				2C69A09128B19BC600D5006D /* SplashScreenStack.swift in Sources */,
 				2C69A09228B19BC600D5006D /* TokensHolder.swift in Sources */,
 				2C69A09328B19BC600D5006D /* CoreBase+CoreDataProperties.swift in Sources */,
+				2CED9A6028BA931F002409C1 /* StackNavigator+14.swift in Sources */,
 				2C69A09428B19BC600D5006D /* CoreAttachments+CoreDataClass.swift in Sources */,
 				2C69A09528B19BC600D5006D /* AppTabView.swift in Sources */,
 				2C69A09628B19BC600D5006D /* Tasktive.xcdatamodeld in Sources */,
@@ -1324,7 +1330,7 @@
 				2C98E40C28B12E170048149F /* ContentView.swift in Sources */,
 				2C98E40D28B12E170048149F /* CoreBase+CoreDataClass.swift in Sources */,
 				2C98E40E28B12E170048149F /* CoreTaskList+CoreDataClass.swift in Sources */,
-				2C98E40F28B12E170048149F /* StackNavigator.swift in Sources */,
+				2C98E40F28B12E170048149F /* StackNavigator+13.swift in Sources */,
 				2C98E41028B12E170048149F /* Theme.swift in Sources */,
 				2C98E41128B12E170048149F /* UserDefaults+extensions.swift in Sources */,
 				2C69A04E28B193CB00D5006D /* PlaygroundNavigationButton.swift in Sources */,
@@ -1335,6 +1341,7 @@
 				2C69A04828B18CA200D5006D /* SplashScreenStack.swift in Sources */,
 				2C98E41528B12E170048149F /* TokensHolder.swift in Sources */,
 				2C98E41628B12E170048149F /* CoreBase+CoreDataProperties.swift in Sources */,
+				2CED9A6128BA931F002409C1 /* StackNavigator+14.swift in Sources */,
 				2C98E41728B12E170048149F /* CoreAttachments+CoreDataClass.swift in Sources */,
 				2C98E41828B12E170048149F /* AppTabView.swift in Sources */,
 				2C98E41928B12E170048149F /* Tasktive.xcdatamodeld in Sources */,
@@ -1412,7 +1419,7 @@
 				2CBCE60E2881DE240057F4CD /* ContentView.swift in Sources */,
 				2CDC17E828A02E5400F07CF0 /* CoreBase+CoreDataClass.swift in Sources */,
 				2CDC17F028A02F8D00F07CF0 /* CoreTaskList+CoreDataClass.swift in Sources */,
-				2C346CA4289EB1C900F1AD17 /* StackNavigator.swift in Sources */,
+				2C346CA4289EB1C900F1AD17 /* StackNavigator+13.swift in Sources */,
 				2CFEB90128A43905000B1667 /* Theme.swift in Sources */,
 				2CFEB90328A43F75000B1667 /* UserDefaults+extensions.swift in Sources */,
 				2C69A04D28B193CB00D5006D /* PlaygroundNavigationButton.swift in Sources */,
@@ -1423,6 +1430,7 @@
 				2C69A04728B18CA200D5006D /* SplashScreenStack.swift in Sources */,
 				2C157593289F03B800425CDD /* TokensHolder.swift in Sources */,
 				2CDC17E928A02E5400F07CF0 /* CoreBase+CoreDataProperties.swift in Sources */,
+				2CED9A5F28BA931F002409C1 /* StackNavigator+14.swift in Sources */,
 				2CDC17F828A030D600F07CF0 /* CoreAttachments+CoreDataClass.swift in Sources */,
 				2CF24AA828842AEB00778BD9 /* AppTabView.swift in Sources */,
 				2CBCE60C2881DE240057F4CD /* Tasktive.xcdatamodeld in Sources */,

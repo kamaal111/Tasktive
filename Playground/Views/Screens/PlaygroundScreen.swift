@@ -5,12 +5,14 @@
 //  Created by Kamaal M Farah on 14/08/2022.
 //
 
-#if DEBUG
+#if DEBUG && swift(>=5.7)
 import SwiftUI
 import SalmonUI
 
+@available(macOS 13.0, *)
 private let SCREEN: StackNavigator.Screens = .playground
 
+@available(macOS 13.0, *)
 struct PlaygroundScreen: View {
     var body: some View {
         KScrollableForm {
@@ -32,6 +34,7 @@ struct PlaygroundScreen: View {
     }
 }
 
+@available(macOS 13.0, *)
 struct PlaygroundScreen_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {

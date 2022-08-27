@@ -5,6 +5,7 @@
 //  Created by Kamaal Farah on 24/07/2022.
 //
 
+#if swift(>=5.7)
 import SwiftUI
 import SalmonUI
 import PopperUp
@@ -12,8 +13,10 @@ import SettingsUI
 import TasktiveLocale
 
 private let SCREEN: NamiNavigator.Screens = .settings
+@available(macOS 13.0, *)
 private let logger = Logster(from: SettingsScreen.self)
 
+@available(macOS 13.0, *)
 struct SettingsScreen: View {
     @EnvironmentObject private var popperUpManager: PopperUpManager
     @EnvironmentObject private var stackNavigator: StackNavigator
@@ -99,3 +102,4 @@ struct SettingsScreen_Previews: PreviewProvider {
         }
     }
 }
+#endif

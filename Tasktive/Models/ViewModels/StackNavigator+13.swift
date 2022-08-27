@@ -1,17 +1,19 @@
 //
-//  StackNavigator.swift
+//  StackNavigator+13.swift
 //  Tasktive
 //
 //  Created by Kamaal M Farah on 06/08/2022.
 //
 
+#if swift(>=5.7)
 import SwiftUI
 
-private let logger = Logster(from: StackNavigator.self)
-
+@available(macOS 13.0, iOS 16.0, *)
 final class StackNavigator: ObservableObject {
     @Published var path = NavigationPath()
     @Published private(set) var screen: NamiNavigator.Screens
+
+    private let logger = Logster(from: StackNavigator.self)
 
     private let notifications: [Notification.Name] = [
         .navigateToPlayground,
@@ -104,6 +106,7 @@ final class StackNavigator: ObservableObject {
     }
 }
 
+@available(macOS 13.0, *)
 extension StackNavigator {
     #if DEBUG
     enum Screens: Int, Hashable, Codable, CaseIterable, Navigatable {
@@ -137,3 +140,4 @@ extension StackNavigator {
     }
     #endif
 }
+#endif

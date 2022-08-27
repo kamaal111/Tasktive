@@ -5,8 +5,10 @@
 //  Created by Kamaal M Farah on 16/08/2022.
 //
 
+#if swift(>=5.7)
 import SwiftUI
 
+@available(macOS 13.0, *)
 extension NavigationPath {
     var asDictionaryArray: [[String: String]]? {
         get throws {
@@ -30,3 +32,4 @@ extension NavigationPath {
         }
     }
 }
+#endif

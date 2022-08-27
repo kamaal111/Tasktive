@@ -63,6 +63,7 @@ extension SettingsUI {
                 PersonalizationSection()
                 AboutSection()
             }
+            #if swift(>=5.7)
             .navigationDestination(for: SettingsScreens.self) { screen in
                 KJustStack {
                     switch screen {
@@ -93,6 +94,7 @@ extension SettingsUI {
                     .navigationBarTitleDisplayMode(.inline)
                 #endif
             }
+            #endif
             .onAppear(perform: handleAppear)
             #if os(macOS)
                 .padding(.vertical, 16)

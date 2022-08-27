@@ -12,13 +12,18 @@ struct DetailsColumn: View {
     @EnvironmentObject private var namiNavigator: NamiNavigator
 
     var body: some View {
-        ScreenWrapper(screen: namiNavigator.currentSelection) {
-            switch namiNavigator.currentSelection {
-            case .tasks:
-                TasksScreen()
-            case .settings:
-                SettingsScreen()
+        if #available(macOS 13.0, *) {
+            ScreenWrapper(screen: namiNavigator.currentSelection) {
+                switch namiNavigator.currentSelection {
+                case .tasks:
+                    TasksScreen()
+                case .settings:
+                    SettingsScreen()
+                }
             }
+        } else {
+            // - TODO: OLDER COLUMN VIEW
+            Text("Yes panic more")
         }
     }
 }
