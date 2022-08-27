@@ -46,7 +46,7 @@ struct Sidebar: View {
     #endif
 }
 
-#if DEBUG
+#if DEBUG && swift(>=5.7)
 @available(macOS 13.0, iOS 16, *)
 struct Sidebar_Previews: PreviewProvider {
     static var previews: some View {

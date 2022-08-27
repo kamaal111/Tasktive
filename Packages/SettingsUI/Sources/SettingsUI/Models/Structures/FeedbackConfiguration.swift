@@ -8,7 +8,7 @@
 import Foundation
 
 /// Configuration for the feedback row in the settings screen.
-public struct FeedbackConfiguration {
+public struct FeedbackConfiguration<T: Encodable> {
     /// This token will be used to create issues in GitHub.
     public let gitHubToken: String
     /// The username or organization name of the repo where we will create the issue on.
@@ -16,7 +16,7 @@ public struct FeedbackConfiguration {
     /// The repo name where we create the issue on.
     public let repoName: String
     /// Some extra data to send with the issue.
-    public let additionalFeedbackData: Encodable
+    public let additionalFeedbackData: T
     /// Extra labels on the issue that will be created.
     public let additionalIssueLabels: [String]
 
@@ -31,7 +31,7 @@ public struct FeedbackConfiguration {
         gitHubToken: String,
         gitHubUsername: String,
         repoName: String,
-        additionalFeedbackData: Encodable,
+        additionalFeedbackData: T,
         additionalIssueLabels: [String] = []
     ) {
         self.gitHubToken = gitHubToken

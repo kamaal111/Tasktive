@@ -10,15 +10,15 @@ import SalmonUI
 import GitHubAPI
 
 extension SettingsUI {
-    public struct FeedbackScreen: View {
+    public struct FeedbackScreen<T: Encodable>: View {
         @Environment(\.colorScheme) private var colorScheme
 
-        @StateObject private var viewModel: ViewModel
+        @StateObject private var viewModel: ViewModel<T>
 
         public let onDone: (_ maybeError: Error?) -> Void
 
         public init(
-            configuration: FeedbackConfiguration,
+            configuration: FeedbackConfiguration<T>,
             style: FeedbackStyles,
             onDone: @escaping (_ maybeError: Error?) -> Void
         ) {
@@ -68,17 +68,17 @@ extension SettingsUI {
 }
 
 extension SettingsUI.FeedbackScreen {
-    final class ViewModel: ObservableObject {
+    final class ViewModel<T: Encodable>: ObservableObject {
         @Published var title = ""
         @Published var description = ""
         @Published var loading = false
 
-        let configuration: FeedbackConfiguration
+        let configuration: FeedbackConfiguration<T>
         let style: FeedbackStyles
 
         private var gitHubAPI: GitHubAPI?
 
-        init(configuration: FeedbackConfiguration, style: FeedbackStyles) {
+        init(configuration: FeedbackConfiguration<T>, style: FeedbackStyles) {
             self.configuration = configuration
             self.style = style
             self.gitHubAPI = .init(token: configuration.gitHubToken, username: configuration.gitHubUsername)

@@ -12,6 +12,7 @@ struct DetailsColumn: View {
     @EnvironmentObject private var namiNavigator: NamiNavigator
 
     var body: some View {
+        #if swift(>=5.7)
         if #available(macOS 13.0, iOS 16, *) {
             ScreenWrapper(screen: namiNavigator.currentSelection) {
                 switch namiNavigator.currentSelection {
@@ -22,9 +23,16 @@ struct DetailsColumn: View {
                 }
             }
         } else {
-            // - TODO: OLDER COLUMN VIEW
-            Text("Yes panic more")
+            fallbackView
         }
+        #else
+        fallbackView
+        #endif
+    }
+
+    private var fallbackView: some View {
+        // - TODO: OLDER COLUMN VIEW
+        Text("Yes panic more")
     }
 }
 

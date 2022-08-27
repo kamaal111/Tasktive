@@ -92,7 +92,7 @@ struct TasksScreen: View {
     }
 
     private func handleTaskEditedInDetailsSheet(_ arguments: CoreTask.Arguments?) {
-        guard let arguments, let task = viewModel.shownTaskDetails else {
+        guard let arguments = arguments, let task = viewModel.shownTaskDetails else {
             let message = "task or/and arguments are missing"
             let argumentsLog = "arguments='\(arguments as Any)'"
             let taskLog = "task='\(viewModel.shownTaskDetails as Any)'"

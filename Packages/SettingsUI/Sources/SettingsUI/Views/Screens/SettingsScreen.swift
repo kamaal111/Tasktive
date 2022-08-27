@@ -66,25 +66,27 @@ extension SettingsUI {
         }
     }
     #else
-    public struct SettingsScreen: View {
+    public struct SettingsScreen<FeedbackType: Encodable>: View {
         @Environment(\.presentationMode) private var presentationMode
 
         @StateObject private var store: Store
 
+        @State private var currentScreen: SettingsScreens?
+
         public let appColor: Color
         public let defaultAppColor: Color
         public let viewSize: CGSize
-        public let feedbackConfiguration: FeedbackConfiguration?
+        public let feedbackConfiguration: FeedbackConfiguration<FeedbackType>?
         public let onFeedbackSend: (_ maybeError: Error?) -> Void
         public let onColorSelect: (_ color: AppColor) -> Void
         public let onPurchaseFailure: (_ error: Error) -> Void
 
-        public init<T: StoreKitDonatable>(
+        public init<DonationType: StoreKitDonatable>(
             appColor: Color,
             defaultAppColor: Color,
             viewSize: CGSize,
-            feedbackConfiguration: FeedbackConfiguration?,
-            storeKitDonations: [T],
+            feedbackConfiguration: FeedbackConfiguration<FeedbackType>?,
+            storeKitDonations: [DonationType],
             onFeedbackSend: @escaping (_: Error?) -> Void,
             onColorSelect: @escaping (_: AppColor) -> Void,
             onPurchaseFailure: @escaping (_ error: Error) -> Void
@@ -102,7 +104,7 @@ extension SettingsUI {
         public var body: some View {
             ZStack {
                 ForEach(SettingsScreens.allCases, id: \.self) { screen in
-                    NavigationLink(destination: {
+                    NavigationLink(tag: screen, selection: $currentScreen, destination: {
                         SettingsStackView(
                             screen: screen,
                             viewSize: viewSize,
@@ -114,21 +116,27 @@ extension SettingsUI {
                             onPurchaseFailure: onPurchaseFailure,
                             navigationPath: { presentationMode.wrappedValue.dismiss() }
                         )
-                    }) {
-                        EmptyView()
-                    }
+                    }, label: { EmptyView() })
                 }
-                SettingsScreenView(feedbackConfiguration: feedbackConfiguration)
-                    .environmentObject(store)
+                SettingsScreenView(
+                    feedbackConfiguration: feedbackConfiguration,
+                    onNavigate: { screen in
+                        currentScreen = screen
+                    }
+                )
+                .environmentObject(store)
             }
         }
     }
     #endif
 
-    private struct SettingsScreenView: View {
+    private struct SettingsScreenView<T: Encodable>: View {
         @EnvironmentObject private var store: Store
 
-        let feedbackConfiguration: FeedbackConfiguration?
+        let feedbackConfiguration: FeedbackConfiguration<T>?
+        #if swift(<5.7)
+        let onNavigate: (_ screen: SettingsScreens) -> Void
+        #endif
 
         private let logger = Logger(
             subsystem: "io.kamaal.SettingsUI",
@@ -138,12 +146,24 @@ extension SettingsUI {
         var body: some View {
             KScrollableForm {
                 if store.hasDonations {
+                    #if swift(>=5.7)
                     SupportAuthorSection()
+                    #else
+                    SupportAuthorSection(onNavigate: onNavigate)
+                    #endif
                 }
                 if showFeedbackSection {
+                    #if swift(>=5.7)
                     FeedbackSection()
+                    #else
+                    FeedbackSection(onNavigate: onNavigate)
+                    #endif
                 }
+                #if swift(>=5.7)
                 PersonalizationSection()
+                #else
+                PersonalizationSection(onNavigate: onNavigate)
+                #endif
                 AboutSection()
             }
             .onAppear(perform: handleAppear)
@@ -173,14 +193,14 @@ extension SettingsUI {
         }
     }
 
-    private struct SettingsStackView: View {
+    private struct SettingsStackView<T: Encodable>: View {
         @EnvironmentObject private var store: Store
 
         let screen: SettingsScreens
         let viewSize: CGSize
         let appColor: Color
         let defaultAppColor: Color
-        let feedbackConfiguration: FeedbackConfiguration?
+        let feedbackConfiguration: FeedbackConfiguration<T>?
         let onFeedbackSend: (_ maybeError: Error?) -> Void
         let onColorSelect: (_ color: AppColor) -> Void
         let onPurchaseFailure: (_ error: Error) -> Void
