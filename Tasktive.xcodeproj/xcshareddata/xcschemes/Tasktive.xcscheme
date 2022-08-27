@@ -59,6 +59,16 @@
                ReferencedContainer = "container:Packages/SettingsUI">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "SkypieaTests"
+               BuildableName = "SkypieaTests"
+               BlueprintName = "SkypieaTests"
+               ReferencedContainer = "container:Packages/Skypiea">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
