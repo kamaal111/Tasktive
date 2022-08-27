@@ -11,44 +11,22 @@ import SalmonUI
 import ConfettiSwiftUI
 
 extension SettingsUI {
-    #if swift(>=5.7)
-    @available(macOS 13.0, iOS 16.0, *)
     public struct SupportAuthorScreen: View {
-        @Binding public var navigationPath: NavigationPath
-
         let handlePurchaseFailure: (_ error: Store.Errors) -> Void
+        let navigateBack: () -> Void
 
-        public init(navigationPath: Binding<NavigationPath>,
-                    handlePurchaseFailure: @escaping (_ error: Error) -> Void) {
-            self._navigationPath = navigationPath
+        public init(navigateBack: @escaping () -> Void, handlePurchaseFailure: @escaping (_ error: Error) -> Void) {
+            self.navigateBack = navigateBack
             self.handlePurchaseFailure = handlePurchaseFailure
         }
 
         public var body: some View {
             SupportAuthorScreenView(
                 handlePurchaseFailure: handlePurchaseFailure,
-                navigateBack: { navigationPath.removeLast() }
+                navigateBack: navigateBack
             )
         }
     }
-    #else
-    public struct SupportAuthorScreen: View {
-        @Environment(\.presentationMode) private var presentationMode
-
-        let handlePurchaseFailure: (_ error: Store.Errors) -> Void
-
-        public init(handlePurchaseFailure: @escaping (_ error: Error) -> Void) {
-            self.handlePurchaseFailure = handlePurchaseFailure
-        }
-
-        public var body: some View {
-            SupportAuthorScreenView(
-                handlePurchaseFailure: handlePurchaseFailure,
-                navigateBack: { presentationMode.wrappedValue.dismiss() }
-            )
-        }
-    }
-    #endif
 
     private struct SupportAuthorScreenView: View {
         private let logger = Logger(

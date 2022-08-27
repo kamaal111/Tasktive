@@ -9,7 +9,6 @@ import SwiftUI
 import SalmonUI
 
 extension SettingsUI {
-    @available(macOS 12.0, *)
     public struct AppColorScreen: View {
         @Environment(\.colorScheme) private var colorScheme
 
