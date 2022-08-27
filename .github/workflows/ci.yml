@@ -45,6 +45,11 @@ jobs:
           ruby-version: 3.1
           bundler-cache: true
 
+      - name: Create token file
+        run: |
+          # No need to actually add the tokens in the test
+          yarn generate-tokens
+
       - name: Test
         run: |
           yarn test:ios
