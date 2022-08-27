@@ -9,7 +9,6 @@ import SwiftUI
 import SalmonUI
 
 extension SettingsUI {
-    @available(macOS 13.0, iOS 16.0, *)
     public struct SupportAuthorSection: View {
         public init() { }
 
@@ -34,7 +33,6 @@ extension SettingsUI {
         }
     }
 
-    @available(macOS 13.0, iOS 16.0, *)
     public struct PersonalizationSection: View {
         public init() { }
 
@@ -49,7 +47,6 @@ extension SettingsUI {
         }
     }
 
-    @available(macOS 13.0, iOS 16.0, *)
     public struct FeedbackSection: View {
         public init() { }
 

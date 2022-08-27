@@ -54,7 +54,6 @@ extension SettingsUI {
         }
     }
 
-    @available(macOS 13.0, iOS 16.0, *)
     public struct RowViewColorNavigationLink: View {
         public let label: String
         public let color: Color
@@ -138,7 +137,6 @@ extension SettingsUI {
         }
     }
 
-    @available(macOS 13.0, iOS 16.0, *)
     public struct RowImageTextNavigationLink: View {
         public let label: String
         public let imageSystemName: String
@@ -157,27 +155,60 @@ extension SettingsUI {
         }
     }
 
-    @available(macOS 13.0, iOS 16.0, *)
     public struct RowNavigationLink<Value: View>: View {
         public let destination: SettingsScreens
         public let value: Value
+        public let onNavigate: (_ destination: SettingsScreens) -> Void
 
+        #if swift(>=5.7)
         public init(destination: SettingsScreens, @ViewBuilder value: () -> Value) {
             self.destination = destination
             self.value = value()
+            self.onNavigate = { _ in }
         }
+        #else
+        public init(
+            onNavigate: @escaping (_ destination: SettingsScreen) -> Void,
+            destination: SettingsScreens,
+            @ViewBuilder value: () -> Value
+        ) {
+            self.destination = destination
+            self.value = value()
+            self.onNavigate = onNavigate
+        }
+        #endif
 
         public var body: some View {
-            NavigationLink(value: destination) {
-                value
-                    .foregroundColor(.accentColor)
-                #if os(macOS)
-                    // Hack: need the following 2 lines to be fully clickable on macOS
-                    .ktakeWidthEagerly()
-                    .background(Color(nsColor: .separatorColor).opacity(0.01))
+            KJustStack {
+                #if swift(>=5.7)
+                if #available(macOS 13.0, iOS 16.0, *) {
+                    NavigationLink(value: destination) {
+                        content
+                    }
+                } else {
+                    fallbackView
+                }
+                #else
+                fallbackView
                 #endif
             }
             .buttonStyle(.plain)
+        }
+
+        private var fallbackView: some View {
+            Button(action: { onNavigate(destination) }) {
+                content
+            }
+        }
+
+        private var content: some View {
+            value
+                .foregroundColor(.accentColor)
+            #if os(macOS)
+                // Hack: need the following 2 lines to be fully clickable on macOS
+                .ktakeWidthEagerly()
+                .background(Color(nsColor: .separatorColor).opacity(0.01))
+            #endif
         }
     }
 
