@@ -30,13 +30,13 @@ extension SettingsUI {
         public let onColorSelect: (_ color: AppColor) -> Void
         public let onPurchaseFailure: (_ error: Error) -> Void
 
-        public init(
+        public init<T: StoreKitDonatable>(
             navigationPath: Binding<NavigationPath>,
             appColor: Color,
             defaultAppColor: Color,
             viewSize: CGSize,
             feedbackConfiguration: FeedbackConfiguration?,
-            storeKitDonations: [some StoreKitDonatable],
+            storeKitDonations: [T],
             onFeedbackSend: @escaping (_: Error?) -> Void,
             onColorSelect: @escaping (_: AppColor) -> Void,
             onPurchaseFailure: @escaping (_ error: Error) -> Void
@@ -110,10 +110,9 @@ extension SettingsUI {
                 let result = await store.requestProducts()
                 switch result {
                 case let .failure(failure):
-                    logger
-                        .error(
-                            "failed to get donations; description='\(failure.localizedDescription)'; error='\(failure)'"
-                        )
+                    let message =
+                        "failed to get donations; description='\(failure.localizedDescription)'; error='\(failure)'"
+                    logger.error("\(message)")
                 case .success:
                     break
                 }

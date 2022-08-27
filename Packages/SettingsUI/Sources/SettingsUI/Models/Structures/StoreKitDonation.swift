@@ -18,7 +18,7 @@ struct StoreKitDonation: Hashable, Identifiable, StoreKitDonatable {
         self.weight = weight
     }
 
-    init(fromDonation donatable: some StoreKitDonatable) {
+    init<T: StoreKitDonatable>(fromDonation donatable: T) {
         self.init(id: donatable.id, emoji: donatable.emoji, weight: donatable.weight)
     }
 }
