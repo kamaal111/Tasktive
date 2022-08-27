@@ -65,7 +65,7 @@ struct WideNavigationLink<Destination: Codable & Hashable, Content: View>: View 
     }
 }
 
-#if DEBUG
+#if DEBUG && swift(>=5.7)
 @available(macOS 13.0, iOS 16, *)
 struct WideNavigationLink_Previews: PreviewProvider {
     static var previews: some View {

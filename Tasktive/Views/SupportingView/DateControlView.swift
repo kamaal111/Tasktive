@@ -39,7 +39,7 @@ struct DateControlView: View {
         #endif
     }
 
-    private func button(action: @escaping () -> Void, content: some View) -> some View {
+    private func button<T: View>(action: @escaping () -> Void, content: T) -> some View {
         let modifiedContent = content
             .foregroundColor(.accentColor)
 

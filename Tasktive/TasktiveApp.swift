@@ -5,12 +5,10 @@
 //  Created by Kamaal M Farah on 15/07/2022.
 //
 
-#if swift(>=5.7)
 import SwiftUI
 import SettingsUI
 
 /// &#128511; Dare you to check!
-@available(macOS 13.0, iOS 16, *)
 @main
 struct TasktiveApp: App {
     #if os(macOS)
@@ -76,4 +74,3 @@ struct TasktiveApp: App {
         #endif
     }
 }
-#endif

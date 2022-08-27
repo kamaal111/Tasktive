@@ -46,7 +46,7 @@ extension TaskDetailsSheet {
         init() { }
 
         func makeCoreTaskArguments(using task: AppTask?) -> CoreTask.Arguments? {
-            guard let task else {
+            guard let task = task else {
                 logger.warning("could not make task arguments")
                 return nil
             }
@@ -59,7 +59,7 @@ extension TaskDetailsSheet {
 
         @MainActor
         func setValues(from task: AppTask?) {
-            guard let task else {
+            guard let task = task else {
                 logger.warning("could not set values")
                 return
             }
