@@ -17,6 +17,7 @@ struct TaskDetailsSheet: View {
     let task: AppTask?
     let onClose: () -> Void
     let onDone: (_ arguments: CoreTask.Arguments?) -> Void
+    let onDelete: () -> Void
 
     var body: some View {
         KSheetStack(
@@ -30,6 +31,18 @@ struct TaskDetailsSheet: View {
         ) {
             VStack {
                 KFloatingTextField(text: $viewModel.title, title: TasktiveLocale.getText(.TITLE_INPUT_TITLE))
+
+                Button {
+                    onDelete()
+                } label: {
+                    (Text(Image(systemName: "trash")) + Text(" Delete"))
+                        .foregroundColor(.white)
+                        .font(.headline)
+                        .frame(width: 250, height: 50)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.accentColor)
+                        .cornerRadius(10)
+                }
             }
             .padding(.vertical, .medium)
         }
@@ -42,8 +55,6 @@ struct TaskDetailsSheet: View {
 extension TaskDetailsSheet {
     final class ViewModel: ObservableObject {
         @Published var title = ""
-
-        init() { }
 
         func makeCoreTaskArguments(using task: AppTask?) -> CoreTask.Arguments? {
             guard let task = task else {
@@ -77,7 +88,8 @@ struct TaskDetailsSheet_Previews: PreviewProvider {
             // swiftlint:disable force_try
             task: try! CoreTask.list(from: PersistenceController.preview.context).get().first!.asAppTask,
             onClose: { },
-            onDone: { _ in }
+            onDone: { _ in },
+            onDelete: { }
         )
     }
 }

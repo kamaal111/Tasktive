@@ -107,7 +107,8 @@ struct TasksScreen: View {
             TaskDetailsSheet(
                 task: viewModel.shownTaskDetails,
                 onClose: { Task { await viewModel.closeDetailsSheet() } },
-                onDone: handleTaskEditedInDetailsSheet(_:)
+                onDone: handleTaskEditedInDetailsSheet(_:),
+                onDelete: handleTaskDeletedInDetailsSheet
             )
             .accentColor(theme.currentAccentColor)
             .withPopperUp(popperUpManager)
@@ -129,6 +130,29 @@ struct TasksScreen: View {
 
         Task {
             let result = await tasksViewModel.updateTask(task, with: arguments)
+            switch result {
+            case let .failure(failure):
+                popperUpManager.showPopup(style: failure.style, timeout: failure.timeout)
+                return
+            case .success:
+                break
+            }
+
+            await viewModel.closeDetailsSheet()
+        }
+    }
+
+    private func handleTaskDeletedInDetailsSheet() {
+        guard let task = viewModel.shownTaskDetails else {
+            let message = "task is missing"
+            let taskLog = "task='\(viewModel.shownTaskDetails as Any)'"
+            let loggingMessage = [message, taskLog].joined(separator: "; ")
+            logger.warning(loggingMessage)
+            return
+        }
+
+        Task {
+            let result = await tasksViewModel.deleteTask(task)
             switch result {
             case let .failure(failure):
                 popperUpManager.showPopup(style: failure.style, timeout: failure.timeout)

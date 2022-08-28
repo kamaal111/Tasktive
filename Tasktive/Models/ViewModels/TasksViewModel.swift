@@ -176,6 +176,12 @@ final class TasksViewModel: ObservableObject {
         })
     }
 
+    func deleteTask(_: AppTask) async -> Result<Void, UserErrors> {
+        // TODO: implement deletion
+
+        .success(())
+    }
+
     private func getTasks(for date: Date, updateNotCompletedTasks: Bool) async -> Result<Void, UserErrors> {
         let startDate = getHashDate(from: date)
         let endDate = getHashDate(from: startDate.incrementByDays(1)).incrementBySeconds(-1)
