@@ -22,7 +22,7 @@ struct ProgressSection: View {
                     DatePicker("", selection: $currentDate, displayedComponents: .date)
                         .datePickerStyle(.compact)
                         .labelsHidden()
-                        // If I don't use this .id view modifier the formatting of the date mismatches some times
+                        /// If I don't use this `.id` view modifier the formatting of the date mismatches some times
                         .id(currentDate)
                     #if os(macOS)
                         .frame(maxWidth: Constants.UI.mainViewMinimumSize.width / 2)
