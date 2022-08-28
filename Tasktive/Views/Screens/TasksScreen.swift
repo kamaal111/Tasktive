@@ -23,6 +23,22 @@ struct TasksScreen: View {
 
     @StateObject private var viewModel = ViewModel()
 
+    private let gesture = DragGesture(minimumDistance: 30, coordinateSpace: .local)
+
+    private func onEnded(_ value: DragGesture.Value) {
+        switch (value.translation.width, value.translation.height) {
+        // when swiping from right to left (without going up or down more than 30px)
+        case (...0, -30 ... 30):
+            Task { await viewModel.goToNextDay() }
+
+        // when swiping from left to right (without going up or down more than 30px)
+        case (0..., -30 ... 30):
+            Task { await viewModel.goToPreviousDay() }
+
+        default: ()
+        }
+    }
+
     var body: some View {
         ZStack {
             List {
@@ -36,10 +52,20 @@ struct TasksScreen: View {
                     .padding(.top, .medium)
                     .padding(.horizontal, Constants.UI.mainViewHorizontalWidth)
                 #endif
+                #if os(iOS)
+                .contentShape(Rectangle())
+                .gesture(gesture.onEnded(onEnded))
+                #endif
+
                 ProgressSection(
                     currentDate: $viewModel.currentDay,
                     progress: tasksViewModel.progressForDate(viewModel.currentDay)
                 )
+                #if os(iOS)
+                .contentShape(Rectangle())
+                .gesture(gesture.onEnded(onEnded))
+                #endif
+
                 #if os(macOS)
                 .padding(.horizontal, Constants.UI.mainViewHorizontalWidth)
                 #endif
