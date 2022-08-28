@@ -28,6 +28,9 @@
 		2C47E40128836FBF00FD4469 /* SalmonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2C47E40028836FBF00FD4469 /* SalmonUI */; };
 		2C47E4042883719000FD4469 /* Sidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47E4032883719000FD4469 /* Sidebar.swift */; };
 		2C47E406288371A300FD4469 /* DetailsColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47E405288371A300FD4469 /* DetailsColumn.swift */; };
+		2C4E81E328BBDC070056D0D1 /* TasksScreenUISpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4E81E228BBDC070056D0D1 /* TasksScreenUISpec.swift */; };
+		2C4E81EC28BBDF100056D0D1 /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = 2C4E81EB28BBDF100056D0D1 /* Quick */; };
+		2C4E81EE28BBDF140056D0D1 /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = 2C4E81ED28BBDF140056D0D1 /* Nimble */; };
 		2C51C90D28847115008939F7 /* AppSizes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C90C28847115008939F7 /* AppSizes.swift */; };
 		2C51C90F28847438008939F7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C90E28847438008939F7 /* Constants.swift */; };
 		2C51C91128847C3B008939F7 /* DataClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C91028847C3B008939F7 /* DataClient.swift */; };
@@ -285,6 +288,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		2C4E81E628BBDC070056D0D1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2CBCE5FB2881DE240057F4CD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2CBCE6022881DE240057F4CD;
+			remoteInfo = Tasktive;
+		};
 		2CCCADC12881FCF00033E2EF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2CBCE5FB2881DE240057F4CD /* Project object */;
@@ -323,6 +333,8 @@
 		2C47E3FC28836B2200FD4469 /* NotificationName+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationName+extensions.swift"; sourceTree = "<group>"; };
 		2C47E4032883719000FD4469 /* Sidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sidebar.swift; sourceTree = "<group>"; };
 		2C47E405288371A300FD4469 /* DetailsColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsColumn.swift; sourceTree = "<group>"; };
+		2C4E81E028BBDC070056D0D1 /* MainFlowsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MainFlowsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C4E81E228BBDC070056D0D1 /* TasksScreenUISpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksScreenUISpec.swift; sourceTree = "<group>"; };
 		2C51C90C28847115008939F7 /* AppSizes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSizes.swift; sourceTree = "<group>"; };
 		2C51C90E28847438008939F7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2C51C91028847C3B008939F7 /* DataClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataClient.swift; sourceTree = "<group>"; };
@@ -420,6 +432,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		2C4E81DD28BBDC070056D0D1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2C4E81EC28BBDF100056D0D1 /* Quick in Frameworks */,
+				2C4E81EE28BBDF140056D0D1 /* Nimble in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2C69A0A528B19BC600D5006D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -672,6 +693,22 @@
 			path = UnitTests;
 			sourceTree = "<group>";
 		};
+		2C4E81DB28BBDBC00056D0D1 /* UITests */ = {
+			isa = PBXGroup;
+			children = (
+				2C4E81E128BBDC070056D0D1 /* MainFlowsUITests */,
+			);
+			path = UITests;
+			sourceTree = "<group>";
+		};
+		2C4E81E128BBDC070056D0D1 /* MainFlowsUITests */ = {
+			isa = PBXGroup;
+			children = (
+				2C4E81E228BBDC070056D0D1 /* TasksScreenUISpec.swift */,
+			);
+			path = MainFlowsUITests;
+			sourceTree = "<group>";
+		};
 		2C51C90B288470C3008939F7 /* Enumerations */ = {
 			isa = PBXGroup;
 			children = (
@@ -756,6 +793,7 @@
 				2CCCADBD2881FCF00033E2EF /* CoreTaskTests.xctest */,
 				2C98E43428B12E170048149F /* TasktiveMacDebug.app */,
 				2C69A0B328B19BC600D5006D /* TasktiveMac.app */,
+				2C4E81E028BBDC070056D0D1 /* MainFlowsUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -846,6 +884,7 @@
 		2CCCADB82881FCC80033E2EF /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				2C4E81DB28BBDBC00056D0D1 /* UITests */,
 				2C4E81DA28BBD98F0056D0D1 /* UnitTests */,
 			);
 			path = Tests;
@@ -938,6 +977,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		2C4E81DF28BBDC070056D0D1 /* MainFlowsUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2C4E81E828BBDC070056D0D1 /* Build configuration list for PBXNativeTarget "MainFlowsUITests" */;
+			buildPhases = (
+				2C4E81DC28BBDC070056D0D1 /* Sources */,
+				2C4E81DD28BBDC070056D0D1 /* Frameworks */,
+				2C4E81DE28BBDC070056D0D1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2C4E81E728BBDC070056D0D1 /* PBXTargetDependency */,
+			);
+			name = MainFlowsUITests;
+			packageProductDependencies = (
+				2C4E81EB28BBDF100056D0D1 /* Quick */,
+				2C4E81ED28BBDF140056D0D1 /* Nimble */,
+			);
+			productName = MainFlowsUITests;
+			productReference = 2C4E81E028BBDC070056D0D1 /* MainFlowsUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		2C69A04F28B19BC600D5006D /* TasktiveMac */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2C69A0B028B19BC600D5006D /* Build configuration list for PBXNativeTarget "TasktiveMac" */;
@@ -1048,6 +1109,10 @@
 				LastSwiftUpdateCheck = 1400;
 				LastUpgradeCheck = 1400;
 				TargetAttributes = {
+					2C4E81DF28BBDC070056D0D1 = {
+						CreatedOnToolsVersion = 14.0;
+						TestTargetID = 2CBCE6022881DE240057F4CD;
+					};
 					2CBCE6022881DE240057F4CD = {
 						CreatedOnToolsVersion = 14.0;
 					};
@@ -1081,11 +1146,19 @@
 				2C69A04F28B19BC600D5006D /* TasktiveMac */,
 				2C98E3D728B12E170048149F /* TasktiveMacDebug */,
 				2CCCADBC2881FCF00033E2EF /* CoreTaskTests */,
+				2C4E81DF28BBDC070056D0D1 /* MainFlowsUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		2C4E81DE28BBDC070056D0D1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2C69A0AB28B19BC600D5006D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1188,6 +1261,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		2C4E81DC28BBDC070056D0D1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2C4E81E328BBDC070056D0D1 /* TasksScreenUISpec.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2C69A05928B19BC600D5006D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1463,6 +1544,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		2C4E81E728BBDC070056D0D1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2CBCE6022881DE240057F4CD /* Tasktive */;
+			targetProxy = 2C4E81E628BBDC070056D0D1 /* PBXContainerItemProxy */;
+		};
 		2CCCADC22881FCF00033E2EF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 2CBCE6022881DE240057F4CD /* Tasktive */;
@@ -1471,6 +1557,47 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		2C4E81E928BBDC070056D0D1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DXUKH9VF73;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.kamaal.MainFlowsUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Tasktive;
+			};
+			name = Debug;
+		};
+		2C4E81EA28BBDC070056D0D1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DXUKH9VF73;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.kamaal.MainFlowsUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Tasktive;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		2C69A0B128B19BC600D5006D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1852,6 +1979,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2C4E81E828BBDC070056D0D1 /* Build configuration list for PBXNativeTarget "MainFlowsUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2C4E81E928BBDC070056D0D1 /* Debug */,
+				2C4E81EA28BBDC070056D0D1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		2C69A0B028B19BC600D5006D /* Build configuration list for PBXNativeTarget "TasktiveMac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -2004,6 +2140,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2C47E3FF28836FBF00FD4469 /* XCRemoteSwiftPackageReference "SalmonUI" */;
 			productName = SalmonUI;
+		};
+		2C4E81EB28BBDF100056D0D1 /* Quick */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2CCCADC62881FECB0033E2EF /* XCRemoteSwiftPackageReference "Quick" */;
+			productName = Quick;
+		};
+		2C4E81ED28BBDF140056D0D1 /* Nimble */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2CCCADC92881FEE90033E2EF /* XCRemoteSwiftPackageReference "Nimble" */;
+			productName = Nimble;
 		};
 		2C69A05028B19BC600D5006D /* TasktiveLocale */ = {
 			isa = XCSwiftPackageProductDependency;
