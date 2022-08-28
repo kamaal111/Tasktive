@@ -18,21 +18,7 @@ struct MainView: View {
         SplashScreenStack(enabled: DeviceModel.deviceType != .mac) {
             if DeviceModel.deviceType.shouldHaveSidebar {
                 #if os(iOS) // if iPad
-                #if swift(>=5.7)
-                if #available(iOS 16.0, *) {
-                    NavigationSplitView(sidebar: { Sidebar() }, detail: { DetailsColumn() })
-                } else {
-                    NavigationView {
-                        Sidebar()
-                        DetailsColumn()
-                    }
-                }
-                #else
-                NavigationView {
-                    Sidebar()
-                    DetailsColumn()
-                }
-                #endif
+                NavigationSplitView(sidebar: { Sidebar() }, detail: { DetailsColumn() })
                 #else // if mac
                 // Can't use `NavigationSplitView` yet because the sidebar breaks the navigation on macOS
                 NavigationView {

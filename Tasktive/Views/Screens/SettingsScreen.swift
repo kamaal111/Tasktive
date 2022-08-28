@@ -5,7 +5,6 @@
 //  Created by Kamaal Farah on 24/07/2022.
 //
 
-#if swift(>=5.7)
 import SwiftUI
 import SalmonUI
 import PopperUp
@@ -13,14 +12,13 @@ import SettingsUI
 import TasktiveLocale
 
 private let SCREEN: NamiNavigator.Screens = .settings
-@available(macOS 13.0, iOS 16, *)
-private let logger = Logster(from: SettingsScreen.self)
 
-@available(macOS 13.0, iOS 16, *)
 struct SettingsScreen: View {
     @EnvironmentObject private var popperUpManager: PopperUpManager
     @EnvironmentObject private var stackNavigator: StackNavigator
     @EnvironmentObject private var theme: Theme
+
+    private let logger = Logster(from: SettingsScreen.self)
 
     var body: some View {
         SettingsUI.SettingsScreen(
@@ -36,7 +34,7 @@ struct SettingsScreen: View {
         )
     }
 
-    private var feedbackConfiguration: FeedbackConfiguration? {
+    private var feedbackConfiguration: FeedbackConfiguration<FeedbackMetadata>? {
         guard let gitHubToken = gitHubToken else { return nil }
 
         return .init(
@@ -102,4 +100,3 @@ struct SettingsScreen_Previews: PreviewProvider {
         }
     }
 }
-#endif

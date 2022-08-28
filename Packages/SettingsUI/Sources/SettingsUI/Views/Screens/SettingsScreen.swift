@@ -12,7 +12,7 @@ import SalmonUI
 extension SettingsUI {
     #if swift(>=5.7)
     @available(macOS 13.0, iOS 16.0, *)
-    public struct SettingsScreen: View {
+    public struct SettingsScreen<FeedbackData: Encodable>: View {
         @StateObject private var store: Store
 
         @Binding public var navigationPath: NavigationPath
@@ -20,7 +20,7 @@ extension SettingsUI {
         public let appColor: Color
         public let defaultAppColor: Color
         public let viewSize: CGSize
-        public let feedbackConfiguration: FeedbackConfiguration?
+        public let feedbackConfiguration: FeedbackConfiguration<FeedbackData>?
         public let onFeedbackSend: (_ maybeError: Error?) -> Void
         public let onColorSelect: (_ color: AppColor) -> Void
         public let onPurchaseFailure: (_ error: Error) -> Void
@@ -30,7 +30,7 @@ extension SettingsUI {
             appColor: Color,
             defaultAppColor: Color,
             viewSize: CGSize,
-            feedbackConfiguration: FeedbackConfiguration?,
+            feedbackConfiguration: FeedbackConfiguration<FeedbackData>?,
             storeKitDonations: [T],
             onFeedbackSend: @escaping (_: Error?) -> Void,
             onColorSelect: @escaping (_: AppColor) -> Void,
@@ -66,7 +66,7 @@ extension SettingsUI {
         }
     }
     #else
-    public struct SettingsScreen<FeedbackType: Encodable>: View {
+    public struct SettingsScreen<FeedbackData: Encodable>: View {
         @Environment(\.presentationMode) private var presentationMode
 
         @StateObject private var store: Store
@@ -76,7 +76,7 @@ extension SettingsUI {
         public let appColor: Color
         public let defaultAppColor: Color
         public let viewSize: CGSize
-        public let feedbackConfiguration: FeedbackConfiguration<FeedbackType>?
+        public let feedbackConfiguration: FeedbackConfiguration<FeedbackData>?
         public let onFeedbackSend: (_ maybeError: Error?) -> Void
         public let onColorSelect: (_ color: AppColor) -> Void
         public let onPurchaseFailure: (_ error: Error) -> Void
@@ -85,7 +85,7 @@ extension SettingsUI {
             appColor: Color,
             defaultAppColor: Color,
             viewSize: CGSize,
-            feedbackConfiguration: FeedbackConfiguration<FeedbackType>?,
+            feedbackConfiguration: FeedbackConfiguration<FeedbackData>?,
             storeKitDonations: [DonationType],
             onFeedbackSend: @escaping (_: Error?) -> Void,
             onColorSelect: @escaping (_: AppColor) -> Void,

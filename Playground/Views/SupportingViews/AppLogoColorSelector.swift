@@ -5,7 +5,7 @@
 //  Created by Kamaal M Farah on 20/08/2022.
 //
 
-#if DEBUG && swift(>=5.7)
+#if DEBUG
 import SwiftUI
 
 struct AppLogoColorSelector: View {
