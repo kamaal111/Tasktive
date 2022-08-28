@@ -7,7 +7,15 @@
 
 import Foundation
 
-public enum SettingsScreens: Hashable, Codable {
+public enum SettingsScreens: Hashable, Codable, CaseIterable {
+    public static let allCases: [SettingsScreens] = [
+        .feedback(style: .feature),
+        .feedback(style: .bug),
+        .feedback(style: .other),
+        .appColor,
+        .supportAuthor,
+    ]
+
     case feedback(style: FeedbackStyles)
     case appColor
     case supportAuthor

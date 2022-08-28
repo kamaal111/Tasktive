@@ -20,8 +20,8 @@ extension Array where Element == String {
         // TODO: THINK OF A MORE EFFICIENT WAY TO DO THIS
         return [startingKey]
             .concat(filter { $0 != startingKey }
-                .sorted(by: { a, b in
-                    a < b
+                .sorted(by: {
+                    $0 < $1
                 }))
     }
 }

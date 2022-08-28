@@ -11,23 +11,31 @@ import SalmonUI
 struct WideNavigationLink<Destination: Codable & Hashable, Content: View>: View {
     let destination: Destination
     let content: Content
+    let onNavigate: (_ destination: Destination) -> Void
 
     init(destination: Destination, @ViewBuilder content: () -> Content) {
         self.destination = destination
         self.content = content()
+        self.onNavigate = { _ in }
     }
 
     var body: some View {
-        NavigationLink(value: destination) {
-            content
-                .foregroundColor(.accentColor)
-            #if os(macOS)
-                // Hack: need the following 2 lines to be fully clickable on macOS
-                .ktakeWidthEagerly()
-                .background(Color(nsColor: .separatorColor).opacity(0.01))
-            #endif
+        KJustStack {
+            NavigationLink(value: destination) {
+                view
+            }
         }
         .buttonStyle(.plain)
+    }
+
+    private var view: some View {
+        content
+            .foregroundColor(.accentColor)
+        #if os(macOS)
+            // Hack: need the following 2 lines to be fully clickable on macOS
+            .ktakeWidthEagerly()
+            .background(Color(nsColor: .separatorColor).opacity(0.01))
+        #endif
     }
 }
 

@@ -8,17 +8,18 @@
 import SwiftUI
 import SalmonUI
 import GitHubAPI
+import ShrimpExtensions
 
 extension SettingsUI {
-    public struct FeedbackScreen: View {
+    public struct FeedbackScreen<FeedbackData: Encodable>: View {
         @Environment(\.colorScheme) private var colorScheme
 
-        @StateObject private var viewModel: ViewModel
+        @StateObject private var viewModel: ViewModel<FeedbackData>
 
         public let onDone: (_ maybeError: Error?) -> Void
 
         public init(
-            configuration: FeedbackConfiguration,
+            configuration: FeedbackConfiguration<FeedbackData>,
             style: FeedbackStyles,
             onDone: @escaping (_ maybeError: Error?) -> Void
         ) {
@@ -68,24 +69,24 @@ extension SettingsUI {
 }
 
 extension SettingsUI.FeedbackScreen {
-    final class ViewModel: ObservableObject {
+    final class ViewModel<FeedbackData: Encodable>: ObservableObject {
         @Published var title = ""
         @Published var description = ""
         @Published var loading = false
 
-        let configuration: FeedbackConfiguration
+        let configuration: FeedbackConfiguration<FeedbackData>
         let style: FeedbackStyles
 
         private var gitHubAPI: GitHubAPI?
 
-        init(configuration: FeedbackConfiguration, style: FeedbackStyles) {
+        init(configuration: FeedbackConfiguration<FeedbackData>, style: FeedbackStyles) {
             self.configuration = configuration
             self.style = style
             self.gitHubAPI = .init(token: configuration.gitHubToken, username: configuration.gitHubUsername)
         }
 
         var disableSubmit: Bool {
-            loading || title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            loading || title.trimmingByWhitespacesAndNewLines.isEmpty
         }
 
         func submit() async throws {

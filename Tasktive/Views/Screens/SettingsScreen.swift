@@ -12,12 +12,13 @@ import SettingsUI
 import TasktiveLocale
 
 private let SCREEN: NamiNavigator.Screens = .settings
-private let logger = Logster(from: SettingsScreen.self)
 
 struct SettingsScreen: View {
     @EnvironmentObject private var popperUpManager: PopperUpManager
     @EnvironmentObject private var stackNavigator: StackNavigator
     @EnvironmentObject private var theme: Theme
+
+    private let logger = Logster(from: SettingsScreen.self)
 
     var body: some View {
         SettingsUI.SettingsScreen(
@@ -33,7 +34,7 @@ struct SettingsScreen: View {
         )
     }
 
-    private var feedbackConfiguration: FeedbackConfiguration? {
+    private var feedbackConfiguration: FeedbackConfiguration<FeedbackMetadata>? {
         guard let gitHubToken = gitHubToken else { return nil }
 
         return .init(

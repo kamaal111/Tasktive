@@ -10,32 +10,40 @@ import SwiftUI
 import SalmonUI
 import ConfettiSwiftUI
 
-@available(macOS 13.0, iOS 16.0, *)
-private let logger = Logger(
-    subsystem: "io.kamaal.SettingsUI",
-    category: String(describing: SettingsUI.SupportAuthorScreen.self)
-)
-
 extension SettingsUI {
-    @available(macOS 13.0, iOS 16.0, *)
     public struct SupportAuthorScreen: View {
+        let handlePurchaseFailure: (_ error: Store.Errors) -> Void
+        let navigateBack: () -> Void
+
+        public init(navigateBack: @escaping () -> Void, handlePurchaseFailure: @escaping (_ error: Error) -> Void) {
+            self.navigateBack = navigateBack
+            self.handlePurchaseFailure = handlePurchaseFailure
+        }
+
+        public var body: some View {
+            SupportAuthorScreenView(
+                handlePurchaseFailure: handlePurchaseFailure,
+                navigateBack: navigateBack
+            )
+        }
+    }
+
+    private struct SupportAuthorScreenView: View {
+        private let logger = Logger(
+            subsystem: "io.kamaal.SettingsUI",
+            category: "SupportAuthorScreenView"
+        )
+
         @EnvironmentObject private var store: Store
 
         @State private var confettiTimesRun = 0
         @State private var numberOfConfettis = 20
         @State private var confettiRepetitions = 0
 
-        @Binding public var navigationPath: NavigationPath
-
         let handlePurchaseFailure: (_ error: Store.Errors) -> Void
+        let navigateBack: () -> Void
 
-        public init(navigationPath: Binding<NavigationPath>,
-                    handlePurchaseFailure: @escaping (_ error: Error) -> Void) {
-            self._navigationPath = navigationPath
-            self.handlePurchaseFailure = handlePurchaseFailure
-        }
-
-        public var body: some View {
+        var body: some View {
             ScrollView(.vertical, showsIndicators: true) {
                 ZStack {
                     VStack {
@@ -81,16 +89,6 @@ extension SettingsUI {
             })
         }
 
-        private func shootConfetti(for donation: CustomProduct) {
-            let weight = donation.weight
-
-            DispatchQueue.main.async {
-                numberOfConfettis = (20 * weight)
-                confettiRepetitions = weight < 1 ? 0 : (weight - 1)
-                confettiTimesRun += 1
-            }
-        }
-
         private func handleAppear() {
             Task {
                 let result = await store.requestProducts()
@@ -101,11 +99,20 @@ extension SettingsUI {
                         "error='\(failure)'",
                     ].joined(separator: ";")
                     logger.error("\(message)")
-                    // Navigate back
-                    navigationPath.removeLast()
+                    navigateBack()
                 case .success:
                     break
                 }
+            }
+        }
+
+        private func shootConfetti(for donation: CustomProduct) {
+            let weight = donation.weight
+
+            DispatchQueue.main.async {
+                numberOfConfettis = (20 * weight)
+                confettiRepetitions = weight < 1 ? 0 : (weight - 1)
+                confettiTimesRun += 1
             }
         }
     }
