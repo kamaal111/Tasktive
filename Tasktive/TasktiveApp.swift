@@ -8,7 +8,7 @@
 import SwiftUI
 import SettingsUI
 
-/// &#128511;
+/// &#128511; Dare you to check!
 @main
 struct TasktiveApp: App {
     #if os(macOS)

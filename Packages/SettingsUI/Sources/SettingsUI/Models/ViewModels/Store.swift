@@ -109,7 +109,8 @@ final class Store: NSObject, ObservableObject {
             do {
                 products = try await Product.products(for: storeKitDonationsIDs)
             } catch {
-                logger.error("failed to get products; description='\(error.localizedDescription)'; error='\(error)'")
+                let message = "failed to get products; description='\(error.localizedDescription)'; error='\(error)'"
+                logger.error("\(message)")
                 return .failure(.getProducts)
             }
 
@@ -194,7 +195,8 @@ final class Store: NSObject, ObservableObject {
                 let transaction: Transaction
                 switch self.checkVerified(result) {
                 case let .failure(failure):
-                    logger.error("failed to verify transaction; error='\(failure)'")
+                    let message = "failed to verify transaction; error='\(failure)'"
+                    logger.error("\(message)")
                     continue
                 case let .success(success):
                     transaction = success
