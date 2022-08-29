@@ -176,10 +176,45 @@ final class TasksViewModel: ObservableObject {
         })
     }
 
-    func deleteTask(_: AppTask) async -> Result<Void, UserErrors> {
-        // TODO: implement deletion
+    func deleteTask(_ task: AppTask) async -> Result<Void, UserErrors> {
+        await withSettingTasks(completion: {
+            let dateHash = getHashDate(from: task.dueDate)
+            guard let taskIndex = tasks[dateHash]?.findIndex(by: \.id, is: task.id)
+            else { return .failure(.updateFailure) }
 
-        .success(())
+            let result = dataClient.delete(
+                by: task.id,
+                from: persistenceController.context,
+                of: CoreTask.self
+            )
+            .mapError {
+                let error: Error?
+                switch $0 {
+                case .notFound:
+                    logger.error("task not found")
+                    return UserErrors.updateFailure
+                case let .crud(error: crudError):
+                    error = crudError as? CoreTask.CrudErrors
+                }
+
+                guard let error = error else { return UserErrors.deleteFailure }
+
+                logger.error(label: "failed to delete this task", error: error)
+                return UserErrors.deleteFailure
+            }
+            switch result {
+            case let .failure(failure):
+                return .failure(failure)
+            case .success():
+                break
+            }
+
+            var mutableTask = tasks
+            mutableTask[dateHash]?.remove(at: taskIndex)
+            await setTasks(mutableTask[dateHash] ?? [], forDate: dateHash)
+
+            return .success(())
+        })
     }
 
     private func getTasks(for date: Date, updateNotCompletedTasks: Bool) async -> Result<Void, UserErrors> {
@@ -323,6 +358,7 @@ extension TasksViewModel {
         case getAllFailure
         case createTaskFailure
         case updateFailure
+        case deleteFailure
         case invalidTitle
 
         var style: PopperUpStyles {
@@ -344,6 +380,12 @@ extension TasksViewModel {
                     title: TasktiveLocale.getText(.SOMETHING_WENT_WRONG_ERROR_TITLE),
                     type: .error,
                     description: TasktiveLocale.getText(.UPDATE_TASK_ERROR_DESCRIPTION)
+                )
+            case .deleteFailure:
+                return .bottom(
+                    title: TasktiveLocale.getText(.SOMETHING_WENT_WRONG_ERROR_TITLE),
+                    type: .error,
+                    description: TasktiveLocale.getText(.DELETE_TASK_ERROR_DESCRIPTION)
                 )
             case .invalidTitle:
                 return .bottom(

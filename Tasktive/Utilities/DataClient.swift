@@ -44,10 +44,32 @@ struct DataClient {
             item = success
         }
 
-        guard let item = item else { return .failure(.notFound) }
+        guard let item else { return .failure(.notFound) }
 
         return item.update(with: arguments)
             .mapError { UpdateErrors.crud(error: $0) }
+    }
+
+    func delete<T: Crudable>(by id: UUID,
+                             from context: T.Context,
+                             of type: T.Type) -> Result<Void, DeleteErrors> {
+        let predicate = NSPredicate(format: "id == %@", id.nsString)
+        let result = type.filter(by: predicate, from: context)
+            .map(\.first)
+            .mapError { DeleteErrors.crud(error: $0) }
+
+        let item: T.ReturnType?
+        switch result {
+        case let .failure(failure):
+            return .failure(failure)
+        case let .success(success):
+            item = success
+        }
+
+        guard let item else { return .failure(.notFound) }
+
+        return item.delete()
+            .mapError { DeleteErrors.crud(error: $0) }
     }
 
     func updateManyTaskDates(by ids: [UUID],
@@ -57,6 +79,11 @@ struct DataClient {
     }
 
     enum UpdateErrors: Error {
+        case crud(error: Error)
+        case notFound
+    }
+
+    enum DeleteErrors: Error {
         case crud(error: Error)
         case notFound
     }
