@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test:ios": "sh Scripts/run_ios_tests.sh",
+    "screenshots": "bundle exec fastlane snapshot",
     "localize": "sh Scripts/GenerateLocales/run.sh",
     "prepare": "husky install",
     "generate-tokens": "yarn build:generate-tokens && Scripts/generate_tokens/target/debug/generate_tokens",

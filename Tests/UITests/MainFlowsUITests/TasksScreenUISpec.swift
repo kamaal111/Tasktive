@@ -22,6 +22,7 @@ final class TasksScreenUISpec: QuickSpec {
             for schemeMode in [CommandLineArguments.uiTestingLightMode, CommandLineArguments.uiTestingDarkMode] {
                 it("goes through tasks screen using \(schemeMode.rawValue)") {
                     let app = XCUIApplication()
+                    setupSnapshot(app)
                     app.launchArguments.append(schemeMode.rawValue)
                     app.launchArguments.append(CommandLineArguments.previewCoredata.rawValue)
                     app.launch()
@@ -35,6 +36,8 @@ final class TasksScreenUISpec: QuickSpec {
                         fail("Circular progress bar didn't appear")
                         return
                     }
+
+                    snapshot("01-task-screen-\(schemeMode.rawValue)")
                 }
             }
         }
