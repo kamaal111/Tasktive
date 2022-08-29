@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import TasktiveLocale
+import ShrimpExtensions
 
 struct CircularProgressBar: View {
     let progress: Double
@@ -28,10 +30,16 @@ struct CircularProgressBar: View {
                 .foregroundColor(.accentColor)
                 .rotationEffect(Angle(degrees: 270))
                 .animation(.linear, value: progress)
-            Text(String(format: "%.0f %%", progress * 100))
+            Text(progressPrecentage)
+                .accessibilityLabel(TasktiveLocale.getText(.TASKS_PROGRESSION_PRESENTAGE, with: [progressPrecentage]))
+                .accessibilityIdentifier(AccessibilityIdentifiers.circularProgressBarPrecentage.rawValue)
                 .font(.body)
                 .bold()
         }
+    }
+
+    private var progressPrecentage: String {
+        "\((progress * 100).toFixed(1))%"
     }
 }
 

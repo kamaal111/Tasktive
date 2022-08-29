@@ -30,5 +30,6 @@ extension TasktiveLocale {
         case FEEDBACK_ERROR_DESCRIPTION
         case FEEDBACK_SENT
         case PURCHASE_ERROR_DESCRIPTION
+        case TASKS_PROGRESSION_PRESENTAGE
     }
 }

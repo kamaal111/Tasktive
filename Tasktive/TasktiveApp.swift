@@ -23,8 +23,6 @@ struct TasktiveApp: App {
 
     @State private var currentScreen = STARTING_SCREEN
 
-    private let persistenceController = PersistenceController.shared
-
     var body: some Scene {
         WindowGroup {
             ContentView()
@@ -37,7 +35,6 @@ struct TasktiveApp: App {
                 .onShake(perform: navigateToPlayground)
             #endif
                 .accentColor(theme.currentAccentColor)
-                .environment(\.managedObjectContext, persistenceController.context)
                 .environmentObject(tasksViewModel)
                 .environmentObject(theme)
         }
