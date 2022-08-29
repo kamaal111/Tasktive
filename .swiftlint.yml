@@ -48,6 +48,7 @@ excluded:
   - Packages/*/Tests
   - Tasktive/Models/CoreData
   - Tests
+  - fastlane/SnapshotHelper.swift
 type_name:
   min_length:
     warning: 2

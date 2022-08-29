@@ -55,8 +55,8 @@ Pods/
 .vscode
 
 
-fastlane/Appfile
 .env
+fastlane/screenshots/iOS/screenshots.html
 
 node_modules
 
