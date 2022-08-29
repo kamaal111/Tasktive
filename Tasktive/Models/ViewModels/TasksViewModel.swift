@@ -21,12 +21,20 @@ final class TasksViewModel: ObservableObject {
     private let dataClient = DataClient()
 
     init() {
+        #if !DEBUG
         self.persistenceController = .shared
+        #else
+        if CommandLineArguments.previewCoredata.enabled {
+            self.persistenceController = .preview
+        } else {
+            self.persistenceController = .shared
+        }
+        #endif
     }
 
     #if DEBUG
     init(preview: Bool) {
-        if preview {
+        if preview || CommandLineArguments.previewCoredata.enabled {
             self.persistenceController = .preview
         } else {
             self.persistenceController = .shared

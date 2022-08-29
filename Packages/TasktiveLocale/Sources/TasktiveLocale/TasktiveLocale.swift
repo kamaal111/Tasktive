@@ -11,11 +11,13 @@ import Foundation
 public struct TasktiveLocale {
     private init() { }
 
-    /// Depending on the key returns a localized string
-    /// - Parameter key: the key to get the localized string
-    /// - Returns: a localized string
-    public static func getText(_ key: Keys) -> String {
-        key.localized
+    /// Depending on the key returns a localized string.
+    /// - Parameters:
+    ///   - key: the key to get the localized string.
+    ///   - variables: variable to inject in to string.
+    /// - Returns: a localized string.
+    public static func getText(_ key: Keys, with variables: [CVarArg] = []) -> String {
+        key.localized(with: variables)
     }
 }
 

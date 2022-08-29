@@ -54,8 +54,7 @@ extension View {
             }
         }
 
-        return environment(\.managedObjectContext, PersistenceController.preview.context)
-            .environmentObject(DeviceModel())
+        return environmentObject(DeviceModel())
             .environmentObject(namiNavigator)
             .environmentObject(TasksViewModel(preview: true))
             .withPopperUp(PopperUpManager(config: .init()))

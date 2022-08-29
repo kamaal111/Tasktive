@@ -24,4 +24,5 @@ module.exports = {
   FEEDBACK_ERROR_DESCRIPTION: 'Could not send feedback',
   FEEDBACK_SENT: 'Feedback sent',
   PURCHASE_ERROR_DESCRIPTION: 'Failed to make purchase',
+  TASKS_PROGRESSION_PRESENTAGE: "Tasks progression precentage of %@",
 };
