@@ -82,6 +82,7 @@ struct TasksScreen: View {
                 .disabled(tasksViewModel.settingTasks)
                 #if os(macOS)
                     .padding(.horizontal, Constants.UI.mainViewHorizontalWidth)
+                    .padding(.bottom, viewModel.quickAddViewSize.height)
                 #endif
             }
             .ktakeSizeEagerly(alignment: .topLeading)
@@ -96,6 +97,7 @@ struct TasksScreen: View {
             #else
                 .padding(.vertical, .small)
             #endif
+                .kBindToFrameSize($viewModel.quickAddViewSize)
                 .background(colorScheme == .dark ? Color.black : Color.white)
                 .ktakeSizeEagerly(alignment: .bottom)
         }
@@ -203,6 +205,8 @@ extension TasksScreen {
         @Published var showTaskDetailsSheet = false {
             didSet { Task { await showTaskDetailsSheetDidSet() } }
         }
+
+        @Published var quickAddViewSize: CGSize = .zero
 
         init() { }
 
