@@ -80,6 +80,7 @@ final class TasksViewModel: ObservableObject {
         return Double(tasksDone) / Double(tasks.count)
     }
 
+    // - TODO: MAKE USABLE FOR CLOUD
     func createTask(with arguments: CoreTask.Arguments) async -> Result<Void, UserErrors> {
         let result: Result<AppTask, UserErrors> = dataClient
             .create(with: arguments, from: persistenceController.context, of: CoreTask.self)
@@ -110,17 +111,17 @@ final class TasksViewModel: ObservableObject {
         return .success(())
     }
 
-    func getTasks(for date: Date) async -> Result<Void, UserErrors> {
-        await getTasks(for: date, updateNotCompletedTasks: false)
+    func getTasks(from sources: [TaskSource] = TaskSource.allCases, for date: Date) async -> Result<Void, UserErrors> {
+        await getTasks(from: sources, for: date, updateNotCompletedTasks: false)
     }
 
-    func getTodaysTasks() async -> Result<Void, UserErrors> {
-        await getTasks(for: Date(), updateNotCompletedTasks: true)
+    func getTodaysTasks(from sources: [TaskSource] = TaskSource.allCases) async -> Result<Void, UserErrors> {
+        await getTasks(from: sources, for: Date(), updateNotCompletedTasks: true)
     }
 
-    func getAllTasks() async -> Result<Void, UserErrors> {
+    func getAllTasks(from sources: [TaskSource] = TaskSource.allCases) async -> Result<Void, UserErrors> {
         let predicate = NSPredicate(value: true)
-        return await getTasksByPredicate(predicate, updateNotCompletedTasks: true)
+        return await getTasksByPredicate(from: sources, by: predicate, updateNotCompletedTasks: true)
     }
 
     func updateTask(_ task: AppTask, with arguments: CoreTask.Arguments) async -> Result<Void, UserErrors> {
@@ -139,6 +140,7 @@ final class TasksViewModel: ObservableObject {
             guard let taskIndex = tasks[dateHash]?.findIndex(by: \.id, is: task.id)
             else { return .failure(.updateFailure) }
 
+            // - TODO: MAKE USABLE FOR CLOUD
             let result: Result<CoreTask, UserErrors> = dataClient.update(
                 by: task.id,
                 with: arguments,
@@ -176,35 +178,30 @@ final class TasksViewModel: ObservableObject {
         })
     }
 
-    private func getTasks(for date: Date, updateNotCompletedTasks: Bool) async -> Result<Void, UserErrors> {
+    private func getTasks(from sources: [TaskSource], for date: Date,
+                          updateNotCompletedTasks: Bool) async -> Result<Void, UserErrors> {
         let startDate = getHashDate(from: date)
         let endDate = getHashDate(from: startDate.incrementByDays(1)).incrementBySeconds(-1)
 
         let predicate = NSPredicate(format: "(dueDate >= %@) AND (dueDate <= %@)", startDate.asNSDate, endDate.asNSDate)
-        return await getTasksByPredicate(predicate, updateNotCompletedTasks: updateNotCompletedTasks)
+        return await getTasksByPredicate(from: sources, by: predicate, updateNotCompletedTasks: updateNotCompletedTasks)
     }
 
-    private func getTasksByPredicate(_ predicate: NSPredicate,
+    private func getTasksByPredicate(from sources: [TaskSource],
+                                     by predicate: NSPredicate,
                                      updateNotCompletedTasks: Bool) async -> Result<Void, UserErrors> {
         await withLoadingTasks {
-            let tasksResult: Result<[CoreTask], UserErrors> = dataClient
-                .filter(by: predicate, from: persistenceController.context, of: CoreTask.self)
-                .mapError {
-                    logger.error(label: "failed to get all tasks", error: $0)
-                    return UserErrors.getAllFailure
-                }
-
-            let tasks: [CoreTask]
-            switch tasksResult {
-            case let .failure(failure):
-                return .failure(failure)
-            case let .success(success):
-                tasks = success
-            }
-
             var appTasks: [AppTask] = []
-            await persistenceController.context.perform {
-                appTasks = tasks.map(\.asAppTask)
+
+            for source in sources {
+                let tasksResult = getFilteredTasks(from: source, by: predicate)
+
+                switch tasksResult {
+                case let .failure(failure):
+                    return .failure(failure)
+                case let .success(success):
+                    appTasks = success
+                }
             }
 
             let maybeUpdatedTasks = updateDueDateOfTasksIfNeeded(appTasks, enabled: updateNotCompletedTasks)
@@ -218,6 +215,22 @@ final class TasksViewModel: ObservableObject {
             }
 
             return .success(())
+        }
+    }
+
+    private func getFilteredTasks(from source: TaskSource,
+                                  by predicate: NSPredicate) -> Result<[AppTask], TasksViewModel.UserErrors> {
+        switch source {
+        case .coreData:
+            return dataClient
+                .filter(by: predicate, from: persistenceController.context, of: CoreTask.self)
+                .mapError {
+                    logger.error(label: "failed to get all tasks", error: $0)
+                    return UserErrors.getAllFailure
+                }
+                .map {
+                    $0.map(\.asAppTask)
+                }
         }
     }
 
@@ -236,6 +249,7 @@ final class TasksViewModel: ObservableObject {
         let now = Date()
 
         let predicate = NSPredicate(format: "(dueDate < %@) AND ticked == NO AND NOT(id in %@) ", today, tasksIDs)
+        // - TODO: MAKE USABLE FOR CLOUD
         let tasksResult = dataClient.filter(by: predicate, from: persistenceController.context, of: CoreTask.self)
             .map { tasks in
                 tasks
@@ -259,6 +273,7 @@ final class TasksViewModel: ObservableObject {
 
         logger.info("updating tasks with ids of '\(outdatedTasks.map(\.id))'")
 
+        // - TODO: MAKE USABLE FOR CLOUD
         let updateResult = dataClient.updateManyTaskDates(
             by: outdatedTasks.map(\.id),
             date: now,

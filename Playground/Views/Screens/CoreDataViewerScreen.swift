@@ -41,7 +41,7 @@ struct CoreDataViewerScreen: View {
     private func fetchData() async {
         switch selectedType {
         case CoreTask.description():
-            try? await tasksViewModel.getTodaysTasks().get()
+            try? await tasksViewModel.getTodaysTasks(from: [.coreData]).get()
         default:
             break
         }
