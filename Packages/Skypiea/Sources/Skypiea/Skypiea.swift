@@ -34,7 +34,10 @@ public struct Skypiea {
     ///   - predicate: query
     /// - Returns: an array of records
     func fetch(ofType objectType: String, withPredicate predicate: NSPredicate) async throws -> [CKRecord] {
-        guard !preview else { return [] }
+        guard !preview else {
+            /// - TODO: SOME PREVIEW DATA
+            return []
+        }
 
         return try await iCloutKit.fetch(ofType: objectType, by: predicate)
     }

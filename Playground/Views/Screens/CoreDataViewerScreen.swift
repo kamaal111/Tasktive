@@ -18,10 +18,12 @@ struct CoreDataViewerScreen: View {
     ]
 
     var body: some View {
-        DataViewer(selectedType: $selectedType, recordTypes: recordTypes, databaseItems: databaseItems)
-            .onAppear {
-                Task { try? await tasksViewModel.getTodaysTasks().get() }
-            }
+        DataViewer(
+            selectedType: $selectedType,
+            recordTypes: recordTypes,
+            databaseItems: databaseItems,
+            fetchData: { Task { await fetchData() } }
+        )
     }
 
     private var databaseItems: [GridItemConfiguration] {
@@ -33,6 +35,15 @@ struct CoreDataViewerScreen: View {
                 .map(\.gridConfiguration)
         default:
             return []
+        }
+    }
+
+    private func fetchData() async {
+        switch selectedType {
+        case CoreTask.description():
+            try? await tasksViewModel.getTodaysTasks().get()
+        default:
+            break
         }
     }
 }

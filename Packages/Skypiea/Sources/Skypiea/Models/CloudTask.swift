@@ -91,7 +91,7 @@ public struct CloudTask: Identifiable, Hashable, Cloudable {
         case title
     }
 
-    static let recordType = "CloudTask"
+    public static let recordType = "CloudTask"
 }
 
 extension CKRecord {

@@ -65,10 +65,10 @@ struct TasksScreen: View {
                 .contentShape(Rectangle())
                 .gesture(gesture.onEnded(onEnded))
                 #endif
-
                 #if os(macOS)
                 .padding(.horizontal, Constants.UI.mainViewHorizontalWidth)
                 #endif
+
                 TasksSection(
                     tasks: tasksViewModel.tasksForDate(viewModel.currentDay),
                     loading: tasksViewModel.loadingTasks,
@@ -82,9 +82,9 @@ struct TasksScreen: View {
                 .disabled(tasksViewModel.settingTasks)
                 #if os(macOS)
                     .padding(.horizontal, Constants.UI.mainViewHorizontalWidth)
-                    .padding(.bottom, viewModel.quickAddViewSize.height)
                 #endif
             }
+            .padding(.bottom, viewModel.quickAddViewSize.height)
             .ktakeSizeEagerly(alignment: .topLeading)
             QuickAddTaskField(
                 title: $viewModel.newTitle,

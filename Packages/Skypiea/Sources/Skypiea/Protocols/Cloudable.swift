@@ -20,6 +20,9 @@ public protocol Cloudable {
     /// - Parameter record: the record to create the ``Cloudable`` object out of.
     /// - Returns: an ``Cloudable`` object.
     static func fromRecord(_ record: CKRecord) -> Object?
+
+    /// The `CKRecord` recordType string.
+    static var recordType: String { get }
 }
 
 extension Cloudable {
@@ -32,5 +35,13 @@ extension Cloudable {
         guard let savedRecord = try await context.save(object.record) else { return nil }
 
         return fromRecord(savedRecord)
+    }
+
+    /// Fetch all of the given record.
+    /// - Parameter context: the context to use for iCloud operations.
+    /// - Returns: An array of the fetched objects.
+    public static func fetchAll(from context: Skypiea) async throws -> [Object] {
+        try await context.fetchAll(ofType: recordType)
+            .compactMap(fromRecord(_:))
     }
 }
