@@ -135,9 +135,10 @@ final class TasksViewModel: ObservableObject {
         await getTasks(from: sources, for: Date(), updateNotCompletedTasks: true)
     }
 
-    func getAllTasks(from sources: [DataSource]) async -> Result<Void, UserErrors> {
+    func getAllTasks(from sources: [DataSource],
+                     updateNotCompletedTasks: Bool = true) async -> Result<Void, UserErrors> {
         let predicate = NSPredicate(value: true)
-        return await getTasksByPredicate(from: sources, by: predicate, updateNotCompletedTasks: true)
+        return await getTasksByPredicate(from: sources, by: predicate, updateNotCompletedTasks: updateNotCompletedTasks)
     }
 
     func updateTask(_ task: AppTask, with arguments: TaskArguments) async -> Result<Void, UserErrors> {

@@ -10,6 +10,8 @@ import SwiftUI
 import Skypiea
 
 struct CloudKitDataViewerScreen: View {
+    @EnvironmentObject private var tasksViewModel: TasksViewModel
+
     @State private var selectedType = CloudTask.recordType
 
     private let recordTypes: [String] = [
@@ -28,7 +30,10 @@ struct CloudKitDataViewerScreen: View {
     private var databaseItems: [GridItemConfiguration] {
         switch selectedType {
         case CloudTask.recordType:
-            return []
+            return tasksViewModel
+                .allTasksSortedByCreationDate
+                .filter { $0.source == .iCloud }
+                .map(\.gridConfiguration)
         default:
             return []
         }
@@ -37,7 +42,7 @@ struct CloudKitDataViewerScreen: View {
     private func fetchData() async {
         switch selectedType {
         case CoreTask.description():
-            break
+            try? await tasksViewModel.getAllTasks(from: [.iCloud], updateNotCompletedTasks: false).get()
         default:
             break
         }

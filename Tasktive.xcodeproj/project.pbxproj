@@ -648,6 +648,7 @@
 			isa = PBXGroup;
 			children = (
 				2C7A560528B4157600CF8A7C /* Array+extensions.swift */,
+				2C513B5328BFDF5700A835C4 /* CloudTask+extensions.swift */,
 				2CDFB1AF28A6DA53004ACED7 /* Colors.swift */,
 				2C98E3C728B125CA0048149F /* Data+extensions.swift */,
 				2CDE6AEA28B2BAFE00924935 /* Date+extensions.swift */,
@@ -659,7 +660,6 @@
 				2C47E3F12883688F00FD4469 /* Text+extensions.swift */,
 				2CFEB90228A43F75000B1667 /* UserDefaults+extensions.swift */,
 				2CF24AA928842B5B00778BD9 /* View+extensions.swift */,
-				2C513B5328BFDF5700A835C4 /* CloudTask+extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
