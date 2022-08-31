@@ -19,10 +19,6 @@ protocol Taskable {
     var source: DataSource { get }
 }
 
-enum DataSource: Codable, CaseIterable {
-    case coreData
-}
-
 extension Taskable {
     var asAppTask: AppTask {
         .init(

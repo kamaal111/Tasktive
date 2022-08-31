@@ -88,7 +88,9 @@ struct TasksScreen: View {
             .ktakeSizeEagerly(alignment: .topLeading)
             QuickAddSection(
                 title: $viewModel.newTitle,
+                currentSource: $viewModel.currentSource,
                 disableSubmit: viewModel.disableNewTaskSubmitButton,
+                dataSources: viewModel.dataSources,
                 submit: onNewTaskSubmit
             )
             .padding(.horizontal, .medium)
@@ -213,6 +215,16 @@ extension TasksScreen {
         }
 
         init() { }
+
+        var dataSources: [DataSource] {
+            DataSource
+                .allCases
+//                .filter { source in
+//                    if !Features.iCloudSyncing && source {
+//
+//                    }
+//                }
+        }
 
         var disableNewTaskSubmitButton: Bool {
             invalidTitle

@@ -11,7 +11,10 @@ import TasktiveLocale
 
 struct QuickAddSection: View {
     @Binding var title: String
+    @Binding var currentSource: DataSource
+
     let disableSubmit: Bool
+    let dataSources: [DataSource]
     let submit: () -> Void
 
     var body: some View {
@@ -24,6 +27,17 @@ struct QuickAddSection: View {
                     guard !disableSubmit else { return }
                     submit()
                 }
+            if dataSources.count > 1 {
+                Picker(selection: $currentSource, label: Text.empty()) {
+                    ForEach(dataSources, id: \.self) { source in
+                        Image(systemName: source.persistanceMethodImageName)
+                            .tag(source)
+                            .ktakeWidthEagerly()
+                    }
+                }
+                .labelsHidden()
+                .frame(maxWidth: 60)
+            }
             Button(action: submit) {
                 Text(localized: .SUBMIT)
                     .foregroundColor(.accentColor)
@@ -37,6 +51,12 @@ struct QuickAddSection: View {
 
 struct QuickAddSection_Previews: PreviewProvider {
     static var previews: some View {
-        QuickAddSection(title: .constant("New"), disableSubmit: false, submit: { })
+        QuickAddSection(
+            title: .constant("New"),
+            currentSource: .constant(.coreData),
+            disableSubmit: false,
+            dataSources: DataSource.allCases,
+            submit: { }
+        )
     }
 }
