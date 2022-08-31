@@ -34,7 +34,7 @@
 		2C4E81F028BBE6EF0056D0D1 /* TasktiveLocale in Frameworks */ = {isa = PBXBuildFile; productRef = 2C4E81EF28BBE6EF0056D0D1 /* TasktiveLocale */; };
 		2C51C90D28847115008939F7 /* AppSizes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C90C28847115008939F7 /* AppSizes.swift */; };
 		2C51C90F28847438008939F7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C90E28847438008939F7 /* Constants.swift */; };
-		2C51C91128847C3B008939F7 /* DataClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C91028847C3B008939F7 /* DataClient.swift */; };
+		2C51C91128847C3B008939F7 /* TasksClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C91028847C3B008939F7 /* TasksClient.swift */; };
 		2C51C91328847F9E008939F7 /* TasksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C91228847F9E008939F7 /* TasksViewModel.swift */; };
 		2C51C916288481A9008939F7 /* AppTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C915288481A9008939F7 /* AppTask.swift */; };
 		2C51C918288481F7008939F7 /* Taskable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C917288481F7008939F7 /* Taskable.swift */; };
@@ -57,7 +57,7 @@
 		2C69A06028B19BC600D5006D /* NamiNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF24AA52884289100778BD9 /* NamiNavigator.swift */; };
 		2C69A06128B19BC600D5006D /* SavePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C98E3C928B126620048149F /* SavePanel.swift */; };
 		2C69A06228B19BC600D5006D /* TaskItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C750F6B288C335A00026D67 /* TaskItemView.swift */; };
-		2C69A06328B19BC600D5006D /* DataClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C91028847C3B008939F7 /* DataClient.swift */; };
+		2C69A06328B19BC600D5006D /* TasksClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C91028847C3B008939F7 /* TasksClient.swift */; };
 		2C69A06428B19BC600D5006D /* AppLogoCreatorScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE9EFB628AD629500C89888 /* AppLogoCreatorScreen.swift */; };
 		2C69A06528B19BC600D5006D /* CoreTask+CRUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCCADB62881F94D0033E2EF /* CoreTask+CRUD.swift */; };
 		2C69A06628B19BC600D5006D /* TasktiveApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCE6062881DE240057F4CD /* TasktiveApp.swift */; };
@@ -162,7 +162,7 @@
 		2C98E3E828B12E170048149F /* NamiNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF24AA52884289100778BD9 /* NamiNavigator.swift */; };
 		2C98E3E928B12E170048149F /* SavePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C98E3C928B126620048149F /* SavePanel.swift */; };
 		2C98E3EA28B12E170048149F /* TaskItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C750F6B288C335A00026D67 /* TaskItemView.swift */; };
-		2C98E3EB28B12E170048149F /* DataClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C91028847C3B008939F7 /* DataClient.swift */; };
+		2C98E3EB28B12E170048149F /* TasksClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C91028847C3B008939F7 /* TasksClient.swift */; };
 		2C98E3EC28B12E170048149F /* AppLogoCreatorScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE9EFB628AD629500C89888 /* AppLogoCreatorScreen.swift */; };
 		2C98E3ED28B12E170048149F /* CoreTask+CRUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCCADB62881F94D0033E2EF /* CoreTask+CRUD.swift */; };
 		2C98E3EE28B12E170048149F /* TasktiveApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCE6062881DE240057F4CD /* TasktiveApp.swift */; };
@@ -348,7 +348,7 @@
 		2C4E81E228BBDC070056D0D1 /* TasksScreenUISpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksScreenUISpec.swift; sourceTree = "<group>"; };
 		2C51C90C28847115008939F7 /* AppSizes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSizes.swift; sourceTree = "<group>"; };
 		2C51C90E28847438008939F7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		2C51C91028847C3B008939F7 /* DataClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataClient.swift; sourceTree = "<group>"; };
+		2C51C91028847C3B008939F7 /* TasksClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksClient.swift; sourceTree = "<group>"; };
 		2C51C91228847F9E008939F7 /* TasksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksViewModel.swift; sourceTree = "<group>"; };
 		2C51C915288481A9008939F7 /* AppTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTask.swift; sourceTree = "<group>"; };
 		2C51C917288481F7008939F7 /* Taskable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Taskable.swift; sourceTree = "<group>"; };
@@ -942,11 +942,11 @@
 		2CCCADCF288203480033E2EF /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				2C51C91028847C3B008939F7 /* DataClient.swift */,
 				2CCCADD0288203720033E2EF /* Logster.swift */,
 				2CBCE6082881DE240057F4CD /* Persistence.swift */,
 				2C98E3C928B126620048149F /* SavePanel.swift */,
 				2C98E43628B12FB20048149F /* Shell.swift */,
+				2C51C91028847C3B008939F7 /* TasksClient.swift */,
 				2C157592289F03B800425CDD /* TokensHolder.swift */,
 			);
 			path = Utilities;
@@ -1320,7 +1320,7 @@
 				2C69A06028B19BC600D5006D /* NamiNavigator.swift in Sources */,
 				2C69A06128B19BC600D5006D /* SavePanel.swift in Sources */,
 				2C69A06228B19BC600D5006D /* TaskItemView.swift in Sources */,
-				2C69A06328B19BC600D5006D /* DataClient.swift in Sources */,
+				2C69A06328B19BC600D5006D /* TasksClient.swift in Sources */,
 				2C69A06428B19BC600D5006D /* AppLogoCreatorScreen.swift in Sources */,
 				2C69A06528B19BC600D5006D /* CoreTask+CRUD.swift in Sources */,
 				2C69A06628B19BC600D5006D /* TasktiveApp.swift in Sources */,
@@ -1410,7 +1410,7 @@
 				2C98E3E828B12E170048149F /* NamiNavigator.swift in Sources */,
 				2C98E3E928B12E170048149F /* SavePanel.swift in Sources */,
 				2C98E3EA28B12E170048149F /* TaskItemView.swift in Sources */,
-				2C98E3EB28B12E170048149F /* DataClient.swift in Sources */,
+				2C98E3EB28B12E170048149F /* TasksClient.swift in Sources */,
 				2C98E3EC28B12E170048149F /* AppLogoCreatorScreen.swift in Sources */,
 				2C98E3ED28B12E170048149F /* CoreTask+CRUD.swift in Sources */,
 				2C98E3EE28B12E170048149F /* TasktiveApp.swift in Sources */,
@@ -1500,7 +1500,7 @@
 				2CF24AA62884289100778BD9 /* NamiNavigator.swift in Sources */,
 				2C98E3CA28B126620048149F /* SavePanel.swift in Sources */,
 				2C750F6C288C335A00026D67 /* TaskItemView.swift in Sources */,
-				2C51C91128847C3B008939F7 /* DataClient.swift in Sources */,
+				2C51C91128847C3B008939F7 /* TasksClient.swift in Sources */,
 				2CB3F3B828BD34D10016B7F4 /* CommandLineArguments.swift in Sources */,
 				2CE9EFB728AD629500C89888 /* AppLogoCreatorScreen.swift in Sources */,
 				2CCCADB72881F94D0033E2EF /* CoreTask+CRUD.swift in Sources */,

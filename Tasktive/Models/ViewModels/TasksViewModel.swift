@@ -18,7 +18,7 @@ final class TasksViewModel: ObservableObject {
     @Published private(set) var settingTasks = false
 
     private let persistenceController: PersistenceController
-    private let dataClient = DataClient()
+    private let tasksClient = TasksClient()
 
     init() {
         #if !DEBUG
@@ -84,13 +84,12 @@ final class TasksViewModel: ObservableObject {
         let result: Result<AppTask, UserErrors>
         switch source {
         case .coreData:
-            result = dataClient
+            result = tasksClient
                 .create(with: arguments, from: persistenceController.context, of: CoreTask.self)
                 .mapError {
                     logger.error(label: "failed to create this task", error: $0)
                     return UserErrors.createTaskFailure
                 }
-                .map(\.asAppTask)
         }
 
         let task: AppTask
@@ -146,7 +145,7 @@ final class TasksViewModel: ObservableObject {
             let result: Result<AppTask, UserErrors>
             switch task.source {
             case .coreData:
-                result = dataClient.update(
+                result = tasksClient.update(
                     by: task.id,
                     with: arguments,
                     from: persistenceController.context,
@@ -167,7 +166,6 @@ final class TasksViewModel: ObservableObject {
                     logger.error(label: "failed to update this task", error: error)
                     return UserErrors.updateFailure
                 }
-                .map(\.asAppTask)
             }
 
             let updatedTask: AppTask
@@ -231,14 +229,11 @@ final class TasksViewModel: ObservableObject {
                                   by predicate: NSPredicate) -> Result<[AppTask], TasksViewModel.UserErrors> {
         switch source {
         case .coreData:
-            return dataClient
+            return tasksClient
                 .filter(by: predicate, from: persistenceController.context, of: CoreTask.self)
                 .mapError {
                     logger.error(label: "failed to get all tasks", error: $0)
                     return UserErrors.getAllFailure
-                }
-                .map {
-                    $0.map(\.asAppTask)
                 }
         }
     }
@@ -265,33 +260,31 @@ final class TasksViewModel: ObservableObject {
             let outdatedTasks: [AppTask]
             switch source {
             case .coreData:
-                let filteredTasks = try? dataClient.filter(
+                let filteredTasks = try? tasksClient.filter(
                     by: predicate,
                     from: persistenceController.context,
                     of: CoreTask.self
                 )
-                .map { tasks in
-                    tasks
-                        .map { task -> AppTask in
-                            var mutableTask = task.asAppTask
-                            mutableTask.dueDate = now
-                            return mutableTask
-                        }
-                }
                 .get()
                 outdatedTasks = filteredTasks ?? []
             }
+
             outdatedTasksBySource[source] = outdatedTasks
+                .map { task in
+                    var mutableTask = task
+                    mutableTask.dueDate = now
+                    return mutableTask
+                }
         }
 
         for source in DataSource.allCases {
             switch source {
             case .coreData:
                 if let outdatedTasks = outdatedTasksBySource[.coreData] {
-                    let updateResult = dataClient.updateManyTaskDates(
+                    let updateResult = CoreTask.updateManyDates(
                         by: outdatedTasks.map(\.id),
                         date: now,
-                        context: persistenceController.context
+                        on: persistenceController.context
                     )
                     switch updateResult {
                     case let .failure(failure):

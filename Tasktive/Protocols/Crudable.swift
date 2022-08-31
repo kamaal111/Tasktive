@@ -12,6 +12,8 @@ protocol Crudable {
     associatedtype CrudErrors: Error
     associatedtype Context
 
+    var asAppTask: AppTask { get }
+
     func update(with arguments: TaskArguments) -> Result<ReturnType, CrudErrors>
     func delete() -> Result<Void, CrudErrors>
 
