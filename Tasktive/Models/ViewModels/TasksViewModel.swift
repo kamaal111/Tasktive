@@ -143,29 +143,34 @@ final class TasksViewModel: ObservableObject {
             guard let taskIndex = tasks[dateHash]?.findIndex(by: \.id, is: task.id)
             else { return .failure(.updateFailure) }
 
-            // - TODO: MAKE USABLE FOR CLOUD
-            let result: Result<CoreTask, UserErrors> = dataClient.update(
-                by: task.id,
-                with: arguments,
-                from: persistenceController.context,
-                of: CoreTask.self
-            )
-            .mapError {
-                let error: Error?
-                switch $0 {
-                case .notFound:
-                    logger.error("task not found")
+            let result: Result<AppTask, UserErrors>
+            switch task.source {
+            case .coreData:
+                result = dataClient.update(
+                    by: task.id,
+                    with: arguments,
+                    from: persistenceController.context,
+                    of: CoreTask.self
+                )
+                .mapError {
+                    let error: Error?
+                    switch $0 {
+                    case .notFound:
+                        logger.error("task not found")
+                        return UserErrors.updateFailure
+                    case let .crud(error: crudError):
+                        error = crudError as? CoreTask.CrudErrors
+                    }
+
+                    guard let error = error else { return UserErrors.updateFailure }
+
+                    logger.error(label: "failed to update this task", error: error)
                     return UserErrors.updateFailure
-                case let .crud(error: crudError):
-                    error = crudError as? CoreTask.CrudErrors
                 }
-
-                guard let error = error else { return UserErrors.updateFailure }
-
-                logger.error(label: "failed to update this task", error: error)
-                return UserErrors.updateFailure
+                .map(\.asAppTask)
             }
-            let updatedTask: CoreTask
+
+            let updatedTask: AppTask
             switch result {
             case let .failure(failure):
                 return .failure(failure)
@@ -174,14 +179,15 @@ final class TasksViewModel: ObservableObject {
             }
 
             var mutableTask = tasks
-            mutableTask[dateHash]?[taskIndex] = updatedTask.asAppTask
+            mutableTask[dateHash]?[taskIndex] = updatedTask
             await setTasks(mutableTask[dateHash] ?? [], forDate: dateHash)
 
             return .success(())
         })
     }
 
-    private func getTasks(from sources: [DataSource], for date: Date,
+    private func getTasks(from sources: [DataSource],
+                          for date: Date,
                           updateNotCompletedTasks: Bool) async -> Result<Void, UserErrors> {
         let startDate = getHashDate(from: date)
         let endDate = getHashDate(from: startDate.incrementByDays(1)).incrementBySeconds(-1)
