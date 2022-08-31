@@ -104,7 +104,7 @@ struct TasksScreen: View {
                 .ktakeSizeEagerly(alignment: .bottom)
         }
         .onChange(of: viewModel.currentDay, perform: { newValue in
-            Task { await tasksViewModel.getTasks(for: newValue) }
+            Task { await tasksViewModel.getTasks(from: viewModel.dataSources, for: newValue) }
         })
         .onAppear(perform: handleOnAppear)
         .sheet(isPresented: $viewModel.showTaskDetailsSheet) {
@@ -147,7 +147,7 @@ struct TasksScreen: View {
 
     private func handleOnAppear() {
         Task {
-            let result = await tasksViewModel.getTodaysTasks()
+            let result = await tasksViewModel.getTodaysTasks(from: viewModel.dataSources)
             switch result {
             case let .failure(failure):
                 popperUpManager.showPopup(style: failure.style, timeout: failure.timeout)
@@ -219,11 +219,12 @@ extension TasksScreen {
         var dataSources: [DataSource] {
             DataSource
                 .allCases
-//                .filter { source in
-//                    if !Features.iCloudSyncing && source {
-//
-//                    }
-//                }
+                .filter { source in
+                    if !Features.iCloudSyncing, source == .iCloud {
+                        return false
+                    }
+                    return true
+                }
         }
 
         var disableNewTaskSubmitButton: Bool {

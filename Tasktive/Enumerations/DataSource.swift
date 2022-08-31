@@ -9,14 +9,14 @@ import Foundation
 
 enum DataSource: Codable, Hashable, CaseIterable {
     case coreData
-//    case iCloud
+    case iCloud
 
     var persistanceMethodImageName: String {
         switch self {
         case .coreData:
             return "iphone.and.arrow.forward"
-//        case .iCloud:
-//            return "icloud"
+        case .iCloud:
+            return "icloud"
         }
     }
 }

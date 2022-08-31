@@ -9,7 +9,7 @@ import CloudKit
 import Foundation
 import ShrimpExtensions
 
-public struct CloudTask: Identifiable, Hashable, Cloudable {
+public struct CloudTask: Identifiable, Hashable {
     public let id: UUID
     public let creationDate: Date
     public let updateDate: Date
@@ -44,6 +44,22 @@ public struct CloudTask: Identifiable, Hashable, Cloudable {
         self.title = title
         self._record = record
     }
+}
+
+extension CloudTask: Cloudable {
+    public var record: CKRecord {
+        let record = _record ?? CKRecord(recordType: Self.recordType)
+        record[.id] = id
+        record[.creationDate] = creationDate.asNSDate
+        record[.updateDate] = updateDate.asNSDate
+        record[.completionDate] = completionDate?.asNSDate
+        record[.dueDate] = dueDate.asNSDate
+        record[.taskDescription] = taskDescription?.nsString
+        record[.ticked] = ticked.int.nsNumber
+        return record
+    }
+
+    public static let recordType = "CloudTask"
 
     public static func fromRecord(_ record: CKRecord) -> CloudTask? {
         guard let id = (record[.id] as? NSString)?.uuid,
@@ -66,19 +82,9 @@ public struct CloudTask: Identifiable, Hashable, Cloudable {
             record: record
         )
     }
+}
 
-    public var record: CKRecord {
-        let record = _record ?? CKRecord(recordType: Self.recordType)
-        record[.id] = id
-        record[.creationDate] = creationDate.asNSDate
-        record[.updateDate] = updateDate.asNSDate
-        record[.completionDate] = completionDate?.asNSDate
-        record[.dueDate] = dueDate.asNSDate
-        record[.taskDescription] = taskDescription?.nsString
-        record[.ticked] = ticked.int.nsNumber
-        return record
-    }
-
+extension CloudTask {
     enum RecordKeys: String {
         case id
         case creationDate = "creation_date"
@@ -90,8 +96,6 @@ public struct CloudTask: Identifiable, Hashable, Cloudable {
         case ticked
         case title
     }
-
-    public static let recordType = "CloudTask"
 }
 
 extension CKRecord {

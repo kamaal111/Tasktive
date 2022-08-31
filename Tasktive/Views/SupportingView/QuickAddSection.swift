@@ -17,11 +17,13 @@ struct QuickAddSection: View {
     let dataSources: [DataSource]
     let submit: () -> Void
 
+    private let topPaddingCorrection: CGFloat = 12
+
     var body: some View {
         HStack {
             Image(systemName: "plus.circle")
                 .bold()
-                .padding(.top, 12)
+                .padding(.top, topPaddingCorrection)
             KFloatingTextField(text: $title, title: TasktiveLocale.getText(.NEW_TASK_INPUT_TITLE))
                 .onSubmit {
                     guard !disableSubmit else { return }
@@ -37,13 +39,14 @@ struct QuickAddSection: View {
                 }
                 .labelsHidden()
                 .frame(maxWidth: 60)
+                .padding(.top, topPaddingCorrection)
             }
             Button(action: submit) {
                 Text(localized: .SUBMIT)
                     .foregroundColor(.accentColor)
             }
             .disabled(disableSubmit)
-            .padding(.top, 12)
+            .padding(.top, topPaddingCorrection)
             .buttonStyle(.plain)
         }
     }

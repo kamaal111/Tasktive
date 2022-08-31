@@ -38,6 +38,9 @@
 		2C513B5028BFDCA500A835C4 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C513B4F28BFDCA500A835C4 /* DataSource.swift */; };
 		2C513B5128BFDCA500A835C4 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C513B4F28BFDCA500A835C4 /* DataSource.swift */; };
 		2C513B5228BFDCA500A835C4 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C513B4F28BFDCA500A835C4 /* DataSource.swift */; };
+		2C513B5428BFDF5700A835C4 /* CloudTask+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C513B5328BFDF5700A835C4 /* CloudTask+extensions.swift */; };
+		2C513B5528BFDF5700A835C4 /* CloudTask+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C513B5328BFDF5700A835C4 /* CloudTask+extensions.swift */; };
+		2C513B5628BFDF5700A835C4 /* CloudTask+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C513B5328BFDF5700A835C4 /* CloudTask+extensions.swift */; };
 		2C51C90D28847115008939F7 /* AppSizes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C90C28847115008939F7 /* AppSizes.swift */; };
 		2C51C90F28847438008939F7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C90E28847438008939F7 /* Constants.swift */; };
 		2C51C91128847C3B008939F7 /* TasksClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C91028847C3B008939F7 /* TasksClient.swift */; };
@@ -354,6 +357,7 @@
 		2C4E81E228BBDC070056D0D1 /* TasksScreenUISpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksScreenUISpec.swift; sourceTree = "<group>"; };
 		2C513B4B28BFDABD00A835C4 /* Features.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Features.swift; sourceTree = "<group>"; };
 		2C513B4F28BFDCA500A835C4 /* DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
+		2C513B5328BFDF5700A835C4 /* CloudTask+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudTask+extensions.swift"; sourceTree = "<group>"; };
 		2C51C90C28847115008939F7 /* AppSizes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSizes.swift; sourceTree = "<group>"; };
 		2C51C90E28847438008939F7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2C51C91028847C3B008939F7 /* TasksClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksClient.swift; sourceTree = "<group>"; };
@@ -655,6 +659,7 @@
 				2C47E3F12883688F00FD4469 /* Text+extensions.swift */,
 				2CFEB90228A43F75000B1667 /* UserDefaults+extensions.swift */,
 				2CF24AA928842B5B00778BD9 /* View+extensions.swift */,
+				2C513B5328BFDF5700A835C4 /* CloudTask+extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1325,6 +1330,7 @@
 				2C69A05B28B19BC600D5006D /* MainView.swift in Sources */,
 				2C69A05C28B19BC600D5006D /* DetailsColumn.swift in Sources */,
 				2C69A05D28B19BC600D5006D /* Logster.swift in Sources */,
+				2C513B5528BFDF5700A835C4 /* CloudTask+extensions.swift in Sources */,
 				2C69A05E28B19BC600D5006D /* ScreenWrapper.swift in Sources */,
 				2C69A05F28B19BC600D5006D /* NotificationName+extensions.swift in Sources */,
 				2C69A06028B19BC600D5006D /* NamiNavigator.swift in Sources */,
@@ -1417,6 +1423,7 @@
 				2C98E3E328B12E170048149F /* MainView.swift in Sources */,
 				2C98E3E428B12E170048149F /* DetailsColumn.swift in Sources */,
 				2C98E3E528B12E170048149F /* Logster.swift in Sources */,
+				2C513B5628BFDF5700A835C4 /* CloudTask+extensions.swift in Sources */,
 				2C98E3E628B12E170048149F /* ScreenWrapper.swift in Sources */,
 				2C98E3E728B12E170048149F /* NotificationName+extensions.swift in Sources */,
 				2C98E3E828B12E170048149F /* NamiNavigator.swift in Sources */,
@@ -1554,6 +1561,7 @@
 				2C98E3C628B125710048149F /* Image+extensions.swift in Sources */,
 				2CDC17F428A0300400F07CF0 /* CoreTask+CoreDataClass.swift in Sources */,
 				2CB3F3B128BD327A0016B7F4 /* AccessibilityIdentifiers.swift in Sources */,
+				2C513B5428BFDF5700A835C4 /* CloudTask+extensions.swift in Sources */,
 				2C7A560628B4157600CF8A7C /* Array+extensions.swift in Sources */,
 				2CC325F328B0E68F0091EC3E /* Navigatable.swift in Sources */,
 				2CBCE60E2881DE240057F4CD /* ContentView.swift in Sources */,
