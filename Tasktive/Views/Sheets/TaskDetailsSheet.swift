@@ -16,7 +16,7 @@ struct TaskDetailsSheet: View {
 
     let task: AppTask?
     let onClose: () -> Void
-    let onDone: (_ arguments: CoreTask.Arguments?) -> Void
+    let onDone: (_ arguments: TaskArguments?) -> Void
 
     var body: some View {
         KSheetStack(
@@ -45,7 +45,7 @@ extension TaskDetailsSheet {
 
         init() { }
 
-        func makeCoreTaskArguments(using task: AppTask?) -> CoreTask.Arguments? {
+        func makeCoreTaskArguments(using task: AppTask?) -> TaskArguments? {
             guard let task = task else {
                 logger.warning("could not make task arguments")
                 return nil

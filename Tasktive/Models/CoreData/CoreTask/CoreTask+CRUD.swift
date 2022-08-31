@@ -15,11 +15,11 @@ extension CoreTask: Crudable {
     typealias ReturnType = CoreTask
     typealias Context = NSManagedObjectContext
 
-    var arguments: Arguments {
+    var arguments: TaskArguments {
         .init(title: title, taskDescription: taskDescription, notes: notes, dueDate: dueDate, ticked: ticked)
     }
 
-    func update(with arguments: Arguments) -> Result<CoreTask, CrudErrors> {
+    func update(with arguments: TaskArguments) -> Result<CoreTask, CrudErrors> {
         guard let context = managedObjectContext else {
             let message = "Context missing"
             logger.warning(message)
@@ -46,7 +46,7 @@ extension CoreTask: Crudable {
         return .success(())
     }
 
-    static func create(with arguments: Arguments,
+    static func create(with arguments: TaskArguments,
                        from context: NSManagedObjectContext) -> Result<CoreTask, CrudErrors> {
         let newTask = CoreTask(context: context)
             .updateValues(with: arguments)
@@ -128,48 +128,6 @@ extension CoreTask: Crudable {
     }
     #endif
 
-    struct Arguments: Equatable {
-        var title: String
-        let taskDescription: String?
-        let notes: String?
-        var dueDate: Date
-        let ticked: Bool
-        let completionDate: Date?
-        let id: UUID?
-
-        init(title: String, taskDescription: String?, notes: String?, dueDate: Date, ticked: Bool) {
-            self.title = title
-            self.taskDescription = taskDescription
-            self.notes = notes
-            self.dueDate = dueDate
-            self.ticked = ticked
-            self.id = nil
-            self.completionDate = nil
-        }
-
-        init(title: String, taskDescription: String?, notes: String?, dueDate: Date) {
-            self.init(title: title, taskDescription: taskDescription, notes: notes, dueDate: dueDate, ticked: false)
-        }
-
-        init(
-            title: String,
-            taskDescription: String?,
-            notes: String?,
-            dueDate: Date,
-            ticked: Bool,
-            id: UUID,
-            completionDate: Date?
-        ) {
-            self.title = title
-            self.taskDescription = taskDescription
-            self.notes = notes
-            self.dueDate = dueDate
-            self.ticked = ticked
-            self.id = id
-            self.completionDate = completionDate
-        }
-    }
-
     enum CrudErrors: Error {
         case saveFailure
         case fetchFailure
@@ -180,7 +138,7 @@ extension CoreTask: Crudable {
 }
 
 extension CoreTask {
-    private func updateValues(with arguments: Arguments) -> CoreTask {
+    private func updateValues(with arguments: TaskArguments) -> CoreTask {
         ticked = arguments.ticked
         title = arguments.title
         taskDescription = arguments.taskDescription

@@ -22,14 +22,14 @@ struct DataClient {
         type.filter(by: predicate, limit: limit, from: context)
     }
 
-    func create<T: Crudable>(with arguments: T.Arguments,
+    func create<T: Crudable>(with arguments: TaskArguments,
                              from context: T.Context,
                              of type: T.Type) -> Result<T.ReturnType, T.CrudErrors> {
         type.create(with: arguments, from: context)
     }
 
     func update<T: Crudable>(by id: UUID,
-                             with arguments: T.ReturnType.Arguments,
+                             with arguments: TaskArguments,
                              from context: T.Context,
                              of type: T.Type) -> Result<T.ReturnType.ReturnType, UpdateErrors> {
         let predicate = NSPredicate(format: "id == %@", id.nsString)

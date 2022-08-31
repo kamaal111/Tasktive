@@ -16,7 +16,7 @@ struct AppTask: Hashable, Identifiable {
     var dueDate: Date
     var completionDate: Date?
     let creationDate: Date
-    let source: TaskSource
+    let source: DataSource
 
     init(
         id: UUID,
@@ -27,7 +27,7 @@ struct AppTask: Hashable, Identifiable {
         dueDate: Date,
         completionDate: Date?,
         creationDate: Date,
-        source: TaskSource
+        source: DataSource
     ) {
         self.id = id
         self.title = title
@@ -40,7 +40,7 @@ struct AppTask: Hashable, Identifiable {
         self.source = source
     }
 
-    var coreTaskArguments: CoreTask.Arguments {
+    var coreTaskArguments: TaskArguments {
         .init(
             title: title,
             taskDescription: taskDescription,
@@ -52,7 +52,7 @@ struct AppTask: Hashable, Identifiable {
         )
     }
 
-    func toggleCoreTaskTickArguments(with newTickState: Bool) -> CoreTask.Arguments {
+    func toggleCoreTaskTickArguments(with newTickState: Bool) -> TaskArguments {
         .init(
             title: title,
             taskDescription: taskDescription,

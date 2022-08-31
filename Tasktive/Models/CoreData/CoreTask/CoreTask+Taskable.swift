@@ -8,7 +8,7 @@
 import Foundation
 
 extension CoreTask: Taskable {
-    var source: TaskSource {
+    var source: DataSource {
         .coreData
     }
 }

@@ -16,10 +16,10 @@ protocol Taskable {
     var dueDate: Date { get set }
     var completionDate: Date? { get set }
     var creationDate: Date { get }
-    var source: TaskSource { get }
+    var source: DataSource { get }
 }
 
-enum TaskSource: CaseIterable {
+enum DataSource: CaseIterable {
     case coreData
 }
 

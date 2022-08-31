@@ -119,7 +119,7 @@ struct TasksScreen: View {
         }
     }
 
-    private func handleTaskEditedInDetailsSheet(_ arguments: CoreTask.Arguments?) {
+    private func handleTaskEditedInDetailsSheet(_ arguments: TaskArguments?) {
         guard let arguments = arguments, let task = viewModel.shownTaskDetails else {
             let message = "task or/and arguments are missing"
             let argumentsLog = "arguments='\(arguments as Any)'"
@@ -173,7 +173,8 @@ struct TasksScreen: View {
                 .createTask(with: .init(title: newTitle,
                                         taskDescription: nil,
                                         notes: nil,
-                                        dueDate: viewModel.currentDay))
+                                        dueDate: viewModel.currentDay),
+                            on: viewModel.currentSource)
             switch createTaskResult {
             case let .failure(failure):
                 popperUpManager.showPopup(style: failure.style, timeout: failure.timeout)
@@ -207,6 +208,8 @@ extension TasksScreen {
         }
 
         @Published var quickAddViewSize: CGSize = .zero
+        // - TODO: SAVE AND RETRIEVE THIS IN USERDEFAULTS
+        @Published var currentSource: DataSource = .coreData
 
         init() { }
 

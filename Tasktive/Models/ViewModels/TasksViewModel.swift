@@ -80,15 +80,18 @@ final class TasksViewModel: ObservableObject {
         return Double(tasksDone) / Double(tasks.count)
     }
 
-    // - TODO: MAKE USABLE FOR CLOUD
-    func createTask(with arguments: CoreTask.Arguments) async -> Result<Void, UserErrors> {
-        let result: Result<AppTask, UserErrors> = dataClient
-            .create(with: arguments, from: persistenceController.context, of: CoreTask.self)
-            .mapError {
-                logger.error(label: "failed to create this task", error: $0)
-                return UserErrors.createTaskFailure
-            }
-            .map(\.asAppTask)
+    func createTask(with arguments: TaskArguments, on source: DataSource) async -> Result<Void, UserErrors> {
+        let result: Result<AppTask, UserErrors>
+        switch source {
+        case .coreData:
+            result = dataClient
+                .create(with: arguments, from: persistenceController.context, of: CoreTask.self)
+                .mapError {
+                    logger.error(label: "failed to create this task", error: $0)
+                    return UserErrors.createTaskFailure
+                }
+                .map(\.asAppTask)
+        }
 
         let task: AppTask
         switch result {
@@ -111,20 +114,20 @@ final class TasksViewModel: ObservableObject {
         return .success(())
     }
 
-    func getTasks(from sources: [TaskSource] = TaskSource.allCases, for date: Date) async -> Result<Void, UserErrors> {
+    func getTasks(from sources: [DataSource] = DataSource.allCases, for date: Date) async -> Result<Void, UserErrors> {
         await getTasks(from: sources, for: date, updateNotCompletedTasks: false)
     }
 
-    func getTodaysTasks(from sources: [TaskSource] = TaskSource.allCases) async -> Result<Void, UserErrors> {
+    func getTodaysTasks(from sources: [DataSource] = DataSource.allCases) async -> Result<Void, UserErrors> {
         await getTasks(from: sources, for: Date(), updateNotCompletedTasks: true)
     }
 
-    func getAllTasks(from sources: [TaskSource] = TaskSource.allCases) async -> Result<Void, UserErrors> {
+    func getAllTasks(from sources: [DataSource] = DataSource.allCases) async -> Result<Void, UserErrors> {
         let predicate = NSPredicate(value: true)
         return await getTasksByPredicate(from: sources, by: predicate, updateNotCompletedTasks: true)
     }
 
-    func updateTask(_ task: AppTask, with arguments: CoreTask.Arguments) async -> Result<Void, UserErrors> {
+    func updateTask(_ task: AppTask, with arguments: TaskArguments) async -> Result<Void, UserErrors> {
         await withSettingTasks(completion: {
             guard task.coreTaskArguments != arguments else { return .success(()) }
 
@@ -178,7 +181,7 @@ final class TasksViewModel: ObservableObject {
         })
     }
 
-    private func getTasks(from sources: [TaskSource], for date: Date,
+    private func getTasks(from sources: [DataSource], for date: Date,
                           updateNotCompletedTasks: Bool) async -> Result<Void, UserErrors> {
         let startDate = getHashDate(from: date)
         let endDate = getHashDate(from: startDate.incrementByDays(1)).incrementBySeconds(-1)
@@ -187,7 +190,7 @@ final class TasksViewModel: ObservableObject {
         return await getTasksByPredicate(from: sources, by: predicate, updateNotCompletedTasks: updateNotCompletedTasks)
     }
 
-    private func getTasksByPredicate(from sources: [TaskSource],
+    private func getTasksByPredicate(from sources: [DataSource],
                                      by predicate: NSPredicate,
                                      updateNotCompletedTasks: Bool) async -> Result<Void, UserErrors> {
         await withLoadingTasks {
@@ -218,7 +221,7 @@ final class TasksViewModel: ObservableObject {
         }
     }
 
-    private func getFilteredTasks(from source: TaskSource,
+    private func getFilteredTasks(from source: DataSource,
                                   by predicate: NSPredicate) -> Result<[AppTask], TasksViewModel.UserErrors> {
         switch source {
         case .coreData:
@@ -234,7 +237,7 @@ final class TasksViewModel: ObservableObject {
         }
     }
 
-    private func validateTaskArguments(_ arguments: CoreTask.Arguments) -> Result<Void, UserErrors> {
+    private func validateTaskArguments(_ arguments: TaskArguments) -> Result<Void, UserErrors> {
         guard !arguments.title.trimmingByWhitespacesAndNewLines.isEmpty else { return .failure(.invalidTitle) }
 
         return .success(())
