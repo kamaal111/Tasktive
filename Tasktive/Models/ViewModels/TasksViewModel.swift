@@ -252,51 +252,59 @@ final class TasksViewModel: ObservableObject {
     private func updateDueDateOfTasksIfNeeded(_ tasks: [AppTask], enabled: Bool) -> [AppTask] {
         guard enabled else { return tasks }
 
-        let today = getHashDate(from: Date()).asNSDate
-        let tasksIDs = tasks.map(\.id.nsString)
-
         let now = Date()
+        let today = getHashDate(from: now).asNSDate
 
-        let predicate = NSPredicate(format: "(dueDate < %@) AND ticked == NO AND NOT(id in %@) ", today, tasksIDs)
-        // - TODO: MAKE USABLE FOR CLOUD
-        let tasksResult = dataClient.filter(by: predicate, from: persistenceController.context, of: CoreTask.self)
-            .map { tasks in
-                tasks
-                    .map { task -> AppTask in
-                        var mutableTask = task.asAppTask
-                        mutableTask.dueDate = now
-                        return mutableTask
-                    }
+        var outdatedTasksBySource: [DataSource: [AppTask]] = [:]
+
+        let tasksBySource = Dictionary(grouping: tasks, by: \.source)
+        for (source, tasks) in tasksBySource {
+            let tasksIDs = tasks.map(\.id.nsString)
+            let predicate = NSPredicate(format: "(dueDate < %@) AND ticked == NO AND NOT(id in %@) ", today, tasksIDs)
+
+            let outdatedTasks: [AppTask]
+            switch source {
+            case .coreData:
+                let filteredTasks = try? dataClient.filter(
+                    by: predicate,
+                    from: persistenceController.context,
+                    of: CoreTask.self
+                )
+                .map { tasks in
+                    tasks
+                        .map { task -> AppTask in
+                            var mutableTask = task.asAppTask
+                            mutableTask.dueDate = now
+                            return mutableTask
+                        }
+                }
+                .get()
+                outdatedTasks = filteredTasks ?? []
             }
-
-        let outdatedTasks: [AppTask]
-        switch tasksResult {
-        case let .failure(failure):
-            logger.error(label: "failed to get updated outdated tasks", error: failure)
-            return tasks
-        case let .success(success):
-            outdatedTasks = success
+            outdatedTasksBySource[source] = outdatedTasks
         }
 
-        guard !outdatedTasks.isEmpty else { return tasks }
-
-        logger.info("updating tasks with ids of '\(outdatedTasks.map(\.id))'")
-
-        // - TODO: MAKE USABLE FOR CLOUD
-        let updateResult = dataClient.updateManyTaskDates(
-            by: outdatedTasks.map(\.id),
-            date: now,
-            context: persistenceController.context
-        )
-        switch updateResult {
-        case let .failure(failure):
-            logger.error(label: "failed to updated outdated tasks", error: failure)
-            return tasks
-        case .success:
-            break
+        for source in DataSource.allCases {
+            switch source {
+            case .coreData:
+                if let outdatedTasks = outdatedTasksBySource[.coreData] {
+                    let updateResult = dataClient.updateManyTaskDates(
+                        by: outdatedTasks.map(\.id),
+                        date: now,
+                        context: persistenceController.context
+                    )
+                    switch updateResult {
+                    case let .failure(failure):
+                        logger.error(label: "failed to updated outdated tasks", error: failure)
+                        return tasks
+                    case .success:
+                        break
+                    }
+                }
+            }
         }
 
-        return tasks + outdatedTasks
+        return tasks + outdatedTasksBySource.flatMap(\.value)
     }
 
     private func withLoadingTasks<T>(completion: () async -> T) async -> T {
