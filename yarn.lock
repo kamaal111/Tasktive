@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@kamaal111/localize@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@kamaal111/localize/-/localize-0.1.0.tgz#e84d6ee25c7c5f9e29817b8cf1f0ffd46fbf097c"
+  integrity sha512-KBtYbBFFKK6IkkyaCAFDgOaeCAX+cR/qmTZndk2d5aC1Ju2nyE2Qd29dx1G66odmFDQFx4OPlOeOUgDSQjiF5A==
+
 git-format-staged@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/git-format-staged/-/git-format-staged-3.0.0.tgz#66fe89fcb537f78e8129412dc0b2511b34d49e32"

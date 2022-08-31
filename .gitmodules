@@ -1,6 +1,3 @@
-[submodule "Scripts/GenerateLocales/Localize.js"]
-	path = Scripts/GenerateLocales/Localize.js
-	url = git@github.com:kamaal111/Localize.js.git
 [submodule "app-icon-generator"]
 	path = Scripts/app-icon-generator
 	url = git@github.com:kamaal111/app-icon-generator.git

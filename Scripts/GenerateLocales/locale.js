@@ -1,4 +1,4 @@
-const Localize = require('./Localize.js/Localize');
+const Localize = require('@kamaal111/localize');
 const en = require('../../Locales/en');
 
 const DEFAULT_LOCALE = 'en';
