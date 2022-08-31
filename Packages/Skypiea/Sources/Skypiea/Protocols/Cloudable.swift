@@ -39,9 +39,19 @@ extension Cloudable {
 
     /// Fetch all of the given record.
     /// - Parameter context: the context to use for iCloud operations.
-    /// - Returns: An array of the fetched objects.
-    public static func fetchAll(from context: Skypiea) async throws -> [Object] {
-        try await context.fetchAll(ofType: recordType)
+    /// - Returns: an array of the fetched objects.
+    public static func list(from context: Skypiea) async throws -> [Object] {
+        try await context.list(ofType: recordType)
+            .compactMap(fromRecord(_:))
+    }
+
+    /// Fetch with query of the given record.
+    /// - Parameters:
+    ///   - context: the context to use for iCloud operations.
+    ///   - predicate: query.
+    /// - Returns: an array of the fetched objects.
+    public static func filter(by predicate: NSPredicate, from context: Skypiea) async throws -> [Object] {
+        try await context.filter(ofType: recordType, by: predicate)
             .compactMap(fromRecord(_:))
     }
 }

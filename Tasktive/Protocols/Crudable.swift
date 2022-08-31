@@ -14,17 +14,17 @@ protocol Crudable {
 
     var asAppTask: AppTask { get }
 
-    func update(with arguments: TaskArguments) -> Result<ReturnType, CrudErrors>
-    func delete() -> Result<Void, CrudErrors>
+    func update(with arguments: TaskArguments) async -> Result<ReturnType, CrudErrors>
+    func delete() async -> Result<Void, CrudErrors>
 
-    static func create(with arguments: TaskArguments, from context: Context) -> Result<ReturnType, CrudErrors>
-    static func list(from context: Context) -> Result<[ReturnType], CrudErrors>
+    static func create(with arguments: TaskArguments, from context: Context) async -> Result<ReturnType, CrudErrors>
+    static func list(from context: Context) async -> Result<[ReturnType], CrudErrors>
     static func filter(
         by predicate: NSPredicate,
         limit: Int?,
         from context: Context
-    ) -> Result<[ReturnType], CrudErrors>
-    static func filter(by predicate: NSPredicate, from context: Context) -> Result<[ReturnType], CrudErrors>
+    ) async -> Result<[ReturnType], CrudErrors>
+    static func filter(by predicate: NSPredicate, from context: Context) async -> Result<[ReturnType], CrudErrors>
 }
 
 struct TaskArguments: Equatable {

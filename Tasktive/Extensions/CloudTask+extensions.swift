@@ -15,31 +15,44 @@ extension CloudTask: Taskable {
 }
 
 extension CloudTask: Crudable {
-    static func create(with _: TaskArguments, from _: Skypiea) -> Result<CloudTask, CrudErrors> {
+    static func create(with _: TaskArguments, from _: Skypiea) async -> Result<CloudTask, CrudErrors> {
         .failure(.generalFailure(message: "oops"))
     }
 
-    func update(with _: TaskArguments) -> Result<CloudTask, CrudErrors> {
+    func update(with _: TaskArguments) async -> Result<CloudTask, CrudErrors> {
         .failure(.generalFailure(message: "oops"))
     }
 
-    func delete() -> Result<Void, CrudErrors> {
+    func delete() async -> Result<Void, CrudErrors> {
         .failure(.generalFailure(message: "oops"))
     }
 
-    static func list(from _: Skypiea) -> Result<[CloudTask], CrudErrors> {
-        .failure(.generalFailure(message: "oops"))
+    static func list(from context: Skypiea) async -> Result<[CloudTask], CrudErrors> {
+        let tasks: [CloudTask]
+        do {
+            tasks = try await CloudTask.list(from: context)
+        } catch {
+            return .failure(.fetchFailure)
+        }
+        return .success(tasks)
     }
 
-    static func filter(by _: NSPredicate, limit _: Int?, from _: Skypiea) -> Result<[CloudTask], CrudErrors> {
-        .failure(.generalFailure(message: "oops"))
+    static func filter(by predicate: NSPredicate, limit _: Int?,
+                       from context: Skypiea) async -> Result<[CloudTask], CrudErrors> {
+        await filter(by: predicate, from: context)
     }
 
-    static func filter(by _: NSPredicate, from _: Skypiea) -> Result<[CloudTask], CrudErrors> {
-        .failure(.generalFailure(message: "oops"))
+    static func filter(by predicate: NSPredicate, from context: Skypiea) async -> Result<[CloudTask], CrudErrors> {
+        let tasks: [CloudTask]
+        do {
+            tasks = try await CloudTask.filter(by: predicate, from: context)
+        } catch {
+            return .failure(.fetchFailure)
+        }
+        return .success(tasks)
     }
 
-    static func updateManyDates(by _: [UUID], date _: Date, on _: Skypiea) -> Result<Void, CrudErrors> {
+    static func updateManyDates(by _: [UUID], date _: Date, on _: Skypiea) async -> Result<Void, CrudErrors> {
         .failure(.generalFailure(message: "oops"))
     }
 

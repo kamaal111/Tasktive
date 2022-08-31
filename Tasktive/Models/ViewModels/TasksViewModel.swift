@@ -91,14 +91,14 @@ final class TasksViewModel: ObservableObject {
         let result: Result<AppTask, UserErrors>
         switch source {
         case .coreData:
-            result = tasksClient
+            result = await tasksClient
                 .create(with: arguments, from: persistenceController.context, of: CoreTask.self)
                 .mapError {
                     logger.error(label: "failed to create this task", error: $0)
                     return UserErrors.createTaskFailure
                 }
         case .iCloud:
-            result = tasksClient
+            result = await tasksClient
                 .create(with: arguments, from: skypiea, of: CloudTask.self)
                 .mapError {
                     logger.error(label: "failed to create this task", error: $0)
@@ -160,7 +160,7 @@ final class TasksViewModel: ObservableObject {
             let result: Result<AppTask, UserErrors>
             switch task.source {
             case .coreData:
-                result = tasksClient.update(
+                result = await tasksClient.update(
                     by: task.id,
                     with: arguments,
                     from: persistenceController.context,
@@ -183,7 +183,7 @@ final class TasksViewModel: ObservableObject {
                     return UserErrors.updateFailure
                 }
             case .iCloud:
-                result = tasksClient.update(
+                result = await tasksClient.update(
                     by: task.id,
                     with: arguments,
                     from: skypiea,
@@ -240,7 +240,7 @@ final class TasksViewModel: ObservableObject {
             var appTasks: [AppTask] = []
 
             for source in sources {
-                let tasksResult = getFilteredTasks(from: source, by: predicate)
+                let tasksResult = await getFilteredTasks(from: source, by: predicate)
 
                 switch tasksResult {
                 case let .failure(failure):
@@ -250,7 +250,7 @@ final class TasksViewModel: ObservableObject {
                 }
             }
 
-            let maybeUpdatedTasks = updateDueDateOfTasksIfNeeded(appTasks, enabled: updateNotCompletedTasks)
+            let maybeUpdatedTasks = await updateDueDateOfTasksIfNeeded(appTasks, enabled: updateNotCompletedTasks)
             let groupedTasks = Dictionary(grouping: maybeUpdatedTasks, by: {
                 getHashDate(from: $0.dueDate)
             })
@@ -265,17 +265,17 @@ final class TasksViewModel: ObservableObject {
     }
 
     private func getFilteredTasks(from source: DataSource,
-                                  by predicate: NSPredicate) -> Result<[AppTask], TasksViewModel.UserErrors> {
+                                  by predicate: NSPredicate) async -> Result<[AppTask], TasksViewModel.UserErrors> {
         switch source {
         case .coreData:
-            return tasksClient
+            return await tasksClient
                 .filter(by: predicate, from: persistenceController.context, of: CoreTask.self)
                 .mapError {
                     logger.error(label: "failed to get all tasks", error: $0)
                     return UserErrors.getAllFailure
                 }
         case .iCloud:
-            return tasksClient
+            return await tasksClient
                 .filter(by: predicate, from: skypiea, of: CloudTask.self)
                 .mapError {
                     logger.error(label: "failed to get all tasks", error: $0)
@@ -290,7 +290,7 @@ final class TasksViewModel: ObservableObject {
         return .success(())
     }
 
-    private func updateDueDateOfTasksIfNeeded(_ tasks: [AppTask], enabled: Bool) -> [AppTask] {
+    private func updateDueDateOfTasksIfNeeded(_ tasks: [AppTask], enabled: Bool) async -> [AppTask] {
         guard enabled else { return tasks }
 
         let now = Date()
@@ -306,14 +306,14 @@ final class TasksViewModel: ObservableObject {
             let outdatedTasks: [AppTask]?
             switch source {
             case .coreData:
-                outdatedTasks = try? tasksClient.filter(
+                outdatedTasks = try? await tasksClient.filter(
                     by: predicate,
                     from: persistenceController.context,
                     of: CoreTask.self
                 )
                 .get()
             case .iCloud:
-                outdatedTasks = try? tasksClient.filter(
+                outdatedTasks = try? await tasksClient.filter(
                     by: predicate,
                     from: skypiea,
                     of: CloudTask.self
@@ -348,7 +348,7 @@ final class TasksViewModel: ObservableObject {
                 }
             case .iCloud:
                 if let outdatedTasks = outdatedTasksBySource[source] {
-                    let updateResult = CloudTask.updateManyDates(
+                    let updateResult = await CloudTask.updateManyDates(
                         by: outdatedTasks.map(\.id),
                         date: now,
                         on: skypiea

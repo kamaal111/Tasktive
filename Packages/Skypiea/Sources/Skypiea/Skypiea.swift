@@ -20,20 +20,25 @@ public struct Skypiea {
         self.preview = preview
     }
 
-    /// Fetch all of the given record
+    /// Fetch all of the given record.
     /// - Parameter objectType: `CloudKit` object
     /// - Returns: an array of records
-    func fetchAll(ofType objectType: String) async throws -> [CKRecord] {
+    func list(ofType objectType: String) async throws -> [CKRecord] {
+        guard !preview else {
+            /// - TODO: SOME PREVIEW DATA
+            return []
+        }
+
         let predicate = NSPredicate(value: true)
-        return try await fetch(ofType: objectType, withPredicate: predicate)
+        return try await filter(ofType: objectType, by: predicate)
     }
 
-    /// Fetch with predicate
+    /// Fetch with query.
     /// - Parameters:
-    ///   - objectType: `CloudKit` object
-    ///   - predicate: query
+    ///   - objectType: `CloudKit` object.
+    ///   - predicate: query.
     /// - Returns: an array of records
-    func fetch(ofType objectType: String, withPredicate predicate: NSPredicate) async throws -> [CKRecord] {
+    func filter(ofType objectType: String, by predicate: NSPredicate) async throws -> [CKRecord] {
         guard !preview else {
             /// - TODO: SOME PREVIEW DATA
             return []

@@ -11,8 +11,8 @@ import Foundation
 struct TasksClient {
     init() { }
 
-    func list<T: Crudable>(from context: T.Context, of type: T.Type) -> Result<[AppTask], T.CrudErrors> {
-        type.list(from: context)
+    func list<T: Crudable>(from context: T.Context, of type: T.Type) async -> Result<[AppTask], T.CrudErrors> {
+        await type.list(from: context)
             .map {
                 $0.map(\.asAppTask)
             }
@@ -21,8 +21,8 @@ struct TasksClient {
     func filter<T: Crudable>(by predicate: NSPredicate,
                              limit: Int? = nil,
                              from context: T.Context,
-                             of type: T.Type) -> Result<[AppTask], T.CrudErrors> {
-        type.filter(by: predicate, limit: limit, from: context)
+                             of type: T.Type) async -> Result<[AppTask], T.CrudErrors> {
+        await type.filter(by: predicate, limit: limit, from: context)
             .map {
                 $0.map(\.asAppTask)
             }
@@ -30,24 +30,24 @@ struct TasksClient {
 
     func find<T: Crudable>(by predicate: NSPredicate,
                            from context: T.Context,
-                           of type: T.Type) -> Result<AppTask?, T.CrudErrors> {
-        filter(by: predicate, limit: 1, from: context, of: type)
+                           of type: T.Type) async -> Result<AppTask?, T.CrudErrors> {
+        await filter(by: predicate, limit: 1, from: context, of: type)
             .map(\.first)
     }
 
     func create<T: Crudable>(with arguments: TaskArguments,
                              from context: T.Context,
-                             of type: T.Type) -> Result<AppTask, T.CrudErrors> {
-        type.create(with: arguments, from: context)
+                             of type: T.Type) async -> Result<AppTask, T.CrudErrors> {
+        await type.create(with: arguments, from: context)
             .map(\.asAppTask)
     }
 
     func update<T: Crudable>(by id: UUID,
                              with arguments: TaskArguments,
                              from context: T.Context,
-                             of type: T.Type) -> Result<AppTask, UpdateErrors> {
+                             of type: T.Type) async -> Result<AppTask, UpdateErrors> {
         let predicate = NSPredicate(format: "id == %@", id.nsString)
-        let result = type.filter(by: predicate, from: context)
+        let result = await type.filter(by: predicate, from: context)
             .map(\.first)
             .mapError { UpdateErrors.crud(error: $0) }
         let item: T.ReturnType?
@@ -60,7 +60,7 @@ struct TasksClient {
 
         guard let item = item else { return .failure(.notFound) }
 
-        return item.update(with: arguments)
+        return await item.update(with: arguments)
             .map(\.asAppTask)
             .mapError { UpdateErrors.crud(error: $0) }
     }
