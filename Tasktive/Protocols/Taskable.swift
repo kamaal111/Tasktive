@@ -19,7 +19,7 @@ protocol Taskable {
     var source: DataSource { get }
 }
 
-enum DataSource: CaseIterable {
+enum DataSource: Codable, CaseIterable {
     case coreData
 }
 

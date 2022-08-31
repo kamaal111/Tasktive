@@ -1,5 +1,5 @@
 //
-//  QuickAddTaskField.swift
+//  QuickAddSection.swift
 //  Tasktive
 //
 //  Created by Kamaal Farah on 20/07/2022.
@@ -9,7 +9,7 @@ import SwiftUI
 import SalmonUI
 import TasktiveLocale
 
-struct QuickAddTaskField: View {
+struct QuickAddSection: View {
     @Binding var title: String
     let disableSubmit: Bool
     let submit: () -> Void
@@ -35,8 +35,8 @@ struct QuickAddTaskField: View {
     }
 }
 
-struct QuickAddTaskField_Previews: PreviewProvider {
+struct QuickAddSection_Previews: PreviewProvider {
     static var previews: some View {
-        QuickAddTaskField(title: .constant("New"), disableSubmit: false, submit: { })
+        QuickAddSection(title: .constant("New"), disableSubmit: false, submit: { })
     }
 }

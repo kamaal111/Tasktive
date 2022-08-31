@@ -86,7 +86,7 @@ struct TasksScreen: View {
             }
             .padding(.bottom, viewModel.quickAddViewSize.height)
             .ktakeSizeEagerly(alignment: .topLeading)
-            QuickAddTaskField(
+            QuickAddSection(
                 title: $viewModel.newTitle,
                 disableSubmit: viewModel.disableNewTaskSubmitButton,
                 submit: onNewTaskSubmit
@@ -208,8 +208,9 @@ extension TasksScreen {
         }
 
         @Published var quickAddViewSize: CGSize = .zero
-        // - TODO: SAVE AND RETRIEVE THIS IN USERDEFAULTS
-        @Published var currentSource: DataSource = .coreData
+        @Published var currentSource = UserDefaults.lastChosenDataSource ?? .coreData {
+            didSet { currentSourceDidSet() }
+        }
 
         init() { }
 
@@ -267,6 +268,10 @@ extension TasksScreen {
 
         private var invalidTitle: Bool {
             newTitle.trimmingByWhitespacesAndNewLines.isEmpty
+        }
+
+        private func currentSourceDidSet() {
+            UserDefaults.lastChosenDataSource = currentSource
         }
 
         private func incrementDay(of date: Date, by increment: Int) -> Date {

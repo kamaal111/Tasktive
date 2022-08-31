@@ -18,7 +18,7 @@
 		2C1B19672888675D00D734D2 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B19662888675D00D734D2 /* MainView.swift */; };
 		2C1B196A2888689700D734D2 /* PopperUp in Frameworks */ = {isa = PBXBuildFile; productRef = 2C1B19692888689700D734D2 /* PopperUp */; };
 		2C1B196C28886CFB00D734D2 /* PopUpError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B196B28886CFB00D734D2 /* PopUpError.swift */; };
-		2C1B1985288874C100D734D2 /* QuickAddTaskField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B1984288874C100D734D2 /* QuickAddTaskField.swift */; };
+		2C1B1985288874C100D734D2 /* QuickAddSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B1984288874C100D734D2 /* QuickAddSection.swift */; };
 		2C39A919288359A1008BAFD2 /* TasktiveLocale in Frameworks */ = {isa = PBXBuildFile; productRef = 2C39A918288359A1008BAFD2 /* TasktiveLocale */; };
 		2C3B27C6288C77F7007CE538 /* DateControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B27C5288C77F7007CE538 /* DateControlView.swift */; };
 		2C3B27C9288CA274007CE538 /* TaskDetailsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B27C8288CA274007CE538 /* TaskDetailsSheet.swift */; };
@@ -83,7 +83,7 @@
 		2C69A07A28B19BC600D5006D /* CoreTag+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDC17FE28A0321B00F07CF0 /* CoreTag+CoreDataClass.swift */; };
 		2C69A07B28B19BC600D5006D /* Text+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47E3F12883688F00FD4469 /* Text+extensions.swift */; };
 		2C69A07C28B19BC600D5006D /* View+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF24AA928842B5B00778BD9 /* View+extensions.swift */; };
-		2C69A07D28B19BC600D5006D /* QuickAddTaskField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B1984288874C100D734D2 /* QuickAddTaskField.swift */; };
+		2C69A07D28B19BC600D5006D /* QuickAddSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B1984288874C100D734D2 /* QuickAddSection.swift */; };
 		2C69A07E28B19BC600D5006D /* DeviceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47E3FA28836A6A00FD4469 /* DeviceModel.swift */; };
 		2C69A07F28B19BC600D5006D /* AppLogoColorSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B060828B10A48001E8441 /* AppLogoColorSelector.swift */; };
 		2C69A08028B19BC600D5006D /* CoreReminder+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDC17FB28A031AF00F07CF0 /* CoreReminder+CoreDataProperties.swift */; };
@@ -186,7 +186,7 @@
 		2C98E40028B12E170048149F /* CoreTag+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDC17FE28A0321B00F07CF0 /* CoreTag+CoreDataClass.swift */; };
 		2C98E40128B12E170048149F /* Text+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47E3F12883688F00FD4469 /* Text+extensions.swift */; };
 		2C98E40228B12E170048149F /* View+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF24AA928842B5B00778BD9 /* View+extensions.swift */; };
-		2C98E40328B12E170048149F /* QuickAddTaskField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B1984288874C100D734D2 /* QuickAddTaskField.swift */; };
+		2C98E40328B12E170048149F /* QuickAddSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B1984288874C100D734D2 /* QuickAddSection.swift */; };
 		2C98E40428B12E170048149F /* DeviceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47E3FA28836A6A00FD4469 /* DeviceModel.swift */; };
 		2C98E40528B12E170048149F /* AppLogoColorSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B060828B10A48001E8441 /* AppLogoColorSelector.swift */; };
 		2C98E40628B12E170048149F /* CoreReminder+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDC17FB28A031AF00F07CF0 /* CoreReminder+CoreDataProperties.swift */; };
@@ -330,7 +330,7 @@
 		2C1B060828B10A48001E8441 /* AppLogoColorSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogoColorSelector.swift; sourceTree = "<group>"; };
 		2C1B19662888675D00D734D2 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		2C1B196B28886CFB00D734D2 /* PopUpError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpError.swift; sourceTree = "<group>"; };
-		2C1B1984288874C100D734D2 /* QuickAddTaskField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAddTaskField.swift; sourceTree = "<group>"; };
+		2C1B1984288874C100D734D2 /* QuickAddSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAddSection.swift; sourceTree = "<group>"; };
 		2C39A91728835847008BAFD2 /* TasktiveLocale */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = TasktiveLocale; sourceTree = "<group>"; };
 		2C39A91C28835ADF008BAFD2 /* run.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = run.sh; sourceTree = "<group>"; };
 		2C3B27C5288C77F7007CE538 /* DateControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateControlView.swift; sourceTree = "<group>"; };
@@ -692,7 +692,7 @@
 				2C1505E8288C26170040943A /* DayNumbersRowItem.swift */,
 				2C47E405288371A300FD4469 /* DetailsColumn.swift */,
 				2C750F67288C31CF00026D67 /* ProgressSection.swift */,
-				2C1B1984288874C100D734D2 /* QuickAddTaskField.swift */,
+				2C1B1984288874C100D734D2 /* QuickAddSection.swift */,
 				2C5AB1B8288D7C870069911C /* ScreenWrapper.swift */,
 				2C47E4032883719000FD4469 /* Sidebar.swift */,
 				2C69A04628B18CA200D5006D /* SplashScreenStack.swift */,
@@ -1349,7 +1349,7 @@
 				2C69A07A28B19BC600D5006D /* CoreTag+CoreDataClass.swift in Sources */,
 				2C69A07B28B19BC600D5006D /* Text+extensions.swift in Sources */,
 				2C69A07C28B19BC600D5006D /* View+extensions.swift in Sources */,
-				2C69A07D28B19BC600D5006D /* QuickAddTaskField.swift in Sources */,
+				2C69A07D28B19BC600D5006D /* QuickAddSection.swift in Sources */,
 				2C69A07E28B19BC600D5006D /* DeviceModel.swift in Sources */,
 				2C9435E728B28C8A00281AF7 /* CloudKitDataViewerScreen.swift in Sources */,
 				2C69A07F28B19BC600D5006D /* AppLogoColorSelector.swift in Sources */,
@@ -1439,7 +1439,7 @@
 				2C98E40028B12E170048149F /* CoreTag+CoreDataClass.swift in Sources */,
 				2C98E40128B12E170048149F /* Text+extensions.swift in Sources */,
 				2C98E40228B12E170048149F /* View+extensions.swift in Sources */,
-				2C98E40328B12E170048149F /* QuickAddTaskField.swift in Sources */,
+				2C98E40328B12E170048149F /* QuickAddSection.swift in Sources */,
 				2C98E40428B12E170048149F /* DeviceModel.swift in Sources */,
 				2C9435E828B28C8A00281AF7 /* CloudKitDataViewerScreen.swift in Sources */,
 				2C98E40528B12E170048149F /* AppLogoColorSelector.swift in Sources */,
@@ -1530,7 +1530,7 @@
 				2CDC180028A0321B00F07CF0 /* CoreTag+CoreDataClass.swift in Sources */,
 				2C47E3F22883688F00FD4469 /* Text+extensions.swift in Sources */,
 				2CF24AAA28842B5B00778BD9 /* View+extensions.swift in Sources */,
-				2C1B1985288874C100D734D2 /* QuickAddTaskField.swift in Sources */,
+				2C1B1985288874C100D734D2 /* QuickAddSection.swift in Sources */,
 				2C47E3FB28836A6A00FD4469 /* DeviceModel.swift in Sources */,
 				2C9435E628B28C8A00281AF7 /* CloudKitDataViewerScreen.swift in Sources */,
 				2C1B060928B10A48001E8441 /* AppLogoColorSelector.swift in Sources */,
