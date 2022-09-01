@@ -8,9 +8,24 @@
 import Skypiea
 import Foundation
 
+private let logger = Logster(from: CoreTask.self)
+
 extension CloudTask: Taskable {
     var source: DataSource {
         .iCloud
+    }
+
+    var asAppTask: AppTask {
+        .init(
+            id: id,
+            title: title,
+            ticked: ticked,
+            dueDate: dueDate,
+            completionDate: completionDate,
+            creationDate: creationDate,
+            source: source,
+            record: record
+        )
     }
 }
 
@@ -77,9 +92,15 @@ extension CloudTask: Crudable {
         return .success(tasks)
     }
 
-    static func updateManyDates(by _: [UUID], date _: Date, on _: Skypiea) async -> Result<Void, CrudErrors> {
-//        .failure(.generalFailure(message: "oops"))
-        .success(())
+    static func updateManyDates(_ tasks: [AppTask], date: Date, on context: Skypiea) async -> Result<Void, CrudErrors> {
+        do {
+            _ = try await CloudTask.updateMany(tasks.map { $0.cloudTaskWithUpdatedDueDate(date) }, on: context)
+        } catch {
+            logger.error(label: "error while deleting tasks", error: error)
+            return .failure(.updateManyFailure)
+        }
+
+        return .success(())
     }
 
     enum CrudErrors: Error {
@@ -89,6 +110,23 @@ extension CloudTask: Crudable {
         case updateFailure
         case deleteFailure
         case generalFailure(message: String)
+    }
+}
+
+extension AppTask {
+    fileprivate func cloudTaskWithUpdatedDueDate(_ date: Date) -> CloudTask {
+        CloudTask(
+            id: id,
+            creationDate: creationDate,
+            updateDate: Date(),
+            completionDate: completionDate,
+            dueDate: date,
+            notes: notes,
+            taskDescription: taskDescription,
+            ticked: ticked,
+            title: title,
+            record: record
+        )
     }
 }
 

@@ -337,7 +337,7 @@ final class TasksViewModel: ObservableObject {
             case .coreData:
                 if let outdatedTasks = outdatedTasksBySource[source] {
                     let updateResult = CoreTask.updateManyDates(
-                        by: outdatedTasks.map(\.id),
+                        outdatedTasks,
                         date: now,
                         on: persistenceController.context
                     )
@@ -352,7 +352,7 @@ final class TasksViewModel: ObservableObject {
             case .iCloud:
                 if let outdatedTasks = outdatedTasksBySource[source] {
                     let updateResult = await CloudTask.updateManyDates(
-                        by: outdatedTasks.map(\.id),
+                        outdatedTasks,
                         date: now,
                         on: skypiea
                     )

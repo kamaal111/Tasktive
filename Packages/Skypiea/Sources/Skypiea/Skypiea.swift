@@ -56,6 +56,15 @@ public struct Skypiea {
         return try await iCloutKit.save(record)
     }
 
+    /// Save many records in batch.
+    /// - Parameter records: the records to save.
+    /// - Returns: the updated records.
+    func saveMany(_ records: [CKRecord]) async throws -> [CKRecord] {
+        guard !preview else { return records }
+
+        return try await iCloutKit.saveMultiple(records)
+    }
+
     /// Deletes the given record.
     /// - Parameter record: the record to delete
     func delete(_ record: CKRecord) async throws {

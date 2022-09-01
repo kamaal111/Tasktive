@@ -5,6 +5,7 @@
 //  Created by Kamaal M Farah on 17/07/2022.
 //
 
+import CloudKit
 import Foundation
 
 struct AppTask: Hashable, Identifiable {
@@ -17,6 +18,7 @@ struct AppTask: Hashable, Identifiable {
     var completionDate: Date?
     let creationDate: Date
     let source: DataSource
+    var record: CKRecord?
 
     init(
         id: UUID,
@@ -27,7 +29,8 @@ struct AppTask: Hashable, Identifiable {
         dueDate: Date,
         completionDate: Date?,
         creationDate: Date,
-        source: DataSource
+        source: DataSource,
+        record: CKRecord? = nil
     ) {
         self.id = id
         self.title = title
@@ -38,6 +41,7 @@ struct AppTask: Hashable, Identifiable {
         self.completionDate = completionDate
         self.creationDate = creationDate
         self.source = source
+        self.record = record
     }
 
     var coreTaskArguments: TaskArguments {

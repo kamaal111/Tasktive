@@ -68,6 +68,16 @@ extension Cloudable {
         try await context.delete(record)
     }
 
+    /// Update many records in batch.
+    /// - Parameters:
+    ///   - objects: the objects to update.
+    ///   - context: the context to use for iCloud operations.
+    /// - Returns: the updated objects.
+    public static func updateMany(_ objects: [Object], on context: Skypiea) async throws -> [Object] {
+        try await context.saveMany(objects.map(\.record))
+            .compactMap(fromRecord(_:))
+    }
+
     private static func save(_ object: Object, on context: Skypiea) async throws -> Object? {
         guard let savedRecord = try await context.save(object.record) else { return nil }
 
