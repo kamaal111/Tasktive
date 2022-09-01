@@ -15,8 +15,30 @@ extension CloudTask: Taskable {
 }
 
 extension CloudTask: Crudable {
-    static func create(with _: TaskArguments, from _: Skypiea) async -> Result<CloudTask, CrudErrors> {
-        .failure(.generalFailure(message: "oops"))
+    static func create(with arguments: TaskArguments, from context: Skypiea) async -> Result<CloudTask, CrudErrors> {
+        let now = Date()
+        let object = CloudTask(
+            id: arguments.id ?? UUID(),
+            creationDate: now,
+            updateDate: now,
+            completionDate: arguments.completionDate,
+            dueDate: arguments.dueDate,
+            notes: arguments.notes,
+            taskDescription: arguments.taskDescription,
+            ticked: arguments.ticked,
+            title: arguments.title
+        )
+
+        let createdTask: CloudTask?
+        do {
+            createdTask = try await CloudTask.create(object, on: context)
+        } catch {
+            return .failure(.saveFailure)
+        }
+
+        guard let createdTask = createdTask else { return .failure(.saveFailure) }
+
+        return .success(createdTask)
     }
 
     func update(with _: TaskArguments) async -> Result<CloudTask, CrudErrors> {
