@@ -12,20 +12,11 @@ import ShrimpExtensions
 private let logger = Logster(from: CoreTask.self)
 
 extension CoreTask: Crudable {
-    typealias ReturnType = CoreTask
-    typealias Context = NSManagedObjectContext
-
     var arguments: TaskArguments {
         .init(title: title, taskDescription: taskDescription, notes: notes, dueDate: dueDate, ticked: ticked)
     }
 
-    func update(with arguments: TaskArguments) -> Result<CoreTask, CrudErrors> {
-        guard let context = managedObjectContext else {
-            let message = "Context missing"
-            logger.warning(message)
-            return .failure(.generalFailure(message: message))
-        }
-
+    func update(with arguments: TaskArguments, on context: NSManagedObjectContext) -> Result<CoreTask, CrudErrors> {
         let updatedTask = updateValues(with: arguments)
 
         return CoreTask.save(from: context)

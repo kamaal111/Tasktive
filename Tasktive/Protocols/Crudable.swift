@@ -14,7 +14,7 @@ protocol Crudable {
 
     var asAppTask: AppTask { get }
 
-    func update(with arguments: TaskArguments) async -> Result<ReturnType, CrudErrors>
+    func update(with arguments: TaskArguments, on context: Context) async -> Result<ReturnType, CrudErrors>
     func delete() async -> Result<Void, CrudErrors>
 
     static func create(with arguments: TaskArguments, from context: Context) async -> Result<ReturnType, CrudErrors>

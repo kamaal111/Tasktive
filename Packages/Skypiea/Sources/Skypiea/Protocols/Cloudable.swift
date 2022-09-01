@@ -32,9 +32,7 @@ extension Cloudable {
     ///   - context: the context to use for iCloud operations.
     /// - Returns: the saved object when it succeeds.
     public static func create(_ object: Object, on context: Skypiea) async throws -> Object? {
-        guard let savedRecord = try await context.save(object.record) else { return nil }
-
-        return fromRecord(savedRecord)
+        try await save(object, on: context)
     }
 
     /// Fetch all of the given record.
@@ -53,5 +51,20 @@ extension Cloudable {
     public static func filter(by predicate: NSPredicate, from context: Skypiea) async throws -> [Object] {
         try await context.filter(ofType: recordType, by: predicate)
             .compactMap(fromRecord(_:))
+    }
+
+    /// Update a currently existing record.
+    /// - Parameters:
+    ///   - object: the object to update.
+    ///   - context: the context to use for iCloud operations.
+    /// - Returns: the updated object when it succeeds.
+    public func update(_ object: Object, on context: Skypiea) async throws -> Object? {
+        try await Self.save(object, on: context)
+    }
+
+    private static func save(_ object: Object, on context: Skypiea) async throws -> Object? {
+        guard let savedRecord = try await context.save(object.record) else { return nil }
+
+        return Self.fromRecord(savedRecord)
     }
 }

@@ -60,7 +60,9 @@ struct TasksClient {
 
         guard let item = item else { return .failure(.notFound) }
 
-        return await item.update(with: arguments)
+        // Pretty safe as `T.Context` is the same as `T.ReturnType.Context`
+        // swiftlint:disable force_cast
+        return await item.update(with: arguments, on: context as! T.ReturnType.Context)
             .map(\.asAppTask)
             .mapError { UpdateErrors.crud(error: $0) }
     }

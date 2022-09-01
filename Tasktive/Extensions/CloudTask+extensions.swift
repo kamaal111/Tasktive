@@ -16,22 +16,9 @@ extension CloudTask: Taskable {
 
 extension CloudTask: Crudable {
     static func create(with arguments: TaskArguments, from context: Skypiea) async -> Result<CloudTask, CrudErrors> {
-        let now = Date()
-        let object = CloudTask(
-            id: arguments.id ?? UUID(),
-            creationDate: now,
-            updateDate: now,
-            completionDate: arguments.completionDate,
-            dueDate: arguments.dueDate,
-            notes: arguments.notes,
-            taskDescription: arguments.taskDescription,
-            ticked: arguments.ticked,
-            title: arguments.title
-        )
-
         let createdTask: CloudTask?
         do {
-            createdTask = try await CloudTask.create(object, on: context)
+            createdTask = try await CloudTask.create(arguments.toCloudTask, on: context)
         } catch {
             return .failure(.saveFailure)
         }
@@ -41,8 +28,17 @@ extension CloudTask: Crudable {
         return .success(createdTask)
     }
 
-    func update(with _: TaskArguments) async -> Result<CloudTask, CrudErrors> {
-        .failure(.generalFailure(message: "oops"))
+    func update(with arguments: TaskArguments, on context: Skypiea) async -> Result<CloudTask, CrudErrors> {
+        let updatedTask: CloudTask?
+        do {
+            updatedTask = try await update(updateArguments(arguments), on: context)
+        } catch {
+            return .failure(.saveFailure)
+        }
+
+        guard let updatedTask = updatedTask else { return .failure(.updateFailure) }
+
+        return .success(updatedTask)
     }
 
     func delete() async -> Result<Void, CrudErrors> {
@@ -84,6 +80,42 @@ extension CloudTask: Crudable {
         case saveFailure
         case fetchFailure
         case updateManyFailure
+        case updateFailure
         case generalFailure(message: String)
+    }
+}
+
+extension CloudTask {
+    private func updateArguments(_ arguments: TaskArguments) -> CloudTask {
+        CloudTask(
+            id: id,
+            creationDate: creationDate,
+            updateDate: Date(),
+            completionDate: arguments.completionDate,
+            dueDate: arguments.dueDate,
+            notes: arguments.notes,
+            taskDescription: arguments.taskDescription,
+            ticked: arguments.ticked,
+            title: arguments.title,
+            record: record
+        )
+    }
+}
+
+extension TaskArguments {
+    fileprivate var toCloudTask: CloudTask {
+        let now = Date()
+
+        return CloudTask(
+            id: id ?? UUID(),
+            creationDate: now,
+            updateDate: now,
+            completionDate: completionDate,
+            dueDate: dueDate,
+            notes: notes,
+            taskDescription: taskDescription,
+            ticked: ticked,
+            title: title
+        )
     }
 }
