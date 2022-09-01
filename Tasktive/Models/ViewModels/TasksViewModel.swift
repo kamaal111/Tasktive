@@ -250,7 +250,11 @@ final class TasksViewModel: ObservableObject {
                 }
             }
 
-            let maybeUpdatedTasks = await updateDueDateOfTasksIfNeeded(appTasks, enabled: updateNotCompletedTasks)
+            let maybeUpdatedTasks = await updateDueDateOfTasksIfNeeded(
+                appTasks,
+                enabled: updateNotCompletedTasks,
+                sources: sources
+            )
             let groupedTasks = Dictionary(grouping: maybeUpdatedTasks, by: {
                 getHashDate(from: $0.dueDate)
             })
@@ -290,19 +294,18 @@ final class TasksViewModel: ObservableObject {
         return .success(())
     }
 
-    private func updateDueDateOfTasksIfNeeded(_ tasks: [AppTask], enabled: Bool) async -> [AppTask] {
+    private func updateDueDateOfTasksIfNeeded(_ tasks: [AppTask], enabled: Bool,
+                                              sources: [DataSource]) async -> [AppTask] {
         guard enabled else { return tasks }
 
         let now = Date()
         let today = getHashDate(from: now).asNSDate
+        let tasksIDs = tasks.map(\.id.nsString)
+        let predicate = NSPredicate(format: "(dueDate < %@) AND ticked == NO AND NOT(id in %@) ", today, tasksIDs)
 
         var outdatedTasksBySource: [DataSource: [AppTask]] = [:]
 
-        let tasksBySource = Dictionary(grouping: tasks, by: \.source)
-        for (source, tasks) in tasksBySource {
-            let tasksIDs = tasks.map(\.id.nsString)
-            let predicate = NSPredicate(format: "(dueDate < %@) AND ticked == NO AND NOT(id in %@) ", today, tasksIDs)
-
+        for source in sources {
             let outdatedTasks: [AppTask]?
             switch source {
             case .coreData:

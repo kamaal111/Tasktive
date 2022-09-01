@@ -62,6 +62,7 @@ extension SettingsUI {
                         onPurchaseFailure: onPurchaseFailure,
                         navigationPath: { navigationPath.removeLast() }
                     )
+                    .environmentObject(store)
                 }
         }
     }

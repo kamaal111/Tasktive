@@ -37,7 +37,8 @@ extension CloudTask: Crudable {
         return .success(tasks)
     }
 
-    static func filter(by predicate: NSPredicate, limit _: Int?,
+    static func filter(by predicate: NSPredicate,
+                       limit _: Int?,
                        from context: Skypiea) async -> Result<[CloudTask], CrudErrors> {
         await filter(by: predicate, from: context)
     }
@@ -53,7 +54,8 @@ extension CloudTask: Crudable {
     }
 
     static func updateManyDates(by _: [UUID], date _: Date, on _: Skypiea) async -> Result<Void, CrudErrors> {
-        .failure(.generalFailure(message: "oops"))
+//        .failure(.generalFailure(message: "oops"))
+        .success(())
     }
 
     enum CrudErrors: Error {
