@@ -47,13 +47,21 @@ public struct Skypiea {
         return try await iCloutKit.fetch(ofType: objectType, by: predicate)
     }
 
-    /// Save the given record on iCloud
-    /// - Parameter record: the record to save
-    /// - Returns: the saved record if it succeeds
+    /// Save the given record on iCloud.
+    /// - Parameter record: the record to save.
+    /// - Returns: the saved record if it succeeds.
     func save(_ record: CKRecord) async throws -> CKRecord? {
         guard !preview else { return record }
 
         return try await iCloutKit.save(record)
+    }
+
+    /// Deletes the given record.
+    /// - Parameter record: the record to delete
+    func delete(_ record: CKRecord) async throws {
+        guard !preview else { return }
+
+        _ = try await iCloutKit.delete(record)
     }
 
     /// Singleton class for easy access of ``Skypiea/Skypiea``

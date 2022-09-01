@@ -62,6 +62,12 @@ extension Cloudable {
         try await Self.save(object, on: context)
     }
 
+    /// Delete the current record.
+    /// - Parameter context: the context to use for iCloud operations.
+    public func delete(onContext context: Skypiea) async throws {
+        try await context.delete(record)
+    }
+
     private static func save(_ object: Object, on context: Skypiea) async throws -> Object? {
         guard let savedRecord = try await context.save(object.record) else { return nil }
 

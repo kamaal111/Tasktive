@@ -41,8 +41,14 @@ extension CloudTask: Crudable {
         return .success(updatedTask)
     }
 
-    func delete() async -> Result<Void, CrudErrors> {
-        .failure(.generalFailure(message: "oops"))
+    func delete(on context: Skypiea) async -> Result<Void, CrudErrors> {
+        do {
+            try await delete(onContext: context)
+        } catch {
+            return .failure(.deleteFailure)
+        }
+
+        return .success(())
     }
 
     static func list(from context: Skypiea) async -> Result<[CloudTask], CrudErrors> {
@@ -81,6 +87,7 @@ extension CloudTask: Crudable {
         case fetchFailure
         case updateManyFailure
         case updateFailure
+        case deleteFailure
         case generalFailure(message: String)
     }
 }
