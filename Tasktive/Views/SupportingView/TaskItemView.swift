@@ -11,6 +11,8 @@ import SalmonUI
 private let RADIO_SIZE: CGFloat = 16
 
 struct TaskItemView: View {
+    @Environment(\.isEnabled) var isEnabled
+
     let task: AppTask
     let isFocused: Bool
     let onTaskTick: (_ newTickedState: Bool) -> Void
@@ -48,7 +50,7 @@ struct TaskItemView: View {
                 KTappableButton(action: onDetailsPress) {
                     Image(systemName: "info.circle")
                         .bold()
-                        .foregroundColor(.accentColor)
+                        .foregroundColor(isEnabled ? .accentColor : .secondary)
                 }
             }
         }
@@ -75,12 +77,13 @@ struct TaskItemView: View {
 
     private var radioView: some View {
         KRadioCheckBox(checked: task.ticked, size: RADIO_SIZE)
+            .foregroundColor(isEnabled ? .accentColor : .secondary)
     }
 
     private var titleView: some View {
         Text(task.title)
             .strikethrough(task.ticked)
-            .foregroundColor(task.ticked ? .secondary : .primary)
+            .foregroundColor(task.ticked || !isEnabled ? .secondary : .primary)
     }
 
     private func clickOnRadioView() {

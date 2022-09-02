@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21271" systemVersion="22A5311f" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21271" systemVersion="22A5331f" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="CoreAttachments" representedClassName="CoreAttachments" parentEntity="CoreBase" syncable="YES">
         <attribute name="data" attributeType="Binary"/>
         <attribute name="dataType" attributeType="String"/>
         <relationship name="task" maxCount="1" deletionRule="Nullify" destinationEntity="CoreTask" inverseName="attachments" inverseEntity="CoreTask"/>
     </entity>
     <entity name="CoreBase" representedClassName="CoreBase" syncable="YES">
-        <attribute name="creationDate" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="kCreationDate" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="updateDate" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
     <entity name="CoreReminder" representedClassName="CoreReminder" parentEntity="CoreBase" syncable="YES">

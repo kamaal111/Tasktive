@@ -49,13 +49,30 @@ public struct CloudTask: Identifiable, Hashable {
 extension CloudTask: Cloudable {
     public var record: CKRecord {
         let record = _record ?? CKRecord(recordType: Self.recordType)
-        record[.id] = id
-        record[.creationDate] = creationDate.asNSDate
-        record[.updateDate] = updateDate.asNSDate
-        record[.completionDate] = completionDate?.asNSDate
-        record[.dueDate] = dueDate.asNSDate
-        record[.taskDescription] = taskDescription?.nsString
-        record[.ticked] = ticked.int.nsNumber
+
+        RecordKeys.allCases.forEach { key in
+            switch key {
+            case .id:
+                record[key] = id.nsString
+            case .creationDate:
+                record[key] = creationDate.asNSDate
+            case .updateDate:
+                record[key] = updateDate.asNSDate
+            case .completionDate:
+                record[key] = completionDate?.asNSDate
+            case .dueDate:
+                record[key] = dueDate.asNSDate
+            case .notes:
+                record[key] = notes?.nsString
+            case .taskDescription:
+                record[key] = taskDescription?.nsString
+            case .ticked:
+                record[key] = ticked.int.nsNumber
+            case .title:
+                record[key] = title.nsString
+            }
+        }
+
         return record
     }
 
@@ -85,14 +102,14 @@ extension CloudTask: Cloudable {
 }
 
 extension CloudTask {
-    enum RecordKeys: String {
+    enum RecordKeys: String, CaseIterable {
         case id
-        case creationDate = "creation_date"
-        case updateDate = "update_date"
-        case completionDate = "completion_date"
-        case dueDate = "due_date"
+        case creationDate = "kCreationDate"
+        case updateDate
+        case completionDate
+        case dueDate
         case notes
-        case taskDescription = "task_description"
+        case taskDescription
         case ticked
         case title
     }

@@ -40,7 +40,7 @@ extension CoreTask: Crudable {
         let newTask = CoreTask(context: context)
             .updateValues(with: arguments)
         newTask.id = arguments.id ?? UUID()
-        newTask.creationDate = Date()
+        newTask.kCreationDate = Date()
         newTask.attachments = NSSet(array: [])
         newTask.reminders = NSSet(array: [])
         newTask.tags = NSSet(array: [])
@@ -72,7 +72,7 @@ extension CoreTask: Crudable {
             result = try context.fetch(request)
         } catch {
             logger.error(label: "error while fetching tasks", error: error)
-            return .failure(.fetchFailure)
+            return .failure(.fetchFailure(context: error))
         }
 
         return .success(result)
@@ -94,7 +94,7 @@ extension CoreTask: Crudable {
             try context.execute(request)
         } catch {
             logger.error(label: "error while updating multiple tasks", error: error)
-            return .failure(.updateManyFailure)
+            return .failure(.updateManyFailure(context: error))
         }
 
         return .success(())
@@ -114,7 +114,7 @@ extension CoreTask: Crudable {
             try context.execute(deleteRequest)
         } catch {
             logger.error(label: "error while deleting tasks", error: error)
-            return .failure(.clearFailure)
+            return .failure(.clearFailure(context: error))
         }
 
         return save(from: context)
@@ -122,10 +122,10 @@ extension CoreTask: Crudable {
     #endif
 
     enum CrudErrors: Error {
-        case saveFailure
-        case fetchFailure
-        case clearFailure
-        case updateManyFailure
+        case saveFailure(context: Error?)
+        case fetchFailure(context: Error?)
+        case clearFailure(context: Error?)
+        case updateManyFailure(context: Error?)
         case generalFailure(message: String)
     }
 }
@@ -159,7 +159,7 @@ extension CoreTask {
             try context.save()
         } catch {
             logger.error(label: "error while creating a task", error: error)
-            return .failure(.saveFailure)
+            return .failure(.saveFailure(context: error))
         }
 
         return .success(())

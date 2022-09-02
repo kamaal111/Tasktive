@@ -15,7 +15,7 @@ extension CoreBase {
     }
 
     @NSManaged public var updateDate: Date
-    @NSManaged public var creationDate: Date
+    @NSManaged public var kCreationDate: Date
     @NSManaged public var id: UUID
 }
 

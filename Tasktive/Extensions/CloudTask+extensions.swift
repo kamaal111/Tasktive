@@ -38,10 +38,11 @@ extension CloudTask: Crudable {
         do {
             createdTask = try await CloudTask.create(arguments.toCloudTask, on: context)
         } catch {
-            return .failure(.saveFailure)
+            logger.error(label: "failed to create cloud task", error: error)
+            return .failure(.saveFailure(context: error))
         }
 
-        guard let createdTask = createdTask else { return .failure(.saveFailure) }
+        guard let createdTask = createdTask else { return .failure(.saveFailure()) }
 
         return .success(createdTask)
     }
@@ -51,10 +52,10 @@ extension CloudTask: Crudable {
         do {
             updatedTask = try await update(updateArguments(arguments), on: context)
         } catch {
-            return .failure(.saveFailure)
+            return .failure(.saveFailure(context: error))
         }
 
-        guard let updatedTask = updatedTask else { return .failure(.updateFailure) }
+        guard let updatedTask = updatedTask else { return .failure(.updateFailure()) }
 
         return .success(updatedTask)
     }
@@ -63,7 +64,7 @@ extension CloudTask: Crudable {
         do {
             try await delete(onContext: context)
         } catch {
-            return .failure(.deleteFailure)
+            return .failure(.deleteFailure(context: error))
         }
 
         return .success(())
@@ -113,7 +114,7 @@ extension CloudTask: Crudable {
             _ = try await CloudTask.updateMany(tasks.map { $0.cloudTaskWithUpdatedDueDate(date) }, on: context)
         } catch {
             logger.error(label: "error while deleting tasks", error: error)
-            return .failure(.updateManyFailure)
+            return .failure(.updateManyFailure(context: error))
         }
 
         return .success(())
@@ -130,15 +131,15 @@ extension CloudTask: Crudable {
             }
         }
 
-        return .failure(.fetchFailure)
+        return .failure(.fetchFailure(context: error))
     }
 
     enum CrudErrors: Error {
-        case saveFailure
-        case fetchFailure
-        case updateManyFailure
-        case updateFailure
-        case deleteFailure
+        case saveFailure(context: Error? = nil)
+        case fetchFailure(context: Error? = nil)
+        case updateManyFailure(context: Error? = nil)
+        case updateFailure(context: Error? = nil)
+        case deleteFailure(context: Error? = nil)
         case generalFailure(message: String)
     }
 }

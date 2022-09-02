@@ -11,4 +11,8 @@ extension CoreTask: Taskable {
     var source: DataSource {
         .coreData
     }
+
+    var creationDate: Date {
+        kCreationDate
+    }
 }

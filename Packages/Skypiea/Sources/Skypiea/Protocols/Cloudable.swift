@@ -101,7 +101,8 @@ extension Cloudable {
     }
 
     private static func save(_ object: Object, on context: Skypiea) async throws -> Object? {
-        guard let savedRecord = try await context.save(object.record) else { return nil }
+        let record = object.record
+        guard let savedRecord = try await context.save(record) else { return nil }
 
         return Self.fromRecord(savedRecord)
     }
