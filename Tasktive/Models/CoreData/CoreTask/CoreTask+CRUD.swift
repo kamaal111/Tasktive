@@ -31,6 +31,10 @@ extension CoreTask: Crudable {
         return .success(())
     }
 
+    static func find(by predicate: NSPredicate, from context: NSManagedObjectContext) -> Result<CoreTask?, CrudErrors> {
+        filter(by: predicate, limit: 1, from: context).map(\.first)
+    }
+
     static func create(with arguments: TaskArguments,
                        from context: NSManagedObjectContext) -> Result<CoreTask, CrudErrors> {
         let newTask = CoreTask(context: context)
@@ -58,7 +62,8 @@ extension CoreTask: Crudable {
         filter(by: predicate, limit: nil, from: context)
     }
 
-    static func filter(by predicate: NSPredicate, limit: Int?,
+    static func filter(by predicate: NSPredicate,
+                       limit: Int?,
                        from context: NSManagedObjectContext) -> Result<[CoreTask], CrudErrors> {
         let request = request(by: predicate, limit: limit)
 

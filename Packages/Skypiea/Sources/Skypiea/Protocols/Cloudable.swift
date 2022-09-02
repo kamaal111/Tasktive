@@ -7,6 +7,7 @@
 
 import CloudKit
 import Foundation
+import ShrimpExtensions
 
 /// Protocol to help perform iCloud operations.
 public protocol Cloudable {
@@ -46,11 +47,32 @@ extension Cloudable {
     /// Fetch with query of the given record.
     /// - Parameters:
     ///   - context: the context to use for iCloud operations.
+    ///   - limit: the amount to limit by.
     ///   - predicate: query.
     /// - Returns: an array of the fetched objects.
-    public static func filter(by predicate: NSPredicate, from context: Skypiea) async throws -> [Object] {
-        try await context.filter(ofType: recordType, by: predicate)
+    public static func filter(by predicate: NSPredicate,
+                              limit: Int? = nil,
+                              from context: Skypiea) async throws -> [Object] {
+        let result = try await context.filter(ofType: recordType, by: predicate)
             .compactMap(fromRecord(_:))
+
+        if let limit = limit {
+            return result
+                .prefix(upTo: limit)
+                .asArray()
+        }
+
+        return result
+    }
+
+    /// Finds a record by the given record.
+    /// - Parameters:
+    ///   - predicate: query.
+    ///   - context: the context to use for iCloud operations.
+    /// - Returns: the searched for object.
+    public static func find(by predicate: NSPredicate, from context: Skypiea) async throws -> Object? {
+        try await filter(by: predicate, limit: 1, from: context)
+            .first
     }
 
     /// Update a currently existing record.

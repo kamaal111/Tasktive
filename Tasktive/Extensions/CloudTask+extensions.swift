@@ -80,19 +80,30 @@ extension CloudTask: Crudable {
     }
 
     static func filter(by predicate: NSPredicate,
-                       limit _: Int?,
+                       limit: Int?,
                        from context: Skypiea) async -> Result<[CloudTask], CrudErrors> {
-        await filter(by: predicate, from: context)
-    }
-
-    static func filter(by predicate: NSPredicate, from context: Skypiea) async -> Result<[CloudTask], CrudErrors> {
         let tasks: [CloudTask]
         do {
-            tasks = try await CloudTask.filter(by: predicate, from: context)
+            tasks = try await CloudTask.filter(by: predicate, limit: limit, from: context)
         } catch {
             return handleFetchErrors(error)
         }
         return .success(tasks)
+    }
+
+    static func filter(by predicate: NSPredicate, from context: Skypiea) async -> Result<[CloudTask], CrudErrors> {
+        await filter(by: predicate, limit: nil, from: context)
+    }
+
+    static func find(by predicate: NSPredicate, from context: Skypiea) async -> Result<CloudTask?, CrudErrors> {
+        let task: CloudTask?
+        do {
+            task = try await CloudTask.find(by: predicate, from: context)
+        } catch {
+            return handleFetchErrors(error).map(\.first)
+        }
+
+        return .success(task)
     }
 
     static func updateManyDates(_ tasks: [AppTask], date: Date, on context: Skypiea) async -> Result<Void, CrudErrors> {
