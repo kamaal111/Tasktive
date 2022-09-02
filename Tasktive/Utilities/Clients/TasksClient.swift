@@ -29,7 +29,11 @@ struct TasksClient {
         return objects.map(\.asAppTask)
     }
 
-    func filter(from source: DataSource, by predicate: NSPredicate, limit: Int? = nil) async throws -> [AppTask] {
+    func filter(from source: DataSource, by queryString: String?, limit: Int? = nil) async throws -> [AppTask] {
+        guard let queryString = queryString else { return try await list(from: source) }
+
+        let predicate = NSPredicate(format: queryString)
+
         let objects: [any Crudable]
         switch source {
         case .coreData:

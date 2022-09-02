@@ -111,8 +111,7 @@ final class TasksViewModel: ObservableObject {
 
     func getAllTasks(from sources: [DataSource],
                      updateNotCompletedTasks: Bool = true) async -> Result<Void, UserErrors> {
-        let predicate = NSPredicate(value: true)
-        return await getTasksByPredicate(from: sources, by: predicate, updateNotCompletedTasks: updateNotCompletedTasks)
+        await getTasksByPredicate(from: sources, by: nil, updateNotCompletedTasks: updateNotCompletedTasks)
     }
 
     func updateTask(_ task: AppTask, with arguments: TaskArguments) async -> Result<Void, UserErrors> {
@@ -153,18 +152,22 @@ final class TasksViewModel: ObservableObject {
         let startDate = getHashDate(from: date)
         let endDate = getHashDate(from: startDate.incrementByDays(1)).incrementBySeconds(-1)
 
-        let predicate = NSPredicate(format: "(dueDate >= %@) AND (dueDate <= %@)", startDate.asNSDate, endDate.asNSDate)
-        return await getTasksByPredicate(from: sources, by: predicate, updateNotCompletedTasks: updateNotCompletedTasks)
+        let queryString = "(dueDate >= \(startDate.asNSDate)) AND (dueDate <= \(endDate.asNSDate))"
+        return await getTasksByPredicate(
+            from: sources,
+            by: queryString,
+            updateNotCompletedTasks: updateNotCompletedTasks
+        )
     }
 
     private func getTasksByPredicate(from sources: [DataSource],
-                                     by predicate: NSPredicate,
+                                     by queryString: String?,
                                      updateNotCompletedTasks: Bool) async -> Result<Void, UserErrors> {
         await withLoadingTasks {
             var appTasks: [AppTask] = []
 
             for source in sources {
-                let tasksResult = await getFilteredTasks(from: source, by: predicate)
+                let tasksResult = await getFilteredTasks(from: source, by: queryString)
 
                 switch tasksResult {
                 case let .failure(failure):
@@ -193,10 +196,10 @@ final class TasksViewModel: ObservableObject {
     }
 
     private func getFilteredTasks(from source: DataSource,
-                                  by predicate: NSPredicate) async -> Result<[AppTask], TasksViewModel.UserErrors> {
+                                  by queryString: String?) async -> Result<[AppTask], TasksViewModel.UserErrors> {
         let tasks: [AppTask]
         do {
-            tasks = try await dataClient.tasks.filter(from: source, by: predicate)
+            tasks = try await dataClient.tasks.filter(from: source, by: queryString)
         } catch {
             logger.error(label: "failed to get all tasks", error: error)
             return .failure(.getAllFailure)
@@ -219,12 +222,12 @@ final class TasksViewModel: ObservableObject {
         let now = Date()
         let today = getHashDate(from: now).asNSDate
         let tasksIDs = tasks.map(\.id.nsString)
-        let predicate = NSPredicate(format: "(dueDate < %@) AND ticked == NO AND NOT(id in %@) ", today, tasksIDs)
+        let queryString = "(dueDate < \(today)) AND ticked == NO AND NOT(id in \(tasksIDs))"
 
         var outdatedTasksBySource: [DataSource: [AppTask]] = [:]
 
         for source in sources {
-            let outdatedTasks = try? await dataClient.tasks.filter(from: source, by: predicate)
+            let outdatedTasks = try? await dataClient.tasks.filter(from: source, by: queryString)
 
             outdatedTasksBySource[source] = (outdatedTasks ?? [])
                 .map { task in
