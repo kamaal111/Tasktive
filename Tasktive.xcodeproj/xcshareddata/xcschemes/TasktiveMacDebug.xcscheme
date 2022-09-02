@@ -50,6 +50,12 @@
             ReferencedContainer = "container:Tasktive.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "enable_icloud_syncing"
+            isEnabled = "YES">
+         </CommandLineArgument>
+      </CommandLineArguments>
       <StoreKitConfigurationFileReference
          identifier = "../../Tasktive/Resources/StoreKit/Donations.storekit">
       </StoreKitConfigurationFileReference>

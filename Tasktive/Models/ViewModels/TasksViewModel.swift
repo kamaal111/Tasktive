@@ -246,7 +246,7 @@ final class TasksViewModel: ObservableObject {
                 case let .failure(failure):
                     return .failure(failure)
                 case let .success(success):
-                    appTasks = success
+                    appTasks.append(contentsOf: success)
                 }
             }
 
@@ -294,7 +294,8 @@ final class TasksViewModel: ObservableObject {
         return .success(())
     }
 
-    private func updateDueDateOfTasksIfNeeded(_ tasks: [AppTask], enabled: Bool,
+    private func updateDueDateOfTasksIfNeeded(_ tasks: [AppTask],
+                                              enabled: Bool,
                                               sources: [DataSource]) async -> [AppTask] {
         guard enabled else { return tasks }
 
@@ -335,7 +336,7 @@ final class TasksViewModel: ObservableObject {
         for source in DataSource.allCases {
             switch source {
             case .coreData:
-                if let outdatedTasks = outdatedTasksBySource[source] {
+                if let outdatedTasks = outdatedTasksBySource[source], !outdatedTasks.isEmpty {
                     let updateResult = CoreTask.updateManyDates(
                         outdatedTasks,
                         date: now,
@@ -350,7 +351,7 @@ final class TasksViewModel: ObservableObject {
                     }
                 }
             case .iCloud:
-                if let outdatedTasks = outdatedTasksBySource[source] {
+                if let outdatedTasks = outdatedTasksBySource[source], !outdatedTasks.isEmpty {
                     let updateResult = await CloudTask.updateManyDates(
                         outdatedTasks,
                         date: now,

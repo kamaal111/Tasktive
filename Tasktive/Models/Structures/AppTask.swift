@@ -75,10 +75,18 @@ extension AppTask: Gridable {
             "ID": idString,
             "Title": title,
             "Ticked": ticked ? "Yes" : "No",
+            "Due date": Self.dateFormatter.string(from: dueDate),
         ]
     }
 
     var idString: String {
         id.uuidString
     }
+
+    private static let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
+        return formatter
+    }()
 }

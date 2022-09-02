@@ -76,6 +76,8 @@ extension CoreTask: Crudable {
     static func updateManyDates(_ tasks: [AppTask],
                                 date: Date,
                                 on context: NSManagedObjectContext) -> Result<Void, CrudErrors> {
+        guard !tasks.isEmpty else { return .success(()) }
+
         let predicate = NSPredicate(format: "id IN %@", tasks.map(\.id.nsString))
         let request = NSBatchUpdateRequest(entityName: CoreTask.description())
         request.predicate = predicate

@@ -8,5 +8,10 @@
 #if os(macOS)
 import Cocoa
 
-final class AppDelegate: NSObject, NSApplicationDelegate { }
+final class AppDelegate: NSObject, NSApplicationDelegate {
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        guard let application = notification.object as? NSApplication else { return }
+        application.registerForRemoteNotifications()
+    }
+}
 #endif

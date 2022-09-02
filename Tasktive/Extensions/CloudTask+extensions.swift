@@ -6,15 +6,12 @@
 //
 
 import Skypiea
+import CloudKit
 import Foundation
 
 private let logger = Logster(from: CoreTask.self)
 
-extension CloudTask: Taskable {
-    var source: DataSource {
-        .iCloud
-    }
-
+extension CloudTask {
     var asAppTask: AppTask {
         .init(
             id: id,
@@ -26,6 +23,12 @@ extension CloudTask: Taskable {
             source: source,
             record: record
         )
+    }
+}
+
+extension CloudTask: Taskable {
+    var source: DataSource {
+        .iCloud
     }
 }
 
@@ -71,7 +74,7 @@ extension CloudTask: Crudable {
         do {
             tasks = try await CloudTask.list(from: context)
         } catch {
-            return .failure(.fetchFailure)
+            return handleFetchErrors(error)
         }
         return .success(tasks)
     }
@@ -87,12 +90,14 @@ extension CloudTask: Crudable {
         do {
             tasks = try await CloudTask.filter(by: predicate, from: context)
         } catch {
-            return .failure(.fetchFailure)
+            return handleFetchErrors(error)
         }
         return .success(tasks)
     }
 
     static func updateManyDates(_ tasks: [AppTask], date: Date, on context: Skypiea) async -> Result<Void, CrudErrors> {
+        guard !tasks.isEmpty else { return .success(()) }
+
         do {
             _ = try await CloudTask.updateMany(tasks.map { $0.cloudTaskWithUpdatedDueDate(date) }, on: context)
         } catch {
@@ -101,6 +106,20 @@ extension CloudTask: Crudable {
         }
 
         return .success(())
+    }
+
+    private static func handleFetchErrors(_ error: Error) -> Result<[CloudTask], CrudErrors> {
+        if let error = error as? CKError {
+            switch error.code {
+            case .unknownItem:
+                logger.info("record not created yet")
+                return .success([])
+            default:
+                break
+            }
+        }
+
+        return .failure(.fetchFailure)
     }
 
     enum CrudErrors: Error {
@@ -160,7 +179,8 @@ extension TaskArguments {
             notes: notes,
             taskDescription: taskDescription,
             ticked: ticked,
-            title: title
+            title: title,
+            record: nil
         )
     }
 }

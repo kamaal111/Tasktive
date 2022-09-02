@@ -10,6 +10,15 @@ import UIKit
 
 final class AppDelegate: NSObject, UIApplicationDelegate {
     func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]? = nil
+    ) -> Bool {
+        application.registerForRemoteNotifications()
+
+        return true
+    }
+
+    func application(
         _: UIApplication,
         configurationForConnecting connectingSceneSession: UISceneSession,
         options _: UIScene.ConnectionOptions
