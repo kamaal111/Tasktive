@@ -35,8 +35,10 @@ struct TaskDetailsSheet: View {
                 Button {
                     onDelete()
                 } label: {
-                    (Text(Image(systemName: "trash")) + Text(" Delete"))
-                        .foregroundColor(.white)
+                    HStack(spacing: 5) {
+                        Text(Image(systemName: "trash"))
+                        Text(localized: .DELETE)
+                    }.foregroundColor(.white)
                         .font(.headline)
                         .frame(width: 250, height: 50)
                         .frame(maxWidth: .infinity)

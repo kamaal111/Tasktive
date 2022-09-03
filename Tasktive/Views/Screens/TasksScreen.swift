@@ -158,7 +158,7 @@ struct TasksScreen: View {
         }
 
         Task {
-            let result = await tasksViewModel.deleteTask(task)
+            let result = await tasksViewModel.deleteTask(on: task.dueDate, by: task.id)
             switch result {
             case let .failure(failure):
                 popperUpManager.showPopup(style: failure.style, timeout: failure.timeout)
