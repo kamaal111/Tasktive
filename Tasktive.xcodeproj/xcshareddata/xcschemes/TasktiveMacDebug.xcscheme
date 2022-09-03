@@ -55,6 +55,10 @@
             argument = "enable_icloud_syncing"
             isEnabled = "YES">
          </CommandLineArgument>
+         <CommandLineArgument
+            argument = "enable_feedback"
+            isEnabled = "NO">
+         </CommandLineArgument>
       </CommandLineArguments>
       <StoreKitConfigurationFileReference
          identifier = "../../Tasktive/Resources/StoreKit/Donations.storekit">

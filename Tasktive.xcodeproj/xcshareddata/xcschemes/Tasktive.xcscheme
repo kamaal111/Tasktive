@@ -94,7 +94,11 @@
       <CommandLineArguments>
          <CommandLineArgument
             argument = "enable_icloud_syncing"
-            isEnabled = "YES">
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "enable_feedback"
+            isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
       <StoreKitConfigurationFileReference

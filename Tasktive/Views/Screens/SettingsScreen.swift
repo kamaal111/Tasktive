@@ -35,7 +35,7 @@ struct SettingsScreen: View {
     }
 
     private var feedbackConfiguration: FeedbackConfiguration<FeedbackMetadata>? {
-        guard let gitHubToken = gitHubToken else { return nil }
+        guard let gitHubToken = gitHubToken, Features.feedback else { return nil }
 
         return .init(
             gitHubToken: gitHubToken,
