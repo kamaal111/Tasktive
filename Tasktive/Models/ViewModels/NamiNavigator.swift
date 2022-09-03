@@ -20,19 +20,10 @@ final class NamiNavigator: ObservableObject {
     #endif
 
     private var needsToNavigate = false
-    private let notifications: [Notification.Name] = [
-        .navigateToPlayground,
-    ]
 
     init() {
         self.tabSelection = STARTING_SCREEN
         self.sidebarSelection = STARTING_SCREEN
-
-        setupObservers()
-    }
-
-    deinit {
-        removeObservers()
     }
 
     var currentSelection: NamiNavigator.Screens {
@@ -78,31 +69,6 @@ final class NamiNavigator: ObservableObject {
         guard screen != sidebarSelection else { return }
 
         setSidebarSelection(screen)
-    }
-
-    private func setupObservers() {
-        notifications.forEach { notification in
-            NotificationCenter.default.addObserver(
-                self,
-                selector: #selector(handleNotification),
-                name: notification,
-                object: .none
-            )
-        }
-    }
-
-    private func removeObservers() {
-        notifications.forEach { notification in
-            NotificationCenter.default.removeObserver(self, name: notification, object: .none)
-        }
-    }
-
-    @objc
-    private func handleNotification(_ notification: Notification) {
-        switch notification.name {
-        default:
-            break
-        }
     }
 }
 

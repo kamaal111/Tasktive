@@ -18,7 +18,11 @@ final class TasksViewModel: ObservableObject {
     @Published private(set) var loadingTasks = false
     @Published private(set) var settingTasks = false
 
+    private var lastFetchedForDate: Date?
     private let dataClient: DataClient
+    private let notifications: [Notification.Name] = [
+        .iCloudChanges,
+    ]
 
     init() {
         #if !DEBUG
@@ -30,6 +34,7 @@ final class TasksViewModel: ObservableObject {
             self.dataClient = .init(persistenceController: .shared, skypiea: .shared)
         }
         #endif
+        setupObservers()
     }
 
     #if DEBUG
@@ -39,8 +44,13 @@ final class TasksViewModel: ObservableObject {
         } else {
             self.dataClient = .init(persistenceController: .shared, skypiea: .shared)
         }
+        setupObservers()
     }
     #endif
+
+    deinit {
+        removeObservers()
+    }
 
     var taskDates: [Date] {
         tasks.keys
@@ -149,6 +159,7 @@ final class TasksViewModel: ObservableObject {
     private func getTasks(from sources: [DataSource],
                           for date: Date,
                           updateNotCompletedTasks: Bool) async -> Result<Void, UserErrors> {
+        lastFetchedForDate = date
         let startDate = getHashDate(from: date)
         let endDate = getHashDate(from: startDate.incrementByDays(1)).incrementBySeconds(-1)
 
@@ -281,6 +292,34 @@ final class TasksViewModel: ObservableObject {
     @MainActor
     private func setTasks(_ tasks: [AppTask], forDate date: Date) {
         self.tasks[getHashDate(from: date)] = tasks
+    }
+
+    private func setupObservers() {
+        notifications.forEach { notification in
+            NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(handleNotification),
+                name: notification,
+                object: .none
+            )
+        }
+    }
+
+    private func removeObservers() {
+        notifications.forEach { notification in
+            NotificationCenter.default.removeObserver(self, name: notification, object: .none)
+        }
+    }
+
+    @objc
+    private func handleNotification(_ notification: Notification) {
+        switch notification.name {
+        case .iCloudChanges:
+            guard let lastFetchedForDate = lastFetchedForDate, Features.iCloudSyncing else { return }
+            Task { await getTasks(from: [.iCloud], for: lastFetchedForDate) }
+        default:
+            break
+        }
     }
 }
 
