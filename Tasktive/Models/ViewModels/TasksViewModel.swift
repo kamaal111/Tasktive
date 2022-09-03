@@ -183,7 +183,7 @@ final class TasksViewModel: ObservableObject {
 
         for taskIndex in indicesReversed {
             let id = tasks[dateHash]![taskIndex].id
-            _ = await deleteTask(id, onSuccess: { })
+            _ = await deleteTask(id)
         }
 
         for taskIndex in indicesReversed {
@@ -201,15 +201,21 @@ final class TasksViewModel: ObservableObject {
             guard let taskIndex = tasks[dateHash]?.findIndex(by: \.id, is: id)
             else { return .failure(.deleteFailure) }
 
-            return await deleteTask(id, onSuccess: {
+            let result = await deleteTask(id)
+
+            switch result {
+            case let .failure(failure):
+                return .failure(failure)
+            case .success():
                 var mutableTask = tasks
                 mutableTask[dateHash]?.remove(at: taskIndex)
                 await setTasks(mutableTask[dateHash] ?? [], forDate: dateHash)
-            })
+                return result
+            }
         })
     }
 
-    private func deleteTask(_ id: UUID, onSuccess: () async -> Void) async -> Result<Void, UserErrors> {
+    private func deleteTask(_ id: UUID) async -> Result<Void, UserErrors> {
         let result = dataClient.delete(
             by: id,
             from: persistenceController.context,
@@ -236,8 +242,6 @@ final class TasksViewModel: ObservableObject {
         case .success():
             break
         }
-
-        await onSuccess()
 
         return .success(())
     }
