@@ -13,6 +13,6 @@ enum Features {
     static let feedback = CommandLineArguments.enableFeedback.enabled
     #else
     static let iCloudSyncing = false
-    static let feedback = false
+    static let feedback = true
     #endif
 }
