@@ -88,6 +88,7 @@ struct SettingsScreen: View {
     }
 }
 
+#if DEBUG
 struct SettingsScreen_Previews: PreviewProvider {
     static var previews: some View {
         var configuration = PreviewConfiguration()
@@ -100,3 +101,4 @@ struct SettingsScreen_Previews: PreviewProvider {
         }
     }
 }
+#endif

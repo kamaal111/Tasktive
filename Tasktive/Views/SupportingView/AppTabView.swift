@@ -27,9 +27,11 @@ struct AppTabView: View {
     }
 }
 
+#if DEBUG
 struct AppTabView_Previews: PreviewProvider {
     static var previews: some View {
         AppTabView()
             .previewEnvironment()
     }
 }
+#endif

@@ -9,7 +9,7 @@ import Skypiea
 import CloudKit
 import Foundation
 
-private let logger = Logster(from: CoreTask.self)
+private let logger = Logster(from: CloudTask.self)
 
 extension CloudTask {
     var asAppTask: AppTask {

@@ -224,31 +224,27 @@ final class TasksViewModel: ObservableObject {
         let tasksIDs = tasks.map(\.id.nsString)
         let predicate = NSPredicate(format: "(dueDate < %@) AND ticked == NO AND NOT(id in %@)", today, tasksIDs)
 
-        var outdatedTasksBySource: [DataSource: [AppTask]] = [:]
-
+        var updatedTasks: [AppTask] = []
         for source in sources {
-            let outdatedTasks = try? await dataClient.tasks.filter(from: source, by: predicate.predicateFormat)
+            guard let outdatedTasks = try? await dataClient.tasks.filter(from: source, by: predicate.predicateFormat),
+                  !outdatedTasks.isEmpty else { continue }
 
-            outdatedTasksBySource[source] = (outdatedTasks ?? [])
-                .map { task in
-                    var mutableTask = task
-                    mutableTask.dueDate = now
-                    return mutableTask
-                }
-        }
-
-        for source in sources {
-            if let outdatedTasks = outdatedTasksBySource[source], !outdatedTasks.isEmpty {
-                do {
-                    try await dataClient.tasks.updateManyDates(outdatedTasks, from: source, date: now)
-                } catch {
-                    logger.error(label: "failed to updated outdated tasks", error: error)
-                    return tasks
-                }
+            do {
+                try await dataClient.tasks.updateManyDates(outdatedTasks, from: source, date: now)
+            } catch {
+                logger.error(label: "failed to updated outdated tasks", error: error)
+                updatedTasks.append(contentsOf: outdatedTasks)
+                continue
             }
+
+            updatedTasks.append(contentsOf: outdatedTasks.map { task in
+                var mutableTask = task
+                mutableTask.dueDate = now
+                return mutableTask
+            })
         }
 
-        return tasks + outdatedTasksBySource.flatMap(\.value)
+        return tasks + updatedTasks
     }
 
     private func withLoadingTasks<T>(completion: () async -> T) async -> T {

@@ -360,6 +360,7 @@ extension TasksScreen.ViewModel {
     }
 }
 
+#if DEBUG
 struct TasksScreen_Previews: PreviewProvider {
     static var previews: some View {
         var configuration = PreviewConfiguration()
@@ -372,3 +373,4 @@ struct TasksScreen_Previews: PreviewProvider {
         }
     }
 }
+#endif
