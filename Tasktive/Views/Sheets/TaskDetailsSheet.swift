@@ -50,9 +50,7 @@ struct TaskDetailsSheet: View {
             viewModel.setValues(from: task)
         })
     }
-}
 
-extension TaskDetailsSheet {
     final class ViewModel: ObservableObject {
         @Published var title = ""
 

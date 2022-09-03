@@ -176,11 +176,12 @@ final class TasksViewModel: ObservableObject {
         })
     }
 
-    func deleteTask(_ task: AppTask) async -> Result<Void, UserErrors> {
-        await withSettingTasks(completion: {
-            let dateHash = getHashDate(from: task.dueDate)
-            guard let taskIndex = tasks[dateHash]?.findIndex(by: \.id, is: task.id)
-            else { return .failure(.updateFailure) }
+    func deleteTasks(by date: Date, indexSet: IndexSet) async -> Result<Void, UserErrors> {
+        let dateHash = getHashDate(from: date)
+        var mutableTask = tasks
+
+        indexSet.reversed().forEach { taskIndex in
+            let task = tasks[dateHash]!.at(taskIndex)!
 
             let result = dataClient.delete(
                 by: task.id,
@@ -192,7 +193,47 @@ final class TasksViewModel: ObservableObject {
                 switch $0 {
                 case .notFound:
                     logger.error("task not found")
-                    return UserErrors.updateFailure
+                    return UserErrors.deleteFailure
+                case let .crud(error: crudError):
+                    error = crudError as? CoreTagsk.CrudErrors
+                }
+
+                guard let error = error else { return UserErrors.deleteFailure }
+
+                logger.error(label: "failed to delete this task", error: error)
+                return UserErrors.deleteFailure
+            }
+
+            switch result {
+            case .failure:
+                break
+            case .success():
+                mutableTask[dateHash]?.remove(at: taskIndex)
+            }
+        }
+
+        await setTasks(mutableTask[dateHash] ?? [], forDate: dateHash)
+
+        return .success(())
+    }
+
+    func deleteTask(_ task: AppTask) async -> Result<Void, UserErrors> {
+        await withSettingTasks(completion: {
+            let dateHash = getHashDate(from: task.dueDate)
+            guard let taskIndex = tasks[dateHash]?.findIndex(by: \.id, is: task.id)
+            else { return .failure(.deleteFailure) }
+
+            let result = dataClient.delete(
+                by: task.id,
+                from: persistenceController.context,
+                of: CoreTask.self
+            )
+            .mapError {
+                let error: Error?
+                switch $0 {
+                case .notFound:
+                    logger.error("task not found")
+                    return UserErrors.deleteFailure
                 case let .crud(error: crudError):
                     error = crudError as? CoreTask.CrudErrors
                 }
