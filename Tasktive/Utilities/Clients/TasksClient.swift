@@ -8,7 +8,7 @@
 import Skypiea
 import Foundation
 
-struct TasksClient {
+class TasksClient {
     private let persistenceController: PersistenceController
     private let skypiea: Skypiea
 

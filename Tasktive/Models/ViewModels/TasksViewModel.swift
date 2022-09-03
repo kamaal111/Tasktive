@@ -152,10 +152,10 @@ final class TasksViewModel: ObservableObject {
         let startDate = getHashDate(from: date)
         let endDate = getHashDate(from: startDate.incrementByDays(1)).incrementBySeconds(-1)
 
-        let queryString = "(dueDate >= \(startDate.asNSDate)) AND (dueDate <= \(endDate.asNSDate))"
+        let predicate = NSPredicate(format: "(dueDate >= %@) AND (dueDate <= %@)", startDate.asNSDate, endDate.asNSDate)
         return await getTasksByPredicate(
             from: sources,
-            by: queryString,
+            by: predicate.predicateFormat,
             updateNotCompletedTasks: updateNotCompletedTasks
         )
     }
@@ -222,12 +222,12 @@ final class TasksViewModel: ObservableObject {
         let now = Date()
         let today = getHashDate(from: now).asNSDate
         let tasksIDs = tasks.map(\.id.nsString)
-        let queryString = "(dueDate < \(today)) AND ticked == NO AND NOT(id in \(tasksIDs))"
+        let predicate = NSPredicate(format: "(dueDate < %@) AND ticked == NO AND NOT(id in %@)", today, tasksIDs)
 
         var outdatedTasksBySource: [DataSource: [AppTask]] = [:]
 
         for source in sources {
-            let outdatedTasks = try? await dataClient.tasks.filter(from: source, by: queryString)
+            let outdatedTasks = try? await dataClient.tasks.filter(from: source, by: predicate.predicateFormat)
 
             outdatedTasksBySource[source] = (outdatedTasks ?? [])
                 .map { task in

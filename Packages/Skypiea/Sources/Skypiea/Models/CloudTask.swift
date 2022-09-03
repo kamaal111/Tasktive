@@ -48,32 +48,29 @@ public struct CloudTask: Identifiable, Hashable {
 
 extension CloudTask: Cloudable {
     public var record: CKRecord {
-        let record = _record ?? CKRecord(recordType: Self.recordType)
-
-        RecordKeys.allCases.forEach { key in
+        RecordKeys.allCases.reduce(_record ?? CKRecord(recordType: Self.recordType)) { result, key in
             switch key {
             case .id:
-                record[key] = id.nsString
+                result[key] = id.nsString
             case .creationDate:
-                record[key] = creationDate.asNSDate
+                result[key] = creationDate.asNSDate
             case .updateDate:
-                record[key] = updateDate.asNSDate
+                result[key] = updateDate.asNSDate
             case .completionDate:
-                record[key] = completionDate?.asNSDate
+                result[key] = completionDate?.asNSDate
             case .dueDate:
-                record[key] = dueDate.asNSDate
+                result[key] = dueDate.asNSDate
             case .notes:
-                record[key] = notes?.nsString
+                result[key] = notes?.nsString
             case .taskDescription:
-                record[key] = taskDescription?.nsString
+                result[key] = taskDescription?.nsString
             case .ticked:
-                record[key] = ticked.int.nsNumber
+                result[key] = ticked.int.nsNumber
             case .title:
-                record[key] = title.nsString
+                result[key] = title.nsString
             }
+            return result
         }
-
-        return record
     }
 
     public static let recordType = "CloudTask"

@@ -8,7 +8,7 @@
 import Skypiea
 import Foundation
 
-struct DataClient {
+class DataClient {
     let tasks: TasksClient
 
     init(persistenceController: PersistenceController, skypiea: Skypiea) {
