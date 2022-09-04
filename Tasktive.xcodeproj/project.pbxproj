@@ -268,6 +268,13 @@
 		2CBCE60E2881DE240057F4CD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCE60D2881DE240057F4CD /* ContentView.swift */; };
 		2CBCE6102881DE270057F4CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CBCE60F2881DE270057F4CD /* Assets.xcassets */; };
 		2CBCE6142881DE270057F4CD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CBCE6132881DE270057F4CD /* Preview Assets.xcassets */; };
+		2CC2D9A828C4D5A20036817B /* EditMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC2D9A728C4D5A20036817B /* EditMode.swift */; };
+		2CC2D9A928C4D5A20036817B /* EditMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC2D9A728C4D5A20036817B /* EditMode.swift */; };
+		2CC2D9AD28C4D6270036817B /* EditModeStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC2D9AC28C4D6270036817B /* EditModeStack.swift */; };
+		2CC2D9AE28C4D6270036817B /* EditModeStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC2D9AC28C4D6270036817B /* EditModeStack.swift */; };
+		2CC2D9AF28C4D6270036817B /* EditModeStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC2D9AC28C4D6270036817B /* EditModeStack.swift */; };
+		2CC2D9B128C4D7430036817B /* EditButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC2D9B028C4D7430036817B /* EditButton.swift */; };
+		2CC2D9B228C4D7430036817B /* EditButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC2D9B028C4D7430036817B /* EditButton.swift */; };
 		2CC325F328B0E68F0091EC3E /* Navigatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC325F228B0E68F0091EC3E /* Navigatable.swift */; };
 		2CC79CE3288D78A400FD5792 /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC79CE2288D78A400FD5792 /* SettingsScreen.swift */; };
 		2CCCADB72881F94D0033E2EF /* CoreTask+CRUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCCADB62881F94D0033E2EF /* CoreTask+CRUD.swift */; };
@@ -423,6 +430,9 @@
 		2CBCE60F2881DE270057F4CD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2CBCE6112881DE270057F4CD /* Tasktive.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Tasktive.entitlements; sourceTree = "<group>"; };
 		2CBCE6132881DE270057F4CD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		2CC2D9A728C4D5A20036817B /* EditMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMode.swift; sourceTree = "<group>"; };
+		2CC2D9AC28C4D6270036817B /* EditModeStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditModeStack.swift; sourceTree = "<group>"; };
+		2CC2D9B028C4D7430036817B /* EditButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditButton.swift; sourceTree = "<group>"; };
 		2CC325F228B0E68F0091EC3E /* Navigatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigatable.swift; sourceTree = "<group>"; };
 		2CC79CE2288D78A400FD5792 /* SettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
 		2CCCADAA2881EFB60033E2EF /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -712,15 +722,16 @@
 				2C3B27C5288C77F7007CE538 /* DateControlView.swift */,
 				2C1505E8288C26170040943A /* DayNumbersRowItem.swift */,
 				2C47E405288371A300FD4469 /* DetailsColumn.swift */,
+				2CC2D9B028C4D7430036817B /* EditButton.swift */,
 				2C750F67288C31CF00026D67 /* ProgressSection.swift */,
 				2C1B1984288874C100D734D2 /* QuickAddSection.swift */,
 				2C5AB1B8288D7C870069911C /* ScreenWrapper.swift */,
 				2C47E4032883719000FD4469 /* Sidebar.swift */,
-				2C69A04628B18CA200D5006D /* SplashScreenStack.swift */,
 				2C750F6B288C335A00026D67 /* TaskItemView.swift */,
 				2C750F69288C328C00026D67 /* TasksSection.swift */,
 				2CDC6DA5288D616B00BF8E06 /* ToolbarButton.swift */,
 				2CE9EFB828AD639500C89888 /* WideNavigationLink.swift */,
+				2CC2D9AB28C4D6120036817B /* Stacks */,
 			);
 			path = SupportingView;
 			sourceTree = "<group>";
@@ -885,6 +896,7 @@
 				2CBCE6122881DE270057F4CD /* Preview Content */,
 				2CCCADD2288204040033E2EF /* Protocols */,
 				2C15758D289F026000425CDD /* Resources */,
+				2CC2D9A628C4D5800036817B /* SwiftUI */,
 				2CCCADCF288203480033E2EF /* Utilities */,
 				2C47E3FE28836F6200FD4469 /* Views */,
 			);
@@ -897,6 +909,31 @@
 				2CBCE6132881DE270057F4CD /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		2CC2D9A628C4D5800036817B /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				2CC2D9AA28C4D5BD0036817B /* Environment */,
+			);
+			path = SwiftUI;
+			sourceTree = "<group>";
+		};
+		2CC2D9AA28C4D5BD0036817B /* Environment */ = {
+			isa = PBXGroup;
+			children = (
+				2CC2D9A728C4D5A20036817B /* EditMode.swift */,
+			);
+			path = Environment;
+			sourceTree = "<group>";
+		};
+		2CC2D9AB28C4D6120036817B /* Stacks */ = {
+			isa = PBXGroup;
+			children = (
+				2CC2D9AC28C4D6270036817B /* EditModeStack.swift */,
+				2C69A04628B18CA200D5006D /* SplashScreenStack.swift */,
+			);
+			path = Stacks;
 			sourceTree = "<group>";
 		};
 		2CCCADAC2881F1970033E2EF /* Scripts */ = {
@@ -1361,6 +1398,7 @@
 				2C69A06728B19BC600D5006D /* DeviceShakeViewModifier.swift in Sources */,
 				2C69A06828B19BC600D5006D /* DateControlView.swift in Sources */,
 				2C69A06928B19BC600D5006D /* Taskable.swift in Sources */,
+				2CC2D9AE28C4D6270036817B /* EditModeStack.swift in Sources */,
 				2C69A06A28B19BC600D5006D /* AppDelegate_iOS.swift in Sources */,
 				2C9435E328B28B9D00281AF7 /* DataViewer.swift in Sources */,
 				2C513B5128BFDCA500A835C4 /* DataSource.swift in Sources */,
@@ -1387,6 +1425,7 @@
 				2C69A07C28B19BC600D5006D /* View+extensions.swift in Sources */,
 				2C69A07D28B19BC600D5006D /* QuickAddSection.swift in Sources */,
 				2C69A07E28B19BC600D5006D /* DeviceModel.swift in Sources */,
+				2CC2D9B128C4D7430036817B /* EditButton.swift in Sources */,
 				2C9435E728B28C8A00281AF7 /* CloudKitDataViewerScreen.swift in Sources */,
 				2C69A07F28B19BC600D5006D /* AppLogoColorSelector.swift in Sources */,
 				2C69A08028B19BC600D5006D /* CoreReminder+CoreDataProperties.swift in Sources */,
@@ -1416,6 +1455,7 @@
 				2C69A09428B19BC600D5006D /* CoreAttachments+CoreDataClass.swift in Sources */,
 				2C69A09528B19BC600D5006D /* AppTabView.swift in Sources */,
 				2C69A09628B19BC600D5006D /* Tasktive.xcdatamodeld in Sources */,
+				2CC2D9A828C4D5A20036817B /* EditMode.swift in Sources */,
 				2C69A09728B19BC600D5006D /* CoreAttachments+CoreDataProperties.swift in Sources */,
 				2C69A09828B19BC600D5006D /* FileManager+extensions.swift in Sources */,
 				2C69A09928B19BC600D5006D /* WideNavigationLink.swift in Sources */,
@@ -1456,6 +1496,7 @@
 				2C98E3EF28B12E170048149F /* DeviceShakeViewModifier.swift in Sources */,
 				2C98E3F028B12E170048149F /* DateControlView.swift in Sources */,
 				2C98E3F128B12E170048149F /* Taskable.swift in Sources */,
+				2CC2D9AF28C4D6270036817B /* EditModeStack.swift in Sources */,
 				2C98E3F228B12E170048149F /* AppDelegate_iOS.swift in Sources */,
 				2C9435E428B28B9D00281AF7 /* DataViewer.swift in Sources */,
 				2C513B5228BFDCA500A835C4 /* DataSource.swift in Sources */,
@@ -1482,6 +1523,7 @@
 				2C98E40228B12E170048149F /* View+extensions.swift in Sources */,
 				2C98E40328B12E170048149F /* QuickAddSection.swift in Sources */,
 				2C98E40428B12E170048149F /* DeviceModel.swift in Sources */,
+				2CC2D9B228C4D7430036817B /* EditButton.swift in Sources */,
 				2C9435E828B28C8A00281AF7 /* CloudKitDataViewerScreen.swift in Sources */,
 				2C98E40528B12E170048149F /* AppLogoColorSelector.swift in Sources */,
 				2C98E40628B12E170048149F /* CoreReminder+CoreDataProperties.swift in Sources */,
@@ -1511,6 +1553,7 @@
 				2C98E41728B12E170048149F /* CoreAttachments+CoreDataClass.swift in Sources */,
 				2C98E41828B12E170048149F /* AppTabView.swift in Sources */,
 				2C98E41928B12E170048149F /* Tasktive.xcdatamodeld in Sources */,
+				2CC2D9A928C4D5A20036817B /* EditMode.swift in Sources */,
 				2C98E41A28B12E170048149F /* CoreAttachments+CoreDataProperties.swift in Sources */,
 				2C98E43C28B1306F0048149F /* FileManager+extensions.swift in Sources */,
 				2C98E41B28B12E170048149F /* WideNavigationLink.swift in Sources */,
@@ -1551,6 +1594,7 @@
 				2CE9EFBC28AD667300C89888 /* DeviceShakeViewModifier.swift in Sources */,
 				2C8158F028C2756800B98E6C /* TaskArguments.swift in Sources */,
 				2C3B27C6288C77F7007CE538 /* DateControlView.swift in Sources */,
+				2CC2D9AD28C4D6270036817B /* EditModeStack.swift in Sources */,
 				2C51C918288481F7008939F7 /* Taskable.swift in Sources */,
 				2CFCA0A628A97842007A08F2 /* AppDelegate_iOS.swift in Sources */,
 				2C9435E228B28B9D00281AF7 /* DataViewer.swift in Sources */,

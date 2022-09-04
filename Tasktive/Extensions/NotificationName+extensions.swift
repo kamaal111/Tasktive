@@ -11,6 +11,7 @@ extension Notification.Name {
     static let navigateToPlayground = makeNotificationName(withKey: "navigate_to_playground")
     static let currentScreenChanged = makeNotificationName(withKey: "current_screen_changed")
     static let iCloudChanges = makeNotificationName(withKey: "icloud_changes")
+    static let changeEditMode = makeNotificationName(withKey: "change_edit_mode")
     /// What happens if you shake your mac? 😋
     static let deviceDidShake = makeNotificationName(withKey: "device_did_shake")
 

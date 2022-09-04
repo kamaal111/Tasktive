@@ -123,11 +123,16 @@ struct TasksScreen: View {
                 .frame(minWidth: 300, minHeight: 160)
             #endif
         }
-        #if os(iOS)
-        .navigationBarItems(
-            leading: EditButton()
-        )
-        #endif
+        .toolbar {
+            #if os(iOS)
+            ToolbarItem(placement: .navigationBarLeading) {
+                EditButton()
+                    .bold()
+            }
+            #else
+            EditButton()
+            #endif
+        }
     }
 
     private func handleTaskEditedInDetailsSheet(_ arguments: TaskArguments?) {

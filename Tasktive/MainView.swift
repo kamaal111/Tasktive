@@ -16,18 +16,20 @@ struct MainView: View {
 
     var body: some View {
         SplashScreenStack(enabled: DeviceModel.deviceType != .mac) {
-            if DeviceModel.deviceType.shouldHaveSidebar {
-                #if os(iOS) // if iPad
-                NavigationSplitView(sidebar: { Sidebar() }, detail: { DetailsColumn() })
-                #else // if mac
-                // Can't use `NavigationSplitView` yet because the sidebar breaks the navigation on macOS
-                NavigationView {
-                    Sidebar()
-                    DetailsColumn()
+            EditModeStack {
+                if DeviceModel.deviceType.shouldHaveSidebar {
+                    #if os(iOS) // if iPad
+                    NavigationSplitView(sidebar: { Sidebar() }, detail: { DetailsColumn() })
+                    #else // if mac
+                    // Can't use `NavigationSplitView` yet because the sidebar breaks the navigation on macOS
+                    NavigationView {
+                        Sidebar()
+                        DetailsColumn()
+                    }
+                    #endif
+                } else {
+                    AppTabView() // if iPhone
                 }
-                #endif
-            } else {
-                AppTabView() // if iPhone
             }
         }
     }
