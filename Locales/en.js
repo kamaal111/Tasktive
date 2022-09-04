@@ -17,6 +17,7 @@ module.exports = {
   INVALID_TITLE_WARNING_DESCRIPTION: 'Invalid title',
   CLOSE: 'Close',
   DONE: 'Done',
+  EDIT: 'Edit',
   DELETE: 'Delete',
   TITLE_INPUT_TITLE: 'Title',
   PROGRESS: 'Progress',

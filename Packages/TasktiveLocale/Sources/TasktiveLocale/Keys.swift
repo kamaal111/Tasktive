@@ -23,6 +23,7 @@ extension TasktiveLocale {
         case INVALID_TITLE_WARNING_DESCRIPTION
         case CLOSE
         case DONE
+        case EDIT
         case DELETE
         case TITLE_INPUT_TITLE
         case PROGRESS

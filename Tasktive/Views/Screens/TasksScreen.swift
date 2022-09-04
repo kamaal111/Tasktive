@@ -78,9 +78,7 @@ struct TasksScreen: View {
                     },
                     focusOnTask: { task in viewModel.setCurrentFocusedTaskID(task.id) },
                     onDetailsPress: { task in Task { await viewModel.showDetailsSheet(for: task) } },
-                    onDelete: { indexSet in Task {
-                        await tasksViewModel.deleteTasks(by: viewModel.currentDay, indices: indexSet)
-                    }}
+                    onDelete: { task in Task { await tasksViewModel.deleteTask(task) } }
                 )
                 .disabled(tasksViewModel.settingTasks)
                 #if os(macOS)
@@ -89,11 +87,6 @@ struct TasksScreen: View {
             }
             .padding(.bottom, viewModel.quickAddViewSize.height)
             .ktakeSizeEagerly(alignment: .topLeading)
-            #if os(iOS)
-                .navigationBarItems(
-                    leading: EditButton()
-                )
-            #endif
             QuickAddSection(
                 title: $viewModel.newTitle,
                 currentSource: $viewModel.currentSource,
@@ -125,7 +118,17 @@ struct TasksScreen: View {
             .accentColor(theme.currentAccentColor)
             .withPopperUp(popperUpManager)
             #if os(macOS)
-                .frame(minWidth: 300, minHeight: 140)
+                .frame(minWidth: 300, minHeight: 160)
+            #endif
+        }
+        .toolbar {
+            #if os(iOS)
+            ToolbarItem(placement: .navigationBarLeading) {
+                EditButton()
+                    .bold()
+            }
+            #else
+            EditButton()
             #endif
         }
     }
@@ -164,7 +167,7 @@ struct TasksScreen: View {
         }
 
         Task {
-            let result = await tasksViewModel.deleteTask(on: viewModel.currentSource, by: task.id, date: task.dueDate)
+            let result = await tasksViewModel.deleteTask(task)
             switch result {
             case let .failure(failure):
                 popperUpManager.showPopup(style: failure.style, timeout: failure.timeout)

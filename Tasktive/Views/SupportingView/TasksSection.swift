@@ -8,6 +8,7 @@
 import SwiftUI
 import SalmonUI
 import TasktiveLocale
+import ShrimpExtensions
 
 struct TasksSection: View {
     let tasks: [AppTask]
@@ -16,7 +17,7 @@ struct TasksSection: View {
     let onTaskTick: (_ task: AppTask, _ newTickedState: Bool) -> Void
     let focusOnTask: (_ task: AppTask) -> Void
     let onDetailsPress: (_ task: AppTask) -> Void
-    let onDelete: (_ atOffsets: IndexSet) -> Void
+    let onDelete: (_ task: AppTask) -> Void
 
     var body: some View {
         KSection(header: TasktiveLocale.getText(.TASKS)) {
@@ -28,22 +29,24 @@ struct TasksSection: View {
                     .ktakeWidthEagerly()
             }
             ForEach(tasks, id: \.self) { task in
-                VStack {
-                    TaskItemView(
-                        task: task,
-                        isFocused: task.id == currentFocusedTaskID,
-                        onTaskTick: { ticked in onTaskTick(task, ticked) },
-                        focusOnTask: { focusOnTask(task) },
-                        onDetailsPress: { onDetailsPress(task) }
-                    )
-                    #if os(macOS)
-                    if task != tasks.last {
-                        Divider()
-                    }
-                    #endif
-                }
+                TaskItemView(
+                    task: task,
+                    isFocused: task.id == currentFocusedTaskID,
+                    hasADivider: task != tasks.last,
+                    onTaskTick: { ticked in onTaskTick(task, ticked) },
+                    focusOnTask: { focusOnTask(task) },
+                    onDetailsPress: { onDetailsPress(task) },
+                    onDelete: { task in onDelete(task) }
+                )
             }
-            .onDelete(perform: onDelete)
+            .onDelete(perform: { indices in
+                for index in indices {
+                    guard let task = tasks.at(index) else { break }
+
+                    onDelete(task)
+                    break
+                }
+            })
         }
     }
 }

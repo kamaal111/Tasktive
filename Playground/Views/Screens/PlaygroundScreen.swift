@@ -22,7 +22,9 @@ struct PlaygroundScreen: View {
                 #if os(macOS)
                     .padding(.bottom, .extraSmall)
                 #endif
-                PlaygroundNavigationButton(title: "Cloud Kit data viewer", destination: .cloudKitDataViewer)
+                if Features.iCloudSyncing {
+                    PlaygroundNavigationButton(title: "Cloud Kit data viewer", destination: .cloudKitDataViewer)
+                }
             }
         }
         #if os(macOS)
