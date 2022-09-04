@@ -148,29 +148,17 @@ final class TasksViewModel: ObservableObject {
         })
     }
 
-    func deleteTasks(by date: Date, indices: IndexSet) async -> Result<Void, UserErrors> {
-        var deletionIndex: Int?
-        for index in indices {
-            deletionIndex = index
-        }
-
-        let dateHash = getHashDate(from: date)
-        guard let deletionIndex = deletionIndex,
-              let taskToDelete = tasks[dateHash]?.at(deletionIndex) else { return .failure(.deleteFailure) }
-
-        return await deleteTask(on: taskToDelete.source, by: taskToDelete.id, date: dateHash)
-    }
-
-    func deleteTask(on source: DataSource, by id: UUID, date: Date) async -> Result<Void, UserErrors> {
+    func deleteTask(_ task: AppTask) async -> Result<Void, UserErrors> {
         await withSettingTasks(completion: {
-            let dateHash = getHashDate(from: date)
-
-            guard let taskIndex = tasks[dateHash]?.findIndex(by: \.id, is: id) else { return .failure(.deleteFailure) }
-
             do {
-                try await dataClient.tasks.delete(on: source, by: id)
+                try await dataClient.tasks.delete(on: task.source, by: task.id)
             } catch {
                 logger.error(label: "failed to delete this task", error: error)
+                return .failure(.deleteFailure)
+            }
+
+            let dateHash = getHashDate(from: task.dueDate)
+            guard let taskIndex = tasks[dateHash]?.findIndex(by: \.id, is: task.id) else {
                 return .failure(.deleteFailure)
             }
 

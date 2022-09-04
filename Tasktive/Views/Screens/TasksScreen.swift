@@ -78,9 +78,7 @@ struct TasksScreen: View {
                     },
                     focusOnTask: { task in viewModel.setCurrentFocusedTaskID(task.id) },
                     onDetailsPress: { task in Task { await viewModel.showDetailsSheet(for: task) } },
-                    onDelete: { indexSet in Task {
-                        await tasksViewModel.deleteTasks(by: viewModel.currentDay, indices: indexSet)
-                    }}
+                    onDelete: { task in Task { await tasksViewModel.deleteTask(task) } }
                 )
                 .disabled(tasksViewModel.settingTasks)
                 #if os(macOS)
@@ -169,7 +167,7 @@ struct TasksScreen: View {
         }
 
         Task {
-            let result = await tasksViewModel.deleteTask(on: viewModel.currentSource, by: task.id, date: task.dueDate)
+            let result = await tasksViewModel.deleteTask(task)
             switch result {
             case let .failure(failure):
                 popperUpManager.showPopup(style: failure.style, timeout: failure.timeout)
