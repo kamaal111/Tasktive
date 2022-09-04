@@ -9,7 +9,7 @@ import CloudKit
 import Foundation
 import ShrimpExtensions
 
-public struct CloudTask: Identifiable, Hashable, Cloudable {
+public struct CloudTask: Identifiable, Hashable {
     public let id: UUID
     public let creationDate: Date
     public let updateDate: Date
@@ -44,6 +44,36 @@ public struct CloudTask: Identifiable, Hashable, Cloudable {
         self.title = title
         self._record = record
     }
+}
+
+extension CloudTask: Cloudable {
+    public var record: CKRecord {
+        RecordKeys.allCases.reduce(_record ?? CKRecord(recordType: Self.recordType)) { result, key in
+            switch key {
+            case .id:
+                result[key] = id.nsString
+            case .creationDate:
+                result[key] = creationDate.asNSDate
+            case .updateDate:
+                result[key] = updateDate.asNSDate
+            case .completionDate:
+                result[key] = completionDate?.asNSDate
+            case .dueDate:
+                result[key] = dueDate.asNSDate
+            case .notes:
+                result[key] = notes?.nsString
+            case .taskDescription:
+                result[key] = taskDescription?.nsString
+            case .ticked:
+                result[key] = ticked.int.nsNumber
+            case .title:
+                result[key] = title.nsString
+            }
+            return result
+        }
+    }
+
+    public static let recordType = "CloudTask"
 
     public static func fromRecord(_ record: CKRecord) -> CloudTask? {
         guard let id = (record[.id] as? NSString)?.uuid,
@@ -66,32 +96,20 @@ public struct CloudTask: Identifiable, Hashable, Cloudable {
             record: record
         )
     }
+}
 
-    public var record: CKRecord {
-        let record = _record ?? CKRecord(recordType: Self.recordType)
-        record[.id] = id
-        record[.creationDate] = creationDate.asNSDate
-        record[.updateDate] = updateDate.asNSDate
-        record[.completionDate] = completionDate?.asNSDate
-        record[.dueDate] = dueDate.asNSDate
-        record[.taskDescription] = taskDescription?.nsString
-        record[.ticked] = ticked.int.nsNumber
-        return record
-    }
-
-    enum RecordKeys: String {
+extension CloudTask {
+    enum RecordKeys: String, CaseIterable {
         case id
-        case creationDate = "creation_date"
-        case updateDate = "update_date"
-        case completionDate = "completion_date"
-        case dueDate = "due_date"
+        case creationDate = "kCreationDate"
+        case updateDate
+        case completionDate
+        case dueDate
         case notes
-        case taskDescription = "task_description"
+        case taskDescription
         case ticked
         case title
     }
-
-    static let recordType = "CloudTask"
 }
 
 extension CKRecord {

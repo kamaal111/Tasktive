@@ -35,7 +35,7 @@ struct SettingsScreen: View {
     }
 
     private var feedbackConfiguration: FeedbackConfiguration<FeedbackMetadata>? {
-        guard let gitHubToken = gitHubToken else { return nil }
+        guard let gitHubToken = gitHubToken, Features.feedback else { return nil }
 
         return .init(
             gitHubToken: gitHubToken,
@@ -88,6 +88,7 @@ struct SettingsScreen: View {
     }
 }
 
+#if DEBUG
 struct SettingsScreen_Previews: PreviewProvider {
     static var previews: some View {
         var configuration = PreviewConfiguration()
@@ -100,3 +101,4 @@ struct SettingsScreen_Previews: PreviewProvider {
         }
     }
 }
+#endif

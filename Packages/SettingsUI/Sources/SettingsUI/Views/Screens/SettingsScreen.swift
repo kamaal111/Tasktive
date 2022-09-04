@@ -48,7 +48,8 @@ extension SettingsUI {
         }
 
         public var body: some View {
-            SettingsScreenView(feedbackConfiguration: feedbackConfiguration)
+            SettingsScreenView(hasDonations: store.hasDonations, feedbackConfiguration: feedbackConfiguration)
+                .onAppear(perform: handleAppear)
                 .environmentObject(store)
                 .navigationDestination(for: SettingsScreens.self) { screen in
                     SettingsStackView(
@@ -62,7 +63,14 @@ extension SettingsUI {
                         onPurchaseFailure: onPurchaseFailure,
                         navigationPath: { navigationPath.removeLast() }
                     )
+                    .environmentObject(store)
                 }
+        }
+
+        private func handleAppear() {
+            Task {
+                _ = try? await store.requestProducts().get()
+            }
         }
     }
     #else
@@ -120,19 +128,26 @@ extension SettingsUI {
                 }
                 SettingsScreenView(
                     feedbackConfiguration: feedbackConfiguration,
+                    hasDonations: store.hasDonations,
                     onNavigate: { screen in
                         currentScreen = screen
                     }
                 )
                 .environmentObject(store)
             }
+            .onAppear(perform: handleAppear)
+        }
+
+        private func handleAppear() {
+            Task {
+                _ = try? await store.requestProducts().get()
+            }
         }
     }
     #endif
 
     private struct SettingsScreenView<T: Encodable>: View {
-        @EnvironmentObject private var store: Store
-
+        let hasDonations: Bool
         let feedbackConfiguration: FeedbackConfiguration<T>?
         #if swift(<5.7)
         let onNavigate: (_ screen: SettingsScreens) -> Void
@@ -145,7 +160,7 @@ extension SettingsUI {
 
         var body: some View {
             KScrollableForm {
-                if store.hasDonations {
+                if hasDonations {
                     #if swift(>=5.7)
                     SupportAuthorSection()
                     #else
@@ -166,30 +181,15 @@ extension SettingsUI {
                 #endif
                 AboutSection()
             }
-            .onAppear(perform: handleAppear)
             #if os(macOS)
-                .padding(.vertical, 16)
-                .padding(.horizontal, 16)
-                .ktakeSizeEagerly(alignment: .topLeading)
+            .padding(.vertical, 16)
+            .padding(.horizontal, 16)
+            .ktakeSizeEagerly(alignment: .topLeading)
             #endif
         }
 
         private var showFeedbackSection: Bool {
             feedbackConfiguration?.gitHubToken != nil
-        }
-
-        private func handleAppear() {
-            Task {
-                let result = await store.requestProducts()
-                switch result {
-                case let .failure(failure):
-                    let message =
-                        "failed to get donations; description='\(failure.localizedDescription)'; error='\(failure)'"
-                    logger.error("\(message)")
-                case .success:
-                    break
-                }
-            }
         }
     }
 

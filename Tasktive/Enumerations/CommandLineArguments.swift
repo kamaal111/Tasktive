@@ -11,6 +11,8 @@ enum CommandLineArguments: String {
     case uiTestingLightMode = "ui_testing_light_mode"
     case uiTestingDarkMode = "ui_testing_dark_mode"
     case previewCoredata = "preview_core_data"
+    case enableICloudSyncing = "enable_icloud_syncing"
+    case enableFeedback = "enable_feedback"
 
     var enabled: Bool {
         CommandLine.arguments.contains(rawValue)

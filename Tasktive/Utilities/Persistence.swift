@@ -46,7 +46,7 @@ struct PersistenceController {
         let result = PersistenceController(inMemory: true)
 
         let aDayInMinutes = 1440
-        let arguments: [CoreTask.Arguments] = [
+        let arguments: [TaskArguments] = [
             .init(
                 title: "Yesterdays Task",
                 taskDescription: "Did stuff",

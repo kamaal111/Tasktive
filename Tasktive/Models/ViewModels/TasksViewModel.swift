@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Skypiea
 import PopperUp
 import TasktiveLocale
 import ShrimpExtensions
@@ -17,30 +18,31 @@ final class TasksViewModel: ObservableObject {
     @Published private(set) var loadingTasks = false
     @Published private(set) var settingTasks = false
 
-    private let persistenceController: PersistenceController
-    private let dataClient = DataClient()
+    private var lastFetchedForDate: Date?
+    private let dataClient: DataClient
+    private let notifications: [Notification.Name] = [
+        .iCloudChanges,
+    ]
 
     init() {
         #if !DEBUG
-        self.persistenceController = .shared
+        self.dataClient = .init(preview: false)
         #else
-        if CommandLineArguments.previewCoredata.enabled {
-            self.persistenceController = .preview
-        } else {
-            self.persistenceController = .shared
-        }
+        self.dataClient = .init(preview: CommandLineArguments.previewCoredata.enabled)
         #endif
+        setupObservers()
     }
 
     #if DEBUG
     init(preview: Bool) {
-        if preview || CommandLineArguments.previewCoredata.enabled {
-            self.persistenceController = .preview
-        } else {
-            self.persistenceController = .shared
-        }
+        self.dataClient = .init(preview: preview || CommandLineArguments.previewCoredata.enabled)
+        setupObservers()
     }
     #endif
+
+    deinit {
+        removeObservers()
+    }
 
     var taskDates: [Date] {
         tasks.keys
@@ -80,21 +82,12 @@ final class TasksViewModel: ObservableObject {
         return Double(tasksDone) / Double(tasks.count)
     }
 
-    func createTask(with arguments: CoreTask.Arguments) async -> Result<Void, UserErrors> {
-        let result: Result<AppTask, UserErrors> = dataClient
-            .create(with: arguments, from: persistenceController.context, of: CoreTask.self)
-            .mapError {
-                logger.error(label: "failed to create this task", error: $0)
-                return UserErrors.createTaskFailure
-            }
-            .map(\.asAppTask)
-
+    func createTask(with arguments: TaskArguments, on source: DataSource) async -> Result<Void, UserErrors> {
         let task: AppTask
-        switch result {
-        case let .failure(failure):
-            return .failure(failure)
-        case let .success(success):
-            task = success
+        do {
+            task = try await dataClient.tasks.create(on: source, with: arguments)
+        } catch {
+            return .failure(.createTaskFailure)
         }
 
         var updatedTasks = tasks
@@ -110,20 +103,20 @@ final class TasksViewModel: ObservableObject {
         return .success(())
     }
 
-    func getTasks(for date: Date) async -> Result<Void, UserErrors> {
-        await getTasks(for: date, updateNotCompletedTasks: false)
+    func getTasks(from sources: [DataSource], for date: Date) async -> Result<Void, UserErrors> {
+        await getTasks(from: sources, for: date, updateNotCompletedTasks: false)
     }
 
-    func getTodaysTasks() async -> Result<Void, UserErrors> {
-        await getTasks(for: Date(), updateNotCompletedTasks: true)
+    func getTodaysTasks(from sources: [DataSource]) async -> Result<Void, UserErrors> {
+        await getTasks(from: sources, for: Date(), updateNotCompletedTasks: true)
     }
 
-    func getAllTasks() async -> Result<Void, UserErrors> {
-        let predicate = NSPredicate(value: true)
-        return await getTasksByPredicate(predicate, updateNotCompletedTasks: true)
+    func getAllTasks(from sources: [DataSource],
+                     updateNotCompletedTasks: Bool = true) async -> Result<Void, UserErrors> {
+        await getTasksByPredicate(from: sources, by: nil, updateNotCompletedTasks: updateNotCompletedTasks)
     }
 
-    func updateTask(_ task: AppTask, with arguments: CoreTask.Arguments) async -> Result<Void, UserErrors> {
+    func updateTask(_ task: AppTask, with arguments: TaskArguments) async -> Result<Void, UserErrors> {
         await withSettingTasks(completion: {
             guard task.coreTaskArguments != arguments else { return .success(()) }
 
@@ -139,145 +132,93 @@ final class TasksViewModel: ObservableObject {
             guard let taskIndex = tasks[dateHash]?.findIndex(by: \.id, is: task.id)
             else { return .failure(.updateFailure) }
 
-            let result: Result<CoreTask, UserErrors> = dataClient.update(
-                by: task.id,
-                with: arguments,
-                from: persistenceController.context,
-                of: CoreTask.self
-            )
-            .mapError {
-                let error: Error?
-                switch $0 {
-                case .notFound:
-                    logger.error("task not found")
-                    return UserErrors.updateFailure
-                case let .crud(error: crudError):
-                    error = crudError as? CoreTask.CrudErrors
-                }
-
-                guard let error = error else { return UserErrors.updateFailure }
-
+            let updatedTask: AppTask
+            do {
+                updatedTask = try await dataClient.tasks.update(on: task.source, by: task.id, with: arguments)
+            } catch {
                 logger.error(label: "failed to update this task", error: error)
-                return UserErrors.updateFailure
-            }
-            let updatedTask: CoreTask
-            switch result {
-            case let .failure(failure):
-                return .failure(failure)
-            case let .success(success):
-                updatedTask = success
+                return .failure(.updateFailure)
             }
 
             var mutableTask = tasks
-            mutableTask[dateHash]?[taskIndex] = updatedTask.asAppTask
+            mutableTask[dateHash]?[taskIndex] = updatedTask
             await setTasks(mutableTask[dateHash] ?? [], forDate: dateHash)
 
             return .success(())
         })
     }
 
-    func deleteTasks(by date: Date, indexSet: IndexSet) async -> Result<Void, UserErrors> {
+    func deleteTasks(by date: Date, indices: IndexSet) async -> Result<Void, UserErrors> {
+        var deletionIndex: Int?
+        for index in indices {
+            deletionIndex = index
+        }
+
         let dateHash = getHashDate(from: date)
-        var mutableTask = tasks
-        let indicesReversed = indexSet.sorted().reversed()
+        guard let deletionIndex = deletionIndex,
+              let taskToDelete = tasks[dateHash]?.at(deletionIndex) else { return .failure(.deleteFailure) }
 
-        for taskIndex in indicesReversed {
-            let id = tasks[dateHash]![taskIndex].id
-            _ = await deleteTask(id)
-        }
-
-        for taskIndex in indicesReversed {
-            mutableTask[dateHash]?.remove(at: taskIndex)
-        }
-
-        await setTasks(mutableTask[dateHash] ?? [], forDate: dateHash)
-
-        return .success(())
+        return await deleteTask(on: taskToDelete.source, by: taskToDelete.id, date: dateHash)
     }
 
-    func deleteTask(on date: Date, by id: UUID) async -> Result<Void, UserErrors> {
+    func deleteTask(on source: DataSource, by id: UUID, date: Date) async -> Result<Void, UserErrors> {
         await withSettingTasks(completion: {
             let dateHash = getHashDate(from: date)
-            guard let taskIndex = tasks[dateHash]?.findIndex(by: \.id, is: id)
-            else { return .failure(.deleteFailure) }
 
-            let result = await deleteTask(id)
+            guard let taskIndex = tasks[dateHash]?.findIndex(by: \.id, is: id) else { return .failure(.deleteFailure) }
 
-            switch result {
-            case let .failure(failure):
-                return .failure(failure)
-            case .success():
-                var mutableTask = tasks
-                mutableTask[dateHash]?.remove(at: taskIndex)
-                await setTasks(mutableTask[dateHash] ?? [], forDate: dateHash)
-                return result
+            do {
+                try await dataClient.tasks.delete(on: source, by: id)
+            } catch {
+                logger.error(label: "failed to delete this task", error: error)
+                return .failure(.deleteFailure)
             }
+
+            var mutableTask = tasks
+            mutableTask[dateHash]?.remove(at: taskIndex)
+            await setTasks(mutableTask[dateHash] ?? [], forDate: dateHash)
+
+            return .success(())
         })
     }
 
-    private func deleteTask(_ id: UUID) async -> Result<Void, UserErrors> {
-        let result = dataClient.delete(
-            by: id,
-            from: persistenceController.context,
-            of: CoreTask.self
-        )
-        .mapError {
-            let error: Error?
-            switch $0 {
-            case .notFound:
-                logger.error("task not found")
-                return UserErrors.deleteFailure
-            case let .crud(error: crudError):
-                error = crudError as? CoreTask.CrudErrors
-            }
-
-            guard let error = error else { return UserErrors.deleteFailure }
-
-            logger.error(label: "failed to delete this task", error: error)
-            return UserErrors.deleteFailure
-        }
-        switch result {
-        case let .failure(failure):
-            return .failure(failure)
-        case .success():
-            break
-        }
-
-        return .success(())
-    }
-
-    private func getTasks(for date: Date, updateNotCompletedTasks: Bool) async -> Result<Void, UserErrors> {
+    private func getTasks(from sources: [DataSource],
+                          for date: Date,
+                          updateNotCompletedTasks: Bool) async -> Result<Void, UserErrors> {
+        lastFetchedForDate = date
         let startDate = getHashDate(from: date)
         let endDate = getHashDate(from: startDate.incrementByDays(1)).incrementBySeconds(-1)
 
         let predicate = NSPredicate(format: "(dueDate >= %@) AND (dueDate <= %@)", startDate.asNSDate, endDate.asNSDate)
-        return await getTasksByPredicate(predicate, updateNotCompletedTasks: updateNotCompletedTasks)
+        return await getTasksByPredicate(
+            from: sources,
+            by: predicate.predicateFormat,
+            updateNotCompletedTasks: updateNotCompletedTasks
+        )
     }
 
-    private func getTasksByPredicate(_ predicate: NSPredicate,
+    private func getTasksByPredicate(from sources: [DataSource],
+                                     by queryString: String?,
                                      updateNotCompletedTasks: Bool) async -> Result<Void, UserErrors> {
         await withLoadingTasks {
-            let tasksResult: Result<[CoreTask], UserErrors> = dataClient
-                .filter(by: predicate, from: persistenceController.context, of: CoreTask.self)
-                .mapError {
-                    logger.error(label: "failed to get all tasks", error: $0)
-                    return UserErrors.getAllFailure
-                }
-
-            let tasks: [CoreTask]
-            switch tasksResult {
-            case let .failure(failure):
-                return .failure(failure)
-            case let .success(success):
-                tasks = success
-            }
-
             var appTasks: [AppTask] = []
-            await persistenceController.context.perform {
-                appTasks = tasks.map(\.asAppTask)
+
+            for source in sources {
+                let tasksResult = await getFilteredTasks(from: source, by: queryString)
+
+                switch tasksResult {
+                case let .failure(failure):
+                    return .failure(failure)
+                case let .success(success):
+                    appTasks.append(contentsOf: success)
+                }
             }
 
-            let maybeUpdatedTasks = updateDueDateOfTasksIfNeeded(appTasks, enabled: updateNotCompletedTasks)
+            let maybeUpdatedTasks = await updateDueDateOfTasksIfNeeded(
+                appTasks,
+                enabled: updateNotCompletedTasks,
+                sources: sources
+            )
             let groupedTasks = Dictionary(grouping: maybeUpdatedTasks, by: {
                 getHashDate(from: $0.dueDate)
             })
@@ -291,58 +232,56 @@ final class TasksViewModel: ObservableObject {
         }
     }
 
-    private func validateTaskArguments(_ arguments: CoreTask.Arguments) -> Result<Void, UserErrors> {
+    private func getFilteredTasks(from source: DataSource,
+                                  by queryString: String?) async -> Result<[AppTask], TasksViewModel.UserErrors> {
+        let tasks: [AppTask]
+        do {
+            tasks = try await dataClient.tasks.filter(from: source, by: queryString)
+        } catch {
+            logger.error(label: "failed to get all tasks", error: error)
+            return .failure(.getAllFailure)
+        }
+
+        return .success(tasks)
+    }
+
+    private func validateTaskArguments(_ arguments: TaskArguments) -> Result<Void, UserErrors> {
         guard !arguments.title.trimmingByWhitespacesAndNewLines.isEmpty else { return .failure(.invalidTitle) }
 
         return .success(())
     }
 
-    private func updateDueDateOfTasksIfNeeded(_ tasks: [AppTask], enabled: Bool) -> [AppTask] {
+    private func updateDueDateOfTasksIfNeeded(_ tasks: [AppTask],
+                                              enabled: Bool,
+                                              sources: [DataSource]) async -> [AppTask] {
         guard enabled else { return tasks }
 
-        let today = getHashDate(from: Date()).asNSDate
-        let tasksIDs = tasks.map(\.id.nsString)
-
         let now = Date()
+        let today = getHashDate(from: now).asNSDate
+        let tasksIDs = tasks.map(\.id.nsString)
+        let predicate = NSPredicate(format: "(dueDate < %@) AND ticked == NO AND NOT(id in %@)", today, tasksIDs)
 
-        let predicate = NSPredicate(format: "(dueDate < %@) AND ticked == NO AND NOT(id in %@) ", today, tasksIDs)
-        let tasksResult = dataClient.filter(by: predicate, from: persistenceController.context, of: CoreTask.self)
-            .map { tasks in
-                tasks
-                    .map { task -> AppTask in
-                        var mutableTask = task.asAppTask
-                        mutableTask.dueDate = now
-                        return mutableTask
-                    }
+        var updatedTasks: [AppTask] = []
+        for source in sources {
+            guard let outdatedTasks = try? await dataClient.tasks.filter(from: source, by: predicate.predicateFormat),
+                  !outdatedTasks.isEmpty else { continue }
+
+            do {
+                try await dataClient.tasks.updateManyDates(outdatedTasks, from: source, date: now)
+            } catch {
+                logger.error(label: "failed to updated outdated tasks", error: error)
+                updatedTasks.append(contentsOf: outdatedTasks)
+                continue
             }
 
-        let outdatedTasks: [AppTask]
-        switch tasksResult {
-        case let .failure(failure):
-            logger.error(label: "failed to get updated outdated tasks", error: failure)
-            return tasks
-        case let .success(success):
-            outdatedTasks = success
+            updatedTasks.append(contentsOf: outdatedTasks.map { task in
+                var mutableTask = task
+                mutableTask.dueDate = now
+                return mutableTask
+            })
         }
 
-        guard !outdatedTasks.isEmpty else { return tasks }
-
-        logger.info("updating tasks with ids of '\(outdatedTasks.map(\.id))'")
-
-        let updateResult = dataClient.updateManyTaskDates(
-            by: outdatedTasks.map(\.id),
-            date: now,
-            context: persistenceController.context
-        )
-        switch updateResult {
-        case let .failure(failure):
-            logger.error(label: "failed to updated outdated tasks", error: failure)
-            return tasks
-        case .success:
-            break
-        }
-
-        return tasks + outdatedTasks
+        return tasks + updatedTasks
     }
 
     private func withLoadingTasks<T>(completion: () async -> T) async -> T {
@@ -379,6 +318,34 @@ final class TasksViewModel: ObservableObject {
     @MainActor
     private func setTasks(_ tasks: [AppTask], forDate date: Date) {
         self.tasks[getHashDate(from: date)] = tasks
+    }
+
+    private func setupObservers() {
+        notifications.forEach { notification in
+            NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(handleNotification),
+                name: notification,
+                object: .none
+            )
+        }
+    }
+
+    private func removeObservers() {
+        notifications.forEach { notification in
+            NotificationCenter.default.removeObserver(self, name: notification, object: .none)
+        }
+    }
+
+    @objc
+    private func handleNotification(_ notification: Notification) {
+        switch notification.name {
+        case .iCloudChanges:
+            guard let lastFetchedForDate = lastFetchedForDate, Features.iCloudSyncing else { return }
+            Task { await getTasks(from: [.iCloud], for: lastFetchedForDate) }
+        default:
+            break
+        }
     }
 }
 

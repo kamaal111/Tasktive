@@ -7,4 +7,5 @@
 #  
 
 rm -rf ~/Library/Containers/io.kamaal.Tasktivity
+rm -rf ~/Library/Containers/io.kamaal.Tasktivity.Debug
 echo "Cleared Mac data"

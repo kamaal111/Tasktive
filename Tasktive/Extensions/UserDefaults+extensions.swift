@@ -11,6 +11,8 @@ import SettingsUI
 extension UserDefaults {
     @UserDefaultObject(key: .appColor, container: .appGroup)
     static var appColor: AppColor?
+    @UserDefaultObject(key: .lastChosenDataSource, container: .appGroup)
+    static var lastChosenDataSource: DataSource?
 
     private static let appGroup = UserDefaults(suiteName: Constants.appGroupIdentifier)
 }
@@ -29,6 +31,7 @@ struct UserDefaultObject<Value: Codable> {
 
     enum Keys: String {
         case appColor
+        case lastChosenDataSource
     }
 
     var wrappedValue: Value? {

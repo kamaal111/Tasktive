@@ -12,7 +12,7 @@ import ICloutKit
 public struct Skypiea {
     private let preview: Bool
     private let iCloutKit = ICloutKit(
-        containerID: "iCloud.com.\(Bundle.main.bundleIdentifier!)",
+        containerID: "iCloud.com.io.kamaal.Tasktivity",
         databaseType: .private
     )
 
@@ -20,32 +20,57 @@ public struct Skypiea {
         self.preview = preview
     }
 
-    /// Fetch all of the given record
+    /// Fetch all of the given record.
     /// - Parameter objectType: `CloudKit` object
     /// - Returns: an array of records
-    func fetchAll(ofType objectType: String) async throws -> [CKRecord] {
+    func list(ofType objectType: String) async throws -> [CKRecord] {
+        guard !preview else {
+            /// - TODO: SOME PREVIEW DATA
+            return []
+        }
+
         let predicate = NSPredicate(value: true)
-        return try await fetch(ofType: objectType, withPredicate: predicate)
+        return try await filter(ofType: objectType, by: predicate)
     }
 
-    /// Fetch with predicate
+    /// Fetch with query.
     /// - Parameters:
-    ///   - objectType: `CloudKit` object
-    ///   - predicate: query
+    ///   - objectType: `CloudKit` object.
+    ///   - predicate: query.
     /// - Returns: an array of records
-    func fetch(ofType objectType: String, withPredicate predicate: NSPredicate) async throws -> [CKRecord] {
-        guard !preview else { return [] }
+    func filter(ofType objectType: String, by predicate: NSPredicate) async throws -> [CKRecord] {
+        guard !preview else {
+            /// - TODO: SOME PREVIEW DATA
+            return []
+        }
 
         return try await iCloutKit.fetch(ofType: objectType, by: predicate)
     }
 
-    /// Save the given record on iCloud
-    /// - Parameter record: the record to save
-    /// - Returns: the saved record if it succeeds
+    /// Save the given record on iCloud.
+    /// - Parameter record: the record to save.
+    /// - Returns: the saved record if it succeeds.
     func save(_ record: CKRecord) async throws -> CKRecord? {
         guard !preview else { return record }
 
         return try await iCloutKit.save(record)
+    }
+
+    /// Save many records in batch.
+    /// - Parameter records: the records to save.
+    /// - Returns: the updated records.
+    func saveMany(_ records: [CKRecord]) async throws -> [CKRecord] {
+        guard !preview else { return records }
+
+        return try await iCloutKit.saveMultiple(records)
+    }
+
+    /// Deletes the given record.
+    /// - Parameter record: the record to delete
+    func delete(_ record: CKRecord) async throws {
+        guard !preview else { return }
+
+        _ = try await iCloutKit.delete(record)
     }
 
     /// Singleton class for easy access of ``Skypiea/Skypiea``

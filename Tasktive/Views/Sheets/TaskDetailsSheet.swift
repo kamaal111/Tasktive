@@ -16,7 +16,7 @@ struct TaskDetailsSheet: View {
 
     let task: AppTask?
     let onClose: () -> Void
-    let onDone: (_ arguments: CoreTask.Arguments?) -> Void
+    let onDone: (_ arguments: TaskArguments?) -> Void
     let onDelete: () -> Void
 
     var body: some View {
@@ -56,7 +56,7 @@ struct TaskDetailsSheet: View {
     final class ViewModel: ObservableObject {
         @Published var title = ""
 
-        func makeCoreTaskArguments(using task: AppTask?) -> CoreTask.Arguments? {
+        func makeCoreTaskArguments(using task: AppTask?) -> TaskArguments? {
             guard let task = task else {
                 logger.warning("could not make task arguments")
                 return nil

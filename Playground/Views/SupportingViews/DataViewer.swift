@@ -14,11 +14,18 @@ struct DataViewer: View {
 
     let recordTypes: [String]
     let databaseItems: [GridItemConfiguration]
+    let fetchData: () -> Void
 
-    init(selectedType: Binding<String>, recordTypes: [String], databaseItems: [GridItemConfiguration]) {
+    init(
+        selectedType: Binding<String>,
+        recordTypes: [String],
+        databaseItems: [GridItemConfiguration],
+        fetchData: @escaping () -> Void
+    ) {
         self._selectedType = selectedType
         self.recordTypes = recordTypes
         self.databaseItems = databaseItems
+        self.fetchData = fetchData
     }
 
     var body: some View {
@@ -52,6 +59,10 @@ struct DataViewer: View {
         .padding(.horizontal, .medium)
         .ktakeSizeEagerly(alignment: .topLeading)
         #endif
+        .onAppear(perform: fetchData)
+        .onChange(of: selectedType, perform: { _ in
+            fetchData()
+        })
     }
 
     private var headerTitles: [String] {

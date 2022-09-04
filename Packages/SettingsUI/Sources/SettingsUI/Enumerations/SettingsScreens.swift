@@ -32,10 +32,14 @@ public enum SettingsScreens: Hashable, Codable, CaseIterable {
     }
 }
 
-public enum FeedbackStyles: Hashable, Codable, CaseIterable {
+public enum FeedbackStyles: Hashable, Codable, Identifiable, CaseIterable {
     case feature
     case bug
     case other
+
+    public var id: String {
+        title
+    }
 
     public var title: String {
         switch self {

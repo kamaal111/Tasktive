@@ -5,6 +5,7 @@
 //  Created by Kamaal M Farah on 17/07/2022.
 //
 
+import CloudKit
 import Foundation
 
 struct AppTask: Hashable, Identifiable {
@@ -16,7 +17,8 @@ struct AppTask: Hashable, Identifiable {
     var dueDate: Date
     var completionDate: Date?
     let creationDate: Date
-    let source: TaskSource
+    let source: DataSource
+    var record: CKRecord?
 
     init(
         id: UUID,
@@ -27,7 +29,8 @@ struct AppTask: Hashable, Identifiable {
         dueDate: Date,
         completionDate: Date?,
         creationDate: Date,
-        source: TaskSource
+        source: DataSource,
+        record: CKRecord? = nil
     ) {
         self.id = id
         self.title = title
@@ -38,9 +41,10 @@ struct AppTask: Hashable, Identifiable {
         self.completionDate = completionDate
         self.creationDate = creationDate
         self.source = source
+        self.record = record
     }
 
-    var coreTaskArguments: CoreTask.Arguments {
+    var coreTaskArguments: TaskArguments {
         .init(
             title: title,
             taskDescription: taskDescription,
@@ -52,7 +56,7 @@ struct AppTask: Hashable, Identifiable {
         )
     }
 
-    func toggleCoreTaskTickArguments(with newTickState: Bool) -> CoreTask.Arguments {
+    func toggleCoreTaskTickArguments(with newTickState: Bool) -> TaskArguments {
         .init(
             title: title,
             taskDescription: taskDescription,
@@ -71,10 +75,18 @@ extension AppTask: Gridable {
             "ID": idString,
             "Title": title,
             "Ticked": ticked ? "Yes" : "No",
+            "Due date": Self.dateFormatter.string(from: dueDate),
         ]
     }
 
     var idString: String {
         id.uuidString
     }
+
+    private static let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
+        return formatter
+    }()
 }

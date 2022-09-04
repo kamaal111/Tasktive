@@ -94,29 +94,33 @@ extension SettingsUI {
 
         public var body: some View {
             KSection(header: NSLocalizedString("Feedback", bundle: .module, comment: "")) {
-                ForEach(FeedbackStyles.allCases, id: \.self) { style in
-                    VStack {
-                        #if swift(>=5.7)
-                        RowImageTextNavigationLink(
-                            label: style.title,
-                            imageSystemName: style.imageSystemName,
-                            destination: .feedback(style: style)
-                        )
-                        #else
-                        RowImageTextNavigationLink(
-                            label: style.title,
-                            imageSystemName: style.imageSystemName,
-                            destination: .feedback(style: style),
-                            onNavigate: onNavigate
-                        )
-                        #endif
-                        #if os(macOS)
-                        if style != FeedbackStyles.allCases.last {
-                            Divider()
-                        }
-                        #endif
-                    }
+                feedbackButton(.feature, withDivider: true)
+                feedbackButton(.bug, withDivider: true)
+                feedbackButton(.other, withDivider: false)
+            }
+        }
+
+        private func feedbackButton(_ style: FeedbackStyles, withDivider: Bool) -> some View {
+            VStack {
+                #if swift(>=5.7)
+                RowImageTextNavigationLink(
+                    label: style.title,
+                    imageSystemName: style.imageSystemName,
+                    destination: .feedback(style: style)
+                )
+                #else
+                RowImageTextNavigationLink(
+                    label: style.title,
+                    imageSystemName: style.imageSystemName,
+                    destination: .feedback(style: style),
+                    onNavigate: onNavigate
+                )
+                #endif
+                #if os(macOS)
+                if withDivider {
+                    Divider()
                 }
+                #endif
             }
         }
     }

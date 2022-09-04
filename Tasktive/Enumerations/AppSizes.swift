@@ -20,4 +20,6 @@ enum AppSizes: CGFloat {
     case medium = 16
     /// Size of 24
     case large = 24
+    /// Size of 32
+    case extraLarge = 32
 }

@@ -12,20 +12,11 @@ import ShrimpExtensions
 private let logger = Logster(from: CoreTask.self)
 
 extension CoreTask: Crudable {
-    typealias ReturnType = CoreTask
-    typealias Context = NSManagedObjectContext
-
-    var arguments: Arguments {
+    var arguments: TaskArguments {
         .init(title: title, taskDescription: taskDescription, notes: notes, dueDate: dueDate, ticked: ticked)
     }
 
-    func update(with arguments: Arguments) -> Result<CoreTask, CrudErrors> {
-        guard let context = managedObjectContext else {
-            let message = "Context missing"
-            logger.warning(message)
-            return .failure(.generalFailure(message: message))
-        }
-
+    func update(with arguments: TaskArguments, on context: NSManagedObjectContext) -> Result<CoreTask, CrudErrors> {
         let updatedTask = updateValues(with: arguments)
 
         return CoreTask.save(from: context)
@@ -34,24 +25,28 @@ extension CoreTask: Crudable {
             }
     }
 
-    func delete() -> Result<Void, CrudErrors> {
-        guard let context = managedObjectContext else {
-            let message = "Context missing"
-            logger.warning(message)
-            return .failure(.generalFailure(message: message))
-        }
-
+    func delete(on context: NSManagedObjectContext) -> Result<Void, CrudErrors> {
         context.delete(self)
+
+        do {
+            try context.save()
+        } catch {
+            return .failure(.deletionFailure(context: error))
+        }
 
         return .success(())
     }
 
-    static func create(with arguments: Arguments,
+    static func find(by predicate: NSPredicate, from context: NSManagedObjectContext) -> Result<CoreTask?, CrudErrors> {
+        filter(by: predicate, limit: 1, from: context).map(\.first)
+    }
+
+    static func create(with arguments: TaskArguments,
                        from context: NSManagedObjectContext) -> Result<CoreTask, CrudErrors> {
         let newTask = CoreTask(context: context)
             .updateValues(with: arguments)
         newTask.id = arguments.id ?? UUID()
-        newTask.creationDate = Date()
+        newTask.kCreationDate = Date()
         newTask.attachments = NSSet(array: [])
         newTask.reminders = NSSet(array: [])
         newTask.tags = NSSet(array: [])
@@ -73,7 +68,8 @@ extension CoreTask: Crudable {
         filter(by: predicate, limit: nil, from: context)
     }
 
-    static func filter(by predicate: NSPredicate, limit: Int?,
+    static func filter(by predicate: NSPredicate,
+                       limit: Int?,
                        from context: NSManagedObjectContext) -> Result<[CoreTask], CrudErrors> {
         let request = request(by: predicate, limit: limit)
 
@@ -82,15 +78,18 @@ extension CoreTask: Crudable {
             result = try context.fetch(request)
         } catch {
             logger.error(label: "error while fetching tasks", error: error)
-            return .failure(.fetchFailure)
+            return .failure(.fetchFailure(context: error))
         }
 
         return .success(result)
     }
 
-    static func updateManyDates(by ids: [UUID], date: Date,
+    static func updateManyDates(_ tasks: [AppTask],
+                                date: Date,
                                 on context: NSManagedObjectContext) -> Result<Void, CrudErrors> {
-        let predicate = NSPredicate(format: "id IN %@", ids.map(\.nsString))
+        guard !tasks.isEmpty else { return .success(()) }
+
+        let predicate = NSPredicate(format: "id IN %@", tasks.map(\.id.nsString))
         let request = NSBatchUpdateRequest(entityName: CoreTask.description())
         request.predicate = predicate
 
@@ -101,7 +100,7 @@ extension CoreTask: Crudable {
             try context.execute(request)
         } catch {
             logger.error(label: "error while updating multiple tasks", error: error)
-            return .failure(.updateManyFailure)
+            return .failure(.updateManyFailure(context: error))
         }
 
         return .success(())
@@ -121,66 +120,25 @@ extension CoreTask: Crudable {
             try context.execute(deleteRequest)
         } catch {
             logger.error(label: "error while deleting tasks", error: error)
-            return .failure(.clearFailure)
+            return .failure(.clearFailure(context: error))
         }
 
         return save(from: context)
     }
     #endif
 
-    struct Arguments: Equatable {
-        var title: String
-        let taskDescription: String?
-        let notes: String?
-        var dueDate: Date
-        let ticked: Bool
-        let completionDate: Date?
-        let id: UUID?
-
-        init(title: String, taskDescription: String?, notes: String?, dueDate: Date, ticked: Bool) {
-            self.title = title
-            self.taskDescription = taskDescription
-            self.notes = notes
-            self.dueDate = dueDate
-            self.ticked = ticked
-            self.id = nil
-            self.completionDate = nil
-        }
-
-        init(title: String, taskDescription: String?, notes: String?, dueDate: Date) {
-            self.init(title: title, taskDescription: taskDescription, notes: notes, dueDate: dueDate, ticked: false)
-        }
-
-        init(
-            title: String,
-            taskDescription: String?,
-            notes: String?,
-            dueDate: Date,
-            ticked: Bool,
-            id: UUID,
-            completionDate: Date?
-        ) {
-            self.title = title
-            self.taskDescription = taskDescription
-            self.notes = notes
-            self.dueDate = dueDate
-            self.ticked = ticked
-            self.id = id
-            self.completionDate = completionDate
-        }
-    }
-
     enum CrudErrors: Error {
-        case saveFailure
-        case fetchFailure
-        case clearFailure
-        case updateManyFailure
+        case saveFailure(context: Error?)
+        case fetchFailure(context: Error?)
+        case clearFailure(context: Error?)
+        case deletionFailure(context: Error?)
+        case updateManyFailure(context: Error?)
         case generalFailure(message: String)
     }
 }
 
 extension CoreTask {
-    private func updateValues(with arguments: Arguments) -> CoreTask {
+    private func updateValues(with arguments: TaskArguments) -> CoreTask {
         ticked = arguments.ticked
         title = arguments.title
         taskDescription = arguments.taskDescription
@@ -208,7 +166,7 @@ extension CoreTask {
             try context.save()
         } catch {
             logger.error(label: "error while creating a task", error: error)
-            return .failure(.saveFailure)
+            return .failure(.saveFailure(context: error))
         }
 
         return .success(())

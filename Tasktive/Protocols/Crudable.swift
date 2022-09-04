@@ -11,17 +11,19 @@ protocol Crudable {
     associatedtype ReturnType: Crudable
     associatedtype CrudErrors: Error
     associatedtype Context
-    associatedtype Arguments
 
-    func update(with arguments: Arguments) -> Result<ReturnType, CrudErrors>
-    func delete() -> Result<Void, CrudErrors>
+    var asAppTask: AppTask { get }
 
-    static func create(with arguments: Arguments, from context: Context) -> Result<ReturnType, CrudErrors>
-    static func list(from context: Context) -> Result<[ReturnType], CrudErrors>
+    func update(with arguments: TaskArguments, on context: Context) async -> Result<ReturnType, CrudErrors>
+    func delete(on context: Context) async -> Result<Void, CrudErrors>
+
+    static func create(with arguments: TaskArguments, from context: Context) async -> Result<ReturnType, CrudErrors>
+    static func list(from context: Context) async -> Result<[ReturnType], CrudErrors>
     static func filter(
         by predicate: NSPredicate,
         limit: Int?,
         from context: Context
-    ) -> Result<[ReturnType], CrudErrors>
-    static func filter(by predicate: NSPredicate, from context: Context) -> Result<[ReturnType], CrudErrors>
+    ) async -> Result<[ReturnType], CrudErrors>
+    static func filter(by predicate: NSPredicate, from context: Context) async -> Result<[ReturnType], CrudErrors>
+    static func find(by predicate: NSPredicate, from context: Context) async -> Result<ReturnType?, CrudErrors>
 }

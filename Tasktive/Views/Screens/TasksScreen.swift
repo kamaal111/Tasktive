@@ -65,10 +65,10 @@ struct TasksScreen: View {
                 .contentShape(Rectangle())
                 .gesture(gesture.onEnded(onEnded))
                 #endif
-
                 #if os(macOS)
                 .padding(.horizontal, Constants.UI.mainViewHorizontalWidth)
                 #endif
+
                 TasksSection(
                     tasks: tasksViewModel.tasksForDate(viewModel.currentDay),
                     loading: tasksViewModel.loadingTasks,
@@ -79,7 +79,7 @@ struct TasksScreen: View {
                     focusOnTask: { task in viewModel.setCurrentFocusedTaskID(task.id) },
                     onDetailsPress: { task in Task { await viewModel.showDetailsSheet(for: task) } },
                     onDelete: { indexSet in Task {
-                        await tasksViewModel.deleteTasks(by: viewModel.currentDay, indexSet: indexSet)
+                        await tasksViewModel.deleteTasks(by: viewModel.currentDay, indices: indexSet)
                     }}
                 )
                 .disabled(tasksViewModel.settingTasks)
@@ -87,13 +87,18 @@ struct TasksScreen: View {
                     .padding(.horizontal, Constants.UI.mainViewHorizontalWidth)
                 #endif
             }
-            .navigationBarItems(
-                leading: EditButton()
-            )
+            .padding(.bottom, viewModel.quickAddViewSize.height)
             .ktakeSizeEagerly(alignment: .topLeading)
-            QuickAddTaskField(
+            #if os(iOS)
+                .navigationBarItems(
+                    leading: EditButton()
+                )
+            #endif
+            QuickAddSection(
                 title: $viewModel.newTitle,
+                currentSource: $viewModel.currentSource,
                 disableSubmit: viewModel.disableNewTaskSubmitButton,
+                dataSources: viewModel.dataSources,
                 submit: onNewTaskSubmit
             )
             .padding(.horizontal, .medium)
@@ -102,11 +107,12 @@ struct TasksScreen: View {
             #else
                 .padding(.vertical, .small)
             #endif
+                .kBindToFrameSize($viewModel.quickAddViewSize)
                 .background(colorScheme == .dark ? Color.black : Color.white)
                 .ktakeSizeEagerly(alignment: .bottom)
         }
         .onChange(of: viewModel.currentDay, perform: { newValue in
-            Task { await tasksViewModel.getTasks(for: newValue) }
+            Task { await tasksViewModel.getTasks(from: viewModel.dataSources, for: newValue) }
         })
         .onAppear(perform: handleOnAppear)
         .sheet(isPresented: $viewModel.showTaskDetailsSheet) {
@@ -124,7 +130,7 @@ struct TasksScreen: View {
         }
     }
 
-    private func handleTaskEditedInDetailsSheet(_ arguments: CoreTask.Arguments?) {
+    private func handleTaskEditedInDetailsSheet(_ arguments: TaskArguments?) {
         guard let arguments = arguments, let task = viewModel.shownTaskDetails else {
             let message = "task or/and arguments are missing"
             let argumentsLog = "arguments='\(arguments as Any)'"
@@ -158,7 +164,7 @@ struct TasksScreen: View {
         }
 
         Task {
-            let result = await tasksViewModel.deleteTask(on: task.dueDate, by: task.id)
+            let result = await tasksViewModel.deleteTask(on: viewModel.currentSource, by: task.id, date: task.dueDate)
             switch result {
             case let .failure(failure):
                 popperUpManager.showPopup(style: failure.style, timeout: failure.timeout)
@@ -173,7 +179,7 @@ struct TasksScreen: View {
 
     private func handleOnAppear() {
         Task {
-            let result = await tasksViewModel.getTodaysTasks()
+            let result = await tasksViewModel.getTodaysTasks(from: viewModel.dataSources)
             switch result {
             case let .failure(failure):
                 popperUpManager.showPopup(style: failure.style, timeout: failure.timeout)
@@ -201,7 +207,8 @@ struct TasksScreen: View {
                 .createTask(with: .init(title: newTitle,
                                         taskDescription: nil,
                                         notes: nil,
-                                        dueDate: viewModel.currentDay))
+                                        dueDate: viewModel.currentDay),
+                            on: viewModel.currentSource)
             switch createTaskResult {
             case let .failure(failure):
                 popperUpManager.showPopup(style: failure.style, timeout: failure.timeout)
@@ -230,6 +237,24 @@ struct TasksScreen: View {
 
         @Published var showTaskDetailsSheet = false {
             didSet { Task { await showTaskDetailsSheetDidSet() } }
+        }
+
+        @Published var quickAddViewSize: CGSize = .zero
+        @Published var currentSource = UserDefaults.lastChosenDataSource ?? .coreData {
+            didSet { currentSourceDidSet() }
+        }
+
+        init() { }
+
+        var dataSources: [DataSource] {
+            DataSource
+                .allCases
+                .filter { source in
+                    if !Features.iCloudSyncing, source == .iCloud {
+                        return false
+                    }
+                    return true
+                }
         }
 
         var disableNewTaskSubmitButton: Bool {
@@ -286,6 +311,10 @@ struct TasksScreen: View {
 
         private var invalidTitle: Bool {
             newTitle.trimmingByWhitespacesAndNewLines.isEmpty
+        }
+
+        private func currentSourceDidSet() {
+            UserDefaults.lastChosenDataSource = currentSource
         }
 
         private func incrementDay(of date: Date, by increment: Int) -> Date {
@@ -359,6 +388,7 @@ struct TasksScreen: View {
     }
 }
 
+#if DEBUG
 struct TasksScreen_Previews: PreviewProvider {
     static var previews: some View {
         var configuration = PreviewConfiguration()
@@ -371,3 +401,4 @@ struct TasksScreen_Previews: PreviewProvider {
         }
     }
 }
+#endif

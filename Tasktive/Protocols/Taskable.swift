@@ -9,18 +9,14 @@ import Foundation
 
 protocol Taskable {
     var id: UUID { get }
-    var title: String { get set }
-    var taskDescription: String? { get set }
-    var notes: String? { get set }
-    var ticked: Bool { get set }
-    var dueDate: Date { get set }
-    var completionDate: Date? { get set }
+    var title: String { get }
+    var taskDescription: String? { get }
+    var notes: String? { get }
+    var ticked: Bool { get }
+    var dueDate: Date { get }
+    var completionDate: Date? { get }
     var creationDate: Date { get }
-    var source: TaskSource { get }
-}
-
-enum TaskSource {
-    case coreData
+    var source: DataSource { get }
 }
 
 extension Taskable {
