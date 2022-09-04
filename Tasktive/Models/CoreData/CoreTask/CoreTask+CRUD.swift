@@ -28,6 +28,12 @@ extension CoreTask: Crudable {
     func delete(on context: NSManagedObjectContext) -> Result<Void, CrudErrors> {
         context.delete(self)
 
+        do {
+            try context.save()
+        } catch {
+            return .failure(.deletionFailure(context: error))
+        }
+
         return .success(())
     }
 
@@ -125,6 +131,7 @@ extension CoreTask: Crudable {
         case saveFailure(context: Error?)
         case fetchFailure(context: Error?)
         case clearFailure(context: Error?)
+        case deletionFailure(context: Error?)
         case updateManyFailure(context: Error?)
         case generalFailure(message: String)
     }

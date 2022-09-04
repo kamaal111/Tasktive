@@ -148,6 +148,40 @@ final class TasksViewModel: ObservableObject {
         })
     }
 
+    func deleteTasks(by date: Date, indices: IndexSet) async -> Result<Void, UserErrors> {
+        var deletionIndex: Int?
+        for index in indices {
+            deletionIndex = index
+        }
+
+        let dateHash = getHashDate(from: date)
+        guard let deletionIndex = deletionIndex,
+              let taskToDelete = tasks[dateHash]?.at(deletionIndex) else { return .failure(.deleteFailure) }
+
+        return await deleteTask(on: taskToDelete.source, by: taskToDelete.id, date: dateHash)
+    }
+
+    func deleteTask(on source: DataSource, by id: UUID, date: Date) async -> Result<Void, UserErrors> {
+        await withSettingTasks(completion: {
+            let dateHash = getHashDate(from: date)
+
+            guard let taskIndex = tasks[dateHash]?.findIndex(by: \.id, is: id) else { return .failure(.deleteFailure) }
+
+            do {
+                try await dataClient.tasks.delete(on: source, by: id)
+            } catch {
+                logger.error(label: "failed to delete this task", error: error)
+                return .failure(.deleteFailure)
+            }
+
+            var mutableTask = tasks
+            mutableTask[dateHash]?.remove(at: taskIndex)
+            await setTasks(mutableTask[dateHash] ?? [], forDate: dateHash)
+
+            return .success(())
+        })
+    }
+
     private func getTasks(from sources: [DataSource],
                           for date: Date,
                           updateNotCompletedTasks: Bool) async -> Result<Void, UserErrors> {
@@ -320,6 +354,7 @@ extension TasksViewModel {
         case getAllFailure
         case createTaskFailure
         case updateFailure
+        case deleteFailure
         case invalidTitle
 
         var style: PopperUpStyles {
@@ -341,6 +376,12 @@ extension TasksViewModel {
                     title: TasktiveLocale.getText(.SOMETHING_WENT_WRONG_ERROR_TITLE),
                     type: .error,
                     description: TasktiveLocale.getText(.UPDATE_TASK_ERROR_DESCRIPTION)
+                )
+            case .deleteFailure:
+                return .bottom(
+                    title: TasktiveLocale.getText(.SOMETHING_WENT_WRONG_ERROR_TITLE),
+                    type: .error,
+                    description: TasktiveLocale.getText(.DELETE_TASK_ERROR_DESCRIPTION)
                 )
             case .invalidTitle:
                 return .bottom(

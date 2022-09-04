@@ -77,7 +77,10 @@ struct TasksScreen: View {
                         Task { await tasksViewModel.setTickOnTask(task, with: newTickedState) }
                     },
                     focusOnTask: { task in viewModel.setCurrentFocusedTaskID(task.id) },
-                    onDetailsPress: { task in Task { await viewModel.showDetailsSheet(for: task) } }
+                    onDetailsPress: { task in Task { await viewModel.showDetailsSheet(for: task) } },
+                    onDelete: { indexSet in Task {
+                        await tasksViewModel.deleteTasks(by: viewModel.currentDay, indices: indexSet)
+                    }}
                 )
                 .disabled(tasksViewModel.settingTasks)
                 #if os(macOS)
@@ -86,6 +89,11 @@ struct TasksScreen: View {
             }
             .padding(.bottom, viewModel.quickAddViewSize.height)
             .ktakeSizeEagerly(alignment: .topLeading)
+            #if os(iOS)
+                .navigationBarItems(
+                    leading: EditButton()
+                )
+            #endif
             QuickAddSection(
                 title: $viewModel.newTitle,
                 currentSource: $viewModel.currentSource,
@@ -111,7 +119,8 @@ struct TasksScreen: View {
             TaskDetailsSheet(
                 task: viewModel.shownTaskDetails,
                 onClose: { Task { await viewModel.closeDetailsSheet() } },
-                onDone: handleTaskEditedInDetailsSheet(_:)
+                onDone: handleTaskEditedInDetailsSheet(_:),
+                onDelete: handleTaskDeletedInDetailsSheet
             )
             .accentColor(theme.currentAccentColor)
             .withPopperUp(popperUpManager)
@@ -133,6 +142,29 @@ struct TasksScreen: View {
 
         Task {
             let result = await tasksViewModel.updateTask(task, with: arguments)
+            switch result {
+            case let .failure(failure):
+                popperUpManager.showPopup(style: failure.style, timeout: failure.timeout)
+                return
+            case .success:
+                break
+            }
+
+            await viewModel.closeDetailsSheet()
+        }
+    }
+
+    private func handleTaskDeletedInDetailsSheet() {
+        guard let task = viewModel.shownTaskDetails else {
+            let message = "task is missing"
+            let taskLog = "task='\(viewModel.shownTaskDetails as Any)'"
+            let loggingMessage = [message, taskLog].joined(separator: "; ")
+            logger.warning(loggingMessage)
+            return
+        }
+
+        Task {
+            let result = await tasksViewModel.deleteTask(on: viewModel.currentSource, by: task.id, date: task.dueDate)
             switch result {
             case let .failure(failure):
                 popperUpManager.showPopup(style: failure.style, timeout: failure.timeout)
@@ -191,9 +223,7 @@ struct TasksScreen: View {
             )
         }
     }
-}
 
-extension TasksScreen {
     final class ViewModel: ObservableObject {
         @Published var newTitle = "" {
             didSet { newTitleDidSet() }
@@ -327,9 +357,7 @@ extension TasksScreen {
             newTitle = title
         }
     }
-}
 
-extension TasksScreen.ViewModel {
     enum ValidationErrors: PopUpError, Error {
         case invalidTitle
 

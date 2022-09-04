@@ -79,6 +79,23 @@ class TasksClient {
         return object.asAppTask
     }
 
+    func delete(on source: DataSource, by id: UUID) async throws {
+        let predicate = NSPredicate(format: "id == %@", id.nsString)
+
+        switch source {
+        case .coreData:
+            try CoreTask.find(by: predicate, from: persistenceController.context)
+                .get()?
+                .delete(on: persistenceController.context)
+                .get()
+        case .iCloud:
+            try await CloudTask.find(by: predicate, from: skypiea)
+                .get()?
+                .delete(on: skypiea)
+                .get()
+        }
+    }
+
     func updateManyDates(_ tasks: [AppTask], from source: DataSource, date: Date) async throws {
         switch source {
         case .coreData:

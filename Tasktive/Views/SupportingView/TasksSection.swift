@@ -16,6 +16,7 @@ struct TasksSection: View {
     let onTaskTick: (_ task: AppTask, _ newTickedState: Bool) -> Void
     let focusOnTask: (_ task: AppTask) -> Void
     let onDetailsPress: (_ task: AppTask) -> Void
+    let onDelete: (_ atOffsets: IndexSet) -> Void
 
     var body: some View {
         KSection(header: TasktiveLocale.getText(.TASKS)) {
@@ -42,6 +43,7 @@ struct TasksSection: View {
                     #endif
                 }
             }
+            .onDelete(perform: onDelete)
         }
     }
 }
@@ -55,7 +57,8 @@ struct TasksSection_Previews: PreviewProvider {
                 currentFocusedTaskID: nil,
                 onTaskTick: { _, _ in },
                 focusOnTask: { _ in },
-                onDetailsPress: { _ in }
+                onDetailsPress: { _ in },
+                onDelete: { _ in }
             )
         }
     }
