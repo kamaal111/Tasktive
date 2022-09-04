@@ -22,6 +22,7 @@
 		2C39A919288359A1008BAFD2 /* TasktiveLocale in Frameworks */ = {isa = PBXBuildFile; productRef = 2C39A918288359A1008BAFD2 /* TasktiveLocale */; };
 		2C3B27C6288C77F7007CE538 /* DateControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B27C5288C77F7007CE538 /* DateControlView.swift */; };
 		2C3B27C9288CA274007CE538 /* TaskDetailsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B27C8288CA274007CE538 /* TaskDetailsSheet.swift */; };
+		2C45AB0828C5143900011282 /* TasktiveLocale in Frameworks */ = {isa = PBXBuildFile; productRef = 2C45AB0728C5143900011282 /* TasktiveLocale */; };
 		2C47E3F22883688F00FD4469 /* Text+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47E3F12883688F00FD4469 /* Text+extensions.swift */; };
 		2C47E3FB28836A6A00FD4469 /* DeviceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47E3FA28836A6A00FD4469 /* DeviceModel.swift */; };
 		2C47E3FD28836B2200FD4469 /* NotificationName+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47E3FC28836B2200FD4469 /* NotificationName+extensions.swift */; };
@@ -239,7 +240,6 @@
 		2C98E42828B12E170048149F /* SalmonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2C98E3D928B12E170048149F /* SalmonUI */; };
 		2C98E42928B12E170048149F /* ShrimpExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 2C98E3DB28B12E170048149F /* ShrimpExtensions */; };
 		2C98E42A28B12E170048149F /* SettingsUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2C98E3DF28B12E170048149F /* SettingsUI */; };
-		2C98E42B28B12E170048149F /* TasktiveLocale in Frameworks */ = {isa = PBXBuildFile; productRef = 2C98E3D828B12E170048149F /* TasktiveLocale */; };
 		2C98E42C28B12E170048149F /* PopperUp in Frameworks */ = {isa = PBXBuildFile; productRef = 2C98E3DD28B12E170048149F /* PopperUp */; };
 		2C98E42E28B12E170048149F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CBCE6132881DE270057F4CD /* Preview Assets.xcassets */; };
 		2C98E42F28B12E170048149F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CBCE60F2881DE270057F4CD /* Assets.xcassets */; };
@@ -508,10 +508,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C98E42828B12E170048149F /* SalmonUI in Frameworks */,
+				2C45AB0828C5143900011282 /* TasktiveLocale in Frameworks */,
 				2C98E42928B12E170048149F /* ShrimpExtensions in Frameworks */,
 				2C98E42A28B12E170048149F /* SettingsUI in Frameworks */,
 				2CCF228F28B7FA7D00366596 /* Skypiea in Frameworks */,
-				2C98E42B28B12E170048149F /* TasktiveLocale in Frameworks */,
 				2C98E42C28B12E170048149F /* PopperUp in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1145,12 +1145,12 @@
 			);
 			name = TasktiveMacDebug;
 			packageProductDependencies = (
-				2C98E3D828B12E170048149F /* TasktiveLocale */,
 				2C98E3D928B12E170048149F /* SalmonUI */,
 				2C98E3DB28B12E170048149F /* ShrimpExtensions */,
 				2C98E3DD28B12E170048149F /* PopperUp */,
 				2C98E3DF28B12E170048149F /* SettingsUI */,
 				2CCF228E28B7FA7D00366596 /* Skypiea */,
+				2C45AB0728C5143900011282 /* TasktiveLocale */,
 			);
 			productName = Tasktive;
 			productReference = 2C98E43428B12E170048149F /* TasktiveMacDebug.app */;
@@ -2273,6 +2273,10 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = TasktiveLocale;
 		};
+		2C45AB0728C5143900011282 /* TasktiveLocale */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TasktiveLocale;
+		};
 		2C47E40028836FBF00FD4469 /* SalmonUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 2C47E3FF28836FBF00FD4469 /* XCRemoteSwiftPackageReference "SalmonUI" */;
@@ -2314,10 +2318,6 @@
 		2C69A05728B19BC600D5006D /* SettingsUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SettingsUI;
-		};
-		2C98E3D828B12E170048149F /* TasktiveLocale */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = TasktiveLocale;
 		};
 		2C98E3D928B12E170048149F /* SalmonUI */ = {
 			isa = XCSwiftPackageProductDependency;
