@@ -36,15 +36,17 @@ struct TaskDetailsSheet: View {
                     onDelete()
                 } label: {
                     HStack(spacing: 5) {
-                        Text(Image(systemName: "trash"))
+                        Image(systemName: "trash")
                         Text(localized: .DELETE)
-                    }.foregroundColor(.white)
-                        .font(.headline)
-                        .frame(width: 250, height: 50)
-                        .frame(maxWidth: .infinity)
-                        .background(Color.accentColor)
-                        .cornerRadius(10)
+                    }
+                    .foregroundColor(.white)
+                    .font(.headline)
+                    .padding(.vertical, .small)
+                    .ktakeWidthEagerly()
+                    .background(Color.accentColor)
+                    .cornerRadius(.small)
                 }
+                .buttonStyle(.plain)
             }
             .padding(.vertical, .medium)
         }

@@ -90,7 +90,9 @@ final class StackNavigator: ObservableObject {
             if let notificationScreen = notification.object as? NamiNavigator.Screens, screen == notificationScreen {
                 // Who cares if this crashes in debug mode? You're the developer just fix it
                 // swiftlint:disable force_try
-                Task { try! await navigate(to: StackNavigator.Screens.playground) }
+                DispatchQueue.main.async { [weak self] in
+                    try! self?.navigate(to: StackNavigator.Screens.playground)
+                }
             }
         #endif
         default:

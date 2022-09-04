@@ -89,11 +89,6 @@ struct TasksScreen: View {
             }
             .padding(.bottom, viewModel.quickAddViewSize.height)
             .ktakeSizeEagerly(alignment: .topLeading)
-            #if os(iOS)
-                .navigationBarItems(
-                    leading: EditButton()
-                )
-            #endif
             QuickAddSection(
                 title: $viewModel.newTitle,
                 currentSource: $viewModel.currentSource,
@@ -125,9 +120,14 @@ struct TasksScreen: View {
             .accentColor(theme.currentAccentColor)
             .withPopperUp(popperUpManager)
             #if os(macOS)
-                .frame(minWidth: 300, minHeight: 140)
+                .frame(minWidth: 300, minHeight: 160)
             #endif
         }
+        #if os(iOS)
+        .navigationBarItems(
+            leading: EditButton()
+        )
+        #endif
     }
 
     private func handleTaskEditedInDetailsSheet(_ arguments: TaskArguments?) {
