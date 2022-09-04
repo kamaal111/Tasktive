@@ -26,24 +26,16 @@ final class TasksViewModel: ObservableObject {
 
     init() {
         #if !DEBUG
-        self.dataClient = .init(persistenceController: .shared, skypiea: .shared)
+        self.dataClient = .init(preview: false)
         #else
-        if CommandLineArguments.previewCoredata.enabled {
-            self.dataClient = .init(persistenceController: .preview, skypiea: .preview)
-        } else {
-            self.dataClient = .init(persistenceController: .shared, skypiea: .shared)
-        }
+        self.dataClient = .init(preview: CommandLineArguments.previewCoredata.enabled)
         #endif
         setupObservers()
     }
 
     #if DEBUG
     init(preview: Bool) {
-        if preview || CommandLineArguments.previewCoredata.enabled {
-            self.dataClient = .init(persistenceController: .preview, skypiea: .preview)
-        } else {
-            self.dataClient = .init(persistenceController: .shared, skypiea: .shared)
-        }
+        self.dataClient = .init(preview: preview || CommandLineArguments.previewCoredata.enabled)
         setupObservers()
     }
     #endif

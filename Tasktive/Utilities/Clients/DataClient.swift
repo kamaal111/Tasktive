@@ -11,7 +11,25 @@ import Foundation
 class DataClient {
     let tasks: TasksClient
 
-    init(persistenceController: PersistenceController, skypiea: Skypiea) {
-        self.tasks = .init(persistenceController: persistenceController, skypiea: skypiea)
+    init() {
+        #if !DEBUG
+        self.tasks = .init(persistenceController: .shared, skypiea: .shared)
+        #else
+        if CommandLineArguments.previewCoredata.enabled {
+            self.tasks = .init(persistenceController: .preview, skypiea: .preview)
+        } else {
+            self.tasks = .init(persistenceController: .shared, skypiea: .shared)
+        }
+        #endif
     }
+
+    #if DEBUG
+    init(preview: Bool) {
+        if preview || CommandLineArguments.previewCoredata.enabled {
+            self.tasks = .init(persistenceController: .preview, skypiea: .preview)
+        } else {
+            self.tasks = .init(persistenceController: .shared, skypiea: .shared)
+        }
+    }
+    #endif
 }
