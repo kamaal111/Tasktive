@@ -26,7 +26,7 @@ final class TasksViewModel: ObservableObject {
 
     init() {
         #if !DEBUG
-        self.dataClient = .init(preview: false)
+        self.dataClient = .init()
         #else
         self.dataClient = .init(preview: CommandLineArguments.previewCoredata.enabled)
         #endif

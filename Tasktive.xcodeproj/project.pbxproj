@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C070CA128CA8BB000B6AD24 /* AssetsIOS.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C070CA028CA8BB000B6AD24 /* AssetsIOS.xcassets */; };
+		2C070CA328CA8BE700B6AD24 /* AssetsMac.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C070CA228CA8BE700B6AD24 /* AssetsMac.xcassets */; };
+		2C070CA428CA8BE700B6AD24 /* AssetsMac.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C070CA228CA8BE700B6AD24 /* AssetsMac.xcassets */; };
 		2C12687228A984FE003D1E56 /* PlaygroundScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C12687128A984FE003D1E56 /* PlaygroundScreen.swift */; };
 		2C1505E9288C26170040943A /* DayNumbersRowItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1505E8288C26170040943A /* DayNumbersRowItem.swift */; };
 		2C15758C289EF43E00425CDD /* FeedbackMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C15758B289EF43E00425CDD /* FeedbackMetadata.swift */; };
@@ -342,6 +345,8 @@
 		2C03071428A006E80071F0CA /* Cargo.lock */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cargo.lock; sourceTree = "<group>"; };
 		2C03071628A006E80071F0CA /* main.rs */ = {isa = PBXFileReference; lastKnownFileType = text; path = main.rs; sourceTree = "<group>"; };
 		2C07056028A0393E0058F646 /* clear_mac_data.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = clear_mac_data.sh; sourceTree = "<group>"; };
+		2C070CA028CA8BB000B6AD24 /* AssetsIOS.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AssetsIOS.xcassets; sourceTree = "<group>"; };
+		2C070CA228CA8BE700B6AD24 /* AssetsMac.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AssetsMac.xcassets; sourceTree = "<group>"; };
 		2C12687128A984FE003D1E56 /* PlaygroundScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundScreen.swift; sourceTree = "<group>"; };
 		2C1505E8288C26170040943A /* DayNumbersRowItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayNumbersRowItem.swift; sourceTree = "<group>"; };
 		2C15758B289EF43E00425CDD /* FeedbackMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackMetadata.swift; sourceTree = "<group>"; };
@@ -559,6 +564,16 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		2C070C9F28CA8B8800B6AD24 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				2CBCE60F2881DE270057F4CD /* Assets.xcassets */,
+				2C070CA028CA8BB000B6AD24 /* AssetsIOS.xcassets */,
+				2C070CA228CA8BE700B6AD24 /* AssetsMac.xcassets */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
 		2C12687028A984E3003D1E56 /* Playground */ = {
 			isa = PBXGroup;
 			children = (
@@ -571,7 +586,7 @@
 			isa = PBXGroup;
 			children = (
 				2C157590289F02E900425CDD /* Tokens.json */,
-				2CBCE60F2881DE270057F4CD /* Assets.xcassets */,
+				2C070C9F28CA8B8800B6AD24 /* Assets */,
 				2CA7A03028A8F7320031C219 /* StoreKit */,
 			);
 			path = Resources;
@@ -1270,6 +1285,7 @@
 			files = (
 				2C69A0AC28B19BC600D5006D /* Preview Assets.xcassets in Resources */,
 				2C69A0AE28B19BC600D5006D /* Assets.xcassets in Resources */,
+				2C070CA328CA8BE700B6AD24 /* AssetsMac.xcassets in Resources */,
 				2C69A0AF28B19BC600D5006D /* Tokens.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1278,6 +1294,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C070CA428CA8BE700B6AD24 /* AssetsMac.xcassets in Resources */,
 				2C98E42E28B12E170048149F /* Preview Assets.xcassets in Resources */,
 				2C98E43528B12EB80048149F /* app-icon-generator in Resources */,
 				2C98E42F28B12E170048149F /* Assets.xcassets in Resources */,
@@ -1291,6 +1308,7 @@
 			files = (
 				2CBCE6142881DE270057F4CD /* Preview Assets.xcassets in Resources */,
 				2C69A04428B189F500D5006D /* LaunchScreen.storyboard in Resources */,
+				2C070CA128CA8BB000B6AD24 /* AssetsIOS.xcassets in Resources */,
 				2CBCE6102881DE270057F4CD /* Assets.xcassets in Resources */,
 				2C157591289F02E900425CDD /* Tokens.json in Resources */,
 			);
@@ -1738,7 +1756,7 @@
 		2C69A0B128B19BC600D5006D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconMac;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Tasktive/TasktiveDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -1774,7 +1792,7 @@
 		2C69A0B228B19BC600D5006D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconMac;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Tasktive/Tasktive.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -1810,7 +1828,7 @@
 		2C98E43228B12E170048149F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconMac;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Tasktive/TasktiveDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -1846,7 +1864,7 @@
 		2C98E43328B12E170048149F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconMac;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Tasktive/Tasktive.entitlements;
 				CODE_SIGN_STYLE = Automatic;
