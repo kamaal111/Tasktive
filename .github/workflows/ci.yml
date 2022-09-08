@@ -2,7 +2,7 @@ name: CI
 on:
   push:
     branches:
-      - develop
+      - main
       - "release/**"
       - "feature/**"
 
@@ -21,3 +21,17 @@ jobs:
       - name: Swift lint
         run: |
           python3 Scripts/swiftlint_checker/main.py
+
+  test:
+    name: Test
+    timeout-minutes: 15
+    runs-on: macos-latest
+    needs: [quality]
+    steps:
+      - name: Git - Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup - Xcode
+        run: |
+          echo "listing available Xcode versions:"
+          ls -d /Applications/Xcode*
