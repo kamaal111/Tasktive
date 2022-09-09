@@ -344,6 +344,12 @@
 		2C03068628A006E70071F0CA /* Cargo.toml */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cargo.toml; sourceTree = "<group>"; };
 		2C03071428A006E80071F0CA /* Cargo.lock */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cargo.lock; sourceTree = "<group>"; };
 		2C03071628A006E80071F0CA /* main.rs */ = {isa = PBXFileReference; lastKnownFileType = text; path = main.rs; sourceTree = "<group>"; };
+		2C04669228CBF22E00BD30E0 /* iPad Pro (12.9-inch) (5th generation)-01-task-screen-ui_testing_light_mode.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPad Pro (12.9-inch) (5th generation)-01-task-screen-ui_testing_light_mode.png"; sourceTree = "<group>"; };
+		2C04669328CBF22E00BD30E0 /* iPhone 13 Pro Max-01-task-screen-ui_testing_light_mode.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone 13 Pro Max-01-task-screen-ui_testing_light_mode.png"; sourceTree = "<group>"; };
+		2C04669428CBF22E00BD30E0 /* iPad Pro (12.9-inch) (5th generation)-01-task-screen-ui_testing_dark_mode.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPad Pro (12.9-inch) (5th generation)-01-task-screen-ui_testing_dark_mode.png"; sourceTree = "<group>"; };
+		2C04669528CBF22E00BD30E0 /* iPhone 8 Plus-01-task-screen-ui_testing_light_mode.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone 8 Plus-01-task-screen-ui_testing_light_mode.png"; sourceTree = "<group>"; };
+		2C04669628CBF22E00BD30E0 /* iPhone 8 Plus-01-task-screen-ui_testing_dark_mode.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone 8 Plus-01-task-screen-ui_testing_dark_mode.png"; sourceTree = "<group>"; };
+		2C04669728CBF22E00BD30E0 /* iPhone 13 Pro Max-01-task-screen-ui_testing_dark_mode.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone 13 Pro Max-01-task-screen-ui_testing_dark_mode.png"; sourceTree = "<group>"; };
 		2C07056028A0393E0058F646 /* clear_mac_data.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = clear_mac_data.sh; sourceTree = "<group>"; };
 		2C070CA028CA8BB000B6AD24 /* AssetsIOS.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AssetsIOS.xcassets; sourceTree = "<group>"; };
 		2C070CA228CA8BE700B6AD24 /* AssetsMac.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AssetsMac.xcassets; sourceTree = "<group>"; };
@@ -562,6 +568,35 @@
 				2C03071628A006E80071F0CA /* main.rs */,
 			);
 			path = src;
+			sourceTree = "<group>";
+		};
+		2C04668F28CBF22E00BD30E0 /* screenshots */ = {
+			isa = PBXGroup;
+			children = (
+				2C04669028CBF22E00BD30E0 /* iOS */,
+			);
+			path = screenshots;
+			sourceTree = "<group>";
+		};
+		2C04669028CBF22E00BD30E0 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				2C04669128CBF22E00BD30E0 /* en-US */,
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
+		2C04669128CBF22E00BD30E0 /* en-US */ = {
+			isa = PBXGroup;
+			children = (
+				2C04669428CBF22E00BD30E0 /* iPad Pro (12.9-inch) (5th generation)-01-task-screen-ui_testing_dark_mode.png */,
+				2C04669228CBF22E00BD30E0 /* iPad Pro (12.9-inch) (5th generation)-01-task-screen-ui_testing_light_mode.png */,
+				2C04669628CBF22E00BD30E0 /* iPhone 8 Plus-01-task-screen-ui_testing_dark_mode.png */,
+				2C04669528CBF22E00BD30E0 /* iPhone 8 Plus-01-task-screen-ui_testing_light_mode.png */,
+				2C04669728CBF22E00BD30E0 /* iPhone 13 Pro Max-01-task-screen-ui_testing_dark_mode.png */,
+				2C04669328CBF22E00BD30E0 /* iPhone 13 Pro Max-01-task-screen-ui_testing_light_mode.png */,
+			);
+			path = "en-US";
 			sourceTree = "<group>";
 		};
 		2C070C9F28CA8B8800B6AD24 /* Assets */ = {
@@ -853,6 +888,7 @@
 				2CAFD79C28BD47AA00B302F8 /* Fastfile */,
 				2CAFD79D28BD47AA00B302F8 /* Snapfile */,
 				2CAFD79B28BD47AA00B302F8 /* SnapshotHelper.swift */,
+				2C04668F28CBF22E00BD30E0 /* screenshots */,
 			);
 			path = fastlane;
 			sourceTree = "<group>";
@@ -1760,7 +1796,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Tasktive/TasktiveDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Tasktive/Preview Content\"";
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1796,7 +1832,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Tasktive/Tasktive.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Tasktive/Preview Content\"";
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1832,7 +1868,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Tasktive/TasktiveDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Tasktive/Preview Content\"";
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1868,7 +1904,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Tasktive/Tasktive.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Tasktive/Preview Content\"";
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2017,7 +2053,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Tasktive/TasktiveDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Tasktive/Preview Content\"";
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2057,7 +2093,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Tasktive/Tasktive.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Tasktive/Preview Content\"";
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				ENABLE_HARDENED_RUNTIME = YES;
