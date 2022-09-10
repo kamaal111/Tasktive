@@ -102,7 +102,7 @@
          </CommandLineArgument>
       </CommandLineArguments>
       <StoreKitConfigurationFileReference
-         identifier = "../../Tasktive/Resources/StoreKit/Donations.storekit">
+         identifier = "../Tasktive/Resources/StoreKit/Donations.storekit">
       </StoreKitConfigurationFileReference>
    </LaunchAction>
    <ProfileAction

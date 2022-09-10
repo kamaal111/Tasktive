@@ -23,21 +23,7 @@ struct TasksScreen: View {
 
     @StateObject private var viewModel = ViewModel()
 
-    private let gesture = DragGesture(minimumDistance: 30, coordinateSpace: .local)
-
-    private func onEnded(_ value: DragGesture.Value) {
-        switch (value.translation.width, value.translation.height) {
-        // when swiping from right to left (without going up or down more than 30px)
-        case (...0, -30 ... 30):
-            Task { await viewModel.goToNextDay() }
-
-        // when swiping from left to right (without going up or down more than 30px)
-        case (0..., -30 ... 30):
-            Task { await viewModel.goToPreviousDay() }
-
-        default: ()
-        }
-    }
+    private let dateDragGesture = DragGesture(minimumDistance: 30, coordinateSpace: .local)
 
     var body: some View {
         ZStack {
@@ -54,7 +40,7 @@ struct TasksScreen: View {
                 #endif
                 #if os(iOS)
                 .contentShape(Rectangle())
-                .gesture(gesture.onEnded(onEnded))
+                .gesture(dateDragGesture.onEnded(viewModel.onDateDragGestureEnd))
                 #endif
 
                 ProgressSection(
@@ -63,7 +49,7 @@ struct TasksScreen: View {
                 )
                 #if os(iOS)
                 .contentShape(Rectangle())
-                .gesture(gesture.onEnded(onEnded))
+                .gesture(dateDragGesture.onEnded(viewModel.onDateDragGestureEnd))
                 #endif
                 #if os(macOS)
                 .padding(.horizontal, Constants.UI.mainViewHorizontalWidth)
@@ -85,7 +71,7 @@ struct TasksScreen: View {
                     .padding(.horizontal, Constants.UI.mainViewHorizontalWidth)
                 #endif
             }
-            .padding(.bottom, viewModel.quickAddViewSize.height)
+            .padding(.bottom, viewModel.quickAddViewHeight)
             .ktakeSizeEagerly(alignment: .topLeading)
             QuickAddSection(
                 title: $viewModel.newTitle,
@@ -100,8 +86,8 @@ struct TasksScreen: View {
             #else
                 .padding(.vertical, .small)
             #endif
-                .kBindToFrameSize($viewModel.quickAddViewSize)
                 .background(colorScheme == .dark ? Color.black : Color.white)
+                .frame(maxHeight: viewModel.quickAddViewHeight)
                 .ktakeSizeEagerly(alignment: .bottom)
         }
         .onChange(of: viewModel.currentDay, perform: { newValue in
@@ -242,10 +228,11 @@ struct TasksScreen: View {
             didSet { Task { await showTaskDetailsSheetDidSet() } }
         }
 
-        @Published var quickAddViewSize: CGSize = .zero
         @Published var currentSource = UserDefaults.lastChosenDataSource ?? .coreData {
             didSet { currentSourceDidSet() }
         }
+
+        let quickAddViewHeight: CGFloat = 50
 
         init() { }
 
@@ -262,6 +249,20 @@ struct TasksScreen: View {
 
         var disableNewTaskSubmitButton: Bool {
             invalidTitle
+        }
+
+        func onDateDragGestureEnd(_ value: DragGesture.Value) {
+            switch (value.translation.width, value.translation.height) {
+            // when swiping from right to left (without going up or down more than 30px)
+            case (...0, -30 ... 30):
+                Task { await goToNextDay() }
+
+            // when swiping from left to right (without going up or down more than 30px)
+            case (0..., -30 ... 30):
+                Task { await goToPreviousDay() }
+
+            default: break
+            }
         }
 
         @MainActor
