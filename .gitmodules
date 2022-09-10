@@ -1,7 +1,12 @@
 [submodule "app-icon-generator"]
 	path = Scripts/app-icon-generator
 	url = git@github.com:kamaal111/app-icon-generator.git
+	branch = main
 [submodule "swiftlint_checker"]
 	path = Scripts/swiftlint_checker
 	url = git@github.com:kamaal111/swiftlint_checker.git
+	branch = main
+[submodule "xcode-app-version-bumper"]
+	path = Scripts/xcode-app-version-bumper
+	url = git@github.com:kamaal111/xcode-app-version-bumper.git
 	branch = main
