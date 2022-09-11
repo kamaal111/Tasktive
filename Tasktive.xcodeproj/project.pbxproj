@@ -430,6 +430,7 @@
 		2CAFD79B28BD47AA00B302F8 /* SnapshotHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
 		2CAFD79C28BD47AA00B302F8 /* Fastfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Fastfile; sourceTree = "<group>"; };
 		2CAFD79D28BD47AA00B302F8 /* Snapfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Snapfile; sourceTree = "<group>"; };
+		2CAFF5D828CDD4FC00D4E91E /* select_xcode_version.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = select_xcode_version.sh; sourceTree = "<group>"; };
 		2CB3F3B028BD327A0016B7F4 /* AccessibilityIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityIdentifiers.swift; sourceTree = "<group>"; };
 		2CB3F3B528BD34760016B7F4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		2CB3F3B728BD34D10016B7F4 /* CommandLineArguments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandLineArguments.swift; sourceTree = "<group>"; };
@@ -994,6 +995,7 @@
 				2C07056028A0393E0058F646 /* clear_mac_data.sh */,
 				2CCCADAD2881F1CC0033E2EF /* pre_compile.sh */,
 				2CD2EB7728BA41F500C14B18 /* run_ios_tests.sh */,
+				2CAFF5D828CDD4FC00D4E91E /* select_xcode_version.sh */,
 				2C98E3CC28B12DFB0048149F /* app-icon-generator */,
 				2C03068528A006E70071F0CA /* generate_tokens */,
 				2C39A91A28835AAD008BAFD2 /* GenerateLocales */,

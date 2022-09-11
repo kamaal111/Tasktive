@@ -30,8 +30,43 @@ jobs:
     steps:
       - name: Git - Checkout
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+          submodules: recursive
 
       - name: Setup - Xcode
         run: |
-          echo "listing available Xcode versions:"
-          ls -d /Applications/Xcode*
+          sh Scripts/select_xcode_version.sh
+
+      - name: Setup - Ruby and bundler dependencies
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0
+          bundler-cache: true
+
+      - name: Test
+        run: |
+          yarn test:ios
+
+  # deployIOS:
+  #   name: deploy iOS
+  #   timeout-minutes: 15
+  #   runs-on: macos-latest
+  #   needs: [test]
+  #   if: contains(github.ref, 'refs/heads/release/') || github.ref == 'refs/heads/main'
+  #   steps:
+  #     - name: Git - Checkout
+  #       uses: actions/checkout@v2
+  #       with:
+  #         ref: ${{ github.ref }}
+  #         submodules: recursive
+
+  #     - name: Setup - Xcode
+  #       run: |
+  #         sh Scripts/select_xcode_version.sh
+
+  #     - name: Setup - Ruby and bundler dependencies
+  #       uses: ruby/setup-ruby@v1
+  #       with:
+  #         ruby-version: 3.0
+  #         bundler-cache: true
