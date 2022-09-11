@@ -358,6 +358,7 @@
 		2C15758B289EF43E00425CDD /* FeedbackMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackMetadata.swift; sourceTree = "<group>"; };
 		2C157590289F02E900425CDD /* Tokens.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Tokens.json; sourceTree = "<group>"; };
 		2C157592289F03B800425CDD /* TokensHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensHolder.swift; sourceTree = "<group>"; };
+		2C1A416628CE152100C2E5D1 /* app.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = app.py; sourceTree = "<group>"; };
 		2C1B060228B10052001E8441 /* AppLogo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogo.swift; sourceTree = "<group>"; };
 		2C1B060628B1083B001E8441 /* AppLogoColorFormRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogoColorFormRow.swift; sourceTree = "<group>"; };
 		2C1B060828B10A48001E8441 /* AppLogoColorSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogoColorSelector.swift; sourceTree = "<group>"; };
@@ -371,8 +372,6 @@
 		2C47E3F12883688F00FD4469 /* Text+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Text+extensions.swift"; sourceTree = "<group>"; };
 		2C47E3F32883692800FD4469 /* locale.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = locale.js; sourceTree = "<group>"; };
 		2C47E3F42883693400FD4469 /* en.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = en.js; sourceTree = "<group>"; };
-		2C47E3F62883694200FD4469 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		2C47E3F72883694200FD4469 /* Localize.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = Localize.js; sourceTree = "<group>"; };
 		2C47E3FA28836A6A00FD4469 /* DeviceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceModel.swift; sourceTree = "<group>"; };
 		2C47E3FC28836B2200FD4469 /* NotificationName+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationName+extensions.swift"; sourceTree = "<group>"; };
 		2C47E4032883719000FD4469 /* Sidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sidebar.swift; sourceTree = "<group>"; };
@@ -444,6 +443,9 @@
 		2CBCE6132881DE270057F4CD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2CBD454F28CE02610073E317 /* import_signing_certificate_ios.bash */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = import_signing_certificate_ios.bash; sourceTree = "<group>"; };
 		2CBD455128CE03460073E317 /* import_provisioning_profile_ios.bash */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = import_provisioning_profile_ios.bash; sourceTree = "<group>"; };
+		2CBD455328CE067A0073E317 /* main.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = main.py; sourceTree = "<group>"; };
+		2CBD455528CE06820073E317 /* go.mod */ = {isa = PBXFileReference; lastKnownFileType = text; path = go.mod; sourceTree = "<group>"; };
+		2CBD455628CE06820073E317 /* main.go */ = {isa = PBXFileReference; lastKnownFileType = text; path = main.go; sourceTree = "<group>"; };
 		2CC2D9A728C4D5A20036817B /* EditMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMode.swift; sourceTree = "<group>"; };
 		2CC2D9AC28C4D6270036817B /* EditModeStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditModeStack.swift; sourceTree = "<group>"; };
 		2CC2D9B028C4D7430036817B /* EditButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditButton.swift; sourceTree = "<group>"; };
@@ -694,7 +696,6 @@
 			children = (
 				2C47E3F32883692800FD4469 /* locale.js */,
 				2C39A91C28835ADF008BAFD2 /* run.sh */,
-				2C47E3F52883694200FD4469 /* Localize.js */,
 			);
 			path = GenerateLocales;
 			sourceTree = "<group>";
@@ -733,15 +734,6 @@
 				2CF24AA928842B5B00778BD9 /* View+extensions.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		2C47E3F52883694200FD4469 /* Localize.js */ = {
-			isa = PBXGroup;
-			children = (
-				2C47E3F72883694200FD4469 /* Localize.js */,
-				2C47E3F62883694200FD4469 /* README.md */,
-			);
-			path = Localize.js;
 			sourceTree = "<group>";
 		};
 		2C47E3F928836A5100FD4469 /* ViewModels */ = {
@@ -965,6 +957,31 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		2CBD455228CE067A0073E317 /* swiftlint_checker */ = {
+			isa = PBXGroup;
+			children = (
+				2CBD455328CE067A0073E317 /* main.py */,
+			);
+			path = swiftlint_checker;
+			sourceTree = "<group>";
+		};
+		2CBD455428CE06820073E317 /* xcode-app-version-bumper */ = {
+			isa = PBXGroup;
+			children = (
+				2CBD455528CE06820073E317 /* go.mod */,
+				2CBD455628CE06820073E317 /* main.go */,
+			);
+			path = "xcode-app-version-bumper";
+			sourceTree = "<group>";
+		};
+		2CBD455728CE07220073E317 /* encode_certificates */ = {
+			isa = PBXGroup;
+			children = (
+				2C1A416628CE152100C2E5D1 /* app.py */,
+			);
+			path = encode_certificates;
+			sourceTree = "<group>";
+		};
 		2CC2D9A628C4D5800036817B /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
@@ -1001,8 +1018,11 @@
 				2CD2EB7728BA41F500C14B18 /* run_ios_tests.sh */,
 				2CAFF5D828CDD4FC00D4E91E /* select_xcode_version.sh */,
 				2C98E3CC28B12DFB0048149F /* app-icon-generator */,
+				2CBD455728CE07220073E317 /* encode_certificates */,
 				2C03068528A006E70071F0CA /* generate_tokens */,
 				2C39A91A28835AAD008BAFD2 /* GenerateLocales */,
+				2CBD455228CE067A0073E317 /* swiftlint_checker */,
+				2CBD455428CE06820073E317 /* xcode-app-version-bumper */,
 			);
 			path = Scripts;
 			sourceTree = "<group>";
@@ -2098,10 +2118,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Tasktive/Tasktive.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Tasktive/Preview Content\"";
-				DEVELOPMENT_TEAM = DXUKH9VF73;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DXUKH9VF73;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -2120,6 +2142,8 @@
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.kamaal.Tasktivity;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Tasktivity App Store distribution";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
