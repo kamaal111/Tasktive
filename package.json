@@ -12,7 +12,8 @@
     "build:generate-tokens": "cargo build --manifest-path=Scripts/generate_tokens/Cargo.toml",
     "clear-mac-data": "sh Scripts/clear_mac_data.sh",
     "bootstrap": "sh Scripts/bootstrap.sh",
-    "bump-version": "go run Scripts/xcode-app-version-bumper/*go"
+    "bump-version": "go run Scripts/xcode-app-version-bumper/*go",
+    "format": "swiftformat ."
   },
   "repository": {
     "type": "git",

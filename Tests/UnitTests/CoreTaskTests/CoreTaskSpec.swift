@@ -26,7 +26,7 @@ final class CoreTaskSpec: QuickSpec {
             context("when trying to create a CoreTask") {
                 it("returns a new task") {
                     let now = Date()
-                    let arguments = CoreTask.Arguments(
+                    let arguments = TaskArguments(
                         title: "Title",
                         taskDescription: "Description",
                         notes: "Notes\nNew Line",
@@ -52,7 +52,7 @@ final class CoreTaskSpec: QuickSpec {
                 }
 
                 it("returns couple of tasks that have been saved") {
-                    let args: [CoreTask.Arguments] = [
+                    let args: [TaskArguments] = [
                         .init(
                             title: "First",
                             taskDescription: "Some things to think about",
@@ -82,7 +82,7 @@ final class CoreTaskSpec: QuickSpec {
 
             context("when trying to update tasks") {
                 it("successfully updates a task") {
-                    let arguments = CoreTask.Arguments(
+                    let arguments = TaskArguments(
                         title: "Title",
                         taskDescription: "Description",
                         notes: "Notes\nNew Line",
@@ -98,14 +98,14 @@ final class CoreTaskSpec: QuickSpec {
                     let oldTaskNotes = task.notes
                     let oldTaskTicked = task.ticked
 
-                    let updatedArguments = CoreTask.Arguments(
+                    let updatedArguments = TaskArguments(
                         title: "Updated",
                         taskDescription: "New description",
                         notes: "yes note",
                         dueDate: Date(),
                         ticked: true
                     )
-                    let updatedTask = try task.update(with: updatedArguments).get()
+                    let updatedTask = try task.update(with: updatedArguments, on: self.viewContext).get()
 
                     expect(updatedTask.id) == oldTaskID
                     expect(updatedTask.creationDate) == oldTaskCreationDate
@@ -121,7 +121,7 @@ final class CoreTaskSpec: QuickSpec {
 
             context("when trying to delete a task") {
                 it("get's deleted successfully") {
-                    let arguments = CoreTask.Arguments(
+                    let arguments = TaskArguments(
                         title: "Title",
                         taskDescription: nil,
                         notes: nil,
@@ -132,7 +132,7 @@ final class CoreTaskSpec: QuickSpec {
 
                     expect(tasks.count) == 1
 
-                    _ = task.delete()
+                    _ = task.delete(on: self.viewContext)
 
                     let updatedTasks = try CoreTask.list(from: self.viewContext).get()
 

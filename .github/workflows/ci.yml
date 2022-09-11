@@ -11,6 +11,9 @@ jobs:
     name: Quality
     timeout-minutes: 15
     runs-on: macos-12
+    concurrency:
+      group: ${{ github.ref }}
+      cancel-in-progress: true
     steps:
       - name: Git - Checkout
         uses: actions/checkout@v2
@@ -27,6 +30,9 @@ jobs:
     timeout-minutes: 15
     runs-on: macos-12
     needs: [quality]
+    concurrency:
+      group: ${{ github.ref }}
+      cancel-in-progress: true
     steps:
       - name: Git - Checkout
         uses: actions/checkout@v2
@@ -43,6 +49,12 @@ jobs:
         with:
           ruby-version: 3.0
           bundler-cache: true
+
+      - name: Create token file
+        run: |
+          # No need to actually add the tokens in the test
+
+          yarn generate-tokens
 
       - name: Test
         run: |
