@@ -100,3 +100,13 @@ jobs:
         with:
           ruby-version: 3.0
           bundler-cache: true
+
+      - name: Bump build number
+        run: |
+          yarn bump-version --number ${{ github.run_number }}
+
+      - name: Setup - Ruby and bundler dependencies
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0
+          bundler-cache: true
