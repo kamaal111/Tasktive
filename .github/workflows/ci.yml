@@ -89,7 +89,15 @@ jobs:
         env:
           PROVISIONING_PROFILE_DATA: ${{ secrets.PROVISIONING_PROFILE_DATA }}
         run: |
-          bash Scripts/import_provisioning_profile_ios.bash
+          # bash Scripts/import_provisioning_profile_ios.bash
+          set -euo pipefail
+
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          echo "$PROVISIONING_PROFILE_DATA" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/profile.mobileprovision
+
+          ls ~/Library/MobileDevice/Provisioning\ Profiles
+
+          echo "Provisioning profile created"
 
       - name: Setup - Xcode
         run: |
@@ -103,6 +111,7 @@ jobs:
 
       - name: Bump build number
         run: |
+          echo "Setting build number to ${{ github.run_number }}"
           yarn bump-version --number ${{ github.run_number }}
 
       - name: Create token file
@@ -111,4 +120,11 @@ jobs:
 
       - name: Archive app
         run: |
-          yarn archive:ios
+          yarn archive:ios:ci
+
+      - name: Upload app to App Store Connect
+        env:
+          APP_STORE_CONNECT_USERNAME: ${{ secrets.APP_STORE_CONNECT_USERNAME }}
+          APP_STORE_CONNECT_PASSWORD: ${{ secrets.APP_STORE_CONNECT_PASSWORD }}
+        run: |
+          xcrun altool --upload-app -t ios -f Tasktivity.ipa -u "$APP_STORE_CONNECT_USERNAME" -p "$APP_STORE_CONNECT_PASSWORD"

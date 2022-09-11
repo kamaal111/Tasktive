@@ -2,10 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 	<dict>
-		<key>signingStyle</key>
-		<string>automatic</string>
+		<!-- <key>uploadBitcode</key>
+		<true /> -->
 		<key>uploadSymbols</key>
 		<true />
+		<key>signingStyle</key>
+		<string>manual</string>
 		<key>teamID</key>
 		<string>DXUKH9VF73</string>
 		<key>method</key>
@@ -13,7 +15,9 @@
 		<key>provisioningProfiles</key>
 		<dict>
 			<key>io.kamaal.Tasktivity</key>
-			<string>~/Library/MobileDevice/Provisioning\ Profiles/profile.provisionprofile</string>
+			<string>Tasktivity App Store distribution</string>
 		</dict>
+		<key>signingCertificate</key>
+		<string>iPhone Distribution: Kamaal Farah (DXUKH9VF73)</string>
 	</dict>
 </plist>

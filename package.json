@@ -14,7 +14,7 @@
     "bootstrap": "sh Scripts/bootstrap.sh",
     "bump-version": "go run Scripts/xcode-app-version-bumper/*go",
     "format": "swiftformat .",
-    "archive:ios": "bundle exec fastlane gym --scheme Tasktive"
+    "archive:ios:ci": "sh Scripts/archive_ios.sh"
   },
   "repository": {
     "type": "git",
