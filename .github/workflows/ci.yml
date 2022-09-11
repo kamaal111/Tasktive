@@ -9,7 +9,7 @@ on:
 jobs:
   # quality:
   #   name: Quality
-  #   timeout-minutes: 15
+  #   timeout-minutes: 5
   #   runs-on: macos-12
   #   concurrency:
   #     group: ${{ github.ref }}
@@ -27,7 +27,7 @@ jobs:
 
   # test:
   #   name: Test
-  #   timeout-minutes: 15
+  #   timeout-minutes: 10
   #   runs-on: macos-12
   #   needs: [quality]
   #   concurrency:
@@ -105,8 +105,10 @@ jobs:
         run: |
           yarn bump-version --number ${{ github.run_number }}
 
-      - name: Setup - Ruby and bundler dependencies
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.0
-          bundler-cache: true
+      - name: Create token file
+        run: |
+          yarn generate-tokens --github-token ${{ secrets.FEEDBACK_TOKEN }}
+
+      - name: Archive app
+        run: |
+          yarn archive:ios

@@ -1,0 +1,10 @@
+# Gymfile
+
+output_name("Tasktivity")
+export_team_id("DXUKH9VF73")
+clean(false)
+include_symbols(true)
+include_bitcode(false)
+export_method("app-store")
+skip_package_pkg(true)
+export_options("fastlane/ExportOptions.plist")
