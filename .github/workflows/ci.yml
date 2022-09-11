@@ -10,7 +10,7 @@ jobs:
   quality:
     name: Quality
     timeout-minutes: 15
-    runs-on: macos-latest
+    runs-on: macos-12
     steps:
       - name: Git - Checkout
         uses: actions/checkout@v2
@@ -25,7 +25,7 @@ jobs:
   test:
     name: Test
     timeout-minutes: 15
-    runs-on: macos-latest
+    runs-on: macos-12
     needs: [quality]
     steps:
       - name: Git - Checkout
