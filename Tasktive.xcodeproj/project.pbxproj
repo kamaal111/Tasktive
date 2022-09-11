@@ -442,6 +442,8 @@
 		2CBCE60F2881DE270057F4CD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2CBCE6112881DE270057F4CD /* Tasktive.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Tasktive.entitlements; sourceTree = "<group>"; };
 		2CBCE6132881DE270057F4CD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		2CBD454F28CE02610073E317 /* import_signing_certificate_ios.bash */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = import_signing_certificate_ios.bash; sourceTree = "<group>"; };
+		2CBD455128CE03460073E317 /* import_provisioning_profile_ios.bash */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = import_provisioning_profile_ios.bash; sourceTree = "<group>"; };
 		2CC2D9A728C4D5A20036817B /* EditMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMode.swift; sourceTree = "<group>"; };
 		2CC2D9AC28C4D6270036817B /* EditModeStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditModeStack.swift; sourceTree = "<group>"; };
 		2CC2D9B028C4D7430036817B /* EditButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditButton.swift; sourceTree = "<group>"; };
@@ -991,6 +993,8 @@
 		2CCCADAC2881F1970033E2EF /* Scripts */ = {
 			isa = PBXGroup;
 			children = (
+				2CBD455128CE03460073E317 /* import_provisioning_profile_ios.bash */,
+				2CBD454F28CE02610073E317 /* import_signing_certificate_ios.bash */,
 				2CE0C86C28A8621200B54EC9 /* bootstrap.sh */,
 				2C07056028A0393E0058F646 /* clear_mac_data.sh */,
 				2CCCADAD2881F1CC0033E2EF /* pre_compile.sh */,
