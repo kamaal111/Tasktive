@@ -9,7 +9,7 @@ on:
 jobs:
   quality:
     name: Quality
-    timeout-minutes: 15
+    timeout-minutes: 5
     runs-on: macos-12
     concurrency:
       group: ${{ github.ref }}
@@ -27,7 +27,7 @@ jobs:
 
   test:
     name: Test
-    timeout-minutes: 15
+    timeout-minutes: 10
     runs-on: macos-12
     needs: [quality]
     concurrency:
@@ -60,25 +60,63 @@ jobs:
         run: |
           yarn test:ios
 
-  # deployIOS:
-  #   name: deploy iOS
-  #   timeout-minutes: 15
-  #   runs-on: macos-latest
-  #   needs: [test]
-  #   if: contains(github.ref, 'refs/heads/release/') || github.ref == 'refs/heads/main'
-  #   steps:
-  #     - name: Git - Checkout
-  #       uses: actions/checkout@v2
-  #       with:
-  #         ref: ${{ github.ref }}
-  #         submodules: recursive
+  deployIOS:
+    name: Deploy iOS
+    timeout-minutes: 15
+    runs-on: macos-12
+    needs: [test]
+    concurrency:
+      group: ${{ github.ref }}
+      cancel-in-progress: true
+    if: contains(github.ref, 'refs/heads/release/') || github.ref == 'refs/heads/main'
+    steps:
+      - name: Git - Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+          submodules: recursive
 
-  #     - name: Setup - Xcode
-  #       run: |
-  #         sh Scripts/select_xcode_version.sh
+      - name: Import signing certificate
+        timeout-minutes: 1
+        env:
+          SIGNING_CERTIFICATE_P12_DATA: ${{ secrets.SIGNING_CERTIFICATE_P12_DATA }}
+          SIGNING_CERTIFICATE_PASSWORD: ${{ secrets.SIGNING_CERTIFICATE_PASSWORD }}
+          KEYCHAIN_PASSPHRASE: ${{ secrets.KEYCHAIN_PASSPHRASE }}
+        run: |
+          bash Scripts/import_signing_certificate_ios.bash
 
-  #     - name: Setup - Ruby and bundler dependencies
-  #       uses: ruby/setup-ruby@v1
-  #       with:
-  #         ruby-version: 3.0
-  #         bundler-cache: true
+      - name: Import provisioning profile
+        env:
+          PROVISIONING_PROFILE_DATA: ${{ secrets.PROVISIONING_PROFILE_DATA }}
+        run: |
+          # bash Scripts/import_provisioning_profile_ios.bash
+
+      - name: Setup - Xcode
+        run: |
+          sh Scripts/select_xcode_version.sh
+
+      - name: Setup - Ruby and bundler dependencies
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0
+          bundler-cache: true
+
+      - name: Bump build number
+        run: |
+          echo "Setting build number to ${{ github.run_number }}"
+          yarn bump-version --number ${{ github.run_number }}
+
+      - name: Create token file
+        run: |
+          yarn generate-tokens --github-token ${{ secrets.FEEDBACK_TOKEN }}
+
+      - name: Archive app
+        run: |
+          yarn archive:ios:ci
+
+      - name: Upload app to App Store Connect
+        env:
+          APP_STORE_CONNECT_USERNAME: ${{ secrets.APP_STORE_CONNECT_USERNAME }}
+          APP_STORE_CONNECT_PASSWORD: ${{ secrets.APP_STORE_CONNECT_PASSWORD }}
+        run: |
+          xcrun altool --upload-app -t ios -f Tasktivity.ipa -u "$APP_STORE_CONNECT_USERNAME" -p "$APP_STORE_CONNECT_PASSWORD"

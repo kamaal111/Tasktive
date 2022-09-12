@@ -64,3 +64,5 @@ Tasktive/Resources/Tokens.json
 Scripts/**/target
 Brewfile.lock.json
 Gemfile.lock
+Secrets
+Archive

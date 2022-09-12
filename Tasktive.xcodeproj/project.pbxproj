@@ -358,12 +358,14 @@
 		2C15758B289EF43E00425CDD /* FeedbackMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackMetadata.swift; sourceTree = "<group>"; };
 		2C157590289F02E900425CDD /* Tokens.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Tokens.json; sourceTree = "<group>"; };
 		2C157592289F03B800425CDD /* TokensHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensHolder.swift; sourceTree = "<group>"; };
+		2C1A416628CE152100C2E5D1 /* app.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = app.py; sourceTree = "<group>"; };
 		2C1B060228B10052001E8441 /* AppLogo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogo.swift; sourceTree = "<group>"; };
 		2C1B060628B1083B001E8441 /* AppLogoColorFormRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogoColorFormRow.swift; sourceTree = "<group>"; };
 		2C1B060828B10A48001E8441 /* AppLogoColorSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogoColorSelector.swift; sourceTree = "<group>"; };
 		2C1B19662888675D00D734D2 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		2C1B196B28886CFB00D734D2 /* PopUpError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpError.swift; sourceTree = "<group>"; };
 		2C1B1984288874C100D734D2 /* QuickAddSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAddSection.swift; sourceTree = "<group>"; };
+		2C33AD7028CFACA100E77F8D /* archive_ios.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = archive_ios.sh; sourceTree = "<group>"; };
 		2C39A91728835847008BAFD2 /* TasktiveLocale */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = TasktiveLocale; sourceTree = "<group>"; };
 		2C39A91C28835ADF008BAFD2 /* run.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = run.sh; sourceTree = "<group>"; };
 		2C3B27C5288C77F7007CE538 /* DateControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateControlView.swift; sourceTree = "<group>"; };
@@ -371,8 +373,6 @@
 		2C47E3F12883688F00FD4469 /* Text+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Text+extensions.swift"; sourceTree = "<group>"; };
 		2C47E3F32883692800FD4469 /* locale.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = locale.js; sourceTree = "<group>"; };
 		2C47E3F42883693400FD4469 /* en.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = en.js; sourceTree = "<group>"; };
-		2C47E3F62883694200FD4469 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		2C47E3F72883694200FD4469 /* Localize.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = Localize.js; sourceTree = "<group>"; };
 		2C47E3FA28836A6A00FD4469 /* DeviceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceModel.swift; sourceTree = "<group>"; };
 		2C47E3FC28836B2200FD4469 /* NotificationName+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationName+extensions.swift"; sourceTree = "<group>"; };
 		2C47E4032883719000FD4469 /* Sidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sidebar.swift; sourceTree = "<group>"; };
@@ -442,6 +442,11 @@
 		2CBCE60F2881DE270057F4CD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2CBCE6112881DE270057F4CD /* Tasktive.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Tasktive.entitlements; sourceTree = "<group>"; };
 		2CBCE6132881DE270057F4CD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		2CBD454F28CE02610073E317 /* import_signing_certificate_ios.bash */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = import_signing_certificate_ios.bash; sourceTree = "<group>"; };
+		2CBD455128CE03460073E317 /* import_provisioning_profile_ios.bash */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = import_provisioning_profile_ios.bash; sourceTree = "<group>"; };
+		2CBD455328CE067A0073E317 /* main.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = main.py; sourceTree = "<group>"; };
+		2CBD455528CE06820073E317 /* go.mod */ = {isa = PBXFileReference; lastKnownFileType = text; path = go.mod; sourceTree = "<group>"; };
+		2CBD455628CE06820073E317 /* main.go */ = {isa = PBXFileReference; lastKnownFileType = text; path = main.go; sourceTree = "<group>"; };
 		2CC2D9A728C4D5A20036817B /* EditMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMode.swift; sourceTree = "<group>"; };
 		2CC2D9AC28C4D6270036817B /* EditModeStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditModeStack.swift; sourceTree = "<group>"; };
 		2CC2D9B028C4D7430036817B /* EditButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditButton.swift; sourceTree = "<group>"; };
@@ -459,6 +464,9 @@
 		2CD2EB7728BA41F500C14B18 /* run_ios_tests.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = run_ios_tests.sh; sourceTree = "<group>"; };
 		2CD2EB7828BA423C00C14B18 /* Gemfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Gemfile; sourceTree = "<group>"; };
 		2CD7EF5728B8076B009FA620 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		2CD9B01328CE2FED00DA7ECC /* Gymfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Gymfile; sourceTree = "<group>"; };
+		2CD9B01428CE2FF900DA7ECC /* ExportOptions.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ExportOptions.plist; sourceTree = "<group>"; };
+		2CD9B01528CE300A00DA7ECC /* Simulator Screen Shot - iPhone 13 - 2022-09-10 at 00.12.02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Simulator Screen Shot - iPhone 13 - 2022-09-10 at 00.12.02.png"; sourceTree = "<group>"; };
 		2CDC17E628A02E5400F07CF0 /* CoreBase+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreBase+CoreDataClass.swift"; sourceTree = "<group>"; };
 		2CDC17E728A02E5400F07CF0 /* CoreBase+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreBase+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2CDC17EE28A02F8D00F07CF0 /* CoreTaskList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTaskList+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -596,6 +604,7 @@
 				2C04669528CBF22E00BD30E0 /* iPhone 8 Plus-01-task-screen-ui_testing_light_mode.png */,
 				2C04669728CBF22E00BD30E0 /* iPhone 13 Pro Max-01-task-screen-ui_testing_dark_mode.png */,
 				2C04669328CBF22E00BD30E0 /* iPhone 13 Pro Max-01-task-screen-ui_testing_light_mode.png */,
+				2CD9B01528CE300A00DA7ECC /* Simulator Screen Shot - iPhone 13 - 2022-09-10 at 00.12.02.png */,
 			);
 			path = "en-US";
 			sourceTree = "<group>";
@@ -692,7 +701,6 @@
 			children = (
 				2C47E3F32883692800FD4469 /* locale.js */,
 				2C39A91C28835ADF008BAFD2 /* run.sh */,
-				2C47E3F52883694200FD4469 /* Localize.js */,
 			);
 			path = GenerateLocales;
 			sourceTree = "<group>";
@@ -731,15 +739,6 @@
 				2CF24AA928842B5B00778BD9 /* View+extensions.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		2C47E3F52883694200FD4469 /* Localize.js */ = {
-			isa = PBXGroup;
-			children = (
-				2C47E3F72883694200FD4469 /* Localize.js */,
-				2C47E3F62883694200FD4469 /* README.md */,
-			);
-			path = Localize.js;
 			sourceTree = "<group>";
 		};
 		2C47E3F928836A5100FD4469 /* ViewModels */ = {
@@ -887,7 +886,9 @@
 			children = (
 				2CAFD79A28BD47AA00B302F8 /* Appfile */,
 				2CAFD79C28BD47AA00B302F8 /* Fastfile */,
+				2CD9B01328CE2FED00DA7ECC /* Gymfile */,
 				2CAFD79D28BD47AA00B302F8 /* Snapfile */,
+				2CD9B01428CE2FF900DA7ECC /* ExportOptions.plist */,
 				2CAFD79B28BD47AA00B302F8 /* SnapshotHelper.swift */,
 				2C04668F28CBF22E00BD30E0 /* screenshots */,
 			);
@@ -963,6 +964,31 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		2CBD455228CE067A0073E317 /* swiftlint_checker */ = {
+			isa = PBXGroup;
+			children = (
+				2CBD455328CE067A0073E317 /* main.py */,
+			);
+			path = swiftlint_checker;
+			sourceTree = "<group>";
+		};
+		2CBD455428CE06820073E317 /* xcode-app-version-bumper */ = {
+			isa = PBXGroup;
+			children = (
+				2CBD455528CE06820073E317 /* go.mod */,
+				2CBD455628CE06820073E317 /* main.go */,
+			);
+			path = "xcode-app-version-bumper";
+			sourceTree = "<group>";
+		};
+		2CBD455728CE07220073E317 /* encode_certificates */ = {
+			isa = PBXGroup;
+			children = (
+				2C1A416628CE152100C2E5D1 /* app.py */,
+			);
+			path = encode_certificates;
+			sourceTree = "<group>";
+		};
 		2CC2D9A628C4D5800036817B /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
@@ -991,14 +1017,20 @@
 		2CCCADAC2881F1970033E2EF /* Scripts */ = {
 			isa = PBXGroup;
 			children = (
+				2CBD455128CE03460073E317 /* import_provisioning_profile_ios.bash */,
+				2CBD454F28CE02610073E317 /* import_signing_certificate_ios.bash */,
+				2C33AD7028CFACA100E77F8D /* archive_ios.sh */,
 				2CE0C86C28A8621200B54EC9 /* bootstrap.sh */,
 				2C07056028A0393E0058F646 /* clear_mac_data.sh */,
 				2CCCADAD2881F1CC0033E2EF /* pre_compile.sh */,
 				2CD2EB7728BA41F500C14B18 /* run_ios_tests.sh */,
 				2CAFF5D828CDD4FC00D4E91E /* select_xcode_version.sh */,
 				2C98E3CC28B12DFB0048149F /* app-icon-generator */,
+				2CBD455728CE07220073E317 /* encode_certificates */,
 				2C03068528A006E70071F0CA /* generate_tokens */,
 				2C39A91A28835AAD008BAFD2 /* GenerateLocales */,
+				2CBD455228CE067A0073E317 /* swiftlint_checker */,
+				2CBD455428CE06820073E317 /* xcode-app-version-bumper */,
 			);
 			path = Scripts;
 			sourceTree = "<group>";
@@ -1755,11 +1787,11 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = io.kamaal.MainFlowsUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -1775,11 +1807,11 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = io.kamaal.MainFlowsUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -1798,7 +1830,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Tasktive/TasktiveDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"Tasktive/Preview Content\"";
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1815,7 +1847,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = io.kamaal.Tasktivity;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -1834,7 +1866,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Tasktive/Tasktive.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"Tasktive/Preview Content\"";
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1851,7 +1883,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = io.kamaal.Tasktivity;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -1870,7 +1902,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Tasktive/TasktiveDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"Tasktive/Preview Content\"";
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1887,7 +1919,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = io.kamaal.Tasktivity.Debug;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -1906,7 +1938,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Tasktive/Tasktive.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"Tasktive/Preview Content\"";
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1923,7 +1955,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = io.kamaal.Tasktivity.Debug;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -2055,7 +2087,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Tasktive/TasktiveDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"Tasktive/Preview Content\"";
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2073,7 +2105,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = io.kamaal.Tasktivity;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -2094,10 +2126,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Tasktive/Tasktive.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Kamaal Farah (DXUKH9VF73)";
+				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution: Kamaal Farah (DXUKH9VF73)";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"Tasktive/Preview Content\"";
-				DEVELOPMENT_TEAM = DXUKH9VF73;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=*]" = DXUKH9VF73;
+				ENABLE_BITCODE = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -2113,9 +2149,11 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = io.kamaal.Tasktivity;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "Tasktivity App Store distribution";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=*]" = "Tasktivity App Store distribution";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -2133,11 +2171,11 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = io.kamaal.CoreTaskTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -2153,11 +2191,11 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = io.kamaal.CoreTaskTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
