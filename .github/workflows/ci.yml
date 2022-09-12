@@ -7,68 +7,68 @@ on:
       - "feature/**"
 
 jobs:
-  # quality:
-  #   name: Quality
-  #   timeout-minutes: 5
-  #   runs-on: macos-12
-  #   concurrency:
-  #     group: ${{ github.ref }}
-  #     cancel-in-progress: true
-  #   steps:
-  #     - name: Git - Checkout
-  #       uses: actions/checkout@v2
-  #       with:
-  #         ref: ${{ github.ref }}
-  #         submodules: recursive
+  quality:
+    name: Quality
+    timeout-minutes: 5
+    runs-on: macos-12
+    concurrency:
+      group: ${{ github.ref }}
+      cancel-in-progress: true
+    steps:
+      - name: Git - Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+          submodules: recursive
 
-  #     - name: Swift lint
-  #       run: |
-  #         python3 Scripts/swiftlint_checker/main.py
+      - name: Swift lint
+        run: |
+          python3 Scripts/swiftlint_checker/main.py
 
-  # test:
-  #   name: Test
-  #   timeout-minutes: 10
-  #   runs-on: macos-12
-  #   needs: [quality]
-  #   concurrency:
-  #     group: ${{ github.ref }}
-  #     cancel-in-progress: true
-  #   steps:
-  #     - name: Git - Checkout
-  #       uses: actions/checkout@v2
-  #       with:
-  #         ref: ${{ github.ref }}
-  #         submodules: recursive
+  test:
+    name: Test
+    timeout-minutes: 10
+    runs-on: macos-12
+    needs: [quality]
+    concurrency:
+      group: ${{ github.ref }}
+      cancel-in-progress: true
+    steps:
+      - name: Git - Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+          submodules: recursive
 
-  #     - name: Setup - Xcode
-  #       run: |
-  #         sh Scripts/select_xcode_version.sh
+      - name: Setup - Xcode
+        run: |
+          sh Scripts/select_xcode_version.sh
 
-  #     - name: Setup - Ruby and bundler dependencies
-  #       uses: ruby/setup-ruby@v1
-  #       with:
-  #         ruby-version: 3.0
-  #         bundler-cache: true
+      - name: Setup - Ruby and bundler dependencies
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0
+          bundler-cache: true
 
-  #     - name: Create token file
-  #       run: |
-  #         # No need to actually add the tokens in the test
+      - name: Create token file
+        run: |
+          # No need to actually add the tokens in the test
 
-  #         yarn generate-tokens
+          yarn generate-tokens
 
-  #     - name: Test
-  #       run: |
-  #         yarn test:ios
+      - name: Test
+        run: |
+          yarn test:ios
 
   deployIOS:
     name: Deploy iOS
     timeout-minutes: 15
     runs-on: macos-12
-    # needs: [test]
+    needs: [test]
     concurrency:
       group: ${{ github.ref }}
       cancel-in-progress: true
-    # if: contains(github.ref, 'refs/heads/release/') || github.ref == 'refs/heads/main'
+    if: contains(github.ref, 'refs/heads/release/') || github.ref == 'refs/heads/main'
     steps:
       - name: Git - Checkout
         uses: actions/checkout@v2
@@ -90,14 +90,6 @@ jobs:
           PROVISIONING_PROFILE_DATA: ${{ secrets.PROVISIONING_PROFILE_DATA }}
         run: |
           # bash Scripts/import_provisioning_profile_ios.bash
-          set -euo pipefail
-
-          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-          echo "$PROVISIONING_PROFILE_DATA" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/profile.mobileprovision
-
-          ls ~/Library/MobileDevice/Provisioning\ Profiles
-
-          echo "Provisioning profile created"
 
       - name: Setup - Xcode
         run: |
