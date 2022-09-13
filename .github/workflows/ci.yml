@@ -89,7 +89,7 @@ jobs:
         env:
           PROVISIONING_PROFILE_DATA: ${{ secrets.PROVISIONING_PROFILE_DATA }}
         run: |
-          # bash Scripts/import_provisioning_profile_ios.bash
+          bash Scripts/import_provisioning_profile_ios.bash
 
       - name: Setup - Xcode
         run: |
