@@ -94,7 +94,7 @@
       <CommandLineArguments>
          <CommandLineArgument
             argument = "enable_icloud_syncing"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "enable_feedback"

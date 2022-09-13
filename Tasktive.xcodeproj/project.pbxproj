@@ -271,6 +271,9 @@
 		2CBCE60E2881DE240057F4CD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCE60D2881DE240057F4CD /* ContentView.swift */; };
 		2CBCE6102881DE270057F4CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CBCE60F2881DE270057F4CD /* Assets.xcassets */; };
 		2CBCE6142881DE270057F4CD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CBCE6132881DE270057F4CD /* Preview Assets.xcassets */; };
+		2CBDB63228D1100F007EC2D5 /* DispatchQueue+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBDB63128D1100F007EC2D5 /* DispatchQueue+extensions.swift */; };
+		2CBDB63328D1100F007EC2D5 /* DispatchQueue+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBDB63128D1100F007EC2D5 /* DispatchQueue+extensions.swift */; };
+		2CBDB63428D1100F007EC2D5 /* DispatchQueue+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBDB63128D1100F007EC2D5 /* DispatchQueue+extensions.swift */; };
 		2CC2D9A828C4D5A20036817B /* EditMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC2D9A728C4D5A20036817B /* EditMode.swift */; };
 		2CC2D9A928C4D5A20036817B /* EditMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC2D9A728C4D5A20036817B /* EditMode.swift */; };
 		2CC2D9AD28C4D6270036817B /* EditModeStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC2D9AC28C4D6270036817B /* EditModeStack.swift */; };
@@ -447,6 +450,7 @@
 		2CBD455328CE067A0073E317 /* main.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = main.py; sourceTree = "<group>"; };
 		2CBD455528CE06820073E317 /* go.mod */ = {isa = PBXFileReference; lastKnownFileType = text; path = go.mod; sourceTree = "<group>"; };
 		2CBD455628CE06820073E317 /* main.go */ = {isa = PBXFileReference; lastKnownFileType = text; path = main.go; sourceTree = "<group>"; };
+		2CBDB63128D1100F007EC2D5 /* DispatchQueue+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+extensions.swift"; sourceTree = "<group>"; };
 		2CC2D9A728C4D5A20036817B /* EditMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMode.swift; sourceTree = "<group>"; };
 		2CC2D9AC28C4D6270036817B /* EditModeStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditModeStack.swift; sourceTree = "<group>"; };
 		2CC2D9B028C4D7430036817B /* EditButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditButton.swift; sourceTree = "<group>"; };
@@ -729,6 +733,7 @@
 				2CDFB1AF28A6DA53004ACED7 /* Colors.swift */,
 				2C98E3C728B125CA0048149F /* Data+extensions.swift */,
 				2CDE6AEA28B2BAFE00924935 /* Date+extensions.swift */,
+				2CBDB63128D1100F007EC2D5 /* DispatchQueue+extensions.swift */,
 				2C98E43A28B1306C0048149F /* FileManager+extensions.swift */,
 				2C98E3C528B125710048149F /* Image+extensions.swift */,
 				2C79879728AC30DF00F36C59 /* NavigationPath+extensions.swift */,
@@ -1550,6 +1555,7 @@
 				2C69A09A28B19BC600D5006D /* PlaygroundScreen.swift in Sources */,
 				2C513B4D28BFDABD00A835C4 /* Features.swift in Sources */,
 				2C69A09B28B19BC600D5006D /* ProgressSection.swift in Sources */,
+				2CBDB63328D1100F007EC2D5 /* DispatchQueue+extensions.swift in Sources */,
 				2C69A09C28B19BC600D5006D /* ToolbarButton.swift in Sources */,
 				2C69A09D28B19BC600D5006D /* CoreTag+CoreDataProperties.swift in Sources */,
 				2C69A09E28B19BC600D5006D /* TaskDetailsSheet.swift in Sources */,
@@ -1648,6 +1654,7 @@
 				2C98E41C28B12E170048149F /* PlaygroundScreen.swift in Sources */,
 				2C513B4E28BFDABD00A835C4 /* Features.swift in Sources */,
 				2C98E41D28B12E170048149F /* ProgressSection.swift in Sources */,
+				2CBDB63428D1100F007EC2D5 /* DispatchQueue+extensions.swift in Sources */,
 				2C98E41E28B12E170048149F /* ToolbarButton.swift in Sources */,
 				2C98E41F28B12E170048149F /* CoreTag+CoreDataProperties.swift in Sources */,
 				2C98E42028B12E170048149F /* TaskDetailsSheet.swift in Sources */,
@@ -1710,6 +1717,7 @@
 				2C47E3FB28836A6A00FD4469 /* DeviceModel.swift in Sources */,
 				2C9435E628B28C8A00281AF7 /* CloudKitDataViewerScreen.swift in Sources */,
 				2C1B060928B10A48001E8441 /* AppLogoColorSelector.swift in Sources */,
+				2CBDB63228D1100F007EC2D5 /* DispatchQueue+extensions.swift in Sources */,
 				2CDC17FD28A031AF00F07CF0 /* CoreReminder+CoreDataProperties.swift in Sources */,
 				2C51C90F28847438008939F7 /* Constants.swift in Sources */,
 				2C62FA2F28A7E95F00200BF9 /* StoreKitDonation.swift in Sources */,
