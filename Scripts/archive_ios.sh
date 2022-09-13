@@ -7,6 +7,5 @@
 #
 
 SCHEME="Tasktive"
-DEVELOPER_DIR="/Applications/Xcode_14.0.app"
 
 bundle exec fastlane gym --scheme $SCHEME
