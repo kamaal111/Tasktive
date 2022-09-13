@@ -274,6 +274,10 @@
 		2CBDB63228D1100F007EC2D5 /* DispatchQueue+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBDB63128D1100F007EC2D5 /* DispatchQueue+extensions.swift */; };
 		2CBDB63328D1100F007EC2D5 /* DispatchQueue+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBDB63128D1100F007EC2D5 /* DispatchQueue+extensions.swift */; };
 		2CBDB63428D1100F007EC2D5 /* DispatchQueue+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBDB63128D1100F007EC2D5 /* DispatchQueue+extensions.swift */; };
+		2CBDB64328D11B8B007EC2D5 /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = 2CBDB64228D11B8B007EC2D5 /* Quick */; };
+		2CBDB64528D11B8B007EC2D5 /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = 2CBDB64428D11B8B007EC2D5 /* Nimble */; };
+		2CBDB64728D11BC4007EC2D5 /* TasksScreenViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBDB64628D11BC4007EC2D5 /* TasksScreenViewModelTests.swift */; };
+		2CBDB64828D11FCD007EC2D5 /* CoreTaskSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCCADBF2881FCF00033E2EF /* CoreTaskSpec.swift */; };
 		2CC2D9A828C4D5A20036817B /* EditMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC2D9A728C4D5A20036817B /* EditMode.swift */; };
 		2CC2D9A928C4D5A20036817B /* EditMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC2D9A728C4D5A20036817B /* EditMode.swift */; };
 		2CC2D9AD28C4D6270036817B /* EditModeStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC2D9AC28C4D6270036817B /* EditModeStack.swift */; };
@@ -284,9 +288,6 @@
 		2CC325F328B0E68F0091EC3E /* Navigatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC325F228B0E68F0091EC3E /* Navigatable.swift */; };
 		2CC79CE3288D78A400FD5792 /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC79CE2288D78A400FD5792 /* SettingsScreen.swift */; };
 		2CCCADB72881F94D0033E2EF /* CoreTask+CRUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCCADB62881F94D0033E2EF /* CoreTask+CRUD.swift */; };
-		2CCCADC02881FCF00033E2EF /* CoreTaskSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCCADBF2881FCF00033E2EF /* CoreTaskSpec.swift */; };
-		2CCCADC82881FECB0033E2EF /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = 2CCCADC72881FECB0033E2EF /* Quick */; };
-		2CCCADCE2882010F0033E2EF /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = 2CCCADCD2882010F0033E2EF /* Nimble */; };
 		2CCCADD1288203720033E2EF /* Logster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCCADD0288203720033E2EF /* Logster.swift */; };
 		2CCCADD4288204100033E2EF /* Crudable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCCADD3288204100033E2EF /* Crudable.swift */; };
 		2CCF228B28B7FA6D00366596 /* Skypiea in Frameworks */ = {isa = PBXBuildFile; productRef = 2CCF228A28B7FA6D00366596 /* Skypiea */; };
@@ -334,7 +335,7 @@
 			remoteGlobalIDString = 2CBCE6022881DE240057F4CD;
 			remoteInfo = Tasktive;
 		};
-		2CCCADC12881FCF00033E2EF /* PBXContainerItemProxy */ = {
+		2CBDB63D28D11B08007EC2D5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2CBCE5FB2881DE240057F4CD /* Project object */;
 			proxyType = 1;
@@ -451,6 +452,8 @@
 		2CBD455528CE06820073E317 /* go.mod */ = {isa = PBXFileReference; lastKnownFileType = text; path = go.mod; sourceTree = "<group>"; };
 		2CBD455628CE06820073E317 /* main.go */ = {isa = PBXFileReference; lastKnownFileType = text; path = main.go; sourceTree = "<group>"; };
 		2CBDB63128D1100F007EC2D5 /* DispatchQueue+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+extensions.swift"; sourceTree = "<group>"; };
+		2CBDB63928D11B08007EC2D5 /* TasktiveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TasktiveTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2CBDB64628D11BC4007EC2D5 /* TasksScreenViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksScreenViewModelTests.swift; sourceTree = "<group>"; };
 		2CC2D9A728C4D5A20036817B /* EditMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMode.swift; sourceTree = "<group>"; };
 		2CC2D9AC28C4D6270036817B /* EditModeStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditModeStack.swift; sourceTree = "<group>"; };
 		2CC2D9B028C4D7430036817B /* EditButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditButton.swift; sourceTree = "<group>"; };
@@ -460,7 +463,6 @@
 		2CCCADAB2881F1750033E2EF /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		2CCCADAD2881F1CC0033E2EF /* pre_compile.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = pre_compile.sh; sourceTree = "<group>"; };
 		2CCCADB62881F94D0033E2EF /* CoreTask+CRUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTask+CRUD.swift"; sourceTree = "<group>"; };
-		2CCCADBD2881FCF00033E2EF /* CoreTaskTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoreTaskTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CCCADBF2881FCF00033E2EF /* CoreTaskSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreTaskSpec.swift; sourceTree = "<group>"; };
 		2CCCADD0288203720033E2EF /* Logster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logster.swift; sourceTree = "<group>"; };
 		2CCCADD3288204100033E2EF /* Crudable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crudable.swift; sourceTree = "<group>"; };
@@ -553,12 +555,12 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2CCCADBA2881FCF00033E2EF /* Frameworks */ = {
+		2CBDB63628D11B08007EC2D5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2CCCADC82881FECB0033E2EF /* Quick in Frameworks */,
-				2CCCADCE2882010F0033E2EF /* Nimble in Frameworks */,
+				2CBDB64328D11B8B007EC2D5 /* Quick in Frameworks */,
+				2CBDB64528D11B8B007EC2D5 /* Nimble in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -794,7 +796,8 @@
 		2C4E81DA28BBD98F0056D0D1 /* UnitTests */ = {
 			isa = PBXGroup;
 			children = (
-				2CCCADBE2881FCF00033E2EF /* CoreTaskTests */,
+				2CCCADBF2881FCF00033E2EF /* CoreTaskSpec.swift */,
+				2CBDB64628D11BC4007EC2D5 /* TasksScreenViewModelTests.swift */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -924,10 +927,10 @@
 			isa = PBXGroup;
 			children = (
 				2CBCE6032881DE240057F4CD /* Tasktive.app */,
-				2CCCADBD2881FCF00033E2EF /* CoreTaskTests.xctest */,
 				2C98E43428B12E170048149F /* TasktiveMacDebug.app */,
 				2C69A0B328B19BC600D5006D /* TasktiveMac.app */,
 				2C4E81E028BBDC070056D0D1 /* MainFlowsUITests.xctest */,
+				2CBDB63928D11B08007EC2D5 /* TasktiveTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1082,14 +1085,6 @@
 				2C4E81DA28BBD98F0056D0D1 /* UnitTests */,
 			);
 			path = Tests;
-			sourceTree = "<group>";
-		};
-		2CCCADBE2881FCF00033E2EF /* CoreTaskTests */ = {
-			isa = PBXGroup;
-			children = (
-				2CCCADBF2881FCF00033E2EF /* CoreTaskSpec.swift */,
-			);
-			path = CoreTaskTests;
 			sourceTree = "<group>";
 		};
 		2CCCADCC2882010F0033E2EF /* Frameworks */ = {
@@ -1272,26 +1267,26 @@
 			productReference = 2CBCE6032881DE240057F4CD /* Tasktive.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2CCCADBC2881FCF00033E2EF /* CoreTaskTests */ = {
+		2CBDB63828D11B08007EC2D5 /* TasktiveTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2CCCADC32881FCF00033E2EF /* Build configuration list for PBXNativeTarget "CoreTaskTests" */;
+			buildConfigurationList = 2CBDB63F28D11B08007EC2D5 /* Build configuration list for PBXNativeTarget "TasktiveTests" */;
 			buildPhases = (
-				2CCCADB92881FCF00033E2EF /* Sources */,
-				2CCCADBA2881FCF00033E2EF /* Frameworks */,
-				2CCCADBB2881FCF00033E2EF /* Resources */,
+				2CBDB63528D11B08007EC2D5 /* Sources */,
+				2CBDB63628D11B08007EC2D5 /* Frameworks */,
+				2CBDB63728D11B08007EC2D5 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				2CCCADC22881FCF00033E2EF /* PBXTargetDependency */,
+				2CBDB63E28D11B08007EC2D5 /* PBXTargetDependency */,
 			);
-			name = CoreTaskTests;
+			name = TasktiveTests;
 			packageProductDependencies = (
-				2CCCADC72881FECB0033E2EF /* Quick */,
-				2CCCADCD2882010F0033E2EF /* Nimble */,
+				2CBDB64228D11B8B007EC2D5 /* Quick */,
+				2CBDB64428D11B8B007EC2D5 /* Nimble */,
 			);
-			productName = CoreTaskTests;
-			productReference = 2CCCADBD2881FCF00033E2EF /* CoreTaskTests.xctest */;
+			productName = TasktiveTests;
+			productReference = 2CBDB63928D11B08007EC2D5 /* TasktiveTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -1311,7 +1306,7 @@
 					2CBCE6022881DE240057F4CD = {
 						CreatedOnToolsVersion = 14.0;
 					};
-					2CCCADBC2881FCF00033E2EF = {
+					2CBDB63828D11B08007EC2D5 = {
 						CreatedOnToolsVersion = 14.0;
 						TestTargetID = 2CBCE6022881DE240057F4CD;
 					};
@@ -1340,7 +1335,7 @@
 				2CBCE6022881DE240057F4CD /* Tasktive */,
 				2C69A04F28B19BC600D5006D /* TasktiveMac */,
 				2C98E3D728B12E170048149F /* TasktiveMacDebug */,
-				2CCCADBC2881FCF00033E2EF /* CoreTaskTests */,
+				2CBDB63828D11B08007EC2D5 /* TasktiveTests */,
 				2C4E81DF28BBDC070056D0D1 /* MainFlowsUITests */,
 			);
 		};
@@ -1389,7 +1384,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2CCCADBB2881FCF00033E2EF /* Resources */ = {
+		2CBDB63728D11B08007EC2D5 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1766,11 +1761,12 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2CCCADB92881FCF00033E2EF /* Sources */ = {
+		2CBDB63528D11B08007EC2D5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2CCCADC02881FCF00033E2EF /* CoreTaskSpec.swift in Sources */,
+				2CBDB64828D11FCD007EC2D5 /* CoreTaskSpec.swift in Sources */,
+				2CBDB64728D11BC4007EC2D5 /* TasksScreenViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1782,10 +1778,10 @@
 			target = 2CBCE6022881DE240057F4CD /* Tasktive */;
 			targetProxy = 2C4E81E628BBDC070056D0D1 /* PBXContainerItemProxy */;
 		};
-		2CCCADC22881FCF00033E2EF /* PBXTargetDependency */ = {
+		2CBDB63E28D11B08007EC2D5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 2CBCE6022881DE240057F4CD /* Tasktive */;
-			targetProxy = 2CCCADC12881FCF00033E2EF /* PBXContainerItemProxy */;
+			targetProxy = 2CBDB63D28D11B08007EC2D5 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -2174,43 +2170,45 @@
 			};
 			name = Release;
 		};
-		2CCCADC42881FCF00033E2EF /* Debug */ = {
+		2CBDB64028D11B08007EC2D5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				MARKETING_VERSION = 1.0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = io.kamaal.CoreTaskTests;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.kamaal.TasktiveTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tasktive.app/Tasktive";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tasktive.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Tasktive";
 			};
 			name = Debug;
 		};
-		2CCCADC52881FCF00033E2EF /* Release */ = {
+		2CBDB64128D11B08007EC2D5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				MARKETING_VERSION = 1.0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = io.kamaal.CoreTaskTests;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.kamaal.TasktiveTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tasktive.app/Tasktive";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tasktive.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Tasktive";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -2263,11 +2261,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2CCCADC32881FCF00033E2EF /* Build configuration list for PBXNativeTarget "CoreTaskTests" */ = {
+		2CBDB63F28D11B08007EC2D5 /* Build configuration list for PBXNativeTarget "TasktiveTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				2CCCADC42881FCF00033E2EF /* Debug */,
-				2CCCADC52881FCF00033E2EF /* Release */,
+				2CBDB64028D11B08007EC2D5 /* Debug */,
+				2CBDB64128D11B08007EC2D5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -2444,12 +2442,12 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = SettingsUI;
 		};
-		2CCCADC72881FECB0033E2EF /* Quick */ = {
+		2CBDB64228D11B8B007EC2D5 /* Quick */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 2CCCADC62881FECB0033E2EF /* XCRemoteSwiftPackageReference "Quick" */;
 			productName = Quick;
 		};
-		2CCCADCD2882010F0033E2EF /* Nimble */ = {
+		2CBDB64428D11B8B007EC2D5 /* Nimble */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 2CCCADC92881FEE90033E2EF /* XCRemoteSwiftPackageReference "Nimble" */;
 			productName = Nimble;

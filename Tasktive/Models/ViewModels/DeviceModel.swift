@@ -13,7 +13,7 @@ private let logger = Logster(from: DeviceModel.self)
 
 final class DeviceModel: ObservableObject {
     @Published private var deviceOrientation: DeviceOrientation?
-    @Published private var isConnectedToNetwork = true {
+    @Published private(set) var isConnectedToNetwork = true {
         didSet { isConnectedToNetworkDidSet() }
     }
 

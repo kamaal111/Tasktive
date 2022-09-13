@@ -20,6 +20,7 @@ struct TasksScreen: View {
     @EnvironmentObject private var theme: Theme
     @EnvironmentObject private var tasksViewModel: TasksViewModel
     @EnvironmentObject private var popperUpManager: PopperUpManager
+    @EnvironmentObject private var deviceModel: DeviceModel
 
     @StateObject private var viewModel = ViewModel()
 
@@ -76,7 +77,8 @@ struct TasksScreen: View {
             QuickAddSection(
                 title: $viewModel.newTitle,
                 currentSource: $viewModel.currentSource,
-                disableSubmit: viewModel.disableNewTaskSubmitButton,
+                disableSubmit: viewModel
+                    .disableNewTaskSubmitButton(isConnectedToNetwork: deviceModel.isConnectedToNetwork),
                 dataSources: viewModel.dataSources,
                 submit: onNewTaskSubmit
             )
@@ -182,9 +184,9 @@ struct TasksScreen: View {
     private func onNewTaskSubmit() {
         logger.info("submitting new task")
         Task {
-            let submitTaskResult = await viewModel.submitNewTask()
+            let validatedTaskDataResult = await viewModel.validateNewTask()
             let newTitle: String
-            switch submitTaskResult {
+            switch validatedTaskDataResult {
             case let .failure(failure):
                 popperUpManager.showPopup(style: failure.style, timeout: failure.timeout)
                 return
@@ -247,8 +249,8 @@ struct TasksScreen: View {
                 }
         }
 
-        var disableNewTaskSubmitButton: Bool {
-            invalidTitle
+        func disableNewTaskSubmitButton(isConnectedToNetwork: Bool) -> Bool {
+            invalidTitle || (!isConnectedToNetwork && currentSource == .iCloud)
         }
 
         func onDateDragGestureEnd(_ value: DragGesture.Value) {
@@ -301,7 +303,7 @@ struct TasksScreen: View {
             await setCurrentFocusedTaskID(nil)
         }
 
-        func submitNewTask() async -> Result<String, ValidationErrors> {
+        func validateNewTask() async -> Result<String, ValidationErrors> {
             guard !invalidTitle else {
                 return .failure(.invalidTitle)
             }
