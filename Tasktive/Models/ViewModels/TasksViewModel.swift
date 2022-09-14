@@ -13,12 +13,17 @@ import ShrimpExtensions
 
 private let logger = Logster(from: TasksViewModel.self)
 
+struct LastFetchedContext: Hashable, Equatable {
+    let date: Date
+    let dataSources: [DataSource]
+}
+
 final class TasksViewModel: ObservableObject {
     @Published private(set) var tasks: [Date: [AppTask]] = [:]
     @Published private(set) var loadingTasks = false
     @Published private(set) var settingTasks = false
 
-    private var lastFetchedForDate: Date?
+    private var lastFetchedContext: LastFetchedContext?
     private let dataClient: DataClient
     private let notifications: [Notification.Name] = [
         .iCloudChanges,
@@ -111,10 +116,12 @@ final class TasksViewModel: ObservableObject {
         await getTasks(from: sources, for: Date(), updateNotCompletedTasks: true)
     }
 
+    #if DEBUG
     func getAllTasks(from sources: [DataSource],
                      updateNotCompletedTasks: Bool = true) async -> Result<Void, UserErrors> {
         await getTasksByPredicate(from: sources, by: nil, updateNotCompletedTasks: updateNotCompletedTasks)
     }
+    #endif
 
     func updateTask(_ task: AppTask, with arguments: TaskArguments) async -> Result<Void, UserErrors> {
         await withSettingTasks(completion: {
@@ -173,7 +180,12 @@ final class TasksViewModel: ObservableObject {
     private func getTasks(from sources: [DataSource],
                           for date: Date,
                           updateNotCompletedTasks: Bool) async -> Result<Void, UserErrors> {
-        lastFetchedForDate = date
+        let newLastFetchedContext = LastFetchedContext(date: date, dataSources: sources)
+
+        guard newLastFetchedContext != lastFetchedContext else { return .success(()) }
+
+        lastFetchedContext = newLastFetchedContext
+
         let startDate = getHashDate(from: date)
         let endDate = getHashDate(from: startDate.incrementByDays(1)).incrementBySeconds(-1)
 
@@ -329,8 +341,13 @@ final class TasksViewModel: ObservableObject {
     private func handleNotification(_ notification: Notification) {
         switch notification.name {
         case .iCloudChanges:
-            guard let lastFetchedForDate = lastFetchedForDate, Features.iCloudSyncing else { return }
-            Task { await getTasks(from: [.iCloud], for: lastFetchedForDate) }
+            guard let lastFetchedContext = lastFetchedContext, Features.iCloudSyncing else { return }
+
+            let dataSources = lastFetchedContext.dataSources
+                .appended(.iCloud)
+                .uniques()
+
+            Task { await getTasks(from: dataSources, for: lastFetchedContext.date) }
         default:
             break
         }

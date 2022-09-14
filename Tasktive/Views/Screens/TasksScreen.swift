@@ -93,7 +93,13 @@ struct TasksScreen: View {
                 .ktakeSizeEagerly(alignment: .bottom)
         }
         .onChange(of: viewModel.currentDay, perform: { newValue in
-            Task { await tasksViewModel.getTasks(from: viewModel.dataSources, for: newValue) }
+            Task { await tasksViewModel.getTasks(from: dataSources, for: newValue) }
+        })
+        .onChange(of: deviceModel.isConnectedToNetwork, perform: { newValue in
+            guard newValue else { return }
+
+            // Reconnected to the internet
+            Task { await tasksViewModel.getTasks(from: dataSources, for: viewModel.currentDay) }
         })
         .onAppear(perform: handleOnAppear)
         .sheet(isPresented: $viewModel.showTaskDetailsSheet) {
@@ -121,13 +127,17 @@ struct TasksScreen: View {
         }
     }
 
+    private var dataSources: [DataSource] {
+        viewModel.dataSources(isConnectedToNetwork: deviceModel.isConnectedToNetwork)
+    }
+
     private func handleTaskEditedInDetailsSheet(_ arguments: TaskArguments?) {
         guard let arguments = arguments, let task = viewModel.shownTaskDetails else {
-            let message = "task or/and arguments are missing"
-            let argumentsLog = "arguments='\(arguments as Any)'"
-            let taskLog = "task='\(viewModel.shownTaskDetails as Any)'"
-            let loggingMessage = [message, argumentsLog, taskLog].joined(separator: "; ")
-            logger.warning(loggingMessage)
+            logger.warning(
+                "task or/and arguments are missing",
+                "arguments='\(arguments as Any)'",
+                "task='\(viewModel.shownTaskDetails as Any)'"
+            )
             return
         }
 
@@ -147,10 +157,7 @@ struct TasksScreen: View {
 
     private func handleTaskDeletedInDetailsSheet() {
         guard let task = viewModel.shownTaskDetails else {
-            let message = "task is missing"
-            let taskLog = "task='\(viewModel.shownTaskDetails as Any)'"
-            let loggingMessage = [message, taskLog].joined(separator: "; ")
-            logger.warning(loggingMessage)
+            logger.warning("task is missing", "task='\(viewModel.shownTaskDetails as Any)'")
             return
         }
 
@@ -170,7 +177,7 @@ struct TasksScreen: View {
 
     private func handleOnAppear() {
         Task {
-            let result = await tasksViewModel.getTodaysTasks(from: viewModel.dataSources)
+            let result = await tasksViewModel.getTodaysTasks(from: dataSources)
             switch result {
             case let .failure(failure):
                 popperUpManager.showPopup(style: failure.style, timeout: failure.timeout)
@@ -234,17 +241,27 @@ struct TasksScreen: View {
             didSet { currentSourceDidSet() }
         }
 
+        var pendingInternetFetch = false
         let quickAddViewHeight: CGFloat = 50
 
         init() { }
 
         var dataSources: [DataSource] {
+            dataSources(isConnectedToNetwork: true)
+        }
+
+        func dataSources(isConnectedToNetwork: Bool) -> [DataSource] {
             DataSource
                 .allCases
                 .filter { source in
-                    if !Features.iCloudSyncing, source == .iCloud {
+                    if !source.isSupported {
                         return false
                     }
+
+                    if source.requiresInternet, !isConnectedToNetwork {
+                        return false
+                    }
+
                     return true
                 }
         }

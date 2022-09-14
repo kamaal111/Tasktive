@@ -31,6 +31,10 @@ struct Logster {
         logger.warning("\(message)")
     }
 
+    func warning(_ messages: String...) {
+        warning(messages.joined(separator: "; "))
+    }
+
     func info(_ message: String) {
         logger.info("\(message)")
     }
