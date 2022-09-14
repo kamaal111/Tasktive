@@ -54,43 +54,22 @@ extension SettingsUI {
         }
     }
 
+    @available(macOS 13.0, iOS 16.0, *)
     public struct RowViewColorNavigationLink: View {
         public let label: String
         public let color: Color
         public let destination: SettingsScreens
-        public let onNavigate: (_ destination: SettingsScreens) -> Void
 
-        #if swift(>=5.7)
         public init(label: String, color: Color, destination: SettingsScreens) {
             self.label = label
             self.color = color
             self.destination = destination
-            self.onNavigate = { _ in }
         }
-        #else
-        public init(
-            label: String,
-            color: Color,
-            destination: SettingsScreens,
-            onNavigate: @escaping (_ destination: SettingsScreens) -> Void
-        ) {
-            self.label = label
-            self.color = color
-            self.destination = destination
-            self.onNavigate = onNavigate
-        }
-        #endif
 
         public var body: some View {
-            #if swift(>=5.7)
             RowNavigationLink(destination: destination) {
                 RowViewColorView(label: label, color: color)
             }
-            #else
-            RowNavigationLink(onNavigate: onNavigate, destination: destination) {
-                RowViewColorView(label: label, color: color)
-            }
-            #endif
         }
     }
 
@@ -159,90 +138,42 @@ extension SettingsUI {
         }
     }
 
+    @available(macOS 13.0, iOS 16.0, *)
     public struct RowImageTextNavigationLink: View {
         public let label: String
         public let imageSystemName: String
         public let destination: SettingsScreens
-        public let onNavigate: (_ destination: SettingsScreens) -> Void
 
-        #if swift(>=5.7)
         public init(label: String, imageSystemName: String, destination: SettingsScreens) {
             self.label = label
             self.imageSystemName = imageSystemName
             self.destination = destination
-            self.onNavigate = { _ in }
         }
-        #else
-        public init(
-            label: String,
-            imageSystemName: String,
-            destination: SettingsScreens,
-            onNavigate: @escaping (_ destination: SettingsScreens) -> Void
-        ) {
-            self.label = label
-            self.imageSystemName = imageSystemName
-            self.destination = destination
-            self.onNavigate = onNavigate
-        }
-        #endif
 
         public var body: some View {
-            #if swift(>=5.7)
             RowNavigationLink(destination: destination) {
                 RowImageTextView(label: label, imageSystemName: imageSystemName)
             }
-            #else
-            RowNavigationLink(onNavigate: onNavigate, destination: destination) {
-                RowImageTextView(label: label, imageSystemName: imageSystemName)
-            }
-            #endif
         }
     }
 
+    @available(macOS 13.0, iOS 16.0, *)
     public struct RowNavigationLink<Value: View>: View {
         public let destination: SettingsScreens
         public let value: Value
-        public let onNavigate: (_ destination: SettingsScreens) -> Void
 
-        #if swift(>=5.7)
         public init(destination: SettingsScreens, @ViewBuilder value: () -> Value) {
             self.destination = destination
             self.value = value()
-            self.onNavigate = { _ in }
         }
-        #else
-        public init(
-            onNavigate: @escaping (_ destination: SettingsScreens) -> Void,
-            destination: SettingsScreens,
-            @ViewBuilder value: () -> Value
-        ) {
-            self.destination = destination
-            self.value = value()
-            self.onNavigate = onNavigate
-        }
-        #endif
 
         public var body: some View {
             KJustStack {
-                #if swift(>=5.7)
-                if #available(macOS 13.0, iOS 16.0, *) {
-                    NavigationLink(value: destination) {
-                        content
-                    }
-                } else {
-                    fallbackView
+                NavigationLink(value: destination) {
+                    content
                 }
-                #else
-                fallbackView
-                #endif
             }
             .buttonStyle(.plain)
-        }
-
-        private var fallbackView: some View {
-            Button(action: { onNavigate(destination) }) {
-                content
-            }
         }
 
         private var content: some View {
