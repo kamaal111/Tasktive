@@ -21,7 +21,7 @@ struct TasktiveApp: App {
     @StateObject private var settingsStackNavigator = StackNavigator(screen: .settings)
     @StateObject private var theme = Theme()
 
-    @State private var currentScreen = STARTING_SCREEN
+    @State private var currentScreen = NamiNavigator.STARTING_SCREEN
 
     var body: some Scene {
         WindowGroup {

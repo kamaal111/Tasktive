@@ -98,9 +98,16 @@
       <CommandLineArguments>
          <CommandLineArgument
             argument = "enable_icloud_syncing"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "starting_stack_screen"
+            value = "1"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
       <StoreKitConfigurationFileReference
          identifier = "../Tasktive/Resources/StoreKit/Donations.storekit">
       </StoreKitConfigurationFileReference>

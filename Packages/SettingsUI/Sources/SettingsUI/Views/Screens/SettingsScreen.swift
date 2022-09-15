@@ -124,7 +124,7 @@ extension SettingsUI {
                 switch screen {
                 case let .feedback(style: style):
                     if let configuration = feedbackConfiguration {
-                        SettingsUI.FeedbackScreen(
+                        FeedbackScreen(
                             configuration: configuration,
                             style: style,
                             onDone: { maybeError in onFeedbackSend(maybeError) }

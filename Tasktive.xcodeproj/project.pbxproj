@@ -143,6 +143,9 @@
 		2C69A0AC28B19BC600D5006D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CBCE6132881DE270057F4CD /* Preview Assets.xcassets */; };
 		2C69A0AE28B19BC600D5006D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CBCE60F2881DE270057F4CD /* Assets.xcassets */; };
 		2C69A0AF28B19BC600D5006D /* Tokens.json in Resources */ = {isa = PBXBuildFile; fileRef = 2C157590289F02E900425CDD /* Tokens.json */; };
+		2C717E7D28D3C14C00DC060D /* EnvironmentVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C717E7C28D3C14C00DC060D /* EnvironmentVariables.swift */; };
+		2C717E7E28D3C14C00DC060D /* EnvironmentVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C717E7C28D3C14C00DC060D /* EnvironmentVariables.swift */; };
+		2C717E7F28D3C14C00DC060D /* EnvironmentVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C717E7C28D3C14C00DC060D /* EnvironmentVariables.swift */; };
 		2C750F66288C2F9400026D67 /* CircularProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C750F65288C2F9400026D67 /* CircularProgressBar.swift */; };
 		2C750F68288C31CF00026D67 /* ProgressSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C750F67288C31CF00026D67 /* ProgressSection.swift */; };
 		2C750F6A288C328C00026D67 /* TasksSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C750F69288C328C00026D67 /* TasksSection.swift */; };
@@ -401,6 +404,7 @@
 		2C69A04C28B193CB00D5006D /* PlaygroundNavigationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundNavigationButton.swift; sourceTree = "<group>"; };
 		2C69A0B328B19BC600D5006D /* TasktiveMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TasktiveMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C717E7B28D3B09E00DC060D /* release_build_ios.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = release_build_ios.sh; sourceTree = "<group>"; };
+		2C717E7C28D3C14C00DC060D /* EnvironmentVariables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentVariables.swift; sourceTree = "<group>"; };
 		2C750F65288C2F9400026D67 /* CircularProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressBar.swift; sourceTree = "<group>"; };
 		2C750F67288C31CF00026D67 /* ProgressSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressSection.swift; sourceTree = "<group>"; };
 		2C750F69288C328C00026D67 /* TasksSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksSection.swift; sourceTree = "<group>"; };
@@ -826,6 +830,7 @@
 				2C51C90C28847115008939F7 /* AppSizes.swift */,
 				2CB3F3B728BD34D10016B7F4 /* CommandLineArguments.swift */,
 				2C513B4F28BFDCA500A835C4 /* DataSource.swift */,
+				2C717E7C28D3C14C00DC060D /* EnvironmentVariables.swift */,
 			);
 			path = Enumerations;
 			sourceTree = "<group>";
@@ -1542,6 +1547,7 @@
 				2C69A09228B19BC600D5006D /* TokensHolder.swift in Sources */,
 				2C69A09328B19BC600D5006D /* CoreBase+CoreDataProperties.swift in Sources */,
 				2CED9A6028BA931F002409C1 /* StackNavigator.swift in Sources */,
+				2C717E7E28D3C14C00DC060D /* EnvironmentVariables.swift in Sources */,
 				2C69A09428B19BC600D5006D /* CoreAttachments+CoreDataClass.swift in Sources */,
 				2C69A09528B19BC600D5006D /* AppTabView.swift in Sources */,
 				2C69A09628B19BC600D5006D /* Tasktive.xcdatamodeld in Sources */,
@@ -1641,6 +1647,7 @@
 				2C98E41528B12E170048149F /* TokensHolder.swift in Sources */,
 				2C98E41628B12E170048149F /* CoreBase+CoreDataProperties.swift in Sources */,
 				2CED9A6128BA931F002409C1 /* StackNavigator.swift in Sources */,
+				2C717E7F28D3C14C00DC060D /* EnvironmentVariables.swift in Sources */,
 				2C98E41728B12E170048149F /* CoreAttachments+CoreDataClass.swift in Sources */,
 				2C98E41828B12E170048149F /* AppTabView.swift in Sources */,
 				2C98E41928B12E170048149F /* Tasktive.xcdatamodeld in Sources */,
@@ -1716,6 +1723,7 @@
 				2C1B060928B10A48001E8441 /* AppLogoColorSelector.swift in Sources */,
 				2CBDB63228D1100F007EC2D5 /* DispatchQueue+extensions.swift in Sources */,
 				2CDC17FD28A031AF00F07CF0 /* CoreReminder+CoreDataProperties.swift in Sources */,
+				2C717E7D28D3C14C00DC060D /* EnvironmentVariables.swift in Sources */,
 				2C51C90F28847438008939F7 /* Constants.swift in Sources */,
 				2C62FA2F28A7E95F00200BF9 /* StoreKitDonation.swift in Sources */,
 				2C98E3C628B125710048149F /* Image+extensions.swift in Sources */,

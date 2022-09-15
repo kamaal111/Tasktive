@@ -8,7 +8,6 @@
 import SwiftUI
 import TasktiveLocale
 
-let STARTING_SCREEN: NamiNavigator.Screens = .tasks
 private let logger = Logster(from: NamiNavigator.self)
 
 final class NamiNavigator: ObservableObject {
@@ -22,13 +21,13 @@ final class NamiNavigator: ObservableObject {
     private var needsToNavigate = false
 
     init() {
-        self.tabSelection = STARTING_SCREEN
-        self.sidebarSelection = STARTING_SCREEN
+        self.tabSelection = NamiNavigator.STARTING_SCREEN
+        self.sidebarSelection = NamiNavigator.STARTING_SCREEN
     }
 
     var currentSelection: NamiNavigator.Screens {
         if DeviceModel.deviceType.shouldHaveSidebar {
-            return sidebarSelection ?? STARTING_SCREEN
+            return sidebarSelection ?? Self.STARTING_SCREEN
         }
         return tabSelection
     }
@@ -70,6 +69,17 @@ final class NamiNavigator: ObservableObject {
 
         setSidebarSelection(screen)
     }
+
+    static let STARTING_SCREEN: NamiNavigator.Screens = {
+        #if DEBUG
+        guard let startingStackScreenValue = Int(EnvironmentVariables.startingStackScreen.value ?? ""),
+              let startingStackScreen = NamiNavigator.Screens(rawValue: startingStackScreenValue) else { return .tasks }
+
+        return startingStackScreen
+        #else
+            .tasks
+        #endif
+    }()
 }
 
 extension NamiNavigator {
