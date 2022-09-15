@@ -53,7 +53,7 @@ Pods/
 
 
 .vscode
-
+.idea
 
 .env
 fastlane/screenshots/iOS/screenshots.html

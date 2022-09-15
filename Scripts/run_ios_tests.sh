@@ -7,30 +7,7 @@
 #
 
 PROJECT="Tasktive.xcodeproj"
+DESTINATION="platform=iOS Simulator,name=iPhone 14 Pro Max"
+SCHEME="Tasktive"
 
-iOS_destinations=(
-  "platform=iOS Simulator,name=iPhone 13 Pro Max"
-)
-
-iOS_test_schemes=(
-  "Tasktive"
-)
-
-xcode_test() {
-    set -o pipefail && xcodebuild test -project "$PROJECT" -scheme "$1" -destination "$2" | bundle exec xcpretty || exit 1
-}
-
-test_all_destinations() {
-  time {
-      for destination in "${iOS_destinations[@]}"
-      do
-        for scheme in "${iOS_test_schemes[@]}"
-        do
-        echo "testing $scheme on $destination"
-        xcode_test "$scheme" "$destination"
-        done
-    done
-  }
-}
-
-test_all_destinations
+set -o pipefail && xcodebuild test -project "$PROJECT" -scheme "$SCHEME" -destination "$DESTINATION" | bundle exec xcpretty || exit 1
