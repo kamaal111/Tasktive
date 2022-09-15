@@ -16,6 +16,16 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
     ) -> Bool {
         application.registerForRemoteNotifications()
 
+        #if DEBUG
+        var injectionBundlePath = "/Applications/InjectionIII.app/Contents/Resources"
+        #if targetEnvironment(macCatalyst)
+        injectionBundlePath = "\(injectionBundlePath)/macOSInjection.bundle"
+        #elseif os(iOS)
+        injectionBundlePath = "\(injectionBundlePath)/iOSInjection.bundle"
+        #endif
+        Bundle(path: injectionBundlePath)?.load()
+        #endif
+
         return true
     }
 
