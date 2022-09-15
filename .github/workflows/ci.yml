@@ -1,10 +1,6 @@
 name: CI
 on:
   push:
-    branches:
-      - main
-      - "release/**"
-      - "feature/**"
 
 jobs:
   quality:
@@ -25,9 +21,44 @@ jobs:
         run: |
           python3 Scripts/swiftlint_checker/main.py
 
+  buildIOSRelease:
+    name: Build iOS release
+    timeout-minutes: 15
+    runs-on: macos-12
+    needs: [quality]
+    concurrency:
+      group: ${{ github.ref }}
+      cancel-in-progress: true
+    steps:
+      - name: Git - Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+          submodules: recursive
+
+      - name: Setup - Xcode
+        run: |
+          sh Scripts/select_xcode_version.sh
+
+      - name: Setup - Ruby and bundler dependencies
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0
+          bundler-cache: true
+
+      - name: Create token file
+        run: |
+          # No need to actually add the tokens in the test
+
+          yarn generate-tokens
+
+      - name: Build
+        run: |
+          yarn build:ios:release
+
   test:
     name: Test
-    timeout-minutes: 10
+    timeout-minutes: 15
     runs-on: macos-12
     needs: [quality]
     concurrency:
@@ -64,7 +95,7 @@ jobs:
     name: Deploy iOS
     timeout-minutes: 15
     runs-on: macos-12
-    needs: [test]
+    needs: [test, buildIOSRelease]
     concurrency:
       group: ${{ github.ref }}
       cancel-in-progress: true

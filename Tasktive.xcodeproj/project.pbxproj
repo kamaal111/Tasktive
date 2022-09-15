@@ -396,6 +396,7 @@
 		2C69A04928B1932F00D5006D /* CoreDataViewerScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataViewerScreen.swift; sourceTree = "<group>"; };
 		2C69A04C28B193CB00D5006D /* PlaygroundNavigationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundNavigationButton.swift; sourceTree = "<group>"; };
 		2C69A0B328B19BC600D5006D /* TasktiveMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TasktiveMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C717E7B28D3B09E00DC060D /* release_build_ios.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = release_build_ios.sh; sourceTree = "<group>"; };
 		2C750F65288C2F9400026D67 /* CircularProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressBar.swift; sourceTree = "<group>"; };
 		2C750F67288C31CF00026D67 /* ProgressSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressSection.swift; sourceTree = "<group>"; };
 		2C750F69288C328C00026D67 /* TasksSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksSection.swift; sourceTree = "<group>"; };
@@ -1023,6 +1024,7 @@
 				2CE0C86C28A8621200B54EC9 /* bootstrap.sh */,
 				2C07056028A0393E0058F646 /* clear_mac_data.sh */,
 				2CCCADAD2881F1CC0033E2EF /* pre_compile.sh */,
+				2C717E7B28D3B09E00DC060D /* release_build_ios.sh */,
 				2CD2EB7728BA41F500C14B18 /* run_ios_tests.sh */,
 				2CAFF5D828CDD4FC00D4E91E /* select_xcode_version.sh */,
 				2C98E3CC28B12DFB0048149F /* app-icon-generator */,
