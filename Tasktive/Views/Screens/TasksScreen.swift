@@ -393,7 +393,7 @@ struct TasksScreen: View {
 }
 
 #if DEBUG
-struct TasksScreen_Previews: PreviewProvider {
+class TasksScreen_Previews: BasePreviewer, PreviewProvider {
     static var previews: some View {
         var configuration = PreviewConfiguration()
         configuration.screen = .tasks

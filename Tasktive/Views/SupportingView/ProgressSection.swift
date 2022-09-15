@@ -51,10 +51,12 @@ struct ProgressSection: View {
     private static let circleSize: CGSize = .squared(80)
 }
 
-struct ProgressSection_Previews: PreviewProvider {
+#if DEBUG
+class ProgressSection_Previews: BasePreviewer, PreviewProvider {
     static var previews: some View {
         List {
             ProgressSection(currentDate: .constant(Date()), progress: 0.2)
         }
     }
 }
+#endif
