@@ -9,7 +9,6 @@ import SwiftUI
 import SalmonUI
 
 extension SettingsUI {
-    @available(macOS 13.0, iOS 16.0, *)
     public struct SupportAuthorSection: View {
         public init() { }
 
@@ -34,7 +33,6 @@ extension SettingsUI {
         }
     }
 
-    @available(macOS 13.0, iOS 16.0, *)
     public struct PersonalizationSection: View {
         public init() { }
 
@@ -49,7 +47,24 @@ extension SettingsUI {
         }
     }
 
-    @available(macOS 13.0, iOS 16.0, *)
+    public struct FeaturesSection: View {
+        @Binding public var iCloudSyncingIsEnabled: Bool
+
+        public init(iCloudSyncingIsEnabled: Binding<Bool>) {
+            self._iCloudSyncingIsEnabled = iCloudSyncingIsEnabled
+        }
+
+        public var body: some View {
+            KSection(header: NSLocalizedString("Features", bundle: .module, comment: "")) {
+                Toggle(isOn: $iCloudSyncingIsEnabled) {
+                    Text(NSLocalizedString("iCloud syncing", bundle: .module, comment: ""))
+                        .bold()
+                        .foregroundColor(.accentColor)
+                }
+            }
+        }
+    }
+
     public struct FeedbackSection: View {
         public init() { }
 

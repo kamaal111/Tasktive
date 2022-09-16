@@ -15,10 +15,6 @@ time {
     echo "Installing homebrew packages"
     brew bundle
 
-    # Get or update all submodules
-    echo "Cloning all submodules"
-    git submodule update --init --recursive
-
     # Create tokens file
     echo "Creating tokens file"
     yarn generate-tokens

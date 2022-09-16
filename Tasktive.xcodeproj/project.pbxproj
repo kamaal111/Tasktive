@@ -10,6 +10,9 @@
 		2C070CA128CA8BB000B6AD24 /* AssetsIOS.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C070CA028CA8BB000B6AD24 /* AssetsIOS.xcassets */; };
 		2C070CA328CA8BE700B6AD24 /* AssetsMac.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C070CA228CA8BE700B6AD24 /* AssetsMac.xcassets */; };
 		2C070CA428CA8BE700B6AD24 /* AssetsMac.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C070CA228CA8BE700B6AD24 /* AssetsMac.xcassets */; };
+		2C10089D28D5265300DB1C8F /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C10089C28D5265300DB1C8F /* UserData.swift */; };
+		2C10089E28D5265300DB1C8F /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C10089C28D5265300DB1C8F /* UserData.swift */; };
+		2C10089F28D5265300DB1C8F /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C10089C28D5265300DB1C8F /* UserData.swift */; };
 		2C12687228A984FE003D1E56 /* PlaygroundScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C12687128A984FE003D1E56 /* PlaygroundScreen.swift */; };
 		2C1505E9288C26170040943A /* DayNumbersRowItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1505E8288C26170040943A /* DayNumbersRowItem.swift */; };
 		2C15758C289EF43E00425CDD /* FeedbackMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C15758B289EF43E00425CDD /* FeedbackMetadata.swift */; };
@@ -360,6 +363,7 @@
 		2C07056028A0393E0058F646 /* clear_mac_data.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = clear_mac_data.sh; sourceTree = "<group>"; };
 		2C070CA028CA8BB000B6AD24 /* AssetsIOS.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AssetsIOS.xcassets; sourceTree = "<group>"; };
 		2C070CA228CA8BE700B6AD24 /* AssetsMac.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AssetsMac.xcassets; sourceTree = "<group>"; };
+		2C10089C28D5265300DB1C8F /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		2C12687128A984FE003D1E56 /* PlaygroundScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundScreen.swift; sourceTree = "<group>"; };
 		2C1505E8288C26170040943A /* DayNumbersRowItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayNumbersRowItem.swift; sourceTree = "<group>"; };
 		2C15758B289EF43E00425CDD /* FeedbackMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackMetadata.swift; sourceTree = "<group>"; };
@@ -761,6 +765,7 @@
 				2CED9A5E28BA931F002409C1 /* StackNavigator.swift */,
 				2C51C91228847F9E008939F7 /* TasksViewModel.swift */,
 				2CFEB90028A43905000B1667 /* Theme.swift */,
+				2C10089C28D5265300DB1C8F /* UserData.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1556,6 +1561,7 @@
 				2C69A09828B19BC600D5006D /* FileManager+extensions.swift in Sources */,
 				2C69A09928B19BC600D5006D /* WideNavigationLink.swift in Sources */,
 				2C69A09A28B19BC600D5006D /* PlaygroundScreen.swift in Sources */,
+				2C10089E28D5265300DB1C8F /* UserData.swift in Sources */,
 				2C513B4D28BFDABD00A835C4 /* Features.swift in Sources */,
 				2C69A09B28B19BC600D5006D /* ProgressSection.swift in Sources */,
 				2CBDB63328D1100F007EC2D5 /* DispatchQueue+extensions.swift in Sources */,
@@ -1656,6 +1662,7 @@
 				2C98E43C28B1306F0048149F /* FileManager+extensions.swift in Sources */,
 				2C98E41B28B12E170048149F /* WideNavigationLink.swift in Sources */,
 				2C98E41C28B12E170048149F /* PlaygroundScreen.swift in Sources */,
+				2C10089F28D5265300DB1C8F /* UserData.swift in Sources */,
 				2C513B4E28BFDABD00A835C4 /* Features.swift in Sources */,
 				2C98E41D28B12E170048149F /* ProgressSection.swift in Sources */,
 				2CBDB63428D1100F007EC2D5 /* DispatchQueue+extensions.swift in Sources */,
@@ -1757,6 +1764,7 @@
 				2C12687228A984FE003D1E56 /* PlaygroundScreen.swift in Sources */,
 				2C750F68288C31CF00026D67 /* ProgressSection.swift in Sources */,
 				2CDC6DA6288D616B00BF8E06 /* ToolbarButton.swift in Sources */,
+				2C10089D28D5265300DB1C8F /* UserData.swift in Sources */,
 				2CDC180128A0321B00F07CF0 /* CoreTag+CoreDataProperties.swift in Sources */,
 				2C513B5028BFDCA500A835C4 /* DataSource.swift in Sources */,
 				2C3B27C9288CA274007CE538 /* TaskDetailsSheet.swift in Sources */,

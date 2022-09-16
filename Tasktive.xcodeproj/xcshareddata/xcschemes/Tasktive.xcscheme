@@ -98,13 +98,13 @@
       <CommandLineArguments>
          <CommandLineArgument
             argument = "enable_icloud_syncing"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "starting_stack_screen"
-            value = "1"
+            value = "0"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>

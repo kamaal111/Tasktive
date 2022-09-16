@@ -21,6 +21,7 @@ struct TasksScreen: View {
     @EnvironmentObject private var tasksViewModel: TasksViewModel
     @EnvironmentObject private var popperUpManager: PopperUpManager
     @EnvironmentObject private var deviceModel: DeviceModel
+    @EnvironmentObject private var userData: UserData
 
     @StateObject private var viewModel = ViewModel()
 
@@ -79,7 +80,7 @@ struct TasksScreen: View {
                 currentSource: $viewModel.currentSource,
                 disableSubmit: viewModel
                     .disableNewTaskSubmitButton(isConnectedToNetwork: deviceModel.isConnectedToNetwork),
-                dataSources: viewModel.dataSources,
+                dataSources: viewModel.dataSources(iCloudSyncingIsEnabled: userData.iCloudSyncingIsEnabled),
                 submit: onNewTaskSubmit
             )
             .padding(.horizontal, .medium)
@@ -95,12 +96,7 @@ struct TasksScreen: View {
         .onChange(of: viewModel.currentDay, perform: { newValue in
             Task { await tasksViewModel.getTasks(from: dataSources, for: newValue) }
         })
-        .onChange(of: deviceModel.isConnectedToNetwork, perform: { newValue in
-            guard newValue else { return }
-
-            // Reconnected to the internet
-            Task { await tasksViewModel.getTasks(from: dataSources, for: viewModel.currentDay) }
-        })
+        .onChange(of: deviceModel.isConnectedToNetwork, perform: isConnectedToNetworkDidChange(_:))
         .onAppear(perform: handleOnAppear)
         .sheet(isPresented: $viewModel.showTaskDetailsSheet) {
             TaskDetailsSheet(
@@ -128,7 +124,23 @@ struct TasksScreen: View {
     }
 
     private var dataSources: [DataSource] {
-        viewModel.dataSources(isConnectedToNetwork: deviceModel.isConnectedToNetwork)
+        viewModel.dataSources(
+            isConnectedToNetwork: deviceModel.isConnectedToNetwork,
+            iCloudSyncingIsEnabled: userData.iCloudSyncingIsEnabled
+        )
+    }
+
+    private func isConnectedToNetworkDidChange(_ newValue: Bool) {
+        if !newValue {
+            return
+        }
+
+        let dataSources = viewModel.dataSources(
+            isConnectedToNetwork: newValue,
+            iCloudSyncingIsEnabled: userData.iCloudSyncingIsEnabled
+        )
+
+        Task { await tasksViewModel.getTasks(from: dataSources, for: viewModel.currentDay) }
     }
 
     private func handleTaskEditedInDetailsSheet(_ arguments: TaskArguments?) {
@@ -241,16 +253,15 @@ struct TasksScreen: View {
             didSet { currentSourceDidSet() }
         }
 
-        var pendingInternetFetch = false
         let quickAddViewHeight: CGFloat = 50
 
         init() { }
 
-        var dataSources: [DataSource] {
-            dataSources(isConnectedToNetwork: true)
+        func dataSources(iCloudSyncingIsEnabled: Bool) -> [DataSource] {
+            dataSources(isConnectedToNetwork: true, iCloudSyncingIsEnabled: iCloudSyncingIsEnabled)
         }
 
-        func dataSources(isConnectedToNetwork: Bool) -> [DataSource] {
+        func dataSources(isConnectedToNetwork: Bool, iCloudSyncingIsEnabled: Bool) -> [DataSource] {
             DataSource
                 .allCases
                 .filter { source in
@@ -259,6 +270,10 @@ struct TasksScreen: View {
                     }
 
                     if source.requiresInternet, !isConnectedToNetwork {
+                        return false
+                    }
+
+                    if source == .iCloud, !iCloudSyncingIsEnabled {
                         return false
                     }
 

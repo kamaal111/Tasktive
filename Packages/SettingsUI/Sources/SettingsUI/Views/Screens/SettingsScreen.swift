@@ -15,6 +15,7 @@ extension SettingsUI {
         @StateObject private var store: Store
 
         @Binding public var navigationPath: NavigationPath
+        @Binding public var iCloudSyncingIsEnabled: Bool
 
         public let appColor: Color
         public let defaultAppColor: Color
@@ -26,6 +27,7 @@ extension SettingsUI {
 
         public init<T: StoreKitDonatable>(
             navigationPath: Binding<NavigationPath>,
+            iCloudSyncingIsEnabled: Binding<Bool>,
             appColor: Color,
             defaultAppColor: Color,
             viewSize: CGSize,
@@ -36,6 +38,7 @@ extension SettingsUI {
             onPurchaseFailure: @escaping (_ error: Error) -> Void
         ) {
             self._navigationPath = navigationPath
+            self._iCloudSyncingIsEnabled = iCloudSyncingIsEnabled
             self.appColor = appColor
             self.defaultAppColor = defaultAppColor
             self.viewSize = viewSize
@@ -47,23 +50,27 @@ extension SettingsUI {
         }
 
         public var body: some View {
-            SettingsScreenView(hasDonations: store.hasDonations, feedbackConfiguration: feedbackConfiguration)
-                .onAppear(perform: handleAppear)
+            SettingsScreenView(
+                iCloudSyncingIsEnabled: $iCloudSyncingIsEnabled,
+                hasDonations: store.hasDonations,
+                feedbackConfiguration: feedbackConfiguration
+            )
+            .onAppear(perform: handleAppear)
+            .environmentObject(store)
+            .navigationDestination(for: SettingsScreens.self) { screen in
+                SettingsStackView(
+                    screen: screen,
+                    viewSize: viewSize,
+                    appColor: appColor,
+                    defaultAppColor: defaultAppColor,
+                    feedbackConfiguration: feedbackConfiguration,
+                    onFeedbackSend: onFeedbackSend,
+                    onColorSelect: onColorSelect,
+                    onPurchaseFailure: onPurchaseFailure,
+                    navigationPath: { navigationPath.removeLast() }
+                )
                 .environmentObject(store)
-                .navigationDestination(for: SettingsScreens.self) { screen in
-                    SettingsStackView(
-                        screen: screen,
-                        viewSize: viewSize,
-                        appColor: appColor,
-                        defaultAppColor: defaultAppColor,
-                        feedbackConfiguration: feedbackConfiguration,
-                        onFeedbackSend: onFeedbackSend,
-                        onColorSelect: onColorSelect,
-                        onPurchaseFailure: onPurchaseFailure,
-                        navigationPath: { navigationPath.removeLast() }
-                    )
-                    .environmentObject(store)
-                }
+            }
         }
 
         private func handleAppear() {
@@ -73,8 +80,9 @@ extension SettingsUI {
         }
     }
 
-    @available(macOS 13.0, iOS 16.0, *)
     private struct SettingsScreenView<T: Encodable>: View {
+        @Binding var iCloudSyncingIsEnabled: Bool
+
         let hasDonations: Bool
         let feedbackConfiguration: FeedbackConfiguration<T>?
 
@@ -92,6 +100,7 @@ extension SettingsUI {
                     FeedbackSection()
                 }
                 PersonalizationSection()
+                FeaturesSection(iCloudSyncingIsEnabled: $iCloudSyncingIsEnabled)
                 AboutSection()
             }
             #if os(macOS)

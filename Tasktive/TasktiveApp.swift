@@ -20,6 +20,7 @@ struct TasktiveApp: App {
     @StateObject private var tasksViewModel = TasksViewModel()
     @StateObject private var settingsStackNavigator = StackNavigator(screen: .settings)
     @StateObject private var theme = Theme()
+    @StateObject private var userData = UserData()
 
     @State private var currentScreen = NamiNavigator.STARTING_SCREEN
 
@@ -37,6 +38,7 @@ struct TasktiveApp: App {
                 .accentColor(theme.currentAccentColor)
                 .environmentObject(tasksViewModel)
                 .environmentObject(theme)
+                .environmentObject(userData)
         }
         #if DEBUG
             .commands(content: {
@@ -60,6 +62,7 @@ struct TasktiveApp: App {
                     .environmentObject(settingsStackNavigator)
             }
             .environmentObject(theme)
+            .environmentObject(userData)
         }
         #endif
     }
