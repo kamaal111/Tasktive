@@ -23,8 +23,11 @@ struct EditModeStack<Content: View>: View {
         #if os(macOS)
         .environment(\.editMode, editMode)
         .onReceive(NotificationCenter.default.publisher(for: .changeEditMode)) { output in
-            guard let newEditMode = output.object as? EditMode, newEditMode != editMode else { return }
-            editMode = newEditMode
+            if let newEditMode = output.object as? EditMode, newEditMode != editMode {
+                withAnimation {
+                    editMode = newEditMode
+                }
+            }
         }
         #endif
     }
