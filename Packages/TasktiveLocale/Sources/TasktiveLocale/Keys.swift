@@ -34,5 +34,6 @@ extension TasktiveLocale {
         case FEEDBACK_SENT
         case PURCHASE_ERROR_DESCRIPTION
         case TASKS_PROGRESSION_PERCENTAGE
+        case NO_CONNECTION
     }
 }

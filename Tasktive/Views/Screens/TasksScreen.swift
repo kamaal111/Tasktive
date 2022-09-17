@@ -8,6 +8,7 @@
 import SwiftUI
 import SalmonUI
 import PopperUp
+import Environment
 import TasktiveLocale
 import ShrimpExtensions
 
@@ -15,7 +16,7 @@ private let SCREEN: NamiNavigator.Screens = .tasks
 private let logger = Logster(from: TasksScreen.self)
 
 struct TasksScreen: View {
-    @Environment(\.colorScheme) private var colorScheme
+    @SwiftUI.Environment(\.colorScheme) private var colorScheme
 
     @EnvironmentObject private var theme: Theme
     @EnvironmentObject private var tasksViewModel: TasksViewModel
@@ -96,7 +97,10 @@ struct TasksScreen: View {
         .onChange(of: viewModel.currentDay, perform: { newValue in
             Task { await tasksViewModel.getTasks(from: dataSources, for: newValue) }
         })
-        .onChange(of: deviceModel.isConnectedToNetwork, perform: fetchTasksAfterInternetIsAvailable)
+        .onChange(of: deviceModel.isConnectedToNetwork, perform: { newValue in
+            showMessageWhenNotConnectedToTheInternet()
+            fetchTasksAfterInternetIsAvailable(newValue)
+        })
         .onChange(of: userData.iCloudSyncingIsEnabled, perform: fetchTasksAfterInternetIsAvailable)
         .onAppear(perform: handleOnAppear)
         .sheet(isPresented: $viewModel.showTaskDetailsSheet) {
@@ -184,6 +188,19 @@ struct TasksScreen: View {
         }
     }
 
+    private func showMessageWhenNotConnectedToTheInternet() {
+        guard Environment.Features.iCloudSyncing, !deviceModel.isConnectedToNetwork else { return }
+
+        popperUpManager.showPopup(
+            style: .hud(
+                title: TasktiveLocale.getText(.NO_CONNECTION),
+                systemImageName: "antenna.radiowaves.left.and.right.slash",
+                description: nil
+            ),
+            timeout: 5
+        )
+    }
+
     private func handleOnAppear() {
         Task {
             let result = await tasksViewModel.getTodaysTasks(from: dataSources)
@@ -194,6 +211,8 @@ struct TasksScreen: View {
             case .success:
                 break
             }
+
+            showMessageWhenNotConnectedToTheInternet()
         }
     }
 

@@ -33,4 +33,5 @@
 "FEEDBACK_SENT" = "Feedback sent";
 "PURCHASE_ERROR_DESCRIPTION" = "Failed to make purchase";
 "TASKS_PROGRESSION_PERCENTAGE" = "Tasks progression percentage of %@";
+"NO_CONNECTION" = "No connection";
 
