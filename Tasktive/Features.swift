@@ -11,6 +11,6 @@ enum Features {
     #if DEBUG
     static let iCloudSyncing = CommandLineArguments.enableICloudSyncing.enabled
     #else
-    static let iCloudSyncing = true
+    static let iCloudSyncing = false
     #endif
 }

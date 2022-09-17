@@ -96,7 +96,8 @@ struct TasksScreen: View {
         .onChange(of: viewModel.currentDay, perform: { newValue in
             Task { await tasksViewModel.getTasks(from: dataSources, for: newValue) }
         })
-        .onChange(of: deviceModel.isConnectedToNetwork, perform: isConnectedToNetworkDidChange(_:))
+        .onChange(of: deviceModel.isConnectedToNetwork, perform: fetchTasksAfterInternetIsAvailable)
+        .onChange(of: userData.iCloudSyncingIsEnabled, perform: fetchTasksAfterInternetIsAvailable)
         .onAppear(perform: handleOnAppear)
         .sheet(isPresented: $viewModel.showTaskDetailsSheet) {
             TaskDetailsSheet(
@@ -130,16 +131,12 @@ struct TasksScreen: View {
         )
     }
 
-    private func isConnectedToNetworkDidChange(_ newValue: Bool) {
+    private func fetchTasksAfterInternetIsAvailable(_ newValue: Bool) {
         if !newValue {
             return
         }
 
-        let dataSources = viewModel.dataSources(
-            isConnectedToNetwork: newValue,
-            iCloudSyncingIsEnabled: userData.iCloudSyncingIsEnabled
-        )
-
+        logger.info("fetching after internet is available")
         Task { await tasksViewModel.getTasks(from: dataSources, for: viewModel.currentDay) }
     }
 
