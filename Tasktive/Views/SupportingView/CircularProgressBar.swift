@@ -31,7 +31,7 @@ struct CircularProgressBar: View {
                 .rotationEffect(Angle(degrees: 270))
                 .animation(.linear, value: progress)
             Text(progressPrecentage)
-                .accessibilityLabel(TasktiveLocale.getText(.TASKS_PROGRESSION_PRESENTAGE, with: [progressPrecentage]))
+                .accessibilityLabel(TasktiveLocale.getText(.TASKS_PROGRESSION_PERCENTAGE, with: [progressPrecentage]))
                 .accessibilityIdentifier(AccessibilityIdentifiers.circularProgressBarPrecentage.rawValue)
                 .font(.body)
                 .bold()

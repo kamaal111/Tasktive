@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Environment
 import TasktiveLocale
 
 private let logger = Logster(from: NamiNavigator.self)
@@ -72,7 +73,7 @@ final class NamiNavigator: ObservableObject {
 
     static let STARTING_SCREEN: NamiNavigator.Screens = {
         #if DEBUG
-        guard let startingStackScreenValue = Int(EnvironmentVariables.startingStackScreen.value ?? ""),
+        guard let startingStackScreenValue = Int(Environment.EnvironmentVariables.startingStackScreen.value ?? ""),
               let startingStackScreen = NamiNavigator.Screens(rawValue: startingStackScreenValue) else { return .tasks }
 
         return startingStackScreen

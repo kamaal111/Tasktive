@@ -8,9 +8,9 @@
 import os.log
 import SwiftUI
 import SalmonUI
+import Environment
 
 extension SettingsUI {
-    @available(macOS 13.0, iOS 16.0, *)
     public struct SettingsScreen<FeedbackData: Encodable>: View {
         @StateObject private var store: Store
 
@@ -100,7 +100,9 @@ extension SettingsUI {
                     FeedbackSection()
                 }
                 PersonalizationSection()
-                FeaturesSection(iCloudSyncingIsEnabled: $iCloudSyncingIsEnabled)
+                if Environment.Features.iCloudSyncing {
+                    FeaturesSection(iCloudSyncingIsEnabled: $iCloudSyncingIsEnabled)
+                }
                 AboutSection()
             }
             #if os(macOS)

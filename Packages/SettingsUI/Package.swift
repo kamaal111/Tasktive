@@ -22,6 +22,7 @@ let package = Package(
         .package(url: "https://github.com/kamaal111/StoreAPIClient.git", "0.1.1" ..< "0.2.0"),
         .package(url: "https://github.com/simibac/ConfettiSwiftUI.git", "1.0.1" ..< "1.0.2"),
         .package(url: "https://github.com/kamaal111/ShrimpExtensions.git", "2.6.0" ..< "3.0.0"),
+        .package(path: "../Environment"),
     ],
     targets: [
         .target(
@@ -32,6 +33,7 @@ let package = Package(
                 "GitHubAPI",
                 "ConfettiSwiftUI",
                 "ShrimpExtensions",
+                "Environment",
             ],
             resources: [
                 .process("Resources"),

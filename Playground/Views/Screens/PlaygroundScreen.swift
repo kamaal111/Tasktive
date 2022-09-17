@@ -8,6 +8,7 @@
 #if DEBUG
 import SwiftUI
 import SalmonUI
+import Environment
 
 private let SCREEN: StackNavigator.Screens = .playground
 
@@ -22,7 +23,7 @@ struct PlaygroundScreen: View {
                 #if os(macOS)
                     .padding(.bottom, .extraSmall)
                 #endif
-                if Features.iCloudSyncing {
+                if Environment.Features.iCloudSyncing {
                     PlaygroundNavigationButton(title: "Cloud Kit data viewer", destination: .cloudKitDataViewer)
                 }
             }

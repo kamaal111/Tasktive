@@ -8,6 +8,7 @@
 import SwiftUI
 import Network
 import Foundation
+import Environment
 
 private let logger = Logster(from: DeviceModel.self)
 
@@ -34,7 +35,7 @@ final class DeviceModel: ObservableObject {
 
         setupNotifications()
 
-        if Features.iCloudSyncing {
+        if Environment.Features.iCloudSyncing {
             networkMonitor.pathUpdateHandler = networkMonitorTask
             networkMonitor.start(queue: .monitor)
         }

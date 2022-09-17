@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Environment
 
 enum DataSource: Codable, Hashable, CaseIterable {
     case coreData
@@ -25,7 +26,7 @@ enum DataSource: Codable, Hashable, CaseIterable {
         case .coreData:
             return true
         case .iCloud:
-            return Features.iCloudSyncing
+            return Environment.Features.iCloudSyncing
         }
     }
 

@@ -8,6 +8,7 @@
 import SwiftUI
 import Skypiea
 import PopperUp
+import Environment
 import TasktiveLocale
 import ShrimpExtensions
 
@@ -33,7 +34,7 @@ final class TasksViewModel: ObservableObject {
         #if !DEBUG
         self.dataClient = .init()
         #else
-        self.dataClient = .init(preview: CommandLineArguments.previewCoredata.enabled)
+        self.dataClient = .init(preview: Environment.CommandLineArguments.previewCoredata.enabled)
         #endif
 
         setupObservers()
@@ -41,7 +42,7 @@ final class TasksViewModel: ObservableObject {
 
     #if DEBUG
     init(preview: Bool) {
-        self.dataClient = .init(preview: preview || CommandLineArguments.previewCoredata.enabled)
+        self.dataClient = .init(preview: preview || Environment.CommandLineArguments.previewCoredata.enabled)
 
         setupObservers()
     }
@@ -397,7 +398,7 @@ final class TasksViewModel: ObservableObject {
         switch notification.name {
         case .iCloudChanges:
             guard let lastFetchedContext = lastFetchedContext,
-                  Features.iCloudSyncing,
+                  Environment.Features.iCloudSyncing,
                   UserDefaults.iCloudSyncingIsEnabled ?? false else { return }
 
             let dataSources = lastFetchedContext.dataSources
