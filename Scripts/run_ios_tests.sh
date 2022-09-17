@@ -10,4 +10,4 @@ PROJECT="Tasktive.xcodeproj"
 DESTINATION="platform=iOS Simulator,name=iPhone 14 Pro Max"
 SCHEME="Tasktive"
 
-set -o pipefail && xcodebuild test -project "$PROJECT" -scheme "$SCHEME" -destination "$DESTINATION" | bundle exec xcpretty || exit 1
+set -o pipefail && xcodebuild test -project "$PROJECT" -scheme "$SCHEME" -destination "$DESTINATION" || exit 1

@@ -40,12 +40,6 @@ jobs:
         run: |
           sh Scripts/select_xcode_version.sh
 
-      - name: Setup - Ruby and bundler dependencies
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.0
-          bundler-cache: true
-
       - name: Create token file
         run: |
           # No need to actually add the tokens in the test
@@ -74,12 +68,6 @@ jobs:
       - name: Setup - Xcode
         run: |
           sh Scripts/select_xcode_version.sh
-
-      - name: Setup - Ruby and bundler dependencies
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.0
-          bundler-cache: true
 
       - name: Create token file
         run: |
