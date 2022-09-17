@@ -56,10 +56,15 @@ extension SettingsUI {
 
         public var body: some View {
             KSection(header: NSLocalizedString("Features", bundle: .module, comment: "")) {
-                Toggle(isOn: $iCloudSyncingIsEnabled) {
+                HStack {
                     Text(NSLocalizedString("iCloud syncing", bundle: .module, comment: ""))
                         .bold()
                         .foregroundColor(.accentColor)
+                    Spacer()
+                    Toggle(isOn: $iCloudSyncingIsEnabled) {
+                        Text("")
+                    }
+                    .labelsHidden()
                 }
             }
         }
