@@ -241,12 +241,13 @@ final class TasksViewModel: ObservableObject {
         await withLoadingTasks {
             var appTasks: [AppTask] = []
 
+            var maybeError: UserErrors?
             for source in sources {
                 let tasksResult = await getFilteredTasks(from: source, by: queryString)
 
                 switch tasksResult {
                 case let .failure(failure):
-                    return .failure(failure)
+                    maybeError = failure
                 case let .success(success):
                     appTasks.append(contentsOf: success)
                 }
@@ -262,9 +263,24 @@ final class TasksViewModel: ObservableObject {
                 getHashDate(from: $0.dueDate)
             })
 
-            // - TODO: WRITE THIS BETTER
             for (date, tasks) in groupedTasks {
-                await setTasks(tasks, forDate: date)
+                if let previouslyFetchedTasks = self.tasks[date] {
+                    let tasks: [AppTask] = tasks
+                        .concat(previouslyFetchedTasks)
+                        .reduce([]) { result, task in
+                            if !result.contains(where: { $0.id == task.id }) {
+                                return result.appended(task)
+                            }
+                            return result
+                        }
+                    await setTasks(tasks, forDate: date)
+                } else {
+                    await setTasks(tasks, forDate: date)
+                }
+            }
+
+            if let error = maybeError {
+                return .failure(error)
             }
 
             return .success(())
