@@ -26,4 +26,8 @@ final class SceneDelegate: NSObject, UIWindowSceneDelegate {
         }
         #endif
     }
+
+    func sceneDidBecomeActive(_: UIScene) {
+        NotificationCenter.default.post(name: .appBecameActive, object: nil)
+    }
 }

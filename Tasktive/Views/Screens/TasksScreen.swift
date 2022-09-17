@@ -125,15 +125,13 @@ struct TasksScreen: View {
                     if let settingsURL = URL(string: "App-prefs:root=CASTLE") {
                         Task { _ = await UIApplication.shared.open(settingsURL) }
                     }
-                    viewModel.showUserErrorAlert = false
-                    tasksViewModel.setPendingUserError(.none)
+                    viewModel.closeUserErrorAlert()
                 }) {
                     Text(localized: .GO_TO_SETTINGS)
                         .foregroundColor(theme.currentAccentColor)
                 }
                 Button(TasktiveLocale.getText(.CANCEL), role: .cancel) {
-                    viewModel.showUserErrorAlert = false
-                    tasksViewModel.setPendingUserError(.none)
+                    viewModel.closeUserErrorAlert()
                 }
                 .foregroundColor(theme.currentAccentColor)
             }, message: {
@@ -147,18 +145,18 @@ struct TasksScreen: View {
             showMessageWhenNotConnectedToTheInternet()
             fetchTasksAfterInternetIsAvailable(newValue)
         })
+        .onReceive(NotificationCenter.default.publisher(for: .appBecameActive), perform: { _ in
+            logger.info("attempting to get tasks after becoming active")
+
+            handleOnAppear()
+        })
         .onChange(of: userData.iCloudSyncingIsEnabled, perform: fetchTasksAfterInternetIsAvailable)
         .onChange(of: tasksViewModel.pendingUserError, perform: { newValue in
             guard let error = newValue else { return }
 
-            switch error {
-            case .iCloudIsDisabled:
-                viewModel.showUserErrorAlert = true
-            default:
-                break
-            }
+            viewModel.openUserErrorAlert(with: error)
+            tasksViewModel.setPendingUserError(.none)
         })
-        .onAppear(perform: handleOnAppear)
     }
 
     private var dataSources: [DataSource] {
@@ -236,7 +234,7 @@ struct TasksScreen: View {
 
     private func handleOnAppear() {
         Task {
-            let result = await tasksViewModel.getTodaysTasks(from: dataSources)
+            let result = await tasksViewModel.getTasks(from: dataSources, for: viewModel.currentDay)
             switch result {
             case let .failure(failure):
                 popperUpManager.showPopup(style: failure.style, timeout: failure.timeout)
@@ -303,10 +301,25 @@ struct TasksScreen: View {
         }
 
         @Published var showUserErrorAlert = false
+        @Published private(set) var pendingUserError: TasksViewModel.UserErrors? {
+            didSet {
+                showUserErrorAlert = pendingUserError != nil
+            }
+        }
 
         let quickAddViewHeight: CGFloat = 50
 
         init() { }
+
+        @MainActor
+        func openUserErrorAlert(with error: TasksViewModel.UserErrors) {
+            pendingUserError = error
+        }
+
+        @MainActor
+        func closeUserErrorAlert() {
+            pendingUserError = nil
+        }
 
         func dataSources(iCloudSyncingIsEnabled: Bool) -> [DataSource] {
             dataSources(isConnectedToNetwork: true, iCloudSyncingIsEnabled: iCloudSyncingIsEnabled)

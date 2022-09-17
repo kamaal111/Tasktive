@@ -116,10 +116,6 @@ final class TasksViewModel: ObservableObject {
         await getTasks(from: sources, for: date, dataIsStale: false, updateNotCompletedTasks: false)
     }
 
-    func getTodaysTasks(from sources: [DataSource]) async -> Result<Void, UserErrors> {
-        await getTasks(from: sources, for: Date(), dataIsStale: false, updateNotCompletedTasks: true)
-    }
-
     #if DEBUG
     /// Fetches all tasks and stores them in the ``tasks`` property.
     /// This method is only to be used in the playground screens, that's why it's under a `DEBUG` flag.
