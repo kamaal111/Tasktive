@@ -35,5 +35,9 @@ extension TasktiveLocale {
         case PURCHASE_ERROR_DESCRIPTION
         case TASKS_PROGRESSION_PERCENTAGE
         case NO_CONNECTION
+        case GO_TO_SETTINGS
+        case CANCEL
+        case ICLOUD_DISABLED_WARNING_TITLE
+        case ICLOUD_DISABLED_WARNING_DESCRIPTION
     }
 }
