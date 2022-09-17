@@ -1,4 +1,4 @@
-// swift-tools-version: 5.5
+// swift-tools-version: 5.7
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -7,8 +7,8 @@ let package = Package(
     name: "SettingsUI",
     defaultLocalization: "en",
     platforms: [
-        .iOS(.v15),
-        .macOS(.v12),
+        .iOS(.v16),
+        .macOS(.v13),
     ],
     products: [
         .library(
@@ -22,6 +22,7 @@ let package = Package(
         .package(url: "https://github.com/kamaal111/StoreAPIClient.git", "0.1.1" ..< "0.2.0"),
         .package(url: "https://github.com/simibac/ConfettiSwiftUI.git", "1.0.1" ..< "1.0.2"),
         .package(url: "https://github.com/kamaal111/ShrimpExtensions.git", "2.6.0" ..< "3.0.0"),
+        .package(path: "../Environment"),
     ],
     targets: [
         .target(
@@ -32,6 +33,7 @@ let package = Package(
                 "GitHubAPI",
                 "ConfettiSwiftUI",
                 "ShrimpExtensions",
+                "Environment",
             ],
             resources: [
                 .process("Resources"),

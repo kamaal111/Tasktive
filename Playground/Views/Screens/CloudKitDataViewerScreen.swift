@@ -42,7 +42,7 @@ struct CloudKitDataViewerScreen: View {
     private func fetchData() async {
         switch selectedType {
         case CoreTask.description():
-            try? await tasksViewModel.getAllTasks(from: [.iCloud], updateNotCompletedTasks: false).get()
+            try? await tasksViewModel.getAllTasks(from: [.iCloud]).get()
         default:
             break
         }

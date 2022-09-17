@@ -8,17 +8,23 @@
 import SwiftUI
 import Skypiea
 import PopperUp
+import Environment
 import TasktiveLocale
 import ShrimpExtensions
 
 private let logger = Logster(from: TasksViewModel.self)
+
+struct TasksFetchedContext: Hashable, Equatable {
+    let date: Date
+    let dataSources: [DataSource]
+}
 
 final class TasksViewModel: ObservableObject {
     @Published private(set) var tasks: [Date: [AppTask]] = [:]
     @Published private(set) var loadingTasks = false
     @Published private(set) var settingTasks = false
 
-    private var lastFetchedForDate: Date?
+    private var fetchedContexts: [TasksFetchedContext] = []
     private let dataClient: DataClient
     private let notifications: [Notification.Name] = [
         .iCloudChanges,
@@ -28,14 +34,16 @@ final class TasksViewModel: ObservableObject {
         #if !DEBUG
         self.dataClient = .init()
         #else
-        self.dataClient = .init(preview: CommandLineArguments.previewCoredata.enabled)
+        self.dataClient = .init(preview: Environment.CommandLineArguments.previewCoredata.enabled)
         #endif
+
         setupObservers()
     }
 
     #if DEBUG
     init(preview: Bool) {
-        self.dataClient = .init(preview: preview || CommandLineArguments.previewCoredata.enabled)
+        self.dataClient = .init(preview: preview || Environment.CommandLineArguments.previewCoredata.enabled)
+
         setupObservers()
     }
     #endif
@@ -104,17 +112,22 @@ final class TasksViewModel: ObservableObject {
     }
 
     func getTasks(from sources: [DataSource], for date: Date) async -> Result<Void, UserErrors> {
-        await getTasks(from: sources, for: date, updateNotCompletedTasks: false)
+        await getTasks(from: sources, for: date, dataIsStale: false, updateNotCompletedTasks: false)
     }
 
     func getTodaysTasks(from sources: [DataSource]) async -> Result<Void, UserErrors> {
-        await getTasks(from: sources, for: Date(), updateNotCompletedTasks: true)
+        await getTasks(from: sources, for: Date(), dataIsStale: false, updateNotCompletedTasks: true)
     }
 
-    func getAllTasks(from sources: [DataSource],
-                     updateNotCompletedTasks: Bool = true) async -> Result<Void, UserErrors> {
-        await getTasksByPredicate(from: sources, by: nil, updateNotCompletedTasks: updateNotCompletedTasks)
+    #if DEBUG
+    /// Fetches all tasks and stores them in the ``tasks`` property.
+    /// This method is only to be used in the playground screens, that's why it's under a `DEBUG` flag.
+    /// - Parameter sources: The specific datasources to fetch from.
+    /// - Returns: A result which is either `Void` on success or ``UserErrors`` on failure.
+    func getAllTasks(from sources: [DataSource]) async -> Result<Void, UserErrors> {
+        await getTasksByPredicate(from: sources, by: nil, updateNotCompletedTasks: false)
     }
+    #endif
 
     func updateTask(_ task: AppTask, with arguments: TaskArguments) async -> Result<Void, UserErrors> {
         await withSettingTasks(completion: {
@@ -170,11 +183,49 @@ final class TasksViewModel: ObservableObject {
         })
     }
 
+    private var lastFetchedContext: TasksFetchedContext? {
+        fetchedContexts.last
+    }
+
+    private func shouldFetchTasks(newContext: TasksFetchedContext, dataIsStale: Bool) -> Bool {
+        var fetchedContexts = fetchedContexts
+
+        if dataIsStale {
+            self.fetchedContexts = fetchedContexts.appended(newContext)
+
+            return true
+        }
+
+        if let fetchedContextIndexWithSameDate = fetchedContexts.findIndex(by: \.date, is: newContext.date) {
+            let fetchedContextWithSameDate = fetchedContexts[fetchedContextIndexWithSameDate]
+
+            if fetchedContextWithSameDate.dataSources != newContext.dataSources {
+                fetchedContexts.remove(at: fetchedContextIndexWithSameDate)
+            }
+        }
+
+        if fetchedContexts.contains(newContext) {
+            self.fetchedContexts = fetchedContexts
+
+            return false
+        }
+
+        self.fetchedContexts = fetchedContexts.appended(newContext)
+
+        return true
+    }
+
     private func getTasks(from sources: [DataSource],
                           for date: Date,
+                          dataIsStale: Bool,
                           updateNotCompletedTasks: Bool) async -> Result<Void, UserErrors> {
-        lastFetchedForDate = date
         let startDate = getHashDate(from: date)
+        let newLastFetchedContext = TasksFetchedContext(date: startDate, dataSources: sources)
+
+        guard shouldFetchTasks(newContext: newLastFetchedContext, dataIsStale: dataIsStale) else { return .success(()) }
+
+        logger.info("fetching tasks for \(startDate)")
+
         let endDate = getHashDate(from: startDate.incrementByDays(1)).incrementBySeconds(-1)
 
         let predicate = NSPredicate(format: "(dueDate >= %@) AND (dueDate <= %@)", startDate.asNSDate, endDate.asNSDate)
@@ -191,12 +242,13 @@ final class TasksViewModel: ObservableObject {
         await withLoadingTasks {
             var appTasks: [AppTask] = []
 
+            var maybeError: UserErrors?
             for source in sources {
                 let tasksResult = await getFilteredTasks(from: source, by: queryString)
 
                 switch tasksResult {
                 case let .failure(failure):
-                    return .failure(failure)
+                    maybeError = failure
                 case let .success(success):
                     appTasks.append(contentsOf: success)
                 }
@@ -207,13 +259,29 @@ final class TasksViewModel: ObservableObject {
                 enabled: updateNotCompletedTasks,
                 sources: sources
             )
+
             let groupedTasks = Dictionary(grouping: maybeUpdatedTasks, by: {
                 getHashDate(from: $0.dueDate)
             })
 
-            // - TODO: WRITE THIS BETTER
             for (date, tasks) in groupedTasks {
-                await setTasks(tasks, forDate: date)
+                if let previouslyFetchedTasks = self.tasks[date] {
+                    let tasks: [AppTask] = tasks
+                        .concat(previouslyFetchedTasks)
+                        .reduce([]) { result, task in
+                            if !result.contains(where: { $0.id == task.id }) {
+                                return result.appended(task)
+                            }
+                            return result
+                        }
+                    await setTasks(tasks, forDate: date)
+                } else {
+                    await setTasks(tasks, forDate: date)
+                }
+            }
+
+            if let error = maybeError {
+                return .failure(error)
             }
 
             return .success(())
@@ -329,8 +397,20 @@ final class TasksViewModel: ObservableObject {
     private func handleNotification(_ notification: Notification) {
         switch notification.name {
         case .iCloudChanges:
-            guard let lastFetchedForDate = lastFetchedForDate, Features.iCloudSyncing else { return }
-            Task { await getTasks(from: [.iCloud], for: lastFetchedForDate) }
+            guard let lastFetchedContext = lastFetchedContext,
+                  Environment.Features.iCloudSyncing,
+                  UserDefaults.iCloudSyncingIsEnabled ?? false else { return }
+
+            let dataSources = lastFetchedContext.dataSources
+                .appended(.iCloud)
+                .uniques()
+
+            Task {
+                await getTasks(from: dataSources,
+                               for: lastFetchedContext.date,
+                               dataIsStale: true,
+                               updateNotCompletedTasks: false)
+            }
         default:
             break
         }

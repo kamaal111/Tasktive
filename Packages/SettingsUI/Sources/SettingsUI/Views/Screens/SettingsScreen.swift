@@ -8,14 +8,14 @@
 import os.log
 import SwiftUI
 import SalmonUI
+import Environment
 
 extension SettingsUI {
-    #if swift(>=5.7)
-    @available(macOS 13.0, iOS 16.0, *)
     public struct SettingsScreen<FeedbackData: Encodable>: View {
         @StateObject private var store: Store
 
         @Binding public var navigationPath: NavigationPath
+        @Binding public var iCloudSyncingIsEnabled: Bool
 
         public let appColor: Color
         public let defaultAppColor: Color
@@ -27,6 +27,7 @@ extension SettingsUI {
 
         public init<T: StoreKitDonatable>(
             navigationPath: Binding<NavigationPath>,
+            iCloudSyncingIsEnabled: Binding<Bool>,
             appColor: Color,
             defaultAppColor: Color,
             viewSize: CGSize,
@@ -37,6 +38,7 @@ extension SettingsUI {
             onPurchaseFailure: @escaping (_ error: Error) -> Void
         ) {
             self._navigationPath = navigationPath
+            self._iCloudSyncingIsEnabled = iCloudSyncingIsEnabled
             self.appColor = appColor
             self.defaultAppColor = defaultAppColor
             self.viewSize = viewSize
@@ -48,94 +50,27 @@ extension SettingsUI {
         }
 
         public var body: some View {
-            SettingsScreenView(hasDonations: store.hasDonations, feedbackConfiguration: feedbackConfiguration)
-                .onAppear(perform: handleAppear)
-                .environmentObject(store)
-                .navigationDestination(for: SettingsScreens.self) { screen in
-                    SettingsStackView(
-                        screen: screen,
-                        viewSize: viewSize,
-                        appColor: appColor,
-                        defaultAppColor: defaultAppColor,
-                        feedbackConfiguration: feedbackConfiguration,
-                        onFeedbackSend: onFeedbackSend,
-                        onColorSelect: onColorSelect,
-                        onPurchaseFailure: onPurchaseFailure,
-                        navigationPath: { navigationPath.removeLast() }
-                    )
-                    .environmentObject(store)
-                }
-        }
-
-        private func handleAppear() {
-            Task {
-                _ = try? await store.requestProducts().get()
-            }
-        }
-    }
-    #else
-    public struct SettingsScreen<FeedbackData: Encodable>: View {
-        @Environment(\.presentationMode) private var presentationMode
-
-        @StateObject private var store: Store
-
-        @State private var currentScreen: SettingsScreens?
-
-        public let appColor: Color
-        public let defaultAppColor: Color
-        public let viewSize: CGSize
-        public let feedbackConfiguration: FeedbackConfiguration<FeedbackData>?
-        public let onFeedbackSend: (_ maybeError: Error?) -> Void
-        public let onColorSelect: (_ color: AppColor) -> Void
-        public let onPurchaseFailure: (_ error: Error) -> Void
-
-        public init<DonationType: StoreKitDonatable>(
-            appColor: Color,
-            defaultAppColor: Color,
-            viewSize: CGSize,
-            feedbackConfiguration: FeedbackConfiguration<FeedbackData>?,
-            storeKitDonations: [DonationType],
-            onFeedbackSend: @escaping (_: Error?) -> Void,
-            onColorSelect: @escaping (_: AppColor) -> Void,
-            onPurchaseFailure: @escaping (_ error: Error) -> Void
-        ) {
-            self.appColor = appColor
-            self.defaultAppColor = defaultAppColor
-            self.viewSize = viewSize
-            self.feedbackConfiguration = feedbackConfiguration
-            self.onFeedbackSend = onFeedbackSend
-            self.onColorSelect = onColorSelect
-            self.onPurchaseFailure = onPurchaseFailure
-            self._store = StateObject(wrappedValue: Store(storeKitDonations: storeKitDonations))
-        }
-
-        public var body: some View {
-            ZStack {
-                ForEach(SettingsScreens.allCases, id: \.self) { screen in
-                    NavigationLink(tag: screen, selection: $currentScreen, destination: {
-                        SettingsStackView(
-                            screen: screen,
-                            viewSize: viewSize,
-                            appColor: appColor,
-                            defaultAppColor: defaultAppColor,
-                            feedbackConfiguration: feedbackConfiguration,
-                            onFeedbackSend: onFeedbackSend,
-                            onColorSelect: onColorSelect,
-                            onPurchaseFailure: onPurchaseFailure,
-                            navigationPath: { presentationMode.wrappedValue.dismiss() }
-                        )
-                    }, label: { EmptyView() })
-                }
-                SettingsScreenView(
+            SettingsScreenView(
+                iCloudSyncingIsEnabled: $iCloudSyncingIsEnabled,
+                hasDonations: store.hasDonations,
+                feedbackConfiguration: feedbackConfiguration
+            )
+            .onAppear(perform: handleAppear)
+            .environmentObject(store)
+            .navigationDestination(for: SettingsScreens.self) { screen in
+                SettingsStackView(
+                    screen: screen,
+                    viewSize: viewSize,
+                    appColor: appColor,
+                    defaultAppColor: defaultAppColor,
                     feedbackConfiguration: feedbackConfiguration,
-                    hasDonations: store.hasDonations,
-                    onNavigate: { screen in
-                        currentScreen = screen
-                    }
+                    onFeedbackSend: onFeedbackSend,
+                    onColorSelect: onColorSelect,
+                    onPurchaseFailure: onPurchaseFailure,
+                    navigationPath: { navigationPath.removeLast() }
                 )
                 .environmentObject(store)
             }
-            .onAppear(perform: handleAppear)
         }
 
         private func handleAppear() {
@@ -144,14 +79,12 @@ extension SettingsUI {
             }
         }
     }
-    #endif
 
     private struct SettingsScreenView<T: Encodable>: View {
+        @Binding var iCloudSyncingIsEnabled: Bool
+
         let hasDonations: Bool
         let feedbackConfiguration: FeedbackConfiguration<T>?
-        #if swift(<5.7)
-        let onNavigate: (_ screen: SettingsScreens) -> Void
-        #endif
 
         private let logger = Logger(
             subsystem: "io.kamaal.SettingsUI",
@@ -161,24 +94,15 @@ extension SettingsUI {
         var body: some View {
             KScrollableForm {
                 if hasDonations {
-                    #if swift(>=5.7)
                     SupportAuthorSection()
-                    #else
-                    SupportAuthorSection(onNavigate: onNavigate)
-                    #endif
                 }
                 if showFeedbackSection {
-                    #if swift(>=5.7)
                     FeedbackSection()
-                    #else
-                    FeedbackSection(onNavigate: onNavigate)
-                    #endif
                 }
-                #if swift(>=5.7)
                 PersonalizationSection()
-                #else
-                PersonalizationSection(onNavigate: onNavigate)
-                #endif
+                if Environment.Features.iCloudSyncing {
+                    FeaturesSection(iCloudSyncingIsEnabled: $iCloudSyncingIsEnabled)
+                }
                 AboutSection()
             }
             #if os(macOS)
@@ -211,7 +135,7 @@ extension SettingsUI {
                 switch screen {
                 case let .feedback(style: style):
                     if let configuration = feedbackConfiguration {
-                        SettingsUI.FeedbackScreen(
+                        FeedbackScreen(
                             configuration: configuration,
                             style: style,
                             onDone: { maybeError in onFeedbackSend(maybeError) }

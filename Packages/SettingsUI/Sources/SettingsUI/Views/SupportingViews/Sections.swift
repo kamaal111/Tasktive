@@ -10,32 +10,15 @@ import SalmonUI
 
 extension SettingsUI {
     public struct SupportAuthorSection: View {
-        #if swift(>=5.7)
         public init() { }
-        #else
-        public let onNavigate: (_ screen: SettingsScreens) -> Void
-
-        public init(onNavigate: @escaping (_ screen: SettingsScreens) -> Void) {
-            self.onNavigate = onNavigate
-        }
-        #endif
 
         public var body: some View {
             KSection(header: NSLocalizedString("Support Author", bundle: .module, comment: "")) {
-                #if swift(>=5.7)
                 RowImageTextNavigationLink(
                     label: NSLocalizedString("Buy me coffee", bundle: .module, comment: ""),
                     imageSystemName: "cup.and.saucer.fill",
                     destination: .supportAuthor
                 )
-                #else
-                RowImageTextNavigationLink(
-                    label: NSLocalizedString("Buy me coffee", bundle: .module, comment: ""),
-                    imageSystemName: "cup.and.saucer.fill",
-                    destination: .supportAuthor,
-                    onNavigate: onNavigate
-                )
-                #endif
             }
         }
     }
@@ -51,46 +34,44 @@ extension SettingsUI {
     }
 
     public struct PersonalizationSection: View {
-        #if swift(>=5.7)
         public init() { }
-        #else
-        public let onNavigate: (_ screen: SettingsScreens) -> Void
-
-        public init(onNavigate: @escaping (_ screen: SettingsScreens) -> Void) {
-            self.onNavigate = onNavigate
-        }
-        #endif
 
         public var body: some View {
             KSection(header: NSLocalizedString("Personalization", bundle: .module, comment: "")) {
-                #if swift(>=5.7)
                 RowViewColorNavigationLink(
                     label: SettingsScreens.appColor.title,
                     color: .accentColor,
                     destination: .appColor
                 )
-                #else
-                RowViewColorNavigationLink(
-                    label: SettingsScreens.appColor.title,
-                    color: .accentColor,
-                    destination: .appColor,
-                    onNavigate: onNavigate
-                )
-                #endif
+            }
+        }
+    }
+
+    public struct FeaturesSection: View {
+        @Binding public var iCloudSyncingIsEnabled: Bool
+
+        public init(iCloudSyncingIsEnabled: Binding<Bool>) {
+            self._iCloudSyncingIsEnabled = iCloudSyncingIsEnabled
+        }
+
+        public var body: some View {
+            KSection(header: NSLocalizedString("Features", bundle: .module, comment: "")) {
+                HStack {
+                    Text(NSLocalizedString("iCloud syncing", bundle: .module, comment: ""))
+                        .bold()
+                        .foregroundColor(.accentColor)
+                    Spacer()
+                    Toggle(isOn: $iCloudSyncingIsEnabled) {
+                        Text("")
+                    }
+                    .labelsHidden()
+                }
             }
         }
     }
 
     public struct FeedbackSection: View {
-        #if swift(>=5.7)
         public init() { }
-        #else
-        public let onNavigate: (_ screen: SettingsScreens) -> Void
-
-        public init(onNavigate: @escaping (_ screen: SettingsScreens) -> Void) {
-            self.onNavigate = onNavigate
-        }
-        #endif
 
         public var body: some View {
             KSection(header: NSLocalizedString("Feedback", bundle: .module, comment: "")) {
@@ -102,20 +83,11 @@ extension SettingsUI {
 
         private func feedbackButton(_ style: FeedbackStyles, withDivider: Bool) -> some View {
             VStack {
-                #if swift(>=5.7)
                 RowImageTextNavigationLink(
                     label: style.title,
                     imageSystemName: style.imageSystemName,
                     destination: .feedback(style: style)
                 )
-                #else
-                RowImageTextNavigationLink(
-                    label: style.title,
-                    imageSystemName: style.imageSystemName,
-                    destination: .feedback(style: style),
-                    onNavigate: onNavigate
-                )
-                #endif
                 #if os(macOS)
                 if withDivider {
                     Divider()

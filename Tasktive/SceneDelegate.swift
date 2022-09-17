@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Environment
 
 final class SceneDelegate: NSObject, UIWindowSceneDelegate {
     func scene(
@@ -16,9 +17,9 @@ final class SceneDelegate: NSObject, UIWindowSceneDelegate {
         #if DEBUG
         if let windowScene = scene as? UIWindowScene {
             windowScene.windows.forEach { window in
-                if CommandLineArguments.uiTestingDarkMode.enabled {
+                if Environment.CommandLineArguments.uiTestingDarkMode.enabled {
                     window.overrideUserInterfaceStyle = .dark
-                } else if CommandLineArguments.uiTestingLightMode.enabled {
+                } else if Environment.CommandLineArguments.uiTestingLightMode.enabled {
                     window.overrideUserInterfaceStyle = .light
                 }
             }

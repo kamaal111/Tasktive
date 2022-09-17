@@ -15,3 +15,13 @@ To install all the necessary packages and modules run the following command.
 ```shell
 yarn bootstrap
 ```
+### Development
+
+#### Environment variables
+
+*Launching app with a certain screens*
+
+Edit the environment variable `starting_stack_screen` you're currently building to the desired screen.
+
+TasksScreen => 0
+SettingsScreen => 1

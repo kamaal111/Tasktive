@@ -8,6 +8,7 @@
 import SwiftUI
 import SalmonUI
 import PopperUp
+import Environment
 import TasktiveLocale
 import ShrimpExtensions
 
@@ -15,11 +16,13 @@ private let SCREEN: NamiNavigator.Screens = .tasks
 private let logger = Logster(from: TasksScreen.self)
 
 struct TasksScreen: View {
-    @Environment(\.colorScheme) private var colorScheme
+    @SwiftUI.Environment(\.colorScheme) private var colorScheme
 
     @EnvironmentObject private var theme: Theme
     @EnvironmentObject private var tasksViewModel: TasksViewModel
     @EnvironmentObject private var popperUpManager: PopperUpManager
+    @EnvironmentObject private var deviceModel: DeviceModel
+    @EnvironmentObject private var userData: UserData
 
     @StateObject private var viewModel = ViewModel()
 
@@ -76,8 +79,9 @@ struct TasksScreen: View {
             QuickAddSection(
                 title: $viewModel.newTitle,
                 currentSource: $viewModel.currentSource,
-                disableSubmit: viewModel.disableNewTaskSubmitButton,
-                dataSources: viewModel.dataSources,
+                disableSubmit: viewModel
+                    .disableNewTaskSubmitButton(isConnectedToNetwork: deviceModel.isConnectedToNetwork),
+                dataSources: viewModel.dataSources(iCloudSyncingIsEnabled: userData.iCloudSyncingIsEnabled),
                 submit: onNewTaskSubmit
             )
             .padding(.horizontal, .medium)
@@ -91,8 +95,13 @@ struct TasksScreen: View {
                 .ktakeSizeEagerly(alignment: .bottom)
         }
         .onChange(of: viewModel.currentDay, perform: { newValue in
-            Task { await tasksViewModel.getTasks(from: viewModel.dataSources, for: newValue) }
+            Task { await tasksViewModel.getTasks(from: dataSources, for: newValue) }
         })
+        .onChange(of: deviceModel.isConnectedToNetwork, perform: { newValue in
+            showMessageWhenNotConnectedToTheInternet()
+            fetchTasksAfterInternetIsAvailable(newValue)
+        })
+        .onChange(of: userData.iCloudSyncingIsEnabled, perform: fetchTasksAfterInternetIsAvailable)
         .onAppear(perform: handleOnAppear)
         .sheet(isPresented: $viewModel.showTaskDetailsSheet) {
             TaskDetailsSheet(
@@ -119,13 +128,29 @@ struct TasksScreen: View {
         }
     }
 
+    private var dataSources: [DataSource] {
+        viewModel.dataSources(
+            isConnectedToNetwork: deviceModel.isConnectedToNetwork,
+            iCloudSyncingIsEnabled: userData.iCloudSyncingIsEnabled
+        )
+    }
+
+    private func fetchTasksAfterInternetIsAvailable(_ newValue: Bool) {
+        if !newValue {
+            return
+        }
+
+        logger.info("fetching after internet is available")
+        Task { await tasksViewModel.getTasks(from: dataSources, for: viewModel.currentDay) }
+    }
+
     private func handleTaskEditedInDetailsSheet(_ arguments: TaskArguments?) {
         guard let arguments = arguments, let task = viewModel.shownTaskDetails else {
-            let message = "task or/and arguments are missing"
-            let argumentsLog = "arguments='\(arguments as Any)'"
-            let taskLog = "task='\(viewModel.shownTaskDetails as Any)'"
-            let loggingMessage = [message, argumentsLog, taskLog].joined(separator: "; ")
-            logger.warning(loggingMessage)
+            logger.warning(
+                "task or/and arguments are missing",
+                "arguments='\(arguments as Any)'",
+                "task='\(viewModel.shownTaskDetails as Any)'"
+            )
             return
         }
 
@@ -145,10 +170,7 @@ struct TasksScreen: View {
 
     private func handleTaskDeletedInDetailsSheet() {
         guard let task = viewModel.shownTaskDetails else {
-            let message = "task is missing"
-            let taskLog = "task='\(viewModel.shownTaskDetails as Any)'"
-            let loggingMessage = [message, taskLog].joined(separator: "; ")
-            logger.warning(loggingMessage)
+            logger.warning("task is missing", "task='\(viewModel.shownTaskDetails as Any)'")
             return
         }
 
@@ -166,9 +188,22 @@ struct TasksScreen: View {
         }
     }
 
+    private func showMessageWhenNotConnectedToTheInternet() {
+        guard Environment.Features.iCloudSyncing, !deviceModel.isConnectedToNetwork else { return }
+
+        popperUpManager.showPopup(
+            style: .hud(
+                title: TasktiveLocale.getText(.NO_CONNECTION),
+                systemImageName: "antenna.radiowaves.left.and.right.slash",
+                description: nil
+            ),
+            timeout: 5
+        )
+    }
+
     private func handleOnAppear() {
         Task {
-            let result = await tasksViewModel.getTodaysTasks(from: viewModel.dataSources)
+            let result = await tasksViewModel.getTodaysTasks(from: dataSources)
             switch result {
             case let .failure(failure):
                 popperUpManager.showPopup(style: failure.style, timeout: failure.timeout)
@@ -176,15 +211,17 @@ struct TasksScreen: View {
             case .success:
                 break
             }
+
+            showMessageWhenNotConnectedToTheInternet()
         }
     }
 
     private func onNewTaskSubmit() {
         logger.info("submitting new task")
         Task {
-            let submitTaskResult = await viewModel.submitNewTask()
+            let validatedTaskDataResult = await viewModel.validateNewTask()
             let newTitle: String
-            switch submitTaskResult {
+            switch validatedTaskDataResult {
             case let .failure(failure):
                 popperUpManager.showPopup(style: failure.style, timeout: failure.timeout)
                 return
@@ -236,19 +273,32 @@ struct TasksScreen: View {
 
         init() { }
 
-        var dataSources: [DataSource] {
+        func dataSources(iCloudSyncingIsEnabled: Bool) -> [DataSource] {
+            dataSources(isConnectedToNetwork: true, iCloudSyncingIsEnabled: iCloudSyncingIsEnabled)
+        }
+
+        func dataSources(isConnectedToNetwork: Bool, iCloudSyncingIsEnabled: Bool) -> [DataSource] {
             DataSource
                 .allCases
                 .filter { source in
-                    if !Features.iCloudSyncing, source == .iCloud {
+                    if !source.isSupported {
                         return false
                     }
+
+                    if source.requiresInternet, !isConnectedToNetwork {
+                        return false
+                    }
+
+                    if source == .iCloud, !iCloudSyncingIsEnabled {
+                        return false
+                    }
+
                     return true
                 }
         }
 
-        var disableNewTaskSubmitButton: Bool {
-            invalidTitle
+        func disableNewTaskSubmitButton(isConnectedToNetwork: Bool) -> Bool {
+            invalidTitle || (!isConnectedToNetwork && currentSource == .iCloud)
         }
 
         func onDateDragGestureEnd(_ value: DragGesture.Value) {
@@ -301,7 +351,7 @@ struct TasksScreen: View {
             await setCurrentFocusedTaskID(nil)
         }
 
-        func submitNewTask() async -> Result<String, ValidationErrors> {
+        func validateNewTask() async -> Result<String, ValidationErrors> {
             guard !invalidTitle else {
                 return .failure(.invalidTitle)
             }

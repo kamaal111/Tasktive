@@ -7,7 +7,7 @@
       buildImplicitDependencies = "YES">
       <BuildActionEntries>
          <BuildActionEntry
-            buildForTesting = "NO"
+            buildForTesting = "YES"
             buildForRunning = "YES"
             buildForProfiling = "NO"
             buildForArchiving = "YES"
@@ -35,6 +35,17 @@
                BlueprintIdentifier = "2C4E81DF28BBDC070056D0D1"
                BuildableName = "MainFlowsUITests.xctest"
                BlueprintName = "MainFlowsUITests"
+               ReferencedContainer = "container:Tasktive.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "2CBDB63828D11B08007EC2D5"
+               BuildableName = "TasktiveTests.xctest"
+               BlueprintName = "TasktiveTests"
                ReferencedContainer = "container:Tasktive.xcodeproj">
             </BuildableReference>
          </TestableReference>

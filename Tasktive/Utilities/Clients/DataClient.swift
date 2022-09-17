@@ -7,6 +7,7 @@
 
 import Skypiea
 import Foundation
+import Environment
 
 class DataClient {
     let tasks: TasksClient
@@ -15,7 +16,7 @@ class DataClient {
         #if !DEBUG
         self.tasks = .init(persistenceController: .shared, skypiea: .shared)
         #else
-        if CommandLineArguments.previewCoredata.enabled {
+        if Environment.CommandLineArguments.previewCoredata.enabled {
             self.tasks = .init(persistenceController: .preview, skypiea: .preview)
         } else {
             self.tasks = .init(persistenceController: .shared, skypiea: .shared)
@@ -25,7 +26,7 @@ class DataClient {
 
     #if DEBUG
     init(preview: Bool) {
-        if preview || CommandLineArguments.previewCoredata.enabled {
+        if preview || Environment.CommandLineArguments.previewCoredata.enabled {
             self.tasks = .init(persistenceController: .preview, skypiea: .preview)
         } else {
             self.tasks = .init(persistenceController: .shared, skypiea: .shared)
