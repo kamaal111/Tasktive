@@ -94,15 +94,6 @@ struct TasksScreen: View {
                 .frame(maxHeight: viewModel.quickAddViewHeight)
                 .ktakeSizeEagerly(alignment: .bottom)
         }
-        .onChange(of: viewModel.currentDay, perform: { newValue in
-            Task { await tasksViewModel.getTasks(from: dataSources, for: newValue) }
-        })
-        .onChange(of: deviceModel.isConnectedToNetwork, perform: { newValue in
-            showMessageWhenNotConnectedToTheInternet()
-            fetchTasksAfterInternetIsAvailable(newValue)
-        })
-        .onChange(of: userData.iCloudSyncingIsEnabled, perform: fetchTasksAfterInternetIsAvailable)
-        .onAppear(perform: handleOnAppear)
         .sheet(isPresented: $viewModel.showTaskDetailsSheet) {
             TaskDetailsSheet(
                 task: viewModel.shownTaskDetails,
@@ -126,6 +117,48 @@ struct TasksScreen: View {
             EditButton()
             #endif
         }
+        .alert(
+            tasksViewModel.pendingUserError?.title ?? "",
+            isPresented: $viewModel.showUserErrorAlert,
+            actions: {
+                Button(action: {
+                    if let settingsURL = URL(string: "App-prefs:root=CASTLE") {
+                        Task { _ = await UIApplication.shared.open(settingsURL) }
+                    }
+                    viewModel.showUserErrorAlert = false
+                    tasksViewModel.setPendingUserError(.none)
+                }) {
+                    Text(localized: .GO_TO_SETTINGS)
+                        .foregroundColor(theme.currentAccentColor)
+                }
+                Button(TasktiveLocale.getText(.CANCEL), role: .cancel) {
+                    viewModel.showUserErrorAlert = false
+                    tasksViewModel.setPendingUserError(.none)
+                }
+                .foregroundColor(theme.currentAccentColor)
+            }, message: {
+                Text(tasksViewModel.pendingUserError?.errorDescription ?? "")
+            }
+        )
+        .onChange(of: viewModel.currentDay, perform: { newValue in
+            Task { await tasksViewModel.getTasks(from: dataSources, for: newValue) }
+        })
+        .onChange(of: deviceModel.isConnectedToNetwork, perform: { newValue in
+            showMessageWhenNotConnectedToTheInternet()
+            fetchTasksAfterInternetIsAvailable(newValue)
+        })
+        .onChange(of: userData.iCloudSyncingIsEnabled, perform: fetchTasksAfterInternetIsAvailable)
+        .onChange(of: tasksViewModel.pendingUserError, perform: { newValue in
+            guard let error = newValue else { return }
+
+            switch error {
+            case .iCloudIsDisabled:
+                viewModel.showUserErrorAlert = true
+            default:
+                break
+            }
+        })
+        .onAppear(perform: handleOnAppear)
     }
 
     private var dataSources: [DataSource] {
@@ -268,6 +301,8 @@ struct TasksScreen: View {
         @Published var currentSource = UserDefaults.lastChosenDataSource ?? .coreData {
             didSet { currentSourceDidSet() }
         }
+
+        @Published var showUserErrorAlert = false
 
         let quickAddViewHeight: CGFloat = 50
 

@@ -6,6 +6,7 @@
 //
 
 import CloudKit
+import ICloutKit
 import Foundation
 import ShrimpExtensions
 
@@ -26,6 +27,12 @@ public protocol Cloudable {
     static var recordType: String { get }
 }
 
+/// Error overrides of ``Cloudable``
+public enum CloudableErrors: Error {
+    /// iCloud has been disabled by the user.
+    case iCloudDisabledByUser
+}
+
 extension Cloudable {
     /// Create new entry on iCloud.
     /// - Parameters:
@@ -40,7 +47,16 @@ extension Cloudable {
     /// - Parameter context: the context to use for iCloud operations.
     /// - Returns: an array of the fetched objects.
     public static func list(from context: Skypiea) async throws -> [Object] {
-        try await context.list(ofType: recordType)
+        let items: [CKRecord]
+
+        do {
+            items = try await context.list(ofType: recordType)
+        } catch {
+            try handleFetchErrors(error)
+            throw error
+        }
+
+        return items
             .compactMap(fromRecord(_:))
     }
 
@@ -53,16 +69,24 @@ extension Cloudable {
     public static func filter(by predicate: NSPredicate,
                               limit: Int? = nil,
                               from context: Skypiea) async throws -> [Object] {
-        let result = try await context.filter(ofType: recordType, by: predicate)
-            .compactMap(fromRecord(_:))
+        let items: [CKRecord]
+
+        do {
+            items = try await context.filter(ofType: recordType, by: predicate)
+        } catch {
+            try handleFetchErrors(error)
+            throw error
+        }
 
         if let limit = limit {
-            return result
+            return items
+                .compactMap(fromRecord(_:))
                 .prefix(upTo: limit)
                 .asArray()
         }
 
-        return result
+        return items
+            .compactMap(fromRecord(_:))
     }
 
     /// Finds a record by the given record.
@@ -98,6 +122,17 @@ extension Cloudable {
     public static func updateMany(_ objects: [Object], on context: Skypiea) async throws -> [Object] {
         try await context.saveMany(objects.map(\.record))
             .compactMap(fromRecord(_:))
+    }
+
+    private static func handleFetchErrors(_ error: Error) throws {
+        if let accountErrors = error as? ICloutKit.AccountErrors {
+            switch accountErrors {
+            case .accountStatusNoAccount:
+                throw CloudableErrors.iCloudDisabledByUser
+            default:
+                break
+            }
+        }
     }
 
     private static func save(_ object: Object, on context: Skypiea) async throws -> Object? {

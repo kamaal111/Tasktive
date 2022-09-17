@@ -23,6 +23,7 @@ final class TasksViewModel: ObservableObject {
     @Published private(set) var tasks: [Date: [AppTask]] = [:]
     @Published private(set) var loadingTasks = false
     @Published private(set) var settingTasks = false
+    @Published private(set) var pendingUserError: UserErrors?
 
     private var fetchedContexts: [TasksFetchedContext] = []
     private let dataClient: DataClient
@@ -281,6 +282,7 @@ final class TasksViewModel: ObservableObject {
             }
 
             if let error = maybeError {
+                _ = fetchedContexts.popLast()
                 return .failure(error)
             }
 
@@ -295,10 +297,39 @@ final class TasksViewModel: ObservableObject {
             tasks = try await dataClient.tasks.filter(from: source, by: queryString)
         } catch {
             logger.error(label: "failed to get all tasks", error: error)
-            return .failure(.getAllFailure)
+
+            let maybeError = await handleCloudTaskErrors(error)
+
+            _ = fetchedContexts.popLast()
+            return .failure(maybeError ?? .getAllFailure)
         }
 
         return .success(tasks)
+    }
+
+    @MainActor
+    func setPendingUserError(_ error: UserErrors?) {
+        pendingUserError = error
+    }
+
+    private func handleCloudTaskErrors(_ error: Error) async -> UserErrors? {
+        if let cloudErrors = error as? CloudTask.CrudErrors {
+            switch cloudErrors {
+            case let .fetchFailure(contextError):
+                if let cloudableError = contextError as? CloudableErrors {
+                    switch cloudableError {
+                    case .iCloudDisabledByUser:
+                        logger.warning("iCloud has been disabled by the user")
+                        await setPendingUserError(.iCloudIsDisabled)
+                        return .iCloudIsDisabled
+                    }
+                }
+            default:
+                break
+            }
+        }
+
+        return .none
     }
 
     private func validateTaskArguments(_ arguments: TaskArguments) -> Result<Void, UserErrors> {
@@ -424,40 +455,57 @@ extension TasksViewModel {
         case updateFailure
         case deleteFailure
         case invalidTitle
+        case iCloudIsDisabled
 
-        var style: PopperUpStyles {
+        var title: String {
             switch self {
             case .getAllFailure:
-                return .bottom(
-                    title: TasktiveLocale.getText(.SOMETHING_WENT_WRONG_ERROR_TITLE),
-                    type: .error,
-                    description: TasktiveLocale.getText(.GET_ALL_TASKS_ERROR_DESCRIPTION)
-                )
+                return TasktiveLocale.getText(.SOMETHING_WENT_WRONG_ERROR_TITLE)
             case .createTaskFailure:
-                return .bottom(
-                    title: TasktiveLocale.getText(.SOMETHING_WENT_WRONG_ERROR_TITLE),
-                    type: .error,
-                    description: TasktiveLocale.getText(.CREATE_TASK_ERROR_DESCRIPTION)
-                )
+                return TasktiveLocale.getText(.SOMETHING_WENT_WRONG_ERROR_TITLE)
             case .updateFailure:
-                return .bottom(
-                    title: TasktiveLocale.getText(.SOMETHING_WENT_WRONG_ERROR_TITLE),
-                    type: .error,
-                    description: TasktiveLocale.getText(.UPDATE_TASK_ERROR_DESCRIPTION)
-                )
+                return TasktiveLocale.getText(.SOMETHING_WENT_WRONG_ERROR_TITLE)
             case .deleteFailure:
-                return .bottom(
-                    title: TasktiveLocale.getText(.SOMETHING_WENT_WRONG_ERROR_TITLE),
-                    type: .error,
-                    description: TasktiveLocale.getText(.DELETE_TASK_ERROR_DESCRIPTION)
-                )
+                return TasktiveLocale.getText(.SOMETHING_WENT_WRONG_ERROR_TITLE)
             case .invalidTitle:
-                return .bottom(
-                    title: TasktiveLocale.getText(.GENERAL_WARNING_TITLE),
-                    type: .warning,
-                    description: TasktiveLocale.getText(.INVALID_TITLE_WARNING_DESCRIPTION)
-                )
+                return TasktiveLocale.getText(.GENERAL_WARNING_TITLE)
+            case .iCloudIsDisabled:
+                return TasktiveLocale.getText(.ICLOUD_DISABLED_WARNING_TITLE)
             }
+        }
+
+        var errorDescription: String {
+            switch self {
+            case .getAllFailure:
+                return TasktiveLocale.getText(.GET_ALL_TASKS_ERROR_DESCRIPTION)
+            case .createTaskFailure:
+                return TasktiveLocale.getText(.CREATE_TASK_ERROR_DESCRIPTION)
+            case .updateFailure:
+                return TasktiveLocale.getText(.UPDATE_TASK_ERROR_DESCRIPTION)
+            case .deleteFailure:
+                return TasktiveLocale.getText(.DELETE_TASK_ERROR_DESCRIPTION)
+            case .invalidTitle:
+                return TasktiveLocale.getText(.INVALID_TITLE_WARNING_DESCRIPTION)
+            case .iCloudIsDisabled:
+                return TasktiveLocale.getText(.ICLOUD_DISABLED_WARNING_DESCRIPTION)
+            }
+        }
+
+        var popupType: PopperUpBottomType {
+            switch self {
+            case .getAllFailure, .createTaskFailure, .updateFailure, .deleteFailure:
+                return .error
+            case .invalidTitle, .iCloudIsDisabled:
+                return .warning
+            }
+        }
+
+        var style: PopperUpStyles {
+            .bottom(
+                title: title,
+                type: popupType,
+                description: errorDescription
+            )
         }
 
         var timeout: TimeInterval? {

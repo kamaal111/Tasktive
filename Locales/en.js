@@ -29,4 +29,8 @@ module.exports = {
   PURCHASE_ERROR_DESCRIPTION: 'Failed to make purchase',
   TASKS_PROGRESSION_PERCENTAGE: 'Tasks progression percentage of %@',
   NO_CONNECTION: "No connection",
+  GO_TO_SETTINGS: "Go to settings",
+  CANCEL: "Cancel",
+  ICLOUD_DISABLED_WARNING_TITLE: "iCloud is disabled warning",
+  ICLOUD_DISABLED_WARNING_DESCRIPTION: "Please enable iCloud in your settings",
 };
