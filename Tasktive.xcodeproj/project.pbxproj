@@ -160,6 +160,7 @@
 		2C8158F028C2756800B98E6C /* TaskArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8158EF28C2756800B98E6C /* TaskArguments.swift */; };
 		2C8158F128C2756800B98E6C /* TaskArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8158EF28C2756800B98E6C /* TaskArguments.swift */; };
 		2C8158F228C2756800B98E6C /* TaskArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8158EF28C2756800B98E6C /* TaskArguments.swift */; };
+		2C84C30F28D7491700015565 /* TasksViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C84C30E28D7491700015565 /* TasksViewModelTests.swift */; };
 		2C9435DA28B284E600281AF7 /* GridItemConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9435D928B284E600281AF7 /* GridItemConfiguration.swift */; };
 		2C9435DB28B284E600281AF7 /* GridItemConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9435D928B284E600281AF7 /* GridItemConfiguration.swift */; };
 		2C9435DC28B284E600281AF7 /* GridItemConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9435D928B284E600281AF7 /* GridItemConfiguration.swift */; };
@@ -409,6 +410,7 @@
 		2C7A560528B4157600CF8A7C /* Array+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+extensions.swift"; sourceTree = "<group>"; };
 		2C8158EB28C2733000B98E6C /* DataClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataClient.swift; sourceTree = "<group>"; };
 		2C8158EF28C2756800B98E6C /* TaskArguments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskArguments.swift; sourceTree = "<group>"; };
+		2C84C30E28D7491700015565 /* TasksViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksViewModelTests.swift; sourceTree = "<group>"; };
 		2C8B0CDD288DD73A00041EF8 /* SettingsUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SettingsUI; sourceTree = "<group>"; };
 		2C9435D928B284E600281AF7 /* GridItemConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridItemConfiguration.swift; sourceTree = "<group>"; };
 		2C9435DD28B2868A00281AF7 /* Gridable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gridable.swift; sourceTree = "<group>"; };
@@ -803,6 +805,7 @@
 			children = (
 				2CCCADBF2881FCF00033E2EF /* CoreTaskSpec.swift */,
 				2CBDB64628D11BC4007EC2D5 /* TasksScreenViewModelTests.swift */,
+				2C84C30E28D7491700015565 /* TasksViewModelTests.swift */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -1770,6 +1773,7 @@
 			files = (
 				2CBDB64828D11FCD007EC2D5 /* CoreTaskSpec.swift in Sources */,
 				2CBDB64728D11BC4007EC2D5 /* TasksScreenViewModelTests.swift in Sources */,
+				2C84C30F28D7491700015565 /* TasksViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

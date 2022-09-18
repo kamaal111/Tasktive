@@ -8,6 +8,6 @@
 
 PROJECT="Tasktive.xcodeproj"
 DESTINATION="platform=iOS Simulator,name=iPhone 14 Pro Max"
-SCHEME="Tasktive"
+SCHEME="TasktiveTests"
 
 set -o pipefail && xcodebuild test -project "$PROJECT" -scheme "$SCHEME" -destination "$DESTINATION" || exit 1

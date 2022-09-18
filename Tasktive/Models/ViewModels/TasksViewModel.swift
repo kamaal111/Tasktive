@@ -112,8 +112,12 @@ final class TasksViewModel: ObservableObject {
         return .success(())
     }
 
+    func getInitialTasks(from sources: [DataSource]) async -> Result<Void, UserErrors> {
+        await _getTasks(from: sources, for: Date(), dataIsStale: false, updateNotCompletedTasks: true)
+    }
+
     func getTasks(from sources: [DataSource], for date: Date) async -> Result<Void, UserErrors> {
-        await getTasks(from: sources, for: date, dataIsStale: false, updateNotCompletedTasks: false)
+        await _getTasks(from: sources, for: date, dataIsStale: false, updateNotCompletedTasks: false)
     }
 
     #if DEBUG
@@ -212,10 +216,10 @@ final class TasksViewModel: ObservableObject {
         return true
     }
 
-    private func getTasks(from sources: [DataSource],
-                          for date: Date,
-                          dataIsStale: Bool,
-                          updateNotCompletedTasks: Bool) async -> Result<Void, UserErrors> {
+    private func _getTasks(from sources: [DataSource],
+                           for date: Date,
+                           dataIsStale: Bool,
+                           updateNotCompletedTasks: Bool) async -> Result<Void, UserErrors> {
         let startDate = getHashDate(from: date)
         let newLastFetchedContext = TasksFetchedContext(date: startDate, dataSources: sources)
 
@@ -433,10 +437,10 @@ final class TasksViewModel: ObservableObject {
                 .uniques()
 
             Task {
-                await getTasks(from: dataSources,
-                               for: lastFetchedContext.date,
-                               dataIsStale: true,
-                               updateNotCompletedTasks: false)
+                await _getTasks(from: dataSources,
+                                for: lastFetchedContext.date,
+                                dataIsStale: true,
+                                updateNotCompletedTasks: false)
             }
         default:
             break

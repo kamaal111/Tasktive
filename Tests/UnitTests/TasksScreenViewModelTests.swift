@@ -11,9 +11,9 @@ import Nimble
 
 final class TasksScreenViewModelTests: QuickSpec {
     override func spec() {
-        describe("disableNewTaskSubmitButton") {
-            var viewModel: TasksScreen.ViewModel!
+        var viewModel: TasksScreen.ViewModel!
 
+        describe("disableNewTaskSubmitButton") {
             beforeEach {
                 viewModel = .init()
             }

@@ -16,7 +16,7 @@ public enum Environment {
         public static let iCloudSyncing = CommandLineArguments.enableICloudSyncing.enabled
         #else
         /// If iCloud syncing is enabled or not.
-        public static let iCloudSyncing = true
+        public static let iCloudSyncing = false
         #endif
     }
 
