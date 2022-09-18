@@ -8,13 +8,22 @@
 #if os(iOS)
 import UIKit
 import CloudKit
+import Skypiea
 
 final class AppDelegate: NSObject, UIApplicationDelegate {
+    #if DEBUG
+    private let skypiea: Skypiea = .preview
+    #else
+    private let skypiea: Skypiea = .shared
+    #endif
+
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         application.registerForRemoteNotifications()
+
+        skypiea.subscripeToAll()
 
         return true
     }
@@ -32,10 +41,11 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
     func application(
         _: UIApplication,
         didReceiveRemoteNotification userInfo: [AnyHashable: Any],
-        fetchCompletionHandler _: @escaping (UIBackgroundFetchResult) -> Void
+        fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
     ) {
         if let notification = CKNotification(fromRemoteNotificationDictionary: userInfo) {
             NotificationCenter.default.post(name: .iCloudChanges, object: notification)
+            completionHandler(.newData)
         }
     }
 }

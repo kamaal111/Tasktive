@@ -428,6 +428,7 @@ final class TasksViewModel: ObservableObject {
     private func handleNotification(_ notification: Notification) {
         switch notification.name {
         case .iCloudChanges:
+            logger.info("recieved iCloud changes notification")
             guard let lastFetchedContext = lastFetchedContext,
                   Environment.Features.iCloudSyncing,
                   UserDefaults.iCloudSyncingIsEnabled ?? false else { return }
