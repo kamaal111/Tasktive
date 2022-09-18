@@ -81,7 +81,7 @@ struct TasksScreen: View {
                 currentSource: $viewModel.currentSource,
                 disableSubmit: viewModel
                     .disableNewTaskSubmitButton(isConnectedToNetwork: deviceModel.isConnectedToNetwork),
-                dataSources: viewModel.dataSources(iCloudSyncingIsEnabled: userData.iCloudSyncingIsEnabled),
+                dataSources: viewModel.dataSources(iCloudSyncingIsEnabledByUser: userData.iCloudSyncingIsEnabled),
                 submit: onNewTaskSubmit
             )
             .padding(.horizontal, .medium)
@@ -146,9 +146,11 @@ struct TasksScreen: View {
             fetchTasksAfterInternetIsAvailable(newValue)
         })
         .onReceive(NotificationCenter.default.publisher(for: .appBecameActive), perform: { _ in
+            guard viewModel.loaded else { return }
+
             logger.info("attempting to get tasks after becoming active")
 
-            handleOnAppear()
+            Task { await tasksViewModel.getTasks(from: dataSources, for: viewModel.currentDay) }
         })
         .onChange(of: userData.iCloudSyncingIsEnabled, perform: fetchTasksAfterInternetIsAvailable)
         .onChange(of: tasksViewModel.pendingUserError, perform: { newValue in
@@ -157,22 +159,25 @@ struct TasksScreen: View {
             viewModel.openUserErrorAlert(with: error)
             tasksViewModel.setPendingUserError(.none)
         })
+        .onAppear(perform: handleOnAppear)
     }
 
     private var dataSources: [DataSource] {
         viewModel.dataSources(
             isConnectedToNetwork: deviceModel.isConnectedToNetwork,
-            iCloudSyncingIsEnabled: userData.iCloudSyncingIsEnabled
+            iCloudSyncingIsEnabledByUser: userData.iCloudSyncingIsEnabled
         )
     }
 
-    private func fetchTasksAfterInternetIsAvailable(_ newValue: Bool) {
-        if !newValue {
+    private func fetchTasksAfterInternetIsAvailable(_ internetIsAvailable: Bool) {
+        if !internetIsAvailable {
             return
         }
 
         logger.info("fetching after internet is available")
-        Task { await tasksViewModel.getTasks(from: dataSources, for: viewModel.currentDay) }
+        Task {
+            await tasksViewModel.getTasks(from: dataSources, for: viewModel.currentDay)
+        }
     }
 
     private func handleTaskEditedInDetailsSheet(_ arguments: TaskArguments?) {
@@ -234,7 +239,7 @@ struct TasksScreen: View {
 
     private func handleOnAppear() {
         Task {
-            let result = await tasksViewModel.getTasks(from: dataSources, for: viewModel.currentDay)
+            let result = await tasksViewModel.getInitialTasks(from: dataSources)
             switch result {
             case let .failure(failure):
                 popperUpManager.showPopup(style: failure.style, timeout: failure.timeout)
@@ -244,6 +249,7 @@ struct TasksScreen: View {
             }
 
             showMessageWhenNotConnectedToTheInternet()
+            viewModel.indicateThatViewModelHasLoaded()
         }
     }
 
@@ -307,9 +313,16 @@ struct TasksScreen: View {
             }
         }
 
+        @Published private(set) var loaded = false
+
         let quickAddViewHeight: CGFloat = 50
 
         init() { }
+
+        @MainActor
+        func indicateThatViewModelHasLoaded() {
+            loaded = true
+        }
 
         @MainActor
         func openUserErrorAlert(with error: TasksViewModel.UserErrors) {
@@ -321,11 +334,11 @@ struct TasksScreen: View {
             pendingUserError = nil
         }
 
-        func dataSources(iCloudSyncingIsEnabled: Bool) -> [DataSource] {
-            dataSources(isConnectedToNetwork: true, iCloudSyncingIsEnabled: iCloudSyncingIsEnabled)
+        func dataSources(iCloudSyncingIsEnabledByUser: Bool) -> [DataSource] {
+            dataSources(isConnectedToNetwork: true, iCloudSyncingIsEnabledByUser: iCloudSyncingIsEnabledByUser)
         }
 
-        func dataSources(isConnectedToNetwork: Bool, iCloudSyncingIsEnabled: Bool) -> [DataSource] {
+        func dataSources(isConnectedToNetwork: Bool, iCloudSyncingIsEnabledByUser: Bool) -> [DataSource] {
             DataSource
                 .allCases
                 .filter { source in
@@ -337,7 +350,7 @@ struct TasksScreen: View {
                         return false
                     }
 
-                    if source == .iCloud, !iCloudSyncingIsEnabled {
+                    if source == .iCloud, !iCloudSyncingIsEnabledByUser {
                         return false
                     }
 
