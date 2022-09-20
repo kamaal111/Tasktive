@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import Logster
+
+private let logger = Logster(from: StackNavigator.self)
 
 final class StackNavigator: ObservableObject {
     @Published var path = NavigationPath()
     @Published private(set) var screen: NamiNavigator.Screens
-
-    private let logger = Logster(from: StackNavigator.self)
 
     private let notifications: [Notification.Name] = [
         .navigateToPlayground,

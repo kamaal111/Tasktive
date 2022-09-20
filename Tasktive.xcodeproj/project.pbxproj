@@ -25,6 +25,9 @@
 		2C1B196A2888689700D734D2 /* PopperUp in Frameworks */ = {isa = PBXBuildFile; productRef = 2C1B19692888689700D734D2 /* PopperUp */; };
 		2C1B196C28886CFB00D734D2 /* PopUpError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B196B28886CFB00D734D2 /* PopUpError.swift */; };
 		2C1B1985288874C100D734D2 /* QuickAddSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B1984288874C100D734D2 /* QuickAddSection.swift */; };
+		2C1B757128DA38BA00181865 /* Logster in Frameworks */ = {isa = PBXBuildFile; productRef = 2C1B757028DA38BA00181865 /* Logster */; };
+		2C1B757328DA38C000181865 /* Logster in Frameworks */ = {isa = PBXBuildFile; productRef = 2C1B757228DA38C000181865 /* Logster */; };
+		2C1B757528DA38C500181865 /* Logster in Frameworks */ = {isa = PBXBuildFile; productRef = 2C1B757428DA38C500181865 /* Logster */; };
 		2C39A919288359A1008BAFD2 /* TasktiveLocale in Frameworks */ = {isa = PBXBuildFile; productRef = 2C39A918288359A1008BAFD2 /* TasktiveLocale */; };
 		2C3B27C6288C77F7007CE538 /* DateControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B27C5288C77F7007CE538 /* DateControlView.swift */; };
 		2C3B27C9288CA274007CE538 /* TaskDetailsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B27C8288CA274007CE538 /* TaskDetailsSheet.swift */; };
@@ -67,7 +70,6 @@
 		2C69A05A28B19BC600D5006D /* AppSizes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C90C28847115008939F7 /* AppSizes.swift */; };
 		2C69A05B28B19BC600D5006D /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B19662888675D00D734D2 /* MainView.swift */; };
 		2C69A05C28B19BC600D5006D /* DetailsColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47E405288371A300FD4469 /* DetailsColumn.swift */; };
-		2C69A05D28B19BC600D5006D /* Logster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCCADD0288203720033E2EF /* Logster.swift */; };
 		2C69A05E28B19BC600D5006D /* ScreenWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5AB1B8288D7C870069911C /* ScreenWrapper.swift */; };
 		2C69A05F28B19BC600D5006D /* NotificationName+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47E3FC28836B2200FD4469 /* NotificationName+extensions.swift */; };
 		2C69A06028B19BC600D5006D /* NamiNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF24AA52884289100778BD9 /* NamiNavigator.swift */; };
@@ -179,7 +181,6 @@
 		2C98E3E228B12E170048149F /* AppSizes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C90C28847115008939F7 /* AppSizes.swift */; };
 		2C98E3E328B12E170048149F /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B19662888675D00D734D2 /* MainView.swift */; };
 		2C98E3E428B12E170048149F /* DetailsColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47E405288371A300FD4469 /* DetailsColumn.swift */; };
-		2C98E3E528B12E170048149F /* Logster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCCADD0288203720033E2EF /* Logster.swift */; };
 		2C98E3E628B12E170048149F /* ScreenWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5AB1B8288D7C870069911C /* ScreenWrapper.swift */; };
 		2C98E3E728B12E170048149F /* NotificationName+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47E3FC28836B2200FD4469 /* NotificationName+extensions.swift */; };
 		2C98E3E828B12E170048149F /* NamiNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF24AA52884289100778BD9 /* NamiNavigator.swift */; };
@@ -288,7 +289,6 @@
 		2CC325F328B0E68F0091EC3E /* Navigatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC325F228B0E68F0091EC3E /* Navigatable.swift */; };
 		2CC79CE3288D78A400FD5792 /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC79CE2288D78A400FD5792 /* SettingsScreen.swift */; };
 		2CCCADB72881F94D0033E2EF /* CoreTask+CRUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCCADB62881F94D0033E2EF /* CoreTask+CRUD.swift */; };
-		2CCCADD1288203720033E2EF /* Logster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCCADD0288203720033E2EF /* Logster.swift */; };
 		2CCCADD4288204100033E2EF /* Crudable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCCADD3288204100033E2EF /* Crudable.swift */; };
 		2CCF228B28B7FA6D00366596 /* Skypiea in Frameworks */ = {isa = PBXBuildFile; productRef = 2CCF228A28B7FA6D00366596 /* Skypiea */; };
 		2CCF228D28B7FA7600366596 /* Skypiea in Frameworks */ = {isa = PBXBuildFile; productRef = 2CCF228C28B7FA7600366596 /* Skypiea */; };
@@ -370,6 +370,7 @@
 		2C1B19662888675D00D734D2 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		2C1B196B28886CFB00D734D2 /* PopUpError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpError.swift; sourceTree = "<group>"; };
 		2C1B1984288874C100D734D2 /* QuickAddSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAddSection.swift; sourceTree = "<group>"; };
+		2C1B756F28DA36DC00181865 /* Logster */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Logster; sourceTree = "<group>"; };
 		2C33AD7028CFACA100E77F8D /* archive_ios.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = archive_ios.sh; sourceTree = "<group>"; };
 		2C39A91728835847008BAFD2 /* TasktiveLocale */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = TasktiveLocale; sourceTree = "<group>"; };
 		2C39A91C28835ADF008BAFD2 /* run.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = run.sh; sourceTree = "<group>"; };
@@ -466,7 +467,6 @@
 		2CCCADAD2881F1CC0033E2EF /* pre_compile.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = pre_compile.sh; sourceTree = "<group>"; };
 		2CCCADB62881F94D0033E2EF /* CoreTask+CRUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTask+CRUD.swift"; sourceTree = "<group>"; };
 		2CCCADBF2881FCF00033E2EF /* CoreTaskSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreTaskSpec.swift; sourceTree = "<group>"; };
-		2CCCADD0288203720033E2EF /* Logster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logster.swift; sourceTree = "<group>"; };
 		2CCCADD3288204100033E2EF /* Crudable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crudable.swift; sourceTree = "<group>"; };
 		2CCF228928B7F9DE00366596 /* Skypiea */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Skypiea; sourceTree = "<group>"; };
 		2CD2EB7728BA41F500C14B18 /* run_ios_tests.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = run_ios_tests.sh; sourceTree = "<group>"; };
@@ -529,6 +529,7 @@
 				2CCF228D28B7FA7600366596 /* Skypiea in Frameworks */,
 				2C69A0A928B19BC600D5006D /* TasktiveLocale in Frameworks */,
 				2C69A0AA28B19BC600D5006D /* PopperUp in Frameworks */,
+				2C1B757328DA38C000181865 /* Logster in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -543,6 +544,7 @@
 				2C98E42A28B12E170048149F /* SettingsUI in Frameworks */,
 				2CCF228F28B7FA7D00366596 /* Skypiea in Frameworks */,
 				2C98E42C28B12E170048149F /* PopperUp in Frameworks */,
+				2C1B757528DA38C500181865 /* Logster in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -557,6 +559,7 @@
 				2CCF228B28B7FA6D00366596 /* Skypiea in Frameworks */,
 				2C39A919288359A1008BAFD2 /* TasktiveLocale in Frameworks */,
 				2C1B196A2888689700D734D2 /* PopperUp in Frameworks */,
+				2C1B757128DA38BA00181865 /* Logster in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -701,6 +704,7 @@
 			isa = PBXGroup;
 			children = (
 				2C3E218528D62F4200BD2330 /* Environment */,
+				2C1B756F28DA36DC00181865 /* Logster */,
 				2C8B0CDD288DD73A00041EF8 /* SettingsUI */,
 				2CCF228928B7F9DE00366596 /* Skypiea */,
 				2C39A91728835847008BAFD2 /* TasktiveLocale */,
@@ -1104,7 +1108,6 @@
 		2CCCADCF288203480033E2EF /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				2CCCADD0288203720033E2EF /* Logster.swift */,
 				2CBCE6082881DE240057F4CD /* Persistence.swift */,
 				2C98E3C928B126620048149F /* SavePanel.swift */,
 				2C98E43628B12FB20048149F /* Shell.swift */,
@@ -1218,6 +1221,7 @@
 				2C69A05728B19BC600D5006D /* SettingsUI */,
 				2CCF228C28B7FA7600366596 /* Skypiea */,
 				2C3E218828D6311C00BD2330 /* Environment */,
+				2C1B757228DA38C000181865 /* Logster */,
 			);
 			productName = Tasktive;
 			productReference = 2C69A0B328B19BC600D5006D /* TasktiveMac.app */;
@@ -1245,6 +1249,7 @@
 				2CCF228E28B7FA7D00366596 /* Skypiea */,
 				2C45AB0728C5143900011282 /* TasktiveLocale */,
 				2C3E218A28D6312100BD2330 /* Environment */,
+				2C1B757428DA38C500181865 /* Logster */,
 			);
 			productName = Tasktive;
 			productReference = 2C98E43428B12E170048149F /* TasktiveMacDebug.app */;
@@ -1272,6 +1277,7 @@
 				2CAF4E40288DD036007C2D1A /* SettingsUI */,
 				2CCF228A28B7FA6D00366596 /* Skypiea */,
 				2C3E218628D6311700BD2330 /* Environment */,
+				2C1B757028DA38BA00181865 /* Logster */,
 			);
 			productName = Tasktive;
 			productReference = 2CBCE6032881DE240057F4CD /* Tasktive.app */;
@@ -1481,7 +1487,6 @@
 				2C69A05A28B19BC600D5006D /* AppSizes.swift in Sources */,
 				2C69A05B28B19BC600D5006D /* MainView.swift in Sources */,
 				2C69A05C28B19BC600D5006D /* DetailsColumn.swift in Sources */,
-				2C69A05D28B19BC600D5006D /* Logster.swift in Sources */,
 				2C513B5528BFDF5700A835C4 /* CloudTask+extensions.swift in Sources */,
 				2C69A05E28B19BC600D5006D /* ScreenWrapper.swift in Sources */,
 				2C69A05F28B19BC600D5006D /* NotificationName+extensions.swift in Sources */,
@@ -1579,7 +1584,6 @@
 				2C98E3E228B12E170048149F /* AppSizes.swift in Sources */,
 				2C98E3E328B12E170048149F /* MainView.swift in Sources */,
 				2C98E3E428B12E170048149F /* DetailsColumn.swift in Sources */,
-				2C98E3E528B12E170048149F /* Logster.swift in Sources */,
 				2C513B5628BFDF5700A835C4 /* CloudTask+extensions.swift in Sources */,
 				2C98E3E628B12E170048149F /* ScreenWrapper.swift in Sources */,
 				2C98E3E728B12E170048149F /* NotificationName+extensions.swift in Sources */,
@@ -1677,7 +1681,6 @@
 				2C51C90D28847115008939F7 /* AppSizes.swift in Sources */,
 				2C1B19672888675D00D734D2 /* MainView.swift in Sources */,
 				2C47E406288371A300FD4469 /* DetailsColumn.swift in Sources */,
-				2CCCADD1288203720033E2EF /* Logster.swift in Sources */,
 				2C5AB1B9288D7C870069911C /* ScreenWrapper.swift in Sources */,
 				2C47E3FD28836B2200FD4469 /* NotificationName+extensions.swift in Sources */,
 				2CF24AA62884289100778BD9 /* NamiNavigator.swift in Sources */,
@@ -2375,6 +2378,18 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2C1B19682888689700D734D2 /* XCRemoteSwiftPackageReference "PopperUp" */;
 			productName = PopperUp;
+		};
+		2C1B757028DA38BA00181865 /* Logster */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Logster;
+		};
+		2C1B757228DA38C000181865 /* Logster */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Logster;
+		};
+		2C1B757428DA38C500181865 /* Logster */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Logster;
 		};
 		2C39A918288359A1008BAFD2 /* TasktiveLocale */ = {
 			isa = XCSwiftPackageProductDependency;

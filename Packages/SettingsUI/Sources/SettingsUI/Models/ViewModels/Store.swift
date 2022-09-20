@@ -5,15 +5,13 @@
 //  Created by Kamaal M Farah on 12/08/2022.
 //
 
-import os.log
+import Logster
 import StoreAPI
 import StoreKit
 import Foundation
 
-@available(iOS 15.0, *)
-private let logger = Logger(subsystem: "io.kamaal.SettingsUI", category: String(describing: Store.self))
+private let logger = Logster(from: Store.self)
 
-@available(iOS 15.0, *)
 extension Store {
     enum Errors: Error {
         case failedVerification
@@ -24,7 +22,6 @@ extension Store {
 }
 
 /// ViewModel to handle donations logic.
-@available(iOS 15.0, *)
 final class Store: NSObject, ObservableObject {
     /// Loading state. View should indicate there is a proccess loading.
     @Published private(set) var isLoading = false

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Skypiea
+import Logster
 import PopperUp
 import Environment
 import TasktiveLocale
