@@ -239,6 +239,10 @@ struct TasksScreen: View {
     }
 
     private func handleOnAppear() {
+        if viewModel.currentSource == .iCloud, !userData.iCloudSyncingIsEnabled {
+            viewModel.currentSource = .coreData
+        }
+
         Task {
             let result = await tasksViewModel.getInitialTasks(from: dataSources)
             switch result {

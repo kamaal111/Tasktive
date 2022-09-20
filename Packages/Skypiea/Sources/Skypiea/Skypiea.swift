@@ -34,6 +34,7 @@ public class Skypiea {
         self.preview = preview
     }
 
+    /// Subscribe to all iCloud subscriptions to recieve notifications.
     public func subscripeToAll() async throws {
         guard !preview else { return }
 
