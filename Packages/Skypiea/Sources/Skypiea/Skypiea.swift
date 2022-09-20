@@ -5,8 +5,12 @@
 //  Created by Kamaal M Farah on 25/08/2022.
 //
 
+import Logster
 import CloudKit
 import ICloutKit
+import ShrimpExtensions
+
+private let logger = Logster(from: Skypiea.self)
 
 /// Handle CloudKit operations
 public class Skypiea {
@@ -22,51 +26,37 @@ public class Skypiea {
         databaseType: .private
     )
     private let subscriptionsWanted = [CloudTask.recordType]
-    private(set) var subscriptions: [CKSubscription] = []
+    private(set) var subscriptions: [CKSubscription] = [] {
+        didSet { logger.info("subscribed iCloud subscriptions; \(subscriptions)") }
+    }
 
     private init(preview: Bool = false) {
         self.preview = preview
     }
 
-    public func subscripeToAll() {
+    public func subscripeToAll() async throws {
         guard !preview else { return }
 
-        // - TODO: REFACTOR THIS MESS
-        fetchAllSubcriptions { (result: Result<[CKSubscription], Error>) in
-            switch result {
-            case let .failure(failure): print(failure)
-            case let .success(success):
-                let subscriptions = success
-                    .filter { (subscription: CKSubscription) -> Bool in
-                        guard let query = subscription as? CKQuerySubscription,
-                              let recordType = query.recordType else { return false }
-                        return self.subscriptionsWanted.contains(recordType)
-                    }
-                    .map { (subscription: CKSubscription) -> [String: CKSubscription] in
-                        let recordType = (subscription as! CKQuerySubscription).recordType!
-                        return [recordType.description: subscription]
-                    }
-                var subscriptionKeysFetched: [String] = []
-                subscriptions.forEach { (subscription: [String: CKSubscription]) in
-                    if let value = subscription.values.first {
-                        self.subscriptions.append(value)
-                    }
-                    if let key = subscription.keys.first {
-                        subscriptionKeysFetched.append(key)
-                    }
+        let subscriptions = try await fetchAllSubcriptions()
+
+        var subscribedSubsctiptions: [CKSubscription] = []
+        for subscription in subscriptions {
+            if let query = subscription as? CKQuerySubscription,
+               let recordType = query.recordType,
+               subscriptionsWanted.contains(recordType) {
+                let subscribedSubscription: CKSubscription
+                do {
+                    subscribedSubscription = try await subscribeAll(toType: recordType)
+                } catch {
+                    logger.error(label: "failed to subscribe to \(recordType) iCloud subscription", error: error)
+                    continue
                 }
-                let subscriptionKeysWanted = self.subscriptionsWanted.filter { !subscriptionKeysFetched.contains($0) }
-                guard !subscriptionKeysWanted.isEmpty else { return }
-                subscriptionKeysWanted.forEach { (recordType: String) in
-                    self.subscribeAll(toType: recordType) { (result: Result<CKSubscription, Error>) in
-                        switch result {
-                        case let .failure(failure): print(failure)
-                        case let .success(success): self.subscriptions.append(success)
-                        }
-                    }
-                }
+
+                subscribedSubsctiptions.append(subscribedSubscription)
             }
         }
+
+        self.subscriptions = subscribedSubsctiptions
     }
 
     /// Fetch all of the given record.
@@ -122,20 +112,16 @@ public class Skypiea {
         _ = try await iCloutKit.delete(record)
     }
 
-    private func fetchAllSubcriptions(completion: @escaping (Result<[CKSubscription], Error>) -> Void) {
+    private func fetchAllSubcriptions() async throws -> [CKSubscription] {
         guard !preview else {
-            completion(.success([]))
-            return
+            return []
         }
 
-        iCloutKit.fetchAllSubscriptions(completion: completion)
+        return try await iCloutKit.fetchAllSubscriptions()
     }
 
-    private func subscribeAll(
-        toType objectType: String,
-        completion: @escaping (Result<CKSubscription, Error>) -> Void
-    ) {
+    private func subscribeAll(toType objectType: String) async throws -> CKSubscription {
         let predicate = NSPredicate(value: true)
-        iCloutKit.subscribe(toType: objectType, by: predicate, completion: completion)
+        return try await iCloutKit.subscribe(toType: objectType, by: predicate)
     }
 }
