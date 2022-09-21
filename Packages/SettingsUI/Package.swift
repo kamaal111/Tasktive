@@ -5,7 +5,6 @@ import PackageDescription
 
 let package = Package(
     name: "SettingsUI",
-    defaultLocalization: "en",
     platforms: [
         .iOS(.v16),
         .macOS(.v13),
@@ -24,6 +23,7 @@ let package = Package(
         .package(url: "https://github.com/kamaal111/ShrimpExtensions.git", "2.6.0" ..< "3.0.0"),
         .package(path: "../Environment"),
         .package(path: "../Logster"),
+        .package(path: "../TasktiveLocale"),
     ],
     targets: [
         .target(
@@ -36,6 +36,7 @@ let package = Package(
                 "ShrimpExtensions",
                 "Environment",
                 "Logster",
+                "TasktiveLocale",
             ],
             resources: [
                 .process("Resources"),

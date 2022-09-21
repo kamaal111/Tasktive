@@ -25,7 +25,6 @@ extension TasktiveLocale {
         case DONE
         case EDIT
         case DELETE
-        case TITLE_INPUT_TITLE
         case PROGRESS
         case SETTINGS
         case NEW_TASK_SAVED
@@ -39,5 +38,32 @@ extension TasktiveLocale {
         case CANCEL
         case ICLOUD_DISABLED_WARNING_TITLE
         case ICLOUD_DISABLED_WARNING_DESCRIPTION
+        case VERSION
+        case ABOUT
+        case FEEDBACK
+        case FEATURES
+        case ICLOUD_SYNCING
+        case PERSONALIZATION
+        case SUPPORT_AUTHOR
+        case BUY_ME_COFFEE
+        case BUY_ME_A_TEXT
+        case PURCHASING
+        case SEND
+        case DESCRIPTION
+        case TITLE
+        case COLORS
+        case DEFAULT
+        case TEAL
+        case PURPLE
+        case GREEN
+        case YELLOW
+        case PINK
+        case ORANGE
+        case RED
+        case BLUE
+        case APP_COLORS
+        case OTHER_FEEDBACK
+        case REPORT_BUG
+        case FEATURE_REQUEST
     }
 }

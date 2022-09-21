@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SalmonUI
+import TasktiveLocale
 
 extension SettingsUI {
     /// A row with the bundle version and build number in it
@@ -16,7 +17,7 @@ extension SettingsUI {
 
         public var body: some View {
             if let versionText = versionText {
-                RowViewValueView(label: NSLocalizedString("Version", bundle: .module, comment: "")) {
+                RowViewValueView(label: TasktiveLocale.getText(.VERSION)) {
                     Text(versionText)
                     if let buildNumber = buildNumber {
                         Text(buildNumber)

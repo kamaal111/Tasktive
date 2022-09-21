@@ -8,6 +8,7 @@
 import SwiftUI
 import SalmonUI
 import GitHubAPI
+import TasktiveLocale
 import ShrimpExtensions
 
 extension SettingsUI {
@@ -31,14 +32,14 @@ extension SettingsUI {
             VStack {
                 KFloatingTextField(
                     text: $viewModel.title,
-                    title: NSLocalizedString("Title", bundle: .module, comment: "")
+                    title: TasktiveLocale.getText(.TITLE)
                 )
                 KTextView(
                     text: $viewModel.description,
-                    title: NSLocalizedString("Description", bundle: .module, comment: "")
+                    title: TasktiveLocale.getText(.DESCRIPTION)
                 )
                 Button(action: onSendPress) {
-                    Text(NSLocalizedString("Send", bundle: .module, comment: ""))
+                    Text(TasktiveLocale.getText(.SEND))
                         .font(.headline)
                         .bold()
                         .foregroundColor(colorScheme == .dark ? .black : .white)

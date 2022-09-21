@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import TasktiveLocale
 
 public enum SettingsScreens: Hashable, Codable, CaseIterable {
     public static let allCases: [SettingsScreens] = [
@@ -25,9 +26,9 @@ public enum SettingsScreens: Hashable, Codable, CaseIterable {
         case let .feedback(style):
             return style.title
         case .appColor:
-            return NSLocalizedString("App colors", bundle: .module, comment: "")
+            return TasktiveLocale.getText(.APP_COLORS)
         case .supportAuthor:
-            return NSLocalizedString("Support Author", bundle: .module, comment: "")
+            return TasktiveLocale.getText(.SUPPORT_AUTHOR)
         }
     }
 }
@@ -44,11 +45,11 @@ public enum FeedbackStyles: Hashable, Codable, Identifiable, CaseIterable {
     public var title: String {
         switch self {
         case .feature:
-            return NSLocalizedString("Feature request", bundle: .module, comment: "")
+            return TasktiveLocale.getText(.FEATURE_REQUEST)
         case .bug:
-            return NSLocalizedString("Report bug", bundle: .module, comment: "")
+            return TasktiveLocale.getText(.REPORT_BUG)
         case .other:
-            return NSLocalizedString("Other feedback", bundle: .module, comment: "")
+            return TasktiveLocale.getText(.OTHER_FEEDBACK)
         }
     }
 

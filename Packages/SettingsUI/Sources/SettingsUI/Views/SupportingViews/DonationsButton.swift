@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TasktiveLocale
 
 struct DonationsButton: View {
     let donation: CustomProduct
@@ -16,8 +17,7 @@ struct DonationsButton: View {
             HStack {
                 Text(donation.emoji)
                 VStack(alignment: .center) {
-                    Text(String(format: NSLocalizedString("Buy me a %@", bundle: .module, comment: ""),
-                                donation.displayName).uppercased())
+                    Text(TasktiveLocale.getText(.BUY_ME_A_TEXT, with: [donation.displayName]).uppercased())
                         .font(.headline)
                         .foregroundColor(.primary)
                     Text(donation.description.uppercased())

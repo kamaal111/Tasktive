@@ -7,8 +7,13 @@
 
 import os.log
 import SwiftUI
+import Logster
 import SalmonUI
 import Environment
+import TasktiveLocale
+
+private struct EmptyEncodable: Encodable { }
+private let logger = Logster(from: SettingsUI.SettingsScreen<EmptyEncodable>.self)
 
 extension SettingsUI {
     public struct SettingsScreen<FeedbackData: Encodable>: View {
@@ -86,11 +91,6 @@ extension SettingsUI {
         let hasDonations: Bool
         let feedbackConfiguration: FeedbackConfiguration<T>?
 
-        private let logger = Logger(
-            subsystem: "io.kamaal.SettingsUI",
-            category: "SettingsScreen"
-        )
-
         var body: some View {
             KScrollableForm {
                 if hasDonations {
@@ -141,7 +141,7 @@ extension SettingsUI {
                             onDone: { maybeError in onFeedbackSend(maybeError) }
                         )
                     } else {
-                        Text(NSLocalizedString("Sorry something went wrong", bundle: .module, comment: ""))
+                        Text(TasktiveLocale.getText(.SOMETHING_WENT_WRONG_ERROR_TITLE))
                     }
                 case .appColor:
                     AppColorScreen(
