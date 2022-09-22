@@ -28,7 +28,7 @@ extension SettingsUI {
             }
             .ktakeSizeEagerly(alignment: .topLeading)
             .onAppear(perform: {
-                Task { logs = await LogHolder.shared.logs }
+                Task { logs = await LogHolder.shared.logs.reversed() }
             })
         }
     }

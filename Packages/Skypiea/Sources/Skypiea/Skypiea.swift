@@ -34,30 +34,35 @@ public class Skypiea {
         self.preview = preview
     }
 
-    /// Subscribe to all iCloud subscriptions to recieve notifications.
+    /// Subscribe to all iCloud subscriptions to recieve changes notifications.
     public func subscripeToAll() async throws {
         guard !preview else { return }
 
-        let subscriptions = try await fetchAllSubcriptions()
-
-        var subscribedSubsctiptions: [CKSubscription] = []
-        for subscription in subscriptions {
-            if let query = subscription as? CKQuerySubscription,
-               let recordType = query.recordType,
-               subscriptionsWanted.contains(recordType) {
-                let subscribedSubscription: CKSubscription
-                do {
-                    subscribedSubscription = try await subscribeAll(toType: recordType)
-                } catch {
-                    logger.error(label: "failed to subscribe to \(recordType) iCloud subscription", error: error)
-                    continue
-                }
-
-                subscribedSubsctiptions.append(subscribedSubscription)
-            }
+        let fetchedSubscriptions = try await fetchAllSubcriptions()
+        let fetchedSubscriptionsAsRecordTypes: [CKRecord.RecordType] = fetchedSubscriptions.compactMap {
+            guard let query = $0 as? CKQuerySubscription else { return nil }
+            return query.recordType
         }
 
-        self.subscriptions = subscribedSubsctiptions
+        let subscriptionsToSubscribeTo = subscriptionsWanted.filter { !fetchedSubscriptionsAsRecordTypes.contains($0) }
+
+        var subscribedSubsctiptions: [CKSubscription] = []
+        for subscriptionToSubscribeTo in subscriptionsToSubscribeTo {
+            let subscribedSubscription: CKSubscription
+            do {
+                subscribedSubscription = try await subscribeAll(toType: subscriptionToSubscribeTo)
+            } catch {
+                logger.error(
+                    label: "failed to subscribe to \(subscriptionToSubscribeTo) iCloud subscription",
+                    error: error
+                )
+                continue
+            }
+
+            subscribedSubsctiptions.append(subscribedSubscription)
+        }
+
+        subscriptions = fetchedSubscriptions + subscribedSubsctiptions
     }
 
     /// Fetch all of the given record.
@@ -123,6 +128,7 @@ public class Skypiea {
 
     private func subscribeAll(toType objectType: String) async throws -> CKSubscription {
         let predicate = NSPredicate(value: true)
+        logger.info("subscribing to all \(objectType) iCloud subscriptions")
         return try await iCloutKit.subscribe(toType: objectType, by: predicate)
     }
 }
