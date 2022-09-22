@@ -10,6 +10,20 @@ import SalmonUI
 import TasktiveLocale
 
 extension SettingsUI {
+    public struct MiscellaneousSection: View {
+        public init() { }
+
+        public var body: some View {
+            KSection(header: TasktiveLocale.getText(.MISCELLANEOUS)) {
+                RowImageTextNavigationLink(
+                    label: TasktiveLocale.getText(.LOGS),
+                    imageSystemName: "newspaper.fill",
+                    destination: .logs
+                )
+            }
+        }
+    }
+
     public struct SupportAuthorSection: View {
         public init() { }
 

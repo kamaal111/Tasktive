@@ -63,7 +63,7 @@ public struct Logster {
     }
 
     private func addLogToQueue(type: HoldedLog.LogTypes, message: String) {
-        Task { await LogHolder.shared.addLog(.init(label: label, type: type, message: message)) }
+        Task { await LogHolder.shared.addLog(.init(label: label, type: type, message: message, timestamp: Date())) }
     }
 
     /// General logger labeled with `Tasktive`.

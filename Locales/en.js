@@ -59,4 +59,6 @@ module.exports = {
   OTHER_FEEDBACK: 'Other feedback',
   REPORT_BUG: 'Report bug',
   FEATURE_REQUEST: 'Feature request',
+  MISCELLANEOUS: 'Miscellaneous',
+  LOGS: 'Logs',
 };

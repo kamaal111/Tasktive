@@ -65,5 +65,7 @@ extension TasktiveLocale {
         case OTHER_FEEDBACK
         case REPORT_BUG
         case FEATURE_REQUEST
+        case MISCELLANEOUS
+        case LOGS
     }
 }

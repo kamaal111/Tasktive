@@ -5,11 +5,16 @@
 //  Created by Kamaal M Farah on 20/09/2022.
 //
 
-import Foundation
+import SwiftUI
 
 /// Actor class that holds all the logs.
 public actor LogHolder {
     private var items = Queue<HoldedLog>(max: 100)
+
+    /// Computed array of logs.
+    public var logs: [HoldedLog] {
+        items.list
+    }
 
     /// This method adds a log to the queue.
     /// - Parameter log: The log to add.
@@ -22,23 +27,27 @@ public actor LogHolder {
 }
 
 /// An representation of a log.
-public struct HoldedLog {
+public struct HoldedLog: Hashable {
     /// The label of the log.
     public let label: String
     /// The type of the log as ``LogTypes``.
     public let type: LogTypes
     /// The message that was logged.
     public let message: String
+    /// The time the log has been logged.
+    public let timestamp: Date
 
     /// Memberwise initializer.
     /// - Parameters:
     ///   - label: The label of the log.
     ///   - type: The type of the log as ``LogTypes``.
     ///   - message: The message that was logged.
-    public init(label: String, type: LogTypes, message: String) {
+    ///   - timestamp: The time the log has been logged.
+    public init(label: String, type: LogTypes, message: String, timestamp: Date) {
         self.label = label
         self.type = type
         self.message = message
+        self.timestamp = timestamp
     }
 
     /// The different kind of logs.
@@ -46,6 +55,18 @@ public struct HoldedLog {
         case error
         case warning
         case info
+
+        /// Representation color.
+        public var color: Color {
+            switch self {
+            case .info:
+                return .green
+            case .warning:
+                return .yellow
+            case .error:
+                return .red
+            }
+        }
     }
 }
 

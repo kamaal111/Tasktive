@@ -103,6 +103,7 @@ extension SettingsUI {
                 if Environment.Features.iCloudSyncing {
                     FeaturesSection(iCloudSyncingIsEnabled: $iCloudSyncingIsEnabled)
                 }
+                MiscellaneousSection()
                 AboutSection()
             }
             #if os(macOS)
@@ -150,6 +151,8 @@ extension SettingsUI {
                     )
                 case .supportAuthor:
                     SupportAuthorScreen(navigateBack: navigationPath, handlePurchaseFailure: onPurchaseFailure)
+                case .logs:
+                    LogsScreen()
                 }
             }
             .frame(minWidth: viewSize.width, minHeight: viewSize.height)

@@ -20,6 +20,7 @@ public enum SettingsScreens: Hashable, Codable, CaseIterable {
     case feedback(style: FeedbackStyles)
     case appColor
     case supportAuthor
+    case logs
 
     public var title: String {
         switch self {
@@ -29,6 +30,8 @@ public enum SettingsScreens: Hashable, Codable, CaseIterable {
             return TasktiveLocale.getText(.APP_COLORS)
         case .supportAuthor:
             return TasktiveLocale.getText(.SUPPORT_AUTHOR)
+        case .logs:
+            return TasktiveLocale.getText(.LOGS)
         }
     }
 }
