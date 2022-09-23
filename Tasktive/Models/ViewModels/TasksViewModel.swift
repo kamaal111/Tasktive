@@ -9,6 +9,7 @@ import SwiftUI
 import Skypiea
 import Logster
 import PopperUp
+import CloudKit
 import Environment
 import TasktiveLocale
 import ShrimpExtensions
@@ -429,7 +430,8 @@ final class TasksViewModel: ObservableObject {
     private func handleNotification(_ notification: Notification) {
         switch notification.name {
         case .iCloudChanges:
-            logger.info("recieved iCloud changes notification")
+            let notificationObject = notification.object as? CKNotification
+            logger.info("recieved iCloud changes notification; \(notificationObject as Any)")
             guard let lastFetchedContext = lastFetchedContext,
                   Environment.Features.iCloudSyncing,
                   UserDefaults.iCloudSyncingIsEnabled ?? false else { return }

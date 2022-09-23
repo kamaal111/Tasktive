@@ -24,17 +24,19 @@ extension SettingsUI {
 
         public var body: some View {
             KScrollableForm {
-                ForEach(logs, id: \.self) { item in
-                    Button(action: { selectedLog = item }) {
-                        HStack(spacing: 8) {
-                            Text(item.label)
-                                .foregroundColor(item.type.color)
-                            Text(item.message)
-                                .foregroundColor(.primary)
-                                .lineLimit(1)
+                KSection {
+                    ForEach(logs, id: \.self) { item in
+                        Button(action: { selectedLog = item }) {
+                            HStack(spacing: 8) {
+                                Text(item.label)
+                                    .foregroundColor(item.type.color)
+                                Text(item.message)
+                                    .foregroundColor(.primary)
+                                    .lineLimit(1)
+                            }
                         }
+                        .buttonStyle(.plain)
                     }
-                    .buttonStyle(.plain)
                 }
             }
             .ktakeSizeEagerly(alignment: .topLeading)
@@ -110,12 +112,12 @@ extension SettingsUI {
                                     Text(TasktiveLocale.getText(.REPORT_BUG))
                                         .bold()
                                 }
+                                .padding(.vertical, 16)
+                                .ktakeWidthEagerly()
+                                .background(log.type.color)
+                                .cornerRadius(16)
                             }
                             .buttonStyle(.plain)
-                            .padding(.vertical, 16)
-                            .ktakeWidthEagerly()
-                            .background(log.type.color)
-                            .cornerRadius(16)
                         }
                     }
                 }

@@ -16,6 +16,8 @@ private let SCREEN: NamiNavigator.Screens = .settings
 private let logger = Logster(from: SettingsScreen.self)
 
 struct SettingsScreen: View {
+    @Environment(\.colorScheme) private var colorScheme
+
     @EnvironmentObject private var popperUpManager: PopperUpManager
     @EnvironmentObject private var stackNavigator: StackNavigator
     @EnvironmentObject private var theme: Theme
@@ -25,7 +27,7 @@ struct SettingsScreen: View {
         SettingsUI.SettingsScreen(
             navigationPath: $stackNavigator.path,
             iCloudSyncingIsEnabled: $userData.iCloudSyncingIsEnabled,
-            appColor: theme.currentAccentColor,
+            appColor: theme.currentAccentColor(scheme: colorScheme),
             defaultAppColor: .AccentColor,
             viewSize: Constants.UI.settingsViewMinimumSize,
             feedbackConfiguration: feedbackConfiguration,

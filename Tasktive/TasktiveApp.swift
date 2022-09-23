@@ -17,6 +17,8 @@ struct TasktiveApp: App {
     @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
     #endif
 
+    @Environment(\.colorScheme) private var colorScheme
+
     @StateObject private var tasksViewModel = TasksViewModel()
     @StateObject private var settingsStackNavigator = StackNavigator(screen: .settings)
     @StateObject private var theme = Theme()
@@ -35,7 +37,7 @@ struct TasktiveApp: App {
             #if os(iOS)
                 .onShake(perform: navigateToPlayground)
             #endif
-                .accentColor(theme.currentAccentColor)
+                .accentColor(theme.currentAccentColor(scheme: colorScheme))
                 .environmentObject(tasksViewModel)
                 .environmentObject(theme)
                 .environmentObject(userData)
@@ -54,7 +56,7 @@ struct TasktiveApp: App {
         Settings {
             NavigationStack(path: $settingsStackNavigator.path) {
                 SettingsScreen()
-                    .accentColor(theme.currentAccentColor)
+                    .accentColor(theme.currentAccentColor(scheme: colorScheme))
                     .frame(
                         minWidth: Constants.UI.settingsViewMinimumSize.width,
                         minHeight: Constants.UI.settingsViewMinimumSize.height

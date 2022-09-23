@@ -9,18 +9,16 @@ import SwiftUI
 import SettingsUI
 
 final class Theme: ObservableObject {
-    @Environment(\.colorScheme) private var colorScheme
-
     @Published private(set) var appColor: AppColor?
 
     init() {
         self.appColor = UserDefaults.appColor
     }
 
-    var currentAccentColor: Color {
+    func currentAccentColor(scheme: ColorScheme) -> Color {
         guard let varients = appColor?.variants else { return .AccentColor }
 
-        if colorScheme == .dark {
+        if scheme == .dark {
             return varients.dark.color
         }
 

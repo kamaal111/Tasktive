@@ -14,11 +14,7 @@ import CloudKit
 private let logger = Logster(from: AppDelegate.self)
 
 final class AppDelegate: NSObject, UIApplicationDelegate {
-    #if DEBUG
-    private let skypiea: Skypiea = .preview
-    #else
     private let skypiea: Skypiea = .shared
-    #endif
 
     func application(
         _ application: UIApplication,
