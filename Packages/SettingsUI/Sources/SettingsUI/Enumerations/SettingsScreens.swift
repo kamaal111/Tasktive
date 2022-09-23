@@ -10,21 +10,21 @@ import TasktiveLocale
 
 public enum SettingsScreens: Hashable, Codable, CaseIterable {
     public static let allCases: [SettingsScreens] = [
-        .feedback(style: .feature),
-        .feedback(style: .bug),
-        .feedback(style: .other),
+        .feedback(style: .feature, predefinedDescription: nil),
+        .feedback(style: .bug, predefinedDescription: nil),
+        .feedback(style: .other, predefinedDescription: nil),
         .appColor,
         .supportAuthor,
     ]
 
-    case feedback(style: FeedbackStyles)
+    case feedback(style: FeedbackStyles, predefinedDescription: String?)
     case appColor
     case supportAuthor
     case logs
 
     public var title: String {
         switch self {
-        case let .feedback(style):
+        case let .feedback(style, _):
             return style.title
         case .appColor:
             return TasktiveLocale.getText(.APP_COLORS)

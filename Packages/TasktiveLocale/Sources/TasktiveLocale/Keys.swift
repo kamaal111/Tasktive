@@ -67,5 +67,6 @@ extension TasktiveLocale {
         case FEATURE_REQUEST
         case MISCELLANEOUS
         case LOGS
+        case LOG
     }
 }

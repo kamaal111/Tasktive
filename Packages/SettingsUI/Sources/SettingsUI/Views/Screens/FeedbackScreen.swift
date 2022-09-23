@@ -22,9 +22,14 @@ extension SettingsUI {
         public init(
             configuration: FeedbackConfiguration<FeedbackData>,
             style: FeedbackStyles,
+            predefinedDescription: String?,
             onDone: @escaping (_ maybeError: Error?) -> Void
         ) {
-            self._viewModel = StateObject(wrappedValue: ViewModel(configuration: configuration, style: style))
+            self._viewModel = StateObject(wrappedValue: ViewModel(
+                configuration: configuration,
+                style: style,
+                predefinedDescription: predefinedDescription
+            ))
             self.onDone = onDone
         }
 
@@ -72,7 +77,7 @@ extension SettingsUI {
 extension SettingsUI.FeedbackScreen {
     final class ViewModel<FeedbackData: Encodable>: ObservableObject {
         @Published var title = ""
-        @Published var description = ""
+        @Published var description: String
         @Published var loading = false
 
         let configuration: FeedbackConfiguration<FeedbackData>
@@ -80,10 +85,15 @@ extension SettingsUI.FeedbackScreen {
 
         private var gitHubAPI: GitHubAPI?
 
-        init(configuration: FeedbackConfiguration<FeedbackData>, style: FeedbackStyles) {
+        init(
+            configuration: FeedbackConfiguration<FeedbackData>,
+            style: FeedbackStyles,
+            predefinedDescription: String?
+        ) {
             self.configuration = configuration
             self.style = style
             self.gitHubAPI = .init(token: configuration.gitHubToken, username: configuration.gitHubUsername)
+            self.description = predefinedDescription ?? ""
         }
 
         var disableSubmit: Bool {

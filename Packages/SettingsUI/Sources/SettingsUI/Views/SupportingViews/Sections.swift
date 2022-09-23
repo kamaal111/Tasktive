@@ -101,7 +101,7 @@ extension SettingsUI {
                 RowImageTextNavigationLink(
                     label: style.title,
                     imageSystemName: style.imageSystemName,
-                    destination: .feedback(style: style)
+                    destination: .feedback(style: style, predefinedDescription: nil)
                 )
                 #if os(macOS)
                 if withDivider {

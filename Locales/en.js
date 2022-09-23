@@ -61,4 +61,5 @@ module.exports = {
   FEATURE_REQUEST: 'Feature request',
   MISCELLANEOUS: 'Miscellaneous',
   LOGS: 'Logs',
+  LOG: 'Log',
 };

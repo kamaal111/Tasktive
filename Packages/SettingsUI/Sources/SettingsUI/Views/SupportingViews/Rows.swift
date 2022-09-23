@@ -169,10 +169,8 @@ extension SettingsUI {
         }
 
         public var body: some View {
-            KJustStack {
-                NavigationLink(value: destination) {
-                    content
-                }
+            NavigationLink(value: destination) {
+                content
             }
             .buttonStyle(.plain)
         }
