@@ -28,7 +28,7 @@ jobs:
     timeout-minutes: 15
     runs-on: macos-12
     needs: [quality]
-    if: !contains(github.ref, 'refs/heads/release/') && github.ref != 'refs/heads/main'
+    if: ${{ !contains(github.ref, 'refs/heads/release/') }} && github.ref != 'refs/heads/main'
     steps:
       - name: Git - Checkout
         uses: actions/checkout@v2
