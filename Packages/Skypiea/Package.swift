@@ -5,7 +5,10 @@ import PackageDescription
 
 let package = Package(
     name: "Skypiea",
-    platforms: [.macOS(.v10_15), .iOS(.v13)],
+    platforms: [
+        .iOS(.v14),
+        .macOS(.v11),
+    ],
     products: [
         .library(
             name: "Skypiea",
@@ -15,6 +18,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/kamaal111/ICloutKit.git", "3.0.0" ..< "4.0.0"),
         .package(url: "https://github.com/kamaal111/ShrimpExtensions.git", "2.6.0" ..< "3.0.0"),
+        .package(path: "../Logster"),
     ],
     targets: [
         .target(
@@ -22,6 +26,7 @@ let package = Package(
             dependencies: [
                 "ICloutKit",
                 "ShrimpExtensions",
+                "Logster",
             ]
         ),
         .testTarget(

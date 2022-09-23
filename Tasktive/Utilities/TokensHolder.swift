@@ -5,6 +5,7 @@
 //  Created by Kamaal M Farah on 06/08/2022.
 //
 
+import Logster
 import Foundation
 
 private let logger = Logster(from: TokensHolder.self)

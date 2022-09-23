@@ -7,8 +7,13 @@
 
 import os.log
 import SwiftUI
+import Logster
 import SalmonUI
 import Environment
+import TasktiveLocale
+
+private struct EmptyEncodable: Encodable { }
+private let logger = Logster(from: SettingsUI.SettingsScreen<EmptyEncodable>.self)
 
 extension SettingsUI {
     public struct SettingsScreen<FeedbackData: Encodable>: View {
@@ -59,6 +64,7 @@ extension SettingsUI {
             .environmentObject(store)
             .navigationDestination(for: SettingsScreens.self) { screen in
                 SettingsStackView(
+                    navigationPath: $navigationPath,
                     screen: screen,
                     viewSize: viewSize,
                     appColor: appColor,
@@ -66,8 +72,7 @@ extension SettingsUI {
                     feedbackConfiguration: feedbackConfiguration,
                     onFeedbackSend: onFeedbackSend,
                     onColorSelect: onColorSelect,
-                    onPurchaseFailure: onPurchaseFailure,
-                    navigationPath: { navigationPath.removeLast() }
+                    onPurchaseFailure: onPurchaseFailure
                 )
                 .environmentObject(store)
             }
@@ -86,11 +91,6 @@ extension SettingsUI {
         let hasDonations: Bool
         let feedbackConfiguration: FeedbackConfiguration<T>?
 
-        private let logger = Logger(
-            subsystem: "io.kamaal.SettingsUI",
-            category: "SettingsScreen"
-        )
-
         var body: some View {
             KScrollableForm {
                 if hasDonations {
@@ -103,6 +103,7 @@ extension SettingsUI {
                 if Environment.Features.iCloudSyncing {
                     FeaturesSection(iCloudSyncingIsEnabled: $iCloudSyncingIsEnabled)
                 }
+                MiscellaneousSection()
                 AboutSection()
             }
             #if os(macOS)
@@ -120,6 +121,8 @@ extension SettingsUI {
     private struct SettingsStackView<T: Encodable>: View {
         @EnvironmentObject private var store: Store
 
+        @Binding var navigationPath: NavigationPath
+
         let screen: SettingsScreens
         let viewSize: CGSize
         let appColor: Color
@@ -128,20 +131,20 @@ extension SettingsUI {
         let onFeedbackSend: (_ maybeError: Error?) -> Void
         let onColorSelect: (_ color: AppColor) -> Void
         let onPurchaseFailure: (_ error: Error) -> Void
-        let navigationPath: () -> Void
 
         var body: some View {
             KJustStack {
                 switch screen {
-                case let .feedback(style: style):
+                case let .feedback(style: style, predefinedDescription: predefinedDescription):
                     if let configuration = feedbackConfiguration {
                         FeedbackScreen(
                             configuration: configuration,
                             style: style,
+                            predefinedDescription: predefinedDescription,
                             onDone: { maybeError in onFeedbackSend(maybeError) }
                         )
                     } else {
-                        Text(NSLocalizedString("Sorry something went wrong", bundle: .module, comment: ""))
+                        Text(TasktiveLocale.getText(.SOMETHING_WENT_WRONG_ERROR_TITLE))
                     }
                 case .appColor:
                     AppColorScreen(
@@ -149,7 +152,12 @@ extension SettingsUI {
                         onColorSelect: { color in onColorSelect(color) }
                     )
                 case .supportAuthor:
-                    SupportAuthorScreen(navigateBack: navigationPath, handlePurchaseFailure: onPurchaseFailure)
+                    SupportAuthorScreen(
+                        navigateBack: { navigationPath.removeLast() },
+                        handlePurchaseFailure: onPurchaseFailure
+                    )
+                case .logs:
+                    LogsScreen(navigate: { screen in navigationPath.append(screen) })
                 }
             }
             .frame(minWidth: viewSize.width, minHeight: viewSize.height)

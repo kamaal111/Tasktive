@@ -7,6 +7,7 @@
 
 #if DEBUG
 import SwiftUI
+import Logster
 import SalmonUI
 import ShrimpExtensions
 

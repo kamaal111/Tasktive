@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Logster
 import SalmonUI
 import TasktiveLocale
 
@@ -30,7 +31,7 @@ struct TaskDetailsSheet: View {
             }
         ) {
             VStack {
-                KFloatingTextField(text: $viewModel.title, title: TasktiveLocale.getText(.TITLE_INPUT_TITLE))
+                KFloatingTextField(text: $viewModel.title, title: TasktiveLocale.getText(.TITLE))
 
                 Button {
                     onDelete()

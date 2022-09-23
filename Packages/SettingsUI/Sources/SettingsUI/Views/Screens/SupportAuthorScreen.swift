@@ -7,8 +7,12 @@
 
 import os.log
 import SwiftUI
+import Logster
 import SalmonUI
+import TasktiveLocale
 import ConfettiSwiftUI
+
+private let logger = Logster(from: SettingsUI.SupportAuthorScreen.self)
 
 extension SettingsUI {
     public struct SupportAuthorScreen: View {
@@ -29,11 +33,6 @@ extension SettingsUI {
     }
 
     private struct SupportAuthorScreenView: View {
-        private let logger = Logger(
-            subsystem: "io.kamaal.SettingsUI",
-            category: "SupportAuthorScreenView"
-        )
-
         @EnvironmentObject private var store: Store
 
         @State private var confettiTimesRun = 0
@@ -60,7 +59,7 @@ extension SettingsUI {
                     if store.isPurchasing {
                         HStack {
                             KLoading()
-                            Text(NSLocalizedString("Purchasing", bundle: .module, comment: ""))
+                            Text(TasktiveLocale.getText(.PURCHASING))
                                 .font(.headline)
                                 .bold()
                         }
@@ -94,11 +93,7 @@ extension SettingsUI {
                 let result = await store.requestProducts()
                 switch result {
                 case let .failure(failure):
-                    let message = [
-                        "failed to get donations",
-                        "error='\(failure)'",
-                    ].joined(separator: ";")
-                    logger.error("\(message)")
+                    logger.error(label: "failed to get donations", error: failure)
                     navigateBack()
                 case .success:
                     break

@@ -6,6 +6,7 @@
 //
 
 import Skypiea
+import Logster
 import CloudKit
 import Foundation
 

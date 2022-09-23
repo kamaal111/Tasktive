@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Logster
 import SalmonUI
 import PopperUp
 import Environment
@@ -101,7 +102,7 @@ struct TasksScreen: View {
                 onDone: handleTaskEditedInDetailsSheet(_:),
                 onDelete: handleTaskDeletedInDetailsSheet
             )
-            .accentColor(theme.currentAccentColor)
+            .accentColor(theme.currentAccentColor(scheme: colorScheme))
             .withPopperUp(popperUpManager)
             #if os(macOS)
                 .frame(minWidth: 300, minHeight: 160)
@@ -128,12 +129,12 @@ struct TasksScreen: View {
                     viewModel.closeUserErrorAlert()
                 }) {
                     Text(localized: .GO_TO_SETTINGS)
-                        .foregroundColor(theme.currentAccentColor)
+                        .foregroundColor(theme.currentAccentColor(scheme: colorScheme))
                 }
                 Button(TasktiveLocale.getText(.CANCEL), role: .cancel) {
                     viewModel.closeUserErrorAlert()
                 }
-                .foregroundColor(theme.currentAccentColor)
+                .foregroundColor(theme.currentAccentColor(scheme: colorScheme))
             }, message: {
                 Text(tasksViewModel.pendingUserError?.errorDescription ?? "")
             }
@@ -238,6 +239,10 @@ struct TasksScreen: View {
     }
 
     private func handleOnAppear() {
+        if viewModel.currentSource == .iCloud, !userData.iCloudSyncingIsEnabled {
+            viewModel.currentSource = .coreData
+        }
+
         Task {
             let result = await tasksViewModel.getInitialTasks(from: dataSources)
             switch result {

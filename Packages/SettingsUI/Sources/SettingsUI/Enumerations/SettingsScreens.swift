@@ -6,28 +6,32 @@
 //
 
 import Foundation
+import TasktiveLocale
 
 public enum SettingsScreens: Hashable, Codable, CaseIterable {
     public static let allCases: [SettingsScreens] = [
-        .feedback(style: .feature),
-        .feedback(style: .bug),
-        .feedback(style: .other),
+        .feedback(style: .feature, predefinedDescription: nil),
+        .feedback(style: .bug, predefinedDescription: nil),
+        .feedback(style: .other, predefinedDescription: nil),
         .appColor,
         .supportAuthor,
     ]
 
-    case feedback(style: FeedbackStyles)
+    case feedback(style: FeedbackStyles, predefinedDescription: String?)
     case appColor
     case supportAuthor
+    case logs
 
     public var title: String {
         switch self {
-        case let .feedback(style):
+        case let .feedback(style, _):
             return style.title
         case .appColor:
-            return NSLocalizedString("App colors", bundle: .module, comment: "")
+            return TasktiveLocale.getText(.APP_COLORS)
         case .supportAuthor:
-            return NSLocalizedString("Support Author", bundle: .module, comment: "")
+            return TasktiveLocale.getText(.SUPPORT_AUTHOR)
+        case .logs:
+            return TasktiveLocale.getText(.LOGS)
         }
     }
 }
@@ -44,11 +48,11 @@ public enum FeedbackStyles: Hashable, Codable, Identifiable, CaseIterable {
     public var title: String {
         switch self {
         case .feature:
-            return NSLocalizedString("Feature request", bundle: .module, comment: "")
+            return TasktiveLocale.getText(.FEATURE_REQUEST)
         case .bug:
-            return NSLocalizedString("Report bug", bundle: .module, comment: "")
+            return TasktiveLocale.getText(.REPORT_BUG)
         case .other:
-            return NSLocalizedString("Other feedback", bundle: .module, comment: "")
+            return TasktiveLocale.getText(.OTHER_FEEDBACK)
         }
     }
 

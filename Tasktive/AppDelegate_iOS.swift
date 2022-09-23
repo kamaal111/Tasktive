@@ -7,14 +7,28 @@
 
 #if os(iOS)
 import UIKit
+import Skypiea
+import Logster
 import CloudKit
 
+private let logger = Logster(from: AppDelegate.self)
+
 final class AppDelegate: NSObject, UIApplicationDelegate {
+    private let skypiea: Skypiea = .shared
+
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         application.registerForRemoteNotifications()
+
+        Task {
+            do {
+                try await skypiea.subscripeToAll()
+            } catch {
+                logger.error(label: "failed to subscribe to iCloud subscriptions", error: error)
+            }
+        }
 
         return true
     }
@@ -32,10 +46,11 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
     func application(
         _: UIApplication,
         didReceiveRemoteNotification userInfo: [AnyHashable: Any],
-        fetchCompletionHandler _: @escaping (UIBackgroundFetchResult) -> Void
+        fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
     ) {
         if let notification = CKNotification(fromRemoteNotificationDictionary: userInfo) {
             NotificationCenter.default.post(name: .iCloudChanges, object: notification)
+            completionHandler(.newData)
         }
     }
 }

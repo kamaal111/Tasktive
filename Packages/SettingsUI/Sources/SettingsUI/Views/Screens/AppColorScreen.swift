@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SalmonUI
+import TasktiveLocale
 
 extension SettingsUI {
     public struct AppColorScreen: View {
@@ -22,7 +23,7 @@ extension SettingsUI {
 
         public var body: some View {
             KScrollableForm {
-                KSection(header: NSLocalizedString("Colors", bundle: .module, comment: "")) {
+                KSection(header: TasktiveLocale.getText(.COLORS)) {
                     ForEach(AppColor.defaultColors) { color in
                         if let variants = color.variants {
                             RowViewColorButton(

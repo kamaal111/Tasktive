@@ -5,6 +5,7 @@
 //  Created by Kamaal M Farah on 10/08/2022.
 //
 
+import Logster
 import Foundation
 import SettingsUI
 

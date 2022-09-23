@@ -7,15 +7,30 @@
 
 import SwiftUI
 import SalmonUI
+import TasktiveLocale
 
 extension SettingsUI {
+    public struct MiscellaneousSection: View {
+        public init() { }
+
+        public var body: some View {
+            KSection(header: TasktiveLocale.getText(.MISCELLANEOUS)) {
+                RowImageTextNavigationLink(
+                    label: TasktiveLocale.getText(.LOGS),
+                    imageSystemName: "newspaper.fill",
+                    destination: .logs
+                )
+            }
+        }
+    }
+
     public struct SupportAuthorSection: View {
         public init() { }
 
         public var body: some View {
-            KSection(header: NSLocalizedString("Support Author", bundle: .module, comment: "")) {
+            KSection(header: TasktiveLocale.getText(.SUPPORT_AUTHOR)) {
                 RowImageTextNavigationLink(
-                    label: NSLocalizedString("Buy me coffee", bundle: .module, comment: ""),
+                    label: TasktiveLocale.getText(.BUY_ME_COFFEE),
                     imageSystemName: "cup.and.saucer.fill",
                     destination: .supportAuthor
                 )
@@ -27,7 +42,7 @@ extension SettingsUI {
         public init() { }
 
         public var body: some View {
-            KSection(header: NSLocalizedString("About", bundle: .module, comment: "")) {
+            KSection(header: TasktiveLocale.getText(.ABOUT)) {
                 VersionRowView()
             }
         }
@@ -37,7 +52,7 @@ extension SettingsUI {
         public init() { }
 
         public var body: some View {
-            KSection(header: NSLocalizedString("Personalization", bundle: .module, comment: "")) {
+            KSection(header: TasktiveLocale.getText(.PERSONALIZATION)) {
                 RowViewColorNavigationLink(
                     label: SettingsScreens.appColor.title,
                     color: .accentColor,
@@ -55,9 +70,9 @@ extension SettingsUI {
         }
 
         public var body: some View {
-            KSection(header: NSLocalizedString("Features", bundle: .module, comment: "")) {
+            KSection(header: TasktiveLocale.getText(.FEATURES)) {
                 HStack {
-                    Text(NSLocalizedString("iCloud syncing", bundle: .module, comment: ""))
+                    Text(TasktiveLocale.getText(.ICLOUD_SYNCING))
                         .bold()
                         .foregroundColor(.accentColor)
                     Spacer()
@@ -74,7 +89,7 @@ extension SettingsUI {
         public init() { }
 
         public var body: some View {
-            KSection(header: NSLocalizedString("Feedback", bundle: .module, comment: "")) {
+            KSection(header: TasktiveLocale.getText(.FEEDBACK)) {
                 feedbackButton(.feature, withDivider: true)
                 feedbackButton(.bug, withDivider: true)
                 feedbackButton(.other, withDivider: false)
@@ -86,7 +101,7 @@ extension SettingsUI {
                 RowImageTextNavigationLink(
                     label: style.title,
                     imageSystemName: style.imageSystemName,
-                    destination: .feedback(style: style)
+                    destination: .feedback(style: style, predefinedDescription: nil)
                 )
                 #if os(macOS)
                 if withDivider {

@@ -5,15 +5,13 @@
 //  Created by Kamaal M Farah on 12/08/2022.
 //
 
-import os.log
+import Logster
 import StoreAPI
 import StoreKit
 import Foundation
 
-@available(iOS 15.0, *)
-private let logger = Logger(subsystem: "io.kamaal.SettingsUI", category: String(describing: Store.self))
+private let logger = Logster(from: Store.self)
 
-@available(iOS 15.0, *)
 extension Store {
     enum Errors: Error {
         case failedVerification
@@ -24,7 +22,6 @@ extension Store {
 }
 
 /// ViewModel to handle donations logic.
-@available(iOS 15.0, *)
 final class Store: NSObject, ObservableObject {
     /// Loading state. View should indicate there is a proccess loading.
     @Published private(set) var isLoading = false
@@ -77,12 +74,7 @@ final class Store: NSObject, ObservableObject {
             let transaction: Transaction?
             switch result {
             case let .failure(failure):
-                let message = [
-                    "failed to verify or purchase product",
-                    "description='\(failure.localizedDescription)'",
-                    "error='\(failure)'",
-                ].joined(separator: ";")
-                logger.error("\(message)")
+                logger.error(label: "failed to verify or purchase product", error: failure)
                 completion(.failure(failure))
                 return
             case let .success(success):
@@ -109,8 +101,7 @@ final class Store: NSObject, ObservableObject {
             do {
                 products = try await Product.products(for: storeKitDonationsIDs)
             } catch {
-                let message = "failed to get products; description='\(error.localizedDescription)'; error='\(error)'"
-                logger.error("\(message)")
+                logger.error(label: "failed to get products", error: error)
                 return .failure(.getProducts)
             }
 
@@ -150,12 +141,7 @@ final class Store: NSObject, ObservableObject {
                 do {
                     purchaseResult = try await product.purchase()
                 } catch {
-                    let message = [
-                        "failed to purchase product",
-                        "description='\(error.localizedDescription)'",
-                        "error='\(error)'",
-                    ].joined(separator: ";")
-                    logger.error("\(message)")
+                    logger.error(label: "failed to purchase product", error: error)
                     return .failure(.purchaseError(causeError: error))
                 }
 
@@ -195,8 +181,7 @@ final class Store: NSObject, ObservableObject {
                 let transaction: Transaction
                 switch self.checkVerified(result) {
                 case let .failure(failure):
-                    let message = "failed to verify transaction; error='\(failure)'"
-                    logger.error("\(message)")
+                    logger.error(label: "failed to verify transaction", error: failure)
                     continue
                 case let .success(success):
                     transaction = success
@@ -269,11 +254,6 @@ extension Store: SKPaymentTransactionObserver {
     }
 
     func paymentQueue(_: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
-        let message = [
-            "failed to restore transactions",
-            "description='\(error.localizedDescription)'",
-            "error='\(error)'",
-        ]
-        logger.error("\(message)")
+        logger.error(label: "failed to restore transactions", error: error)
     }
 }

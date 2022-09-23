@@ -5,6 +5,7 @@
 //  Created by Kamaal M Farah on 15/07/2022.
 //
 
+import Logster
 import CoreData
 import Foundation
 import ShrimpExtensions

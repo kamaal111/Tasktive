@@ -6,26 +6,28 @@
 //
 
 import SwiftUI
+import Logster
 import SalmonUI
 import PopperUp
 import SettingsUI
 import TasktiveLocale
 
 private let SCREEN: NamiNavigator.Screens = .settings
+private let logger = Logster(from: SettingsScreen.self)
 
 struct SettingsScreen: View {
+    @Environment(\.colorScheme) private var colorScheme
+
     @EnvironmentObject private var popperUpManager: PopperUpManager
     @EnvironmentObject private var stackNavigator: StackNavigator
     @EnvironmentObject private var theme: Theme
     @EnvironmentObject private var userData: UserData
 
-    private let logger = Logster(from: SettingsScreen.self)
-
     var body: some View {
         SettingsUI.SettingsScreen(
             navigationPath: $stackNavigator.path,
             iCloudSyncingIsEnabled: $userData.iCloudSyncingIsEnabled,
-            appColor: theme.currentAccentColor,
+            appColor: theme.currentAccentColor(scheme: colorScheme),
             defaultAppColor: .AccentColor,
             viewSize: Constants.UI.settingsViewMinimumSize,
             feedbackConfiguration: feedbackConfiguration,
