@@ -52,34 +52,34 @@ jobs:
         run: |
           yarn build:ios:release
 
-  buildMacOSRelease:
-    name: Build macOS release
-    timeout-minutes: 15
-    runs-on: macos-12
-    needs: [quality]
-    if: contains(github.ref, 'refs/heads/release/') == false && github.ref != 'refs/heads/main'
-    steps:
-      - name: Git - Checkout
-        uses: actions/checkout@v2
-        with:
-          ref: ${{ github.ref }}
-          submodules: recursive
+  # buildMacOSRelease:
+  #   name: Build macOS release
+  #   timeout-minutes: 15
+  #   runs-on: macos-12
+  #   needs: [quality]
+  #   if: contains(github.ref, 'refs/heads/release/') == false && github.ref != 'refs/heads/main'
+  #   steps:
+  #     - name: Git - Checkout
+  #       uses: actions/checkout@v2
+  #       with:
+  #         ref: ${{ github.ref }}
+  #         submodules: recursive
 
-      - name: Setup - Xcode
-        env:
-          XCODE_APP_NAME: Xcode_14.1.app
-        run: |
-          sh Scripts/select_xcode_version.sh
+  #     - name: Setup - Xcode
+  #       env:
+  #         XCODE_APP_NAME: Xcode_14.1.app
+  #       run: |
+  #         sh Scripts/select_xcode_version.sh
 
-      - name: Create token file
-        run: |
-          # No need to actually add the tokens in the test
+  #     - name: Create token file
+  #       run: |
+  #         # No need to actually add the tokens in the test
 
-          yarn generate-tokens
+  #         yarn generate-tokens
 
-      - name: Build
-        run: |
-          yarn build:mac:release
+  #     - name: Build
+  #       run: |
+  #         yarn build:mac:release
 
   testIOS:
     name: Test iOS
