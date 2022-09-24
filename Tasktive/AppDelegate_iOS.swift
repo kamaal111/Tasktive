@@ -10,6 +10,7 @@ import UIKit
 import Skypiea
 import Logster
 import CloudKit
+import Environment
 
 private let logger = Logster(from: AppDelegate.self)
 
@@ -22,11 +23,13 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
     ) -> Bool {
         application.registerForRemoteNotifications()
 
-        Task {
-            do {
-                try await skypiea.subscripeToAll()
-            } catch {
-                logger.error(label: "failed to subscribe to iCloud subscriptions", error: error)
+        if Environment.Features.iCloudSyncing {
+            Task {
+                do {
+                    try await skypiea.subscripeToAll()
+                } catch {
+                    logger.error(label: "failed to subscribe to iCloud subscriptions", error: error)
+                }
             }
         }
 
