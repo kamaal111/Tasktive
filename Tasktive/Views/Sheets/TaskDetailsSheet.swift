@@ -59,6 +59,8 @@ struct TaskDetailsSheet: View {
     final class ViewModel: ObservableObject {
         @Published var title = ""
 
+        private var isNewTask = false
+
         func makeCoreTaskArguments(using task: AppTask?) -> TaskArguments? {
             guard let task = task else {
                 logger.warning("could not make task arguments")
@@ -73,14 +75,17 @@ struct TaskDetailsSheet: View {
 
         @MainActor
         func setValues(from task: AppTask?) {
-            guard let task = task else {
-                logger.warning("could not set values")
-                return
+            if let task {
+                title = task.title
+
+                isNewTask = false
+
+                logger.info("task values have set")
+            } else {
+                isNewTask = true
+
+                logger.info("prepared for a new task")
             }
-
-            title = task.title
-
-            logger.info("task values have set")
         }
     }
 }

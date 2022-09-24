@@ -114,8 +114,12 @@ struct TasksScreen: View {
                 EditButton()
                     .bold()
             }
+            ToolbarItem(placement.navigationBarTrailing) {
+                addTaskButton
+            }
             #else
             EditButton()
+            addTaskButton
             #endif
         }
         .alert(
@@ -163,6 +167,16 @@ struct TasksScreen: View {
             tasksViewModel.setPendingUserError(.none)
         })
         .onAppear(perform: handleOnAppear)
+    }
+
+    private var addTaskButton: some View {
+        Button(action: {
+            Task { await viewModel.showDetailsSheet(for: .none) }
+        }) {
+            Image(systemName: "plus")
+                .bold()
+                .foregroundColor(.accentColor)
+        }
     }
 
     private var dataSources: [DataSource] {
@@ -295,32 +309,22 @@ struct TasksScreen: View {
     }
 
     final class ViewModel: ObservableObject {
-        @Published var newTitle = "" {
-            didSet { newTitleDidSet() }
-        }
-
+        @Published var newTitle = ""
         @Published var currentDay = Date()
         @Published private(set) var currentFocusedTaskID: UUID?
-        @Published private(set) var shownTaskDetails: AppTask? {
-            didSet { Task { await shownTaskDetailsDidSet() } }
-        }
-
-        @Published var showTaskDetailsSheet = false {
-            didSet { Task { await showTaskDetailsSheetDidSet() } }
-        }
-
+        @Published private(set) var shownTaskDetails: AppTask?
+        @Published var showTaskDetailsSheet = false
+        @Published var showUserErrorAlert = false
+        @Published private(set) var loaded = false
         @Published var currentSource = UserDefaults.lastChosenDataSource ?? .coreData {
             didSet { currentSourceDidSet() }
         }
 
-        @Published var showUserErrorAlert = false
         @Published private(set) var pendingUserError: TasksViewModel.UserErrors? {
             didSet {
                 showUserErrorAlert = pendingUserError != nil
             }
         }
-
-        @Published private(set) var loaded = false
 
         let quickAddViewHeight: CGFloat = 50
 
@@ -392,12 +396,14 @@ struct TasksScreen: View {
             }
         }
 
-        func showDetailsSheet(for task: AppTask) async {
+        func showDetailsSheet(for task: AppTask?) async {
             await setShownTaskDetails(task)
+            await setShowTaskDetailsSheet(true)
         }
 
         func closeDetailsSheet() async {
             await setShownTaskDetails(nil)
+            await setShowTaskDetailsSheet(false)
         }
 
         func goToToday() async {
@@ -441,18 +447,6 @@ struct TasksScreen: View {
 
         private func incrementDay(of date: Date, by increment: Int) -> Date {
             date.incrementByDays(increment)
-        }
-
-        private func newTitleDidSet() { }
-
-        private func shownTaskDetailsDidSet() async {
-            await setShowTaskDetailsSheet(shownTaskDetails != nil)
-        }
-
-        private func showTaskDetailsSheetDidSet() async {
-            if !showTaskDetailsSheet {
-                await setShownTaskDetails(nil)
-            }
         }
 
         @MainActor
