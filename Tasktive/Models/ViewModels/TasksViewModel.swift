@@ -144,21 +144,33 @@ final class TasksViewModel: ObservableObject {
                 break
             }
 
-            let dateHash = getHashDate(from: task.dueDate)
-            guard let taskIndex = tasks[dateHash]?.findIndex(by: \.id, is: task.id)
+            let taskID = task.id
+
+            let oldDateHash = getHashDate(from: task.dueDate)
+            guard let taskIndex = tasks[oldDateHash]?.findIndex(by: \.id, is: taskID)
             else { return .failure(.updateFailure) }
 
             let updatedTask: AppTask
             do {
-                updatedTask = try await dataClient.tasks.update(on: task.source, by: task.id, with: arguments)
+                updatedTask = try await dataClient.tasks.update(on: task.source, by: taskID, with: arguments)
             } catch {
                 logger.error(label: "failed to update this task", error: error)
                 return .failure(.updateFailure)
             }
 
             var mutableTask = tasks
-            mutableTask[dateHash]?[taskIndex] = updatedTask
-            await setTasks(mutableTask[dateHash] ?? [], forDate: dateHash)
+
+            let newDateHash = getHashDate(from: arguments.dueDate)
+            if oldDateHash != newDateHash {
+                mutableTask[newDateHash]?.append(updatedTask)
+                mutableTask[oldDateHash]?.remove(at: taskIndex)
+
+                await setTasks(mutableTask[newDateHash] ?? [updatedTask], forDate: newDateHash)
+            } else {
+                mutableTask[oldDateHash]?[taskIndex] = updatedTask
+            }
+
+            await setTasks(mutableTask[oldDateHash] ?? [], forDate: oldDateHash)
 
             return .success(())
         })

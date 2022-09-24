@@ -7,6 +7,7 @@
 
 import Quick
 import Nimble
+import XCTest
 import Foundation
 @testable import Tasktive
 
@@ -19,6 +20,139 @@ final class TasksViewModelTests: QuickSpec {
                 try CoreTask.clear(from: viewContext).get()
             } catch {
                 fail("failed to clear store; error='\(error)'")
+            }
+        }
+
+        describe("updateTask") {
+            it("does not update due to an invalid title") { [self] in
+                let tasksViewModel = TasksViewModel(preview: true)
+                let now = Date()
+                let taskOfNow = try createTask(forDate: now)
+
+                let gettingTasksExpectation = expectation(description: "Getting tasks")
+                Task {
+                    do {
+                        try await tasksViewModel.getTasks(from: [.coreData], for: now).get()
+                    } catch {
+                        fail("failed to get tasks; error='\(error)'")
+                    }
+                    gettingTasksExpectation.fulfill()
+                }
+                waitForExpectations(timeout: 3)
+
+                let updateTaskExpectation = expectation(description: "Updating a task")
+                Task {
+                    var arguments = taskOfNow.arguments
+                    arguments.title = ""
+
+                    let result = await tasksViewModel.updateTask(taskOfNow.asAppTask, with: arguments)
+                    switch result {
+                    case .success:
+                        fail("not supposed to succeed")
+                        return
+                    case let .failure(failure):
+                        expect(failure) == .invalidTitle
+                    }
+                    updateTaskExpectation.fulfill()
+                }
+                waitForExpectations(timeout: 3)
+            }
+
+            it("updates a task with the same due date") { [self] in
+                let tasksViewModel = TasksViewModel(preview: true)
+                let now = Date()
+                let taskOfNow = try createTask(forDate: now)
+
+                let gettingTasksExpectation = expectation(description: "Getting tasks")
+                Task {
+                    do {
+                        try await tasksViewModel.getTasks(from: [.coreData], for: now).get()
+                    } catch {
+                        fail("failed to get tasks; error='\(error)'")
+                    }
+                    gettingTasksExpectation.fulfill()
+                }
+                waitForExpectations(timeout: 3)
+
+                let updateTaskExpectation = expectation(description: "Updating a task")
+                Task {
+                    var arguments = taskOfNow.arguments
+
+                    let result = await tasksViewModel.updateTask(taskOfNow.asAppTask, with: arguments)
+                    switch result {
+                    case .success:
+                        break
+                    case let .failure(failure):
+                        fail("failed to update task; error='\(failure)'")
+                        return
+                    }
+
+                    updateTaskExpectation.fulfill()
+                }
+                waitForExpectations(timeout: 3)
+
+                let tasksForNow = tasksViewModel.tasksForDate(now)
+                expect(tasksForNow.count) == 1
+                expect(tasksForNow[0].id) == taskOfNow.id
+            }
+
+            it("updates a task with a updated due date") { [self] in
+                let tasksViewModel = TasksViewModel(preview: true)
+                let now = Date()
+                let tomorrow = now.incrementByDays(1)
+                let taskOfNow = try createTask(forDate: now)
+
+                let gettingTasksExpectation = expectation(description: "Getting tasks")
+                Task {
+                    do {
+                        try await tasksViewModel.getTasks(from: [.coreData], for: now).get()
+                        try await tasksViewModel.getTasks(from: [.coreData], for: tomorrow).get()
+                    } catch {
+                        fail("failed to get tasks; error='\(error)'")
+                    }
+                    gettingTasksExpectation.fulfill()
+                }
+                waitForExpectations(timeout: 3)
+
+                let updateTaskExpectation = expectation(description: "Updating a task")
+                Task {
+                    var arguments = taskOfNow.arguments
+                    arguments.dueDate = tomorrow
+
+                    let result = await tasksViewModel.updateTask(taskOfNow.asAppTask, with: arguments)
+                    switch result {
+                    case .success:
+                        break
+                    case let .failure(failure):
+                        fail("failed to update task; error='\(failure)'")
+                        return
+                    }
+
+                    updateTaskExpectation.fulfill()
+                }
+                waitForExpectations(timeout: 3)
+
+                let refreshingTasksExpectation = expectation(description: "Refreshing tasks")
+                Task {
+                    do {
+                        try await tasksViewModel.getTasks(from: [.coreData], for: now).get()
+                        try await tasksViewModel.getTasks(from: [.coreData], for: tomorrow).get()
+                    } catch {
+                        fail("failed to get tasks; error='\(error)'")
+                    }
+                    refreshingTasksExpectation.fulfill()
+                }
+                waitForExpectations(timeout: 3)
+
+                let tasksForNow = tasksViewModel.tasksForDate(now)
+                expect(tasksForNow.isEmpty).to(beTrue())
+
+                print("tasksViewModel.tasks", tasksViewModel.tasks)
+
+                let tasksForTomorrow = tasksViewModel.tasksForDate(tomorrow)
+                expect(tasksForTomorrow.count) == 1
+                expect(tasksForTomorrow[0].dueDate) == tomorrow
+                expect(tasksForTomorrow[0].id) == taskOfNow.id
             }
         }
 
