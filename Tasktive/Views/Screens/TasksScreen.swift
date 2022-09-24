@@ -122,6 +122,7 @@ struct TasksScreen: View {
             tasksViewModel.pendingUserError?.title ?? "",
             isPresented: $viewModel.showUserErrorAlert,
             actions: {
+                #if os(iOS)
                 Button(action: {
                     if let settingsURL = URL(string: "App-prefs:root=CASTLE") {
                         Task { _ = await UIApplication.shared.open(settingsURL) }
@@ -131,6 +132,7 @@ struct TasksScreen: View {
                     Text(localized: .GO_TO_SETTINGS)
                         .foregroundColor(theme.currentAccentColor(scheme: colorScheme))
                 }
+                #endif
                 Button(TasktiveLocale.getText(.CANCEL), role: .cancel) {
                     viewModel.closeUserErrorAlert()
                 }
