@@ -68,5 +68,6 @@ extension TasktiveLocale {
         case MISCELLANEOUS
         case LOGS
         case LOG
+        case DUE_DATE
     }
 }

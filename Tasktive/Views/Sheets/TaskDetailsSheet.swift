@@ -17,7 +17,7 @@ struct TaskDetailsSheet: View {
 
     let task: AppTask?
     let onClose: () -> Void
-    let onDone: (_ arguments: TaskArguments?) -> Void
+    let onDone: (_ arguments: TaskArguments?, _ isNew: Bool) -> Void
     let onDelete: () -> Void
 
     var body: some View {
@@ -27,27 +27,31 @@ struct TaskDetailsSheet: View {
                 ToolbarButton(localized: .CLOSE, action: onClose)
             },
             trailingNavigationButton: {
-                ToolbarButton(localized: .DONE, action: { onDone(viewModel.makeCoreTaskArguments(using: task)) })
+                ToolbarButton(localized: .DONE, action: {
+                    onDone(viewModel.makeCoreTaskArguments(using: task), viewModel.isNewTask)
+                })
             }
         ) {
             VStack {
                 KFloatingTextField(text: $viewModel.title, title: TasktiveLocale.getText(.TITLE))
 
-                Button {
-                    onDelete()
-                } label: {
-                    HStack(spacing: 5) {
-                        Image(systemName: "trash")
-                        Text(localized: .DELETE)
+                KFloatingDatePicker(value: $viewModel.dueDate, title: TasktiveLocale.getText(.DUE_DATE))
+
+                if !viewModel.isNewTask {
+                    Button(action: onDelete) {
+                        HStack(spacing: 5) {
+                            Image(systemName: "trash")
+                            Text(localized: .DELETE)
+                        }
+                        .foregroundColor(.white)
+                        .font(.headline)
+                        .padding(.vertical, .small)
+                        .ktakeWidthEagerly()
+                        .background(Color.accentColor)
+                        .cornerRadius(.small)
                     }
-                    .foregroundColor(.white)
-                    .font(.headline)
-                    .padding(.vertical, .small)
-                    .ktakeWidthEagerly()
-                    .background(Color.accentColor)
-                    .cornerRadius(.small)
+                    .buttonStyle(.plain)
                 }
-                .buttonStyle(.plain)
             }
             .padding(.vertical, .medium)
         }
@@ -58,25 +62,34 @@ struct TaskDetailsSheet: View {
 
     final class ViewModel: ObservableObject {
         @Published var title = ""
+        @Published var dueDate = Date()
 
-        private var isNewTask = false
+        @Published private(set) var isNewTask = false
 
         func makeCoreTaskArguments(using task: AppTask?) -> TaskArguments? {
-            guard let task = task else {
-                logger.warning("could not make task arguments")
-                return nil
+            if isNewTask {
+                let arguments = TaskArguments(title: title, taskDescription: nil, notes: nil, dueDate: dueDate)
+
+                return arguments
+            } else {
+                guard let task = task else {
+                    logger.warning("could not make task arguments")
+                    return nil
+                }
+
+                var arguments = task.coreTaskArguments
+                arguments.title = title
+                arguments.dueDate = dueDate
+
+                return arguments
             }
-
-            var arguments = task.coreTaskArguments
-            arguments.title = title
-
-            return arguments
         }
 
         @MainActor
         func setValues(from task: AppTask?) {
             if let task {
                 title = task.title
+                dueDate = task.dueDate
 
                 isNewTask = false
 
@@ -96,7 +109,7 @@ struct TaskDetailsSheet_Previews: PreviewProvider {
             // swiftlint:disable force_try
             task: try! CoreTask.list(from: PersistenceController.preview.context).get().first!.asAppTask,
             onClose: { },
-            onDone: { _ in },
+            onDone: { _, _ in },
             onDelete: { }
         )
     }

@@ -62,4 +62,5 @@ module.exports = {
   MISCELLANEOUS: 'Miscellaneous',
   LOGS: 'Logs',
   LOG: 'Log',
+  DUE_DATE: 'Due date',
 };

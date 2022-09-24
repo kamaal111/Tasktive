@@ -99,13 +99,13 @@ struct TasksScreen: View {
             TaskDetailsSheet(
                 task: viewModel.shownTaskDetails,
                 onClose: { Task { await viewModel.closeDetailsSheet() } },
-                onDone: handleTaskEditedInDetailsSheet(_:),
+                onDone: handleTaskEditedInDetailsSheet,
                 onDelete: handleTaskDeletedInDetailsSheet
             )
             .accentColor(theme.currentAccentColor(scheme: colorScheme))
             .withPopperUp(popperUpManager)
             #if os(macOS)
-                .frame(minWidth: 300, minHeight: 160)
+                .frame(minWidth: 300, minHeight: 200)
             #endif
         }
         .toolbar {
@@ -114,7 +114,7 @@ struct TasksScreen: View {
                 EditButton()
                     .bold()
             }
-            ToolbarItem(placement.navigationBarTrailing) {
+            ToolbarItem(placement: .navigationBarTrailing) {
                 addTaskButton
             }
             #else
@@ -197,24 +197,32 @@ struct TasksScreen: View {
         }
     }
 
-    private func handleTaskEditedInDetailsSheet(_ arguments: TaskArguments?) {
-        guard let arguments = arguments, let task = viewModel.shownTaskDetails else {
-            logger.warning(
-                "task or/and arguments are missing",
-                "arguments='\(arguments as Any)'",
-                "task='\(viewModel.shownTaskDetails as Any)'"
-            )
+    private func handleTaskEditedInDetailsSheet(_ arguments: TaskArguments?, _ isNewTask: Bool) {
+        guard let arguments else {
+            logger.warning("arguments are missing", "arguments='\(arguments as Any)'")
             return
         }
 
         Task {
-            let result = await tasksViewModel.updateTask(task, with: arguments)
-            switch result {
-            case let .failure(failure):
-                popperUpManager.showPopup(style: failure.style, timeout: failure.timeout)
-                return
-            case .success:
-                break
+            if isNewTask {
+                let created = await createTask(with: arguments)
+                if !created {
+                    return
+                }
+            } else {
+                guard let task = viewModel.shownTaskDetails else {
+                    logger.warning("task are missing", "task='\(viewModel.shownTaskDetails as Any)'")
+                    return
+                }
+
+                let result = await tasksViewModel.updateTask(task, with: arguments)
+                switch result {
+                case let .failure(failure):
+                    popperUpManager.showPopup(style: failure.style, timeout: failure.timeout)
+                    return
+                case .success:
+                    break
+                }
             }
 
             await viewModel.closeDetailsSheet()
@@ -276,36 +284,31 @@ struct TasksScreen: View {
 
     private func onNewTaskSubmit() {
         logger.info("submitting new task")
+
         Task {
-            let validatedTaskDataResult = await viewModel.validateNewTask()
-            let newTitle: String
-            switch validatedTaskDataResult {
-            case let .failure(failure):
-                popperUpManager.showPopup(style: failure.style, timeout: failure.timeout)
-                return
-            case let .success(success):
-                newTitle = success
-            }
+            let created = await createTask(with: viewModel.taskArguments)
 
-            let createTaskResult = await tasksViewModel
-                .createTask(with: .init(title: newTitle,
-                                        taskDescription: nil,
-                                        notes: nil,
-                                        dueDate: viewModel.currentDay),
-                            on: viewModel.currentSource)
-            switch createTaskResult {
-            case let .failure(failure):
-                popperUpManager.showPopup(style: failure.style, timeout: failure.timeout)
-                return
-            case .success:
-                break
+            if created {
+                viewModel.clearQuickAddInput()
             }
-
-            popperUpManager.showPopup(
-                style: .bottom(title: TasktiveLocale.getText(.NEW_TASK_SAVED), type: .success, description: nil),
-                timeout: 2
-            )
         }
+    }
+
+    private func createTask(with arguments: TaskArguments) async -> Bool {
+        let createTaskResult = await tasksViewModel.createTask(with: arguments, on: viewModel.currentSource)
+        switch createTaskResult {
+        case let .failure(failure):
+            popperUpManager.showPopup(style: failure.style, timeout: failure.timeout)
+            return false
+        case .success:
+            break
+        }
+
+        popperUpManager.showPopup(
+            style: .bottom(title: TasktiveLocale.getText(.NEW_TASK_SAVED), type: .success, description: nil),
+            timeout: 2
+        )
+        return true
     }
 
     final class ViewModel: ObservableObject {
@@ -329,6 +332,10 @@ struct TasksScreen: View {
         let quickAddViewHeight: CGFloat = 50
 
         init() { }
+
+        var taskArguments: TaskArguments {
+            .init(title: newTitle, taskDescription: nil, notes: nil, dueDate: currentDay)
+        }
 
         @MainActor
         func indicateThatViewModelHasLoaded() {
@@ -425,16 +432,9 @@ struct TasksScreen: View {
             await setCurrentFocusedTaskID(nil)
         }
 
-        func validateNewTask() async -> Result<String, ValidationErrors> {
-            guard !invalidTitle else {
-                return .failure(.invalidTitle)
-            }
-
-            let title = newTitle
-
-            await setTitle("")
-
-            return .success(title)
+        @MainActor
+        func clearQuickAddInput() {
+            newTitle = ""
         }
 
         private var invalidTitle: Bool {
@@ -466,11 +466,6 @@ struct TasksScreen: View {
             withAnimation {
                 currentDay = date
             }
-        }
-
-        @MainActor
-        private func setTitle(_ title: String) {
-            newTitle = title
         }
     }
 

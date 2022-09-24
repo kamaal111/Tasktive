@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ShrimpExtensions
 
 struct TaskArguments: Equatable {
     var title: String
