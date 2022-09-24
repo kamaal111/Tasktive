@@ -76,7 +76,7 @@ final class TasksViewModelTests: QuickSpec {
 
                 let updateTaskExpectation = expectation(description: "Updating a task")
                 Task {
-                    var arguments = taskOfNow.arguments
+                    let arguments = taskOfNow.arguments
 
                     let result = await tasksViewModel.updateTask(taskOfNow.asAppTask, with: arguments)
                     switch result {
