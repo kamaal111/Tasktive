@@ -11,9 +11,9 @@ import Foundation
 public enum Environment {
     /// The features that are enabled or disabled.
     public enum Features {
-        #if DEBUG
+        #if targetEnvironment(simulator)
         /// If iCloud syncing is enabled or not.
-        public static let iCloudSyncing = CommandLineArguments.enableICloudSyncing.enabled
+        public static let iCloudSyncing = false
         #else
         /// If iCloud syncing is enabled or not.
         public static let iCloudSyncing = true
