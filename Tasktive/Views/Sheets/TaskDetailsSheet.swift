@@ -32,7 +32,7 @@ struct TaskDetailsSheet: View {
                 })
             }
         ) {
-            VStack {
+            VStack(alignment: .leading) {
                 KFloatingTextField(text: $viewModel.title, title: TasktiveLocale.getText(.TITLE))
 
                 KFloatingDatePicker(value: $viewModel.dueDate, title: TasktiveLocale.getText(.DUE_DATE))
