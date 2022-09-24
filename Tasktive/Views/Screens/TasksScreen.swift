@@ -31,7 +31,7 @@ struct TasksScreen: View {
 
     var body: some View {
         ZStack {
-            List {
+            KScrollableForm {
                 DateControlView(
                     goToPreviousDay: { Task { await viewModel.goToPreviousDay() } },
                     goToToday: { Task { await viewModel.goToToday() } },
@@ -91,7 +91,7 @@ struct TasksScreen: View {
             #else
                 .padding(.vertical, .small)
             #endif
-                .background(colorScheme == .dark ? Color.black : Color.white)
+                .background(colorScheme == .dark ? Color.black : .white)
                 .frame(maxHeight: viewModel.quickAddViewHeight)
                 .ktakeSizeEagerly(alignment: .bottom)
         }

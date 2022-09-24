@@ -24,6 +24,9 @@ struct AppTabView: View {
                     .tag(screen.tag)
             }
         }
+        /// The prevents the tab view to crash when changing betweens screens with a Form.
+        /// Con is that the current detail screen will make a full refresh on every appear 🥲
+        .id(namiNavigator.currentSelection)
     }
 }
 
