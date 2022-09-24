@@ -24,7 +24,7 @@ struct TasktiveApp: App {
     @StateObject private var theme = Theme()
     @StateObject private var userData = UserData()
 
-    @State private var currentScreen = NamiNavigator.STARTING_SCREEN
+    @State private var currentScreen = NamiNavigator.startingScreen
 
     var body: some Scene {
         WindowGroup {

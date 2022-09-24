@@ -20,16 +20,14 @@ final class NamiNavigator: ObservableObject {
     @Published private(set) var sidebarSelection: Screens?
     #endif
 
-    private var needsToNavigate = false
-
     init() {
-        self.tabSelection = NamiNavigator.STARTING_SCREEN
-        self.sidebarSelection = NamiNavigator.STARTING_SCREEN
+        self.tabSelection = NamiNavigator.startingScreen
+        self.sidebarSelection = NamiNavigator.startingScreen
     }
 
     var currentSelection: NamiNavigator.Screens {
         if DeviceModel.deviceType.shouldHaveSidebar {
-            return sidebarSelection ?? Self.STARTING_SCREEN
+            return sidebarSelection ?? Self.startingScreen
         }
         return tabSelection
     }
@@ -72,7 +70,7 @@ final class NamiNavigator: ObservableObject {
         setSidebarSelection(screen)
     }
 
-    static let STARTING_SCREEN: NamiNavigator.Screens = {
+    static let startingScreen: NamiNavigator.Screens = {
         #if DEBUG
         guard let startingStackScreenValue = Int(Environment.EnvironmentVariables.startingStackScreen.value ?? ""),
               let startingStackScreen = NamiNavigator.Screens(rawValue: startingStackScreenValue) else { return .tasks }
