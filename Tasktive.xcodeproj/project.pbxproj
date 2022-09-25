@@ -32,7 +32,6 @@
 		2C3B27C6288C77F7007CE538 /* DateControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B27C5288C77F7007CE538 /* DateControlView.swift */; };
 		2C3B27C9288CA274007CE538 /* TaskDetailsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B27C8288CA274007CE538 /* TaskDetailsSheet.swift */; };
 		2C3DAD2A28E08D8C00059DAF /* CDPersist.docc in Sources */ = {isa = PBXBuildFile; fileRef = 2C3DAD2928E08D8C00059DAF /* CDPersist.docc */; };
-		2C3DAD3028E08D8C00059DAF /* CDPersist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C3DAD2628E08D8C00059DAF /* CDPersist.framework */; };
 		2C3DAD3728E08D8D00059DAF /* CDPersistTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3DAD3628E08D8D00059DAF /* CDPersistTests.swift */; };
 		2C3DAD3828E08D8D00059DAF /* CDPersist.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C3DAD2828E08D8C00059DAF /* CDPersist.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2C3DAD3B28E08D8D00059DAF /* CDPersist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C3DAD2628E08D8C00059DAF /* CDPersist.framework */; };
@@ -57,6 +56,10 @@
 		2C3DAD8D28E093B000059DAF /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3DAD8C28E093B000059DAF /* PersistenceController.swift */; };
 		2C3DAD8F28E0947400059DAF /* ShrimpExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 2C3DAD8E28E0947400059DAF /* ShrimpExtensions */; };
 		2C3DAD9228E097D800059DAF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3DAD9128E097D800059DAF /* Constants.swift */; };
+		2C3DAD9528E09F0000059DAF /* CoreTask+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3DAD9428E09F0000059DAF /* CoreTask+extensions.swift */; };
+		2C3DAD9728E0A2A200059DAF /* Logster in Frameworks */ = {isa = PBXBuildFile; productRef = 2C3DAD9628E0A2A200059DAF /* Logster */; };
+		2C3DAD9A28E0ACDB00059DAF /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = 2C3DAD9928E0ACDB00059DAF /* Quick */; };
+		2C3DAD9C28E0ACE100059DAF /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = 2C3DAD9B28E0ACE100059DAF /* Nimble */; };
 		2C3E218728D6311700BD2330 /* Environment in Frameworks */ = {isa = PBXBuildFile; productRef = 2C3E218628D6311700BD2330 /* Environment */; };
 		2C3E218928D6311C00BD2330 /* Environment in Frameworks */ = {isa = PBXBuildFile; productRef = 2C3E218828D6311C00BD2330 /* Environment */; };
 		2C3E218B28D6312100BD2330 /* Environment in Frameworks */ = {isa = PBXBuildFile; productRef = 2C3E218A28D6312100BD2330 /* Environment */; };
@@ -312,20 +315,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		2C3DAD3128E08D8C00059DAF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2CBCE5FB2881DE240057F4CD /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2C3DAD2528E08D8C00059DAF;
-			remoteInfo = CDPersist;
-		};
-		2C3DAD3328E08D8D00059DAF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2CBCE5FB2881DE240057F4CD /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2CBCE6022881DE240057F4CD;
-			remoteInfo = Tasktive;
-		};
 		2C3DAD3928E08D8D00059DAF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2CBCE5FB2881DE240057F4CD /* Project object */;
@@ -341,6 +330,13 @@
 			remoteInfo = CDPersist;
 		};
 		2C3DAD7128E08FEE00059DAF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2CBCE5FB2881DE240057F4CD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2C3DAD2528E08D8C00059DAF;
+			remoteInfo = CDPersist;
+		};
+		2C3DAD9D28E0AFF500059DAF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2CBCE5FB2881DE240057F4CD /* Project object */;
 			proxyType = 1;
@@ -441,6 +437,7 @@
 		2C3DAD7E28E0912D00059DAF /* CoreAttachments+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreAttachments+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2C3DAD8C28E093B000059DAF /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		2C3DAD9128E097D800059DAF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		2C3DAD9428E09F0000059DAF /* CoreTask+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTask+extensions.swift"; sourceTree = "<group>"; };
 		2C3E218528D62F4200BD2330 /* Environment */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Environment; sourceTree = "<group>"; };
 		2C47E3F12883688F00FD4469 /* Text+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Text+extensions.swift"; sourceTree = "<group>"; };
 		2C47E3F32883692800FD4469 /* locale.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = locale.js; sourceTree = "<group>"; };
@@ -574,6 +571,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C3DAD8F28E0947400059DAF /* ShrimpExtensions in Frameworks */,
+				2C3DAD9728E0A2A200059DAF /* Logster in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -581,7 +579,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2C3DAD3028E08D8C00059DAF /* CDPersist.framework in Frameworks */,
+				2C3DAD9C28E0ACE100059DAF /* Nimble in Frameworks */,
+				2C3DAD9A28E0ACDB00059DAF /* Quick in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -813,6 +812,7 @@
 			isa = PBXGroup;
 			children = (
 				2C3DAD9128E097D800059DAF /* Constants.swift */,
+				2C3DAD9828E0ABB300059DAF /* Extensions */,
 				2C3DAD4528E08F6100059DAF /* Models */,
 				2C3DAD8B28E0939000059DAF /* Utilities */,
 			);
@@ -823,6 +823,7 @@
 			isa = PBXGroup;
 			children = (
 				2C3DAD9028E0955500059DAF /* CoreData */,
+				2C3DAD9328E09EB400059DAF /* Structures */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -901,6 +902,21 @@
 				2C3DAD7428E0904500059DAF /* Tasktive.xcdatamodeld */,
 			);
 			path = CoreData;
+			sourceTree = "<group>";
+		};
+		2C3DAD9328E09EB400059DAF /* Structures */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Structures;
+			sourceTree = "<group>";
+		};
+		2C3DAD9828E0ABB300059DAF /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				2C3DAD9428E09F0000059DAF /* CoreTask+extensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		2C47E3F02883685D00FD4469 /* Extensions */ = {
@@ -1337,6 +1353,7 @@
 			name = CDPersist;
 			packageProductDependencies = (
 				2C3DAD8E28E0947400059DAF /* ShrimpExtensions */,
+				2C3DAD9628E0A2A200059DAF /* Logster */,
 			);
 			productName = CDPersist;
 			productReference = 2C3DAD2628E08D8C00059DAF /* CDPersist.framework */;
@@ -1353,10 +1370,13 @@
 			buildRules = (
 			);
 			dependencies = (
-				2C3DAD3228E08D8C00059DAF /* PBXTargetDependency */,
-				2C3DAD3428E08D8D00059DAF /* PBXTargetDependency */,
+				2C3DAD9E28E0AFF500059DAF /* PBXTargetDependency */,
 			);
 			name = CDPersistTests;
+			packageProductDependencies = (
+				2C3DAD9928E0ACDB00059DAF /* Quick */,
+				2C3DAD9B28E0ACE100059DAF /* Nimble */,
+			);
 			productName = CDPersistTests;
 			productReference = 2C3DAD2F28E08D8C00059DAF /* CDPersistTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -1693,6 +1713,7 @@
 				2C3DAD8628E0919900059DAF /* CoreTask+CoreDataClass.swift in Sources */,
 				2C3DAD8728E091AD00059DAF /* CoreTaskList+CoreDataClass.swift in Sources */,
 				2C3DAD2A28E08D8C00059DAF /* CDPersist.docc in Sources */,
+				2C3DAD9528E09F0000059DAF /* CoreTask+extensions.swift in Sources */,
 				2C3DAD8428E0917600059DAF /* CoreReminder+CoreDataProperties.swift in Sources */,
 				2C3DAD7F28E0912D00059DAF /* CoreAttachments+CoreDataClass.swift in Sources */,
 				2C3DAD9228E097D800059DAF /* Constants.swift in Sources */,
@@ -1986,16 +2007,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		2C3DAD3228E08D8C00059DAF /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2C3DAD2528E08D8C00059DAF /* CDPersist */;
-			targetProxy = 2C3DAD3128E08D8C00059DAF /* PBXContainerItemProxy */;
-		};
-		2C3DAD3428E08D8D00059DAF /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2CBCE6022881DE240057F4CD /* Tasktive */;
-			targetProxy = 2C3DAD3328E08D8D00059DAF /* PBXContainerItemProxy */;
-		};
 		2C3DAD3A28E08D8D00059DAF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 2C3DAD2528E08D8C00059DAF /* CDPersist */;
@@ -2010,6 +2021,11 @@
 			isa = PBXTargetDependency;
 			target = 2C3DAD2528E08D8C00059DAF /* CDPersist */;
 			targetProxy = 2C3DAD7128E08FEE00059DAF /* PBXContainerItemProxy */;
+		};
+		2C3DAD9E28E0AFF500059DAF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2C3DAD2528E08D8C00059DAF /* CDPersist */;
+			targetProxy = 2C3DAD9D28E0AFF500059DAF /* PBXContainerItemProxy */;
 		};
 		2C4E81E728BBDC070056D0D1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2775,6 +2791,20 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2CF24AAC28842F9A00778BD9 /* XCRemoteSwiftPackageReference "ShrimpExtensions" */;
 			productName = ShrimpExtensions;
+		};
+		2C3DAD9628E0A2A200059DAF /* Logster */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Logster;
+		};
+		2C3DAD9928E0ACDB00059DAF /* Quick */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2CCCADC62881FECB0033E2EF /* XCRemoteSwiftPackageReference "Quick" */;
+			productName = Quick;
+		};
+		2C3DAD9B28E0ACE100059DAF /* Nimble */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2CCCADC92881FEE90033E2EF /* XCRemoteSwiftPackageReference "Nimble" */;
+			productName = Nimble;
 		};
 		2C3E218628D6311700BD2330 /* Environment */ = {
 			isa = XCSwiftPackageProductDependency;

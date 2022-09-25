@@ -45,18 +45,8 @@ extension CoreTask: Crudable {
 
     static func create(with arguments: TaskArguments,
                        from context: NSManagedObjectContext) -> Result<CoreTask, CrudErrors> {
-        let newTask = CoreTask(context: context)
-            .updateValues(with: arguments)
-        newTask.id = arguments.id ?? UUID()
-        newTask.kCreationDate = Date()
-        newTask.attachments = NSSet(array: [])
-        newTask.reminders = NSSet(array: [])
-        newTask.tags = NSSet(array: [])
-
-        return save(from: context)
-            .map {
-                newTask
-            }
+        create(with: arguments.coreTaskArguments, from: context)
+            .mapError(mapError)
     }
 
     static func list(from context: NSManagedObjectContext) -> Result<[CoreTask], CrudErrors> {
@@ -140,6 +130,15 @@ extension CoreTask: Crudable {
 }
 
 extension CoreTask {
+    private static func mapError(_ error: CoreTask.CoreErrors) -> CrudErrors {
+        switch error {
+        case let .saveFailure(context):
+            return .saveFailure(context: context)
+        case let .generalFailure(message: message):
+            return .generalFailure(message: message)
+        }
+    }
+
     private func updateValues(with arguments: TaskArguments) -> CoreTask {
         ticked = arguments.ticked
         title = arguments.title

@@ -5,6 +5,7 @@
 //  Created by Kamaal M Farah on 02/09/2022.
 //
 
+import CDPersist
 import Foundation
 import ShrimpExtensions
 
@@ -47,5 +48,17 @@ struct TaskArguments: Equatable {
         self.ticked = ticked
         self.id = id
         self.completionDate = completionDate
+    }
+
+    var coreTaskArguments: CoreTask.Arguments {
+        .init(
+            title: title,
+            taskDescription: taskDescription,
+            notes: notes,
+            dueDate: dueDate,
+            ticked: ticked,
+            id: id,
+            completionDate: completionDate
+        )
     }
 }

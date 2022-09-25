@@ -92,7 +92,7 @@ final class CoreTaskSpec: QuickSpec {
                     let task = try CoreTask.create(with: arguments, from: self.viewContext).get()
                     let oldTaskTitle = task.title
                     let oldTaskID = task.id
-                    let oldTaskCreationDate = task.creationDate
+                    let oldTaskCreationDate = task.kCreationDate
                     let oldTaskDueDate = task.dueDate
                     let oldTaskUpdateTime = task.updateDate
                     let oldTaskDescription = task.taskDescription
@@ -109,7 +109,7 @@ final class CoreTaskSpec: QuickSpec {
                     let updatedTask = try task.update(with: updatedArguments, on: self.viewContext).get()
 
                     expect(updatedTask.id) == oldTaskID
-                    expect(updatedTask.creationDate) == oldTaskCreationDate
+                    expect(updatedTask.kCreationDate) == oldTaskCreationDate
 
                     expect(updatedTask.dueDate) != oldTaskDueDate
                     expect(updatedTask.title) != oldTaskTitle

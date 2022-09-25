@@ -8,12 +8,4 @@
 import XCTest
 @testable import CDPersist
 
-class CDPersistTests: XCTestCase {
-    override func setUpWithError() throws { }
-
-    override func tearDownWithError() throws { }
-
-    func testExample() throws {
-        XCTAssert(true)
-    }
-}
+class CDPersistTests: XCTestCase { }

@@ -46,7 +46,7 @@ opt_in_rules:
 excluded:
   - Packages/*/Package.swift
   - Packages/*/Tests
-  - Tasktive/Models/CoreData
+  - CDPersist/Sources/Models/CoreData
   - Tests
   - fastlane/SnapshotHelper.swift
   - Packages/SettingsUI
