@@ -8,6 +8,7 @@
 import Quick
 import Nimble
 import XCTest
+import CDPersist
 import Foundation
 @testable import Tasktive
 

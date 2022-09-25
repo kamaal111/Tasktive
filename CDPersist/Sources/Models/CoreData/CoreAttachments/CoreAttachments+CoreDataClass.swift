@@ -1,8 +1,8 @@
 //
 //  CoreAttachments+CoreDataClass.swift
-//  Tasktive
+//  CDPersist
 //
-//  Created by Kamaal M Farah on 07/08/2022.
+//  Created by Kamaal M Farah on 25/09/2022.
 //
 //
 

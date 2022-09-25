@@ -8,6 +8,7 @@
 import SwiftUI
 import Logster
 import SalmonUI
+import CDPersist
 import TasktiveLocale
 
 private let logger = Logster(from: TaskDetailsSheet.self)

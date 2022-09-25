@@ -73,6 +73,17 @@
                ReferencedContainer = "container:Packages/Skypiea">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "2C3DAD2E28E08D8C00059DAF"
+               BuildableName = "CDPersistTests.xctest"
+               BlueprintName = "CDPersistTests"
+               ReferencedContainer = "container:Tasktive.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

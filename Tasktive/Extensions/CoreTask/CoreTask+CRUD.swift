@@ -7,6 +7,7 @@
 
 import Logster
 import CoreData
+import CDPersist
 import Foundation
 import ShrimpExtensions
 

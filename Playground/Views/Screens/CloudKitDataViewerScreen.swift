@@ -8,6 +8,7 @@
 #if DEBUG
 import SwiftUI
 import Skypiea
+import CDPersist
 
 struct CloudKitDataViewerScreen: View {
     @EnvironmentObject private var tasksViewModel: TasksViewModel

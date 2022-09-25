@@ -6,6 +6,7 @@
 //
 
 import Skypiea
+import CDPersist
 import Foundation
 
 class TasksClient {

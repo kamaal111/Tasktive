@@ -7,6 +7,7 @@
 
 import Quick
 import Nimble
+import CDPersist
 import Foundation
 @testable import Tasktive
 

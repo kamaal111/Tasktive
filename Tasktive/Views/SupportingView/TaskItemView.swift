@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SalmonUI
+import CDPersist
 
 private let RADIO_SIZE: CGFloat = 16
 
