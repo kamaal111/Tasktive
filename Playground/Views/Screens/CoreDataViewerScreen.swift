@@ -7,6 +7,7 @@
 
 #if DEBUG
 import SwiftUI
+import CDPersist
 
 struct CoreDataViewerScreen: View {
     @EnvironmentObject private var tasksViewModel: TasksViewModel

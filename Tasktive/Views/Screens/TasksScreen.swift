@@ -10,6 +10,7 @@ import Logster
 import SalmonUI
 import PopperUp
 import Environment
+import SharedModels
 import TasktiveLocale
 import ShrimpExtensions
 

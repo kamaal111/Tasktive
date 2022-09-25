@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SalmonUI
+import SharedModels
 import TasktiveLocale
 import ShrimpExtensions
 

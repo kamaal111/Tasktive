@@ -8,6 +8,7 @@
 import Logster
 import Foundation
 import SettingsUI
+import SharedModels
 
 extension UserDefaults {
     @UserDefaultObject(key: .appColor, container: .appGroup)

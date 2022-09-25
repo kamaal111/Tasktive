@@ -8,7 +8,8 @@
 import Quick
 import Nimble
 import XCTest
-import Foundation
+import CDPersist
+import SharedModels
 @testable import Tasktive
 
 final class TasksViewModelTests: QuickSpec {
