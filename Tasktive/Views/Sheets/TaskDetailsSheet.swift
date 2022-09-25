@@ -79,7 +79,7 @@ struct TaskDetailsSheet: View {
                     return nil
                 }
 
-                var arguments = task.coreTaskArguments
+                var arguments = task.arguments
                 arguments.title = title
                 arguments.dueDate = dueDate
 
