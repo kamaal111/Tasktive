@@ -38,7 +38,6 @@
 		2C3B27C6288C77F7007CE538 /* DateControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B27C5288C77F7007CE538 /* DateControlView.swift */; };
 		2C3B27C9288CA274007CE538 /* TaskDetailsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B27C8288CA274007CE538 /* TaskDetailsSheet.swift */; };
 		2C3DAD2A28E08D8C00059DAF /* CDPersist.docc in Sources */ = {isa = PBXBuildFile; fileRef = 2C3DAD2928E08D8C00059DAF /* CDPersist.docc */; };
-		2C3DAD3728E08D8D00059DAF /* CDPersistTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3DAD3628E08D8D00059DAF /* CDPersistTests.swift */; };
 		2C3DAD3828E08D8D00059DAF /* CDPersist.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C3DAD2828E08D8C00059DAF /* CDPersist.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2C3DAD3B28E08D8D00059DAF /* CDPersist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C3DAD2628E08D8C00059DAF /* CDPersist.framework */; };
 		2C3DAD3C28E08D8D00059DAF /* CDPersist.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2C3DAD2628E08D8C00059DAF /* CDPersist.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -420,7 +419,6 @@
 		2C3DAD2828E08D8C00059DAF /* CDPersist.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDPersist.h; sourceTree = "<group>"; };
 		2C3DAD2928E08D8C00059DAF /* CDPersist.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = CDPersist.docc; sourceTree = "<group>"; };
 		2C3DAD2F28E08D8C00059DAF /* CDPersistTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CDPersistTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		2C3DAD3628E08D8D00059DAF /* CDPersistTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDPersistTests.swift; sourceTree = "<group>"; };
 		2C3DAD7528E0904500059DAF /* Tasktive.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Tasktive.xcdatamodel; sourceTree = "<group>"; };
 		2C3DAD7D28E0912D00059DAF /* CoreAttachments+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreAttachments+CoreDataClass.swift"; sourceTree = "<group>"; };
 		2C3DAD7E28E0912D00059DAF /* CoreAttachments+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreAttachments+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -793,7 +791,6 @@
 		2C3DAD3528E08D8D00059DAF /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				2C3DAD3628E08D8D00059DAF /* CDPersistTests.swift */,
 				2C113DCD28E0DCAF00B43BDB /* CoreTaskSpec.swift */,
 			);
 			path = Tests;
@@ -814,7 +811,6 @@
 			isa = PBXGroup;
 			children = (
 				2C3DAD9028E0955500059DAF /* CoreData */,
-				2C3DAD9328E09EB400059DAF /* Structures */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -893,13 +889,6 @@
 				2C3DAD7428E0904500059DAF /* Tasktive.xcdatamodeld */,
 			);
 			path = CoreData;
-			sourceTree = "<group>";
-		};
-		2C3DAD9328E09EB400059DAF /* Structures */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Structures;
 			sourceTree = "<group>";
 		};
 		2C3DAD9828E0ABB300059DAF /* Extensions */ = {
@@ -1715,7 +1704,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C113DCE28E0DCAF00B43BDB /* CoreTaskSpec.swift in Sources */,
-				2C3DAD3728E08D8D00059DAF /* CDPersistTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,22 +13,6 @@ import SharedModels
 private let logger = Logster(from: CoreTask.self)
 
 extension CoreTask: Crudable, Taskable {
-    public var source: DataSource {
-        .coreData
-    }
-
-    public var arguments: TaskArguments {
-        .init(
-            title: title,
-            taskDescription: taskDescription,
-            notes: notes,
-            dueDate: dueDate,
-            ticked: ticked,
-            id: id,
-            completionDate: completionDate
-        )
-    }
-
     /// Errors that can come from `CoreData` operations.
     public enum CrudErrors: Error {
         /// Failure on saving a task.
@@ -57,8 +41,31 @@ extension CoreTask: Crudable, Taskable {
         }
     }
 
+    /// Where this object is located, in this in `CoreData`.
+    public var source: DataSource {
+        .coreData
+    }
+
+    /// Arguments to be used to create and/or update a task.
+    public var arguments: TaskArguments {
+        .init(
+            title: title,
+            taskDescription: taskDescription,
+            notes: notes,
+            dueDate: dueDate,
+            ticked: ticked,
+            id: id,
+            completionDate: completionDate
+        )
+    }
+
     // - MARK: CoreData operations
 
+    /// Update the task.
+    /// - Parameters:
+    ///   - arguments: The arguments used to update a task.
+    ///   - context: The context to use to operate the `CoreData` operation.
+    /// - Returns: A result either containing ``CoreTask`` on success or ``CoreErrors`` on failure.
     public func update(
         with arguments: TaskArguments,
         on context: NSManagedObjectContext
@@ -71,6 +78,9 @@ extension CoreTask: Crudable, Taskable {
             }
     }
 
+    /// Delete the task.
+    /// - Parameter context: The context to use to operate the `CoreData` operation.
+    /// - Returns: A result either containing nothing (`Void`) on success or ``CoreErrors`` on failure.
     public func delete(on context: NSManagedObjectContext) async -> Result<Void, CrudErrors> {
         context.delete(self)
 
@@ -119,12 +129,20 @@ extension CoreTask: Crudable, Taskable {
         filter(by: predicate, limit: 1, from: context).map(\.first)
     }
 
+    /// List all tasks.
+    /// - Parameter context: The context to use to operate the `CoreData` operation.
+    /// - Returns: A result either containing an array with all tasks on success or ``CoreErrors`` on failure.
     public static func list(from context: NSManagedObjectContext) -> Result<[CoreTask], CrudErrors> {
         let predicate = NSPredicate(value: true)
 
         return filter(by: predicate, from: context)
     }
 
+    /// Filtered list of tasks depending on the given predicate query.
+    /// - Parameters:
+    ///   - predicate: Query to filter the tasks on.
+    ///   - context: The context to use to operate the `CoreData` operation.
+    /// - Returns: A result either containing an array with filtered tasks on success or ``CoreErrors`` on failure.
     public static func filter(
         by predicate: NSPredicate,
         from context: NSManagedObjectContext
@@ -132,6 +150,12 @@ extension CoreTask: Crudable, Taskable {
         filter(by: predicate, limit: nil, from: context)
     }
 
+    /// Filtered list of tasks depending on the given predicate query.
+    /// - Parameters:
+    ///   - predicate:  Query to filter the tasks on.
+    ///   - limit: The maximum amount of tasks to return.
+    ///   - context: The context to use to operate the `CoreData` operation.
+    /// - Returns: A result either containing an array with filtered tasks on success or ``CoreErrors`` on failure.
     public static func filter(
         by predicate: NSPredicate,
         limit: Int?,
@@ -150,6 +174,12 @@ extension CoreTask: Crudable, Taskable {
         return .success(result)
     }
 
+    /// Update many tasks ``dueDate`` depending on a certain predicate query.
+    /// - Parameters:
+    ///   - tasks: The tasks to update.
+    ///   - date: What to change the ``dueDate`` to.
+    ///   - context: The context to use to operate the `CoreData` operation.
+    /// - Returns: A result either containing nothing (`Void`) on success or ``CoreErrors`` on failure.
     public static func updateManyDates(
         _ tasks: [AppTask],
         date: Date,
