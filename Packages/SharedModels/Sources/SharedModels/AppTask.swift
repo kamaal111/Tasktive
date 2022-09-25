@@ -1,26 +1,26 @@
 //
 //  AppTask.swift
-//  Tasktive
 //
-//  Created by Kamaal M Farah on 17/07/2022.
+//
+//  Created by Kamaal M Farah on 25/09/2022.
 //
 
 import CloudKit
 import Foundation
 
-struct AppTask: Hashable, Identifiable {
-    let id: UUID
-    var title: String
-    var taskDescription: String?
-    var notes: String?
-    var ticked: Bool
-    var dueDate: Date
-    var completionDate: Date?
-    let creationDate: Date
-    let source: DataSource
-    var record: CKRecord?
+public struct AppTask: Hashable, Identifiable {
+    public let id: UUID
+    public var title: String
+    public var taskDescription: String?
+    public var notes: String?
+    public var ticked: Bool
+    public var dueDate: Date
+    public var completionDate: Date?
+    public let creationDate: Date
+    public let source: DataSource
+    public var record: CKRecord?
 
-    init(
+    public init(
         id: UUID,
         title: String,
         taskDescription: String? = nil,
@@ -44,7 +44,7 @@ struct AppTask: Hashable, Identifiable {
         self.record = record
     }
 
-    var coreTaskArguments: TaskArguments {
+    public var coreTaskArguments: TaskArguments {
         .init(
             title: title,
             taskDescription: taskDescription,
@@ -56,7 +56,7 @@ struct AppTask: Hashable, Identifiable {
         )
     }
 
-    func toggleCoreTaskTickArguments(with newTickState: Bool) -> TaskArguments {
+    public func toggleCoreTaskTickArguments(with newTickState: Bool) -> TaskArguments {
         .init(
             title: title,
             taskDescription: taskDescription,
@@ -67,26 +67,4 @@ struct AppTask: Hashable, Identifiable {
             completionDate: newTickState ? Date() : nil
         )
     }
-}
-
-extension AppTask: Gridable {
-    var dictionary: [String: String] {
-        [
-            "ID": idString,
-            "Title": title,
-            "Ticked": ticked ? "Yes" : "No",
-            "Due date": Self.dateFormatter.string(from: dueDate),
-        ]
-    }
-
-    var idString: String {
-        id.uuidString
-    }
-
-    private static let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .none
-        return formatter
-    }()
 }

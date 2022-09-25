@@ -11,6 +11,7 @@ import Logster
 import PopperUp
 import CloudKit
 import Environment
+import SharedModels
 import TasktiveLocale
 import ShrimpExtensions
 

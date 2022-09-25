@@ -1,13 +1,13 @@
 //
 //  Crudable.swift
-//  Tasktive
 //
-//  Created by Kamaal M Farah on 15/07/2022.
+//
+//  Created by Kamaal M Farah on 25/09/2022.
 //
 
 import Foundation
 
-protocol Crudable {
+public protocol Crudable {
     associatedtype ReturnType: Crudable
     associatedtype CrudErrors: Error
     associatedtype Context

@@ -1,15 +1,15 @@
 //
 //  CoreTaskSpec.swift
-//  CoreTaskTests
+//  CDPersistTests
 //
-//  Created by Kamaal M Farah on 15/07/2022.
+//  Created by Kamaal M Farah on 25/09/2022.
 //
 
 import Quick
 import Nimble
-import CDPersist
-import Foundation
-@testable import Tasktive
+import XCTest
+import SharedModels
+@testable import CDPersist
 
 final class CoreTaskSpec: QuickSpec {
     let viewContext = PersistenceController.preview.context
@@ -82,14 +82,14 @@ final class CoreTaskSpec: QuickSpec {
             }
 
             context("when trying to update tasks") {
-                it("successfully updates a task") {
+                it("successfully updates a task") { [self] in
                     let arguments = TaskArguments(
                         title: "Title",
                         taskDescription: "Description",
                         notes: "Notes\nNew Line",
                         dueDate: Date().addingTimeInterval(100_000)
                     )
-                    let task = try CoreTask.create(with: arguments, from: self.viewContext).get()
+                    let task = try CoreTask.create(with: arguments, from: viewContext).get()
                     let oldTaskTitle = task.title
                     let oldTaskID = task.id
                     let oldTaskCreationDate = task.kCreationDate
@@ -106,36 +106,49 @@ final class CoreTaskSpec: QuickSpec {
                         dueDate: Date(),
                         ticked: true
                     )
-                    let updatedTask = try task.update(with: updatedArguments, on: self.viewContext).get()
 
-                    expect(updatedTask.id) == oldTaskID
-                    expect(updatedTask.kCreationDate) == oldTaskCreationDate
+                    let updateTaskExpectation = expectation(description: "updating task")
+                    Task {
+                        let updatedTask = try await task.update(with: updatedArguments, on: viewContext).get()
 
-                    expect(updatedTask.dueDate) != oldTaskDueDate
-                    expect(updatedTask.title) != oldTaskTitle
-                    expect(updatedTask.updateDate) != oldTaskUpdateTime
-                    expect(updatedTask.taskDescription) != oldTaskDescription
-                    expect(updatedTask.notes) != oldTaskNotes
-                    expect(updatedTask.ticked) != oldTaskTicked
+                        expect(updatedTask.id) == oldTaskID
+                        expect(updatedTask.kCreationDate) == oldTaskCreationDate
+
+                        expect(updatedTask.dueDate) != oldTaskDueDate
+                        expect(updatedTask.title) != oldTaskTitle
+                        expect(updatedTask.updateDate) != oldTaskUpdateTime
+                        expect(updatedTask.taskDescription) != oldTaskDescription
+                        expect(updatedTask.notes) != oldTaskNotes
+                        expect(updatedTask.ticked) != oldTaskTicked
+
+                        updateTaskExpectation.fulfill()
+                    }
+                    waitForExpectations(timeout: 3)
                 }
             }
 
             context("when trying to delete a task") {
-                it("get's deleted successfully") {
+                it("get's deleted successfully") { [self] in
                     let arguments = TaskArguments(
                         title: "Title",
                         taskDescription: nil,
                         notes: nil,
                         dueDate: Date()
                     )
-                    let task = try CoreTask.create(with: arguments, from: self.viewContext).get()
-                    let tasks = try CoreTask.list(from: self.viewContext).get()
+                    let task = try CoreTask.create(with: arguments, from: viewContext).get()
+                    let tasks = try CoreTask.list(from: viewContext).get()
 
                     expect(tasks.count) == 1
 
-                    _ = task.delete(on: self.viewContext)
+                    let deleteTaskExpectation = expectation(description: "delete task")
+                    Task {
+                        _ = await task.delete(on: viewContext)
 
-                    let updatedTasks = try CoreTask.list(from: self.viewContext).get()
+                        deleteTaskExpectation.fulfill()
+                    }
+                    waitForExpectations(timeout: 3)
+
+                    let updatedTasks = try CoreTask.list(from: viewContext).get()
 
                     expect(updatedTasks).to(beEmpty())
                 }

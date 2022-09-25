@@ -9,32 +9,21 @@ import Skypiea
 import Logster
 import CloudKit
 import Foundation
+import SharedModels
 
 private let logger = Logster(from: CloudTask.self)
 
-extension CloudTask {
-    var asAppTask: AppTask {
-        .init(
-            id: id,
-            title: title,
-            ticked: ticked,
-            dueDate: dueDate,
-            completionDate: completionDate,
-            creationDate: creationDate,
-            source: source,
-            record: record
-        )
-    }
-}
-
 extension CloudTask: Taskable {
-    var source: DataSource {
+    public var source: DataSource {
         .iCloud
     }
 }
 
 extension CloudTask: Crudable {
-    static func create(with arguments: TaskArguments, from context: Skypiea) async -> Result<CloudTask, CrudErrors> {
+    public static func create(
+        with arguments: TaskArguments,
+        from context: Skypiea
+    ) async -> Result<CloudTask, CrudErrors> {
         let createdTask: CloudTask?
         do {
             createdTask = try await CloudTask.create(arguments.toCloudTask, on: context)
@@ -48,7 +37,7 @@ extension CloudTask: Crudable {
         return .success(createdTask)
     }
 
-    func update(with arguments: TaskArguments, on context: Skypiea) async -> Result<CloudTask, CrudErrors> {
+    public func update(with arguments: TaskArguments, on context: Skypiea) async -> Result<CloudTask, CrudErrors> {
         let updatedTask: CloudTask?
         do {
             updatedTask = try await update(updateArguments(arguments), on: context)
@@ -61,7 +50,7 @@ extension CloudTask: Crudable {
         return .success(updatedTask)
     }
 
-    func delete(on context: Skypiea) async -> Result<Void, CrudErrors> {
+    public func delete(on context: Skypiea) async -> Result<Void, CrudErrors> {
         do {
             try await delete(onContext: context)
         } catch {
@@ -71,7 +60,7 @@ extension CloudTask: Crudable {
         return .success(())
     }
 
-    static func list(from context: Skypiea) async -> Result<[CloudTask], CrudErrors> {
+    public static func list(from context: Skypiea) async -> Result<[CloudTask], CrudErrors> {
         let tasks: [CloudTask]
         do {
             tasks = try await CloudTask.list(from: context)
@@ -81,9 +70,11 @@ extension CloudTask: Crudable {
         return .success(tasks)
     }
 
-    static func filter(by predicate: NSPredicate,
-                       limit: Int?,
-                       from context: Skypiea) async -> Result<[CloudTask], CrudErrors> {
+    public static func filter(
+        by predicate: NSPredicate,
+        limit: Int?,
+        from context: Skypiea
+    ) async -> Result<[CloudTask], CrudErrors> {
         let tasks: [CloudTask]
         do {
             tasks = try await CloudTask.filter(by: predicate, limit: limit, from: context)
@@ -93,11 +84,14 @@ extension CloudTask: Crudable {
         return .success(tasks)
     }
 
-    static func filter(by predicate: NSPredicate, from context: Skypiea) async -> Result<[CloudTask], CrudErrors> {
+    public static func filter(
+        by predicate: NSPredicate,
+        from context: Skypiea
+    ) async -> Result<[CloudTask], CrudErrors> {
         await filter(by: predicate, limit: nil, from: context)
     }
 
-    static func find(by predicate: NSPredicate, from context: Skypiea) async -> Result<CloudTask?, CrudErrors> {
+    public static func find(by predicate: NSPredicate, from context: Skypiea) async -> Result<CloudTask?, CrudErrors> {
         let task: CloudTask?
         do {
             task = try await CloudTask.find(by: predicate, from: context)
@@ -135,7 +129,7 @@ extension CloudTask: Crudable {
         return .failure(.fetchFailure(context: error))
     }
 
-    enum CrudErrors: Error {
+    public enum CrudErrors: Error {
         case saveFailure(context: Error? = nil)
         case fetchFailure(context: Error? = nil)
         case updateManyFailure(context: Error? = nil)

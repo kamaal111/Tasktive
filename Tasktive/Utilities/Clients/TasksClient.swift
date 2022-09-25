@@ -8,6 +8,7 @@
 import Skypiea
 import CDPersist
 import Foundation
+import SharedModels
 
 class TasksClient {
     private let persistenceController: PersistenceController
@@ -64,7 +65,7 @@ class TasksClient {
         let object: (any Crudable)?
         switch source {
         case .coreData:
-            object = try CoreTask.find(by: predicate, from: persistenceController.context)
+            object = try await CoreTask.find(by: predicate, from: persistenceController.context)
                 .get()?
                 .update(with: arguments, on: persistenceController.context)
                 .get()
@@ -85,7 +86,7 @@ class TasksClient {
 
         switch source {
         case .coreData:
-            try CoreTask.find(by: predicate, from: persistenceController.context)
+            try await CoreTask.find(by: predicate, from: persistenceController.context)
                 .get()?
                 .delete(on: persistenceController.context)
                 .get()

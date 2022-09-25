@@ -1,6 +1,6 @@
 //
 //  CoreTag+CoreDataProperties.swift
-//  Tasktive
+//  CDPersist
 //
 //  Created by Kamaal M Farah on 07/08/2022.
 //

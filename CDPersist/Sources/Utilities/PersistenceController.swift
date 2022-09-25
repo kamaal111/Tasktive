@@ -7,6 +7,7 @@
 
 import Logster
 import CoreData
+import SharedModels
 import ShrimpExtensions
 
 private let logger = Logster(from: PersistenceController.self)
@@ -64,7 +65,7 @@ public class PersistenceController {
         let result = PersistenceController(inMemory: true)
 
         let aDayInMinutes = 1440
-        let arguments: [CoreTask.Arguments] = [
+        let arguments: [TaskArguments] = [
             .init(
                 title: "Yesterdays Task",
                 taskDescription: "Did stuff",

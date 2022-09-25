@@ -9,6 +9,7 @@ import SwiftUI
 import Logster
 import SalmonUI
 import CDPersist
+import SharedModels
 import TasktiveLocale
 
 private let logger = Logster(from: TaskDetailsSheet.self)

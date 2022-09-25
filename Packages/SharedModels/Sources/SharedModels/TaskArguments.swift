@@ -1,24 +1,22 @@
 //
 //  TaskArguments.swift
-//  Tasktive
 //
-//  Created by Kamaal M Farah on 02/09/2022.
+//
+//  Created by Kamaal M Farah on 25/09/2022.
 //
 
-import CDPersist
 import Foundation
-import ShrimpExtensions
 
-struct TaskArguments: Equatable {
-    var title: String
-    let taskDescription: String?
-    let notes: String?
-    var dueDate: Date
-    let ticked: Bool
-    let completionDate: Date?
-    let id: UUID?
+public struct TaskArguments: Equatable {
+    public var title: String
+    public let taskDescription: String?
+    public let notes: String?
+    public var dueDate: Date
+    public let ticked: Bool
+    public let completionDate: Date?
+    public let id: UUID?
 
-    init(title: String, taskDescription: String?, notes: String?, dueDate: Date, ticked: Bool) {
+    public init(title: String, taskDescription: String?, notes: String?, dueDate: Date, ticked: Bool) {
         self.title = title
         self.taskDescription = taskDescription
         self.notes = notes
@@ -28,11 +26,11 @@ struct TaskArguments: Equatable {
         self.completionDate = nil
     }
 
-    init(title: String, taskDescription: String?, notes: String?, dueDate: Date) {
+    public init(title: String, taskDescription: String?, notes: String?, dueDate: Date) {
         self.init(title: title, taskDescription: taskDescription, notes: notes, dueDate: dueDate, ticked: false)
     }
 
-    init(
+    public init(
         title: String,
         taskDescription: String?,
         notes: String?,
@@ -48,17 +46,5 @@ struct TaskArguments: Equatable {
         self.ticked = ticked
         self.id = id
         self.completionDate = completionDate
-    }
-
-    var coreTaskArguments: CoreTask.Arguments {
-        .init(
-            title: title,
-            taskDescription: taskDescription,
-            notes: notes,
-            dueDate: dueDate,
-            ticked: ticked,
-            id: id,
-            completionDate: completionDate
-        )
     }
 }

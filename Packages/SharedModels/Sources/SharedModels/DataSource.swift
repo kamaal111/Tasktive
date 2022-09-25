@@ -1,18 +1,18 @@
 //
 //  DataSource.swift
-//  Tasktive
 //
-//  Created by Kamaal M Farah on 31/08/2022.
+//
+//  Created by Kamaal M Farah on 25/09/2022.
 //
 
 import Foundation
 import Environment
 
-enum DataSource: Codable, Hashable, CaseIterable {
+public enum DataSource: Codable, Hashable, CaseIterable {
     case coreData
     case iCloud
 
-    var requiresInternet: Bool {
+    public var requiresInternet: Bool {
         switch self {
         case .coreData:
             return false
@@ -21,7 +21,7 @@ enum DataSource: Codable, Hashable, CaseIterable {
         }
     }
 
-    var isSupported: Bool {
+    public var isSupported: Bool {
         switch self {
         case .coreData:
             return true
@@ -30,7 +30,7 @@ enum DataSource: Codable, Hashable, CaseIterable {
         }
     }
 
-    var persistanceMethodImageName: String {
+    public var persistanceMethodImageName: String {
         switch self {
         case .coreData:
             return "iphone.and.arrow.forward"

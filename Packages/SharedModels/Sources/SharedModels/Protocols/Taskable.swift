@@ -1,13 +1,13 @@
 //
 //  Taskable.swift
-//  Tasktive
 //
-//  Created by Kamaal M Farah on 17/07/2022.
+//
+//  Created by Kamaal M Farah on 25/09/2022.
 //
 
 import Foundation
 
-protocol Taskable {
+public protocol Taskable {
     var id: UUID { get }
     var title: String { get }
     var taskDescription: String? { get }
@@ -20,7 +20,7 @@ protocol Taskable {
 }
 
 extension Taskable {
-    var asAppTask: AppTask {
+    public var asAppTask: AppTask {
         .init(
             id: id,
             title: title,
