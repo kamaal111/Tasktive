@@ -35,8 +35,11 @@ extension CoreTask: Crudable, Taskable {
         case saveFailure(context: Error?)
         /// Failure on fetching tasks.
         case fetchFailure(context: Error?)
+        /// Failure on clearing tasks.
         case clearFailure(context: Error?)
+        /// Failure on deleting a task.
         case deletionFailure(context: Error?)
+        /// Failure on updating many tasks.
         case updateManyFailure(context: Error?)
         /// General failure.
         case generalFailure(message: String)

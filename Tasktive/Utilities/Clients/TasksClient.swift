@@ -20,15 +20,16 @@ class TasksClient {
     }
 
     func list(from source: DataSource) async throws -> [AppTask] {
-        let objects: [any Crudable]
         switch source {
         case .coreData:
-            objects = try CoreTask.list(from: persistenceController.context).get()
+            return try CoreTask.list(from: persistenceController.context)
+                .get()
+                .map(\.asAppTask)
         case .iCloud:
-            objects = try await CloudTask.list(from: skypiea).get()
+            return try await CloudTask.list(from: skypiea)
+                .get()
+                .map(\.asAppTask)
         }
-
-        return objects.map(\.asAppTask)
     }
 
     func filter(from source: DataSource, by queryString: String?, limit: Int? = nil) async throws -> [AppTask] {
@@ -36,19 +37,20 @@ class TasksClient {
 
         let predicate = NSPredicate(format: queryString)
 
-        let objects: [any Crudable]
         switch source {
         case .coreData:
-            objects = try CoreTask.filter(by: predicate, limit: limit, from: persistenceController.context).get()
+            return try CoreTask.filter(by: predicate, limit: limit, from: persistenceController.context)
+                .get()
+                .map(\.asAppTask)
         case .iCloud:
-            objects = try await CloudTask.filter(by: predicate, limit: limit, from: skypiea).get()
+            return try await CloudTask.filter(by: predicate, limit: limit, from: skypiea)
+                .get()
+                .map(\.asAppTask)
         }
-
-        return objects.map(\.asAppTask)
     }
 
     func create(on source: DataSource, with arguments: TaskArguments) async throws -> AppTask {
-        let object: any Crudable
+        let object: any Taskable
         switch source {
         case .coreData:
             object = try CoreTask.create(with: arguments, from: persistenceController.context).get()
@@ -62,7 +64,7 @@ class TasksClient {
     func update(on source: DataSource, by id: UUID, with arguments: TaskArguments) async throws -> AppTask {
         let predicate = NSPredicate(format: "id == %@", id.nsString)
 
-        let object: (any Crudable)?
+        let object: (any Taskable)?
         switch source {
         case .coreData:
             object = try await CoreTask.find(by: predicate, from: persistenceController.context)
