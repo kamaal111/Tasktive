@@ -739,7 +739,7 @@
 			path = SupportingViews;
 			sourceTree = "<group>";
 		};
-		2C39A916288357CA008BAFD2 /* Packages */ = {
+		2C39A916288357CA008BAFD2 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
 				2C3E218528D62F4200BD2330 /* Environment */,
@@ -748,8 +748,9 @@
 				2CF3A6E728E0D30300DCEA2C /* SharedModels */,
 				2CCF228928B7F9DE00366596 /* Skypiea */,
 				2C39A91728835847008BAFD2 /* TasktiveLocale */,
+				2C3DAD2728E08D8C00059DAF /* CDPersist */,
 			);
-			path = Packages;
+			path = Modules;
 			sourceTree = "<group>";
 		};
 		2C39A91A28835AAD008BAFD2 /* GenerateLocales */ = {
@@ -1084,7 +1085,7 @@
 				2CAFD79928BD47AA00B302F8 /* fastlane */,
 				2CCCADCC2882010F0033E2EF /* Frameworks */,
 				2C39A91B28835AC1008BAFD2 /* Locales */,
-				2C39A916288357CA008BAFD2 /* Packages */,
+				2C39A916288357CA008BAFD2 /* Modules */,
 				2C12687028A984E3003D1E56 /* Playground */,
 				2CBCE6042881DE240057F4CD /* Products */,
 				2CCCADAC2881F1970033E2EF /* Scripts */,
@@ -1236,7 +1237,6 @@
 		2CCCADCC2882010F0033E2EF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				2C3DAD2728E08D8C00059DAF /* CDPersist */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
