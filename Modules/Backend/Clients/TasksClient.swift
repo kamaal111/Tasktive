@@ -1,25 +1,31 @@
 //
 //  TasksClient.swift
-//  Tasktive
+//  Backend
 //
-//  Created by Kamaal M Farah on 17/07/2022.
+//  Created by Kamaal M Farah on 28/09/2022.
 //
 
 import Skypiea
 import CDPersist
 import Foundation
 import SharedModels
+import ShrimpExtensions
 
-class TasksClient {
+public class TasksClient {
     private let persistenceController: PersistenceController
     private let skypiea: Skypiea
 
-    init(persistenceController: PersistenceController, skypiea: Skypiea) {
-        self.persistenceController = persistenceController
-        self.skypiea = skypiea
+    public init(preview: Bool) {
+        if !preview {
+            self.persistenceController = .shared
+            self.skypiea = .shared
+        } else {
+            self.persistenceController = .preview
+            self.skypiea = .preview
+        }
     }
 
-    func list(from source: DataSource) async throws -> [AppTask] {
+    public func list(from source: DataSource) async throws -> [AppTask] {
         switch source {
         case .coreData:
             return try CoreTask.list(from: persistenceController.context)
@@ -32,7 +38,7 @@ class TasksClient {
         }
     }
 
-    func filter(from source: DataSource, by queryString: String?, limit: Int? = nil) async throws -> [AppTask] {
+    public func filter(from source: DataSource, by queryString: String?, limit: Int? = nil) async throws -> [AppTask] {
         guard let queryString = queryString else { return try await list(from: source) }
 
         let predicate = NSPredicate(format: queryString)
@@ -49,7 +55,7 @@ class TasksClient {
         }
     }
 
-    func create(on source: DataSource, with arguments: TaskArguments) async throws -> AppTask {
+    public func create(on source: DataSource, with arguments: TaskArguments) async throws -> AppTask {
         let object: any Taskable
         switch source {
         case .coreData:
@@ -61,7 +67,7 @@ class TasksClient {
         return object.asAppTask
     }
 
-    func update(on source: DataSource, by id: UUID, with arguments: TaskArguments) async throws -> AppTask {
+    public func update(on source: DataSource, by id: UUID, with arguments: TaskArguments) async throws -> AppTask {
         let predicate = NSPredicate(format: "id == %@", id.nsString)
 
         let object: (any Taskable)?
@@ -83,7 +89,7 @@ class TasksClient {
         return object.asAppTask
     }
 
-    func delete(on source: DataSource, by id: UUID) async throws {
+    public func delete(on source: DataSource, by id: UUID) async throws {
         let predicate = NSPredicate(format: "id == %@", id.nsString)
 
         switch source {
@@ -100,7 +106,7 @@ class TasksClient {
         }
     }
 
-    func updateManyDates(_ tasks: [AppTask], from source: DataSource, date: Date) async throws {
+    public func updateManyDates(_ tasks: [AppTask], from source: DataSource, date: Date) async throws {
         switch source {
         case .coreData:
             _ = try CoreTask.updateManyDates(tasks, date: date, on: persistenceController.context).get()
@@ -109,7 +115,7 @@ class TasksClient {
         }
     }
 
-    enum Errors: Error {
+    public enum Errors: Error {
         case notFound
     }
 }

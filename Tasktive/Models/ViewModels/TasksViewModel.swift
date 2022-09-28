@@ -29,16 +29,16 @@ final class TasksViewModel: ObservableObject {
     @Published private(set) var pendingUserError: UserErrors?
 
     private var fetchedContexts: [TasksFetchedContext] = []
-    private let dataClient: DataClient
+    private let backend: Backend
     private let notifications: [Notification.Name] = [
         .iCloudChanges,
     ]
 
     init() {
         #if !DEBUG
-        self.dataClient = .init()
+        self.backend = .init()
         #else
-        self.dataClient = .init(preview: Environment.CommandLineArguments.previewCoredata.enabled)
+        self.backend = .init(preview: Environment.CommandLineArguments.previewCoredata.enabled)
         #endif
 
         setupObservers()
@@ -46,7 +46,7 @@ final class TasksViewModel: ObservableObject {
 
     #if DEBUG
     init(preview: Bool) {
-        self.dataClient = .init(preview: preview || Environment.CommandLineArguments.previewCoredata.enabled)
+        self.backend = .init(preview: preview || Environment.CommandLineArguments.previewCoredata.enabled)
 
         setupObservers()
     }
@@ -97,7 +97,7 @@ final class TasksViewModel: ObservableObject {
     func createTask(with arguments: TaskArguments, on source: DataSource) async -> Result<Void, UserErrors> {
         let task: AppTask
         do {
-            task = try await dataClient.tasks.create(on: source, with: arguments)
+            task = try await backend.tasks.create(on: source, with: arguments)
         } catch {
             return .failure(.createTaskFailure)
         }
@@ -153,7 +153,7 @@ final class TasksViewModel: ObservableObject {
 
             let updatedTask: AppTask
             do {
-                updatedTask = try await dataClient.tasks.update(on: task.source, by: taskID, with: arguments)
+                updatedTask = try await backend.tasks.update(on: task.source, by: taskID, with: arguments)
             } catch {
                 logger.error(label: "failed to update this task", error: error)
                 return .failure(.updateFailure)
@@ -180,7 +180,7 @@ final class TasksViewModel: ObservableObject {
     func deleteTask(_ task: AppTask) async -> Result<Void, UserErrors> {
         await withSettingTasks(completion: {
             do {
-                try await dataClient.tasks.delete(on: task.source, by: task.id)
+                try await backend.tasks.delete(on: task.source, by: task.id)
             } catch {
                 logger.error(label: "failed to delete this task", error: error)
                 return .failure(.deleteFailure)
@@ -309,7 +309,7 @@ final class TasksViewModel: ObservableObject {
                                   by queryString: String?) async -> Result<[AppTask], TasksViewModel.UserErrors> {
         let tasks: [AppTask]
         do {
-            tasks = try await dataClient.tasks.filter(from: source, by: queryString)
+            tasks = try await backend.tasks.filter(from: source, by: queryString)
         } catch {
             logger.error(label: "failed to get all tasks", error: error)
 
@@ -365,11 +365,11 @@ final class TasksViewModel: ObservableObject {
 
         var updatedTasks: [AppTask] = []
         for source in sources {
-            guard let outdatedTasks = try? await dataClient.tasks.filter(from: source, by: predicate.predicateFormat),
+            guard let outdatedTasks = try? await backend.tasks.filter(from: source, by: predicate.predicateFormat),
                   !outdatedTasks.isEmpty else { continue }
 
             do {
-                try await dataClient.tasks.updateManyDates(outdatedTasks, from: source, date: now)
+                try await backend.tasks.updateManyDates(outdatedTasks, from: source, date: now)
             } catch {
                 logger.error(label: "failed to updated outdated tasks", error: error)
                 updatedTasks.append(contentsOf: outdatedTasks)
