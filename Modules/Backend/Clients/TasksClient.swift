@@ -98,18 +98,14 @@ public class TasksClient {
         by id: UUID,
         with arguments: TaskArguments
     ) async -> Result<AppTask, Errors> {
-        let predicate = NSPredicate(format: "id == %@", id.nsString)
-
         switch source {
         case .coreData:
             let foundTask: CoreTask
-            let findResult = CoreTask.find(by: predicate, from: persistenceController.context)
-                .mapError(mapCoreTaskErrors)
+            let findResult = findCoreTask(by: id)
             switch findResult {
             case let .failure(failure):
                 return .failure(failure)
             case let .success(success):
-                guard let success else { return .failure(.notFound) }
                 foundTask = success
             }
 
@@ -118,13 +114,11 @@ public class TasksClient {
                 .map(\.asAppTask)
         case .iCloud:
             let foundTask: CloudTask
-            let findResult = await CloudTask.find(by: predicate, from: skypiea)
-                .mapError(mapCloudTaskErrors)
+            let findResult = await findCloudTask(by: id)
             switch findResult {
             case let .failure(failure):
                 return .failure(failure)
             case let .success(success):
-                guard let success else { return .failure(.notFound) }
                 foundTask = success
             }
 
@@ -134,24 +128,37 @@ public class TasksClient {
         }
     }
 
-    public func delete(on source: DataSource, by id: UUID) async throws {
-        let predicate = NSPredicate(format: "id == %@", id.nsString)
-
+    /// Delete the task by id.
+    /// - Parameters:
+    ///   - source: Where to create the tasks on.
+    ///   - id: The search id.
+    /// - Returns: A result either containing nothing (`Void`) on success or ``Errors`` on failure.
+    public func delete(on source: DataSource, by id: UUID) async -> Result<Void, Errors> {
         switch source {
         case .coreData:
-            try await CoreTask.find(by: predicate, from: persistenceController.context)
+            let foundTask: CoreTask
+            let findResult = findCoreTask(by: id)
+            switch findResult {
+            case let .failure(failure):
+                return .failure(failure)
+            case let .success(success):
+                foundTask = success
+            }
+
+            return await foundTask.delete(on: persistenceController.context)
                 .mapError(mapCoreTaskErrors)
-                .get()?
-                .delete(on: persistenceController.context)
-                .mapError(mapCoreTaskErrors)
-                .get()
         case .iCloud:
-            try await CloudTask.find(by: predicate, from: skypiea)
+            let foundTask: CloudTask
+            let findResult = await findCloudTask(by: id)
+            switch findResult {
+            case let .failure(failure):
+                return .failure(failure)
+            case let .success(success):
+                foundTask = success
+            }
+
+            return await foundTask.delete(on: skypiea)
                 .mapError(mapCloudTaskErrors)
-                .get()?
-                .delete(on: skypiea)
-                .mapError(mapCloudTaskErrors)
-                .get()
         }
     }
 
@@ -188,6 +195,40 @@ public class TasksClient {
         case generalFailure(message: String)
         /// iCloud is disabled by user.
         case iCloudDisabledByUser
+    }
+
+    private func findCoreTask(by id: UUID) -> Result<CoreTask, Errors> {
+        let predicate = NSPredicate(format: "id == %@", id.nsString)
+
+        let foundTask: CoreTask
+        let findResult = CoreTask.find(by: predicate, from: persistenceController.context)
+            .mapError(mapCoreTaskErrors)
+        switch findResult {
+        case let .failure(failure):
+            return .failure(failure)
+        case let .success(success):
+            guard let success else { return .failure(.notFound) }
+            foundTask = success
+        }
+
+        return .success(foundTask)
+    }
+
+    private func findCloudTask(by id: UUID) async -> Result<CloudTask, Errors> {
+        let predicate = NSPredicate(format: "id == %@", id.nsString)
+
+        let foundTask: CloudTask
+        let findResult = await CloudTask.find(by: predicate, from: skypiea)
+            .mapError(mapCloudTaskErrors)
+        switch findResult {
+        case let .failure(failure):
+            return .failure(failure)
+        case let .success(success):
+            guard let success else { return .failure(.notFound) }
+            foundTask = success
+        }
+
+        return .success(foundTask)
     }
 
     private func mapCoreTaskErrors(_ error: CoreTask.CrudErrors) -> Errors {
