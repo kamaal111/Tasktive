@@ -399,12 +399,14 @@ final class TasksViewModel: ObservableObject {
                 outdatedTasks = success
             }
 
-            do {
-                try await backend.tasks.updateManyDates(outdatedTasks, from: source, date: now)
-            } catch {
-                logger.error(label: "failed to updated outdated tasks", error: error)
+            let updateManyDatesResult = await backend.tasks.updateManyDates(outdatedTasks, from: source, date: now)
+            switch updateManyDatesResult {
+            case let .failure(failure):
+                let maybeError = await mapBackendTaskErrors(failure)
                 updatedTasks.append(contentsOf: outdatedTasks)
                 continue
+            case .success:
+                break
             }
 
             updatedTasks.append(contentsOf: outdatedTasks.map { task in

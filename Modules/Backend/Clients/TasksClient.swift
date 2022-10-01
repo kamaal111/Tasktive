@@ -162,16 +162,20 @@ public class TasksClient {
         }
     }
 
-    public func updateManyDates(_ tasks: [AppTask], from source: DataSource, date: Date) async throws {
+    /// Update many due dates on tasks by date.
+    /// - Parameters:
+    ///   - tasks: The tasks to update.
+    ///   - source: Where to create the tasks on.
+    ///   - date: The new due date.
+    /// - Returns: A result either containing nothing (`Void`) on success or ``Errors`` on failure.
+    public func updateManyDates(_ tasks: [AppTask], from source: DataSource, date: Date) async -> Result<Void, Errors> {
         switch source {
         case .coreData:
-            _ = try CoreTask.updateManyDates(tasks, date: date, on: persistenceController.context)
+            return CoreTask.updateManyDates(tasks, date: date, on: persistenceController.context)
                 .mapError(mapCoreTaskErrors)
-                .get()
         case .iCloud:
-            _ = try await CloudTask.updateManyDates(tasks, date: date, on: skypiea)
+            return await CloudTask.updateManyDates(tasks, date: date, on: skypiea)
                 .mapError(mapCloudTaskErrors)
-                .get()
         }
     }
 
