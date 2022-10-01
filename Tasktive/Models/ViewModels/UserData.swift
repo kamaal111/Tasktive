@@ -15,7 +15,7 @@ final class UserData: ObservableObject {
     }
 
     init() {
-        self.iCloudSyncingIsEnabled = UserDefaults.iCloudSyncingIsEnabled ?? false
+        self.iCloudSyncingIsEnabled = UserDefaults.iCloudSyncingIsEnabled ?? true
     }
 
     private func iCloudSyncingIsEnabledDidSet() {

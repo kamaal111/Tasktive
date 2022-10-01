@@ -11,10 +11,13 @@ import Foundation
 import SharedModels
 import ShrimpExtensions
 
+/// Client to handle all tasks store modifications.
 public class TasksClient {
     private let persistenceController: PersistenceController
     private let skypiea: Skypiea
 
+    /// Initializer of ``TasksClient``
+    /// - Parameter preview: Whether to return static preview data or not.
     public init(preview: Bool) {
         if !preview {
             self.persistenceController = .shared
@@ -25,33 +28,44 @@ public class TasksClient {
         }
     }
 
-    public func list(from source: DataSource) async throws -> [AppTask] {
+    /// List all tasks from the given `DataSource`.
+    /// - Parameter source: Where to get the tasks from.
+    /// - Returns: A result either containing an array with all tasks on success or ``Errors`` on failure.
+    public func list(from source: DataSource) async -> Result<[AppTask], Errors> {
         switch source {
         case .coreData:
-            return try CoreTask.list(from: persistenceController.context)
-                .get()
-                .map(\.asAppTask)
+            return CoreTask.list(from: persistenceController.context)
+                .mapError(mapCoreTaskErrors)
+                .map { $0.map(\.asAppTask) }
         case .iCloud:
-            return try await CloudTask.list(from: skypiea)
-                .get()
-                .map(\.asAppTask)
+            return await CloudTask.list(from: skypiea)
+                .mapError(mapCloudTaskErrors)
+                .map { $0.map(\.asAppTask) }
         }
     }
 
-    public func filter(from source: DataSource, by queryString: String?, limit: Int? = nil) async throws -> [AppTask] {
-        guard let queryString = queryString else { return try await list(from: source) }
-
+    /// Filters tasks using the given query from the given `DataSource`.
+    /// - Parameters:
+    ///   - source: Where to get the tasks from.
+    ///   - queryString: The query to filters tasks with.
+    ///   - limit: The maximum amount of tasks to return, if this value is kepts nil then there is no limit.
+    /// - Returns: A result either containing an array with filtered tasks on success or ``Errors`` on failure.
+    public func filter(
+        from source: DataSource,
+        by queryString: String,
+        limit: Int? = nil
+    ) async -> Result<[AppTask], Errors> {
         let predicate = NSPredicate(format: queryString)
 
         switch source {
         case .coreData:
-            return try CoreTask.filter(by: predicate, limit: limit, from: persistenceController.context)
-                .get()
-                .map(\.asAppTask)
+            return CoreTask.filter(by: predicate, limit: limit, from: persistenceController.context)
+                .mapError(mapCoreTaskErrors)
+                .map { $0.map(\.asAppTask) }
         case .iCloud:
-            return try await CloudTask.filter(by: predicate, limit: limit, from: skypiea)
-                .get()
-                .map(\.asAppTask)
+            return await CloudTask.filter(by: predicate, limit: limit, from: skypiea)
+                .mapError(mapCloudTaskErrors)
+                .map { $0.map(\.asAppTask) }
         }
     }
 
@@ -59,9 +73,13 @@ public class TasksClient {
         let object: any Taskable
         switch source {
         case .coreData:
-            object = try CoreTask.create(with: arguments, from: persistenceController.context).get()
+            object = try CoreTask.create(with: arguments, from: persistenceController.context)
+                .mapError(mapCoreTaskErrors)
+                .get()
         case .iCloud:
-            object = try await CloudTask.create(with: arguments, from: skypiea).get()
+            object = try await CloudTask.create(with: arguments, from: skypiea)
+                .mapError(mapCloudTaskErrors)
+                .get()
         }
 
         return object.asAppTask
@@ -74,13 +92,17 @@ public class TasksClient {
         switch source {
         case .coreData:
             object = try await CoreTask.find(by: predicate, from: persistenceController.context)
+                .mapError(mapCoreTaskErrors)
                 .get()?
                 .update(with: arguments, on: persistenceController.context)
+                .mapError(mapCoreTaskErrors)
                 .get()
         case .iCloud:
             object = try await CloudTask.find(by: predicate, from: skypiea)
+                .mapError(mapCloudTaskErrors)
                 .get()?
                 .update(with: arguments, on: skypiea)
+                .mapError(mapCloudTaskErrors)
                 .get()
         }
 
@@ -95,13 +117,17 @@ public class TasksClient {
         switch source {
         case .coreData:
             try await CoreTask.find(by: predicate, from: persistenceController.context)
+                .mapError(mapCoreTaskErrors)
                 .get()?
                 .delete(on: persistenceController.context)
+                .mapError(mapCoreTaskErrors)
                 .get()
         case .iCloud:
             try await CloudTask.find(by: predicate, from: skypiea)
+                .mapError(mapCloudTaskErrors)
                 .get()?
                 .delete(on: skypiea)
+                .mapError(mapCloudTaskErrors)
                 .get()
         }
     }
@@ -109,13 +135,78 @@ public class TasksClient {
     public func updateManyDates(_ tasks: [AppTask], from source: DataSource, date: Date) async throws {
         switch source {
         case .coreData:
-            _ = try CoreTask.updateManyDates(tasks, date: date, on: persistenceController.context).get()
+            _ = try CoreTask.updateManyDates(tasks, date: date, on: persistenceController.context)
+                .mapError(mapCoreTaskErrors)
+                .get()
         case .iCloud:
-            _ = try await CloudTask.updateManyDates(tasks, date: date, on: skypiea).get()
+            _ = try await CloudTask.updateManyDates(tasks, date: date, on: skypiea)
+                .mapError(mapCloudTaskErrors)
+                .get()
         }
     }
 
+    /// Task failures.
     public enum Errors: Error {
+        /// Failure while saving.
+        case saveFailure(context: Error?)
+        /// Failure while fetching.
+        case fetchFailure(context: Error?)
+        /// Failure while updating.
+        case updateFailure(context: Error?)
+        /// Failure while deleting.
+        case deleteFailure(context: Error?)
+        /// Failure while updating many tasks.
+        case updateManyFailure(context: Error?)
+        /// Failure while clearing tasks.
+        case clearFailure(context: Error?)
+        /// Task is not found.
         case notFound
+        /// Unknown error.
+        case generalFailure(message: String)
+        /// iCloud is disabled by user.
+        case iCloudDisabledByUser
+    }
+
+    private func mapCoreTaskErrors(_ error: CoreTask.CrudErrors) -> Errors {
+        switch error {
+        case let .saveFailure(context):
+            return .saveFailure(context: context)
+        case let .fetchFailure(context):
+            return .fetchFailure(context: context)
+        case let .clearFailure(context):
+            return .clearFailure(context: context)
+        case let .deletionFailure(context):
+            return .deleteFailure(context: context)
+        case let .updateManyFailure(context):
+            return .updateManyFailure(context: context)
+        case let .generalFailure(message):
+            return .generalFailure(message: message)
+        }
+    }
+
+    private func mapCloudTaskErrors(_ error: CloudTask.CrudErrors) -> Errors {
+        switch error {
+        case let .saveFailure(context):
+            return mapCloudTaskContextError(context) ?? .saveFailure(context: context)
+        case let .fetchFailure(context):
+            return mapCloudTaskContextError(context) ?? .fetchFailure(context: context)
+        case let .updateManyFailure(context):
+            return mapCloudTaskContextError(context) ?? .updateManyFailure(context: context)
+        case let .updateFailure(context):
+            return mapCloudTaskContextError(context) ?? .updateFailure(context: context)
+        case let .deleteFailure(context):
+            return mapCloudTaskContextError(context) ?? .deleteFailure(context: context)
+        case let .generalFailure(message):
+            return .generalFailure(message: message)
+        }
+    }
+
+    private func mapCloudTaskContextError(_ error: Error?) -> Errors? {
+        guard let error, let cloudErrors = error as? CloudableErrors else { return .none }
+
+        switch cloudErrors {
+        case .iCloudDisabledByUser:
+            return .iCloudDisabledByUser
+        }
     }
 }

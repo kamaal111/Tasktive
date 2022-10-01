@@ -307,16 +307,20 @@ final class TasksViewModel: ObservableObject {
 
     private func getFilteredTasks(from source: DataSource,
                                   by queryString: String?) async -> Result<[AppTask], TasksViewModel.UserErrors> {
+        let tasksResult: Result<[AppTask], TasksClient.Errors>
+        if let queryString {
+            tasksResult = await backend.tasks.filter(from: source, by: queryString)
+        } else {
+            tasksResult = await backend.tasks.list(from: source)
+        }
         let tasks: [AppTask]
-        do {
-            tasks = try await backend.tasks.filter(from: source, by: queryString)
-        } catch {
-            logger.error(label: "failed to get all tasks", error: error)
-
-            let maybeError = await handleCloudTaskErrors(error)
-
+        switch tasksResult {
+        case let .failure(failure):
+            let maybeError = await mapBackendTaskErrors(failure)
             _ = fetchedContexts.popLast()
             return .failure(maybeError ?? .getAllFailure)
+        case let .success(success):
+            tasks = success
         }
 
         return .success(tasks)
@@ -327,24 +331,37 @@ final class TasksViewModel: ObservableObject {
         pendingUserError = error
     }
 
-    private func handleCloudTaskErrors(_ error: Error) async -> UserErrors? {
-        if let cloudErrors = error as? CloudTask.CrudErrors {
-            switch cloudErrors {
-            case let .fetchFailure(contextError):
-                if let cloudableError = contextError as? CloudableErrors {
-                    switch cloudableError {
-                    case .iCloudDisabledByUser:
-                        logger.warning("iCloud has been disabled by the user")
-                        await setPendingUserError(.iCloudIsDisabled)
-                        return .iCloudIsDisabled
-                    }
-                }
-            default:
-                break
-            }
+    private func mapBackendTaskErrors(_ error: TasksClient.Errors) async -> UserErrors? {
+        switch error {
+        case .saveFailure:
+            logger.error(label: "failed to create task", error: error)
+            return .createTaskFailure
+        case .fetchFailure:
+            logger.error(label: "failed to fetch tasks", error: error)
+            return .getAllFailure
+        case .updateFailure:
+            logger.error(label: "failed to update tasks", error: error)
+            return .updateFailure
+        case .deleteFailure:
+            logger.error(label: "failed to delete tasks", error: error)
+            return .deleteFailure
+        case .updateManyFailure:
+            logger.error(label: "failed to update many tasks", error: error)
+            return .updateFailure
+        case .clearFailure:
+            logger.error(label: "failed to clear tasks", error: error)
+            return .none
+        case .notFound:
+            logger.error(label: "failed to find task", error: error)
+            return .getAllFailure
+        case .generalFailure:
+            logger.error(label: "general task error", error: error)
+            return .none
+        case .iCloudDisabledByUser:
+            logger.warning("iCloud has been disbaled by user")
+            await setPendingUserError(.iCloudIsDisabled)
+            return .iCloudIsDisabled
         }
-
-        return .none
     }
 
     private func validateTaskArguments(_ arguments: TaskArguments) -> Result<Void, UserErrors> {
@@ -365,8 +382,15 @@ final class TasksViewModel: ObservableObject {
 
         var updatedTasks: [AppTask] = []
         for source in sources {
-            guard let outdatedTasks = try? await backend.tasks.filter(from: source, by: predicate.predicateFormat),
-                  !outdatedTasks.isEmpty else { continue }
+            let outdatedTasksResult = await backend.tasks.filter(from: source, by: predicate.predicateFormat)
+            let outdatedTasks: [AppTask]
+            switch outdatedTasksResult {
+            case let .failure(failure):
+                logger.error(label: "failed to fetch outdated tasks", error: failure)
+                continue
+            case let .success(success):
+                outdatedTasks = success
+            }
 
             do {
                 try await backend.tasks.updateManyDates(outdatedTasks, from: source, date: now)
