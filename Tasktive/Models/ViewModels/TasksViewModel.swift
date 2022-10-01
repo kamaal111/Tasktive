@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Skypiea
 import Logster
 import PopperUp
 import CloudKit
@@ -17,18 +16,12 @@ import ShrimpExtensions
 
 private let logger = Logster(from: TasksViewModel.self)
 
-struct TasksFetchedContext: Hashable, Equatable {
-    let date: Date
-    let dataSources: [DataSource]
-}
-
 final class TasksViewModel: ObservableObject {
     @Published private(set) var tasks: [Date: [AppTask]] = [:]
     @Published private(set) var loadingTasks = false
     @Published private(set) var settingTasks = false
     @Published private(set) var pendingUserError: UserErrors?
 
-    private var fetchedContexts: [TasksFetchedContext] = []
     private let backend: Backend
     private let notifications: [Notification.Name] = [
         .iCloudChanges,
@@ -57,7 +50,8 @@ final class TasksViewModel: ObservableObject {
     }
 
     var taskDates: [Date] {
-        tasks.keys
+        tasks
+            .keys
             .sorted(by: {
                 $0.compare($1) == .orderedAscending
             })
@@ -132,7 +126,26 @@ final class TasksViewModel: ObservableObject {
     /// - Parameter sources: The specific datasources to fetch from.
     /// - Returns: A result which is either `Void` on success or ``UserErrors`` on failure.
     func getAllTasks(from sources: [DataSource]) async -> Result<Void, UserErrors> {
-        await getTasksByPredicate(from: sources, by: nil, updateNotCompletedTasks: false)
+        let (tasks, error) = await backend.tasks.list(
+            from: sources,
+            updateNotCompleted: false,
+            forceFetch: false
+        )
+        if let tasks {
+            let groupedTasks = Dictionary(grouping: tasks, by: {
+                getHashDate(from: $0.dueDate)
+            })
+            for (date, tasks) in groupedTasks {
+                await setTasks(tasks, forDate: date)
+            }
+        }
+
+        if let error {
+            let mappedError = await mapBackendTaskErrors(error)
+            return .failure(mappedError ?? .getAllFailure)
+        }
+
+        return .success(())
     }
     #endif
 
@@ -206,131 +219,29 @@ final class TasksViewModel: ObservableObject {
         })
     }
 
-    private var lastFetchedContext: TasksFetchedContext? {
-        fetchedContexts.last
-    }
-
-    private func shouldFetchTasks(newContext: TasksFetchedContext, dataIsStale: Bool) -> Bool {
-        var fetchedContexts = fetchedContexts
-
-        if dataIsStale {
-            self.fetchedContexts = fetchedContexts.appended(newContext)
-
-            return true
-        }
-
-        if let fetchedContextIndexWithSameDate = fetchedContexts.findIndex(by: \.date, is: newContext.date) {
-            let fetchedContextWithSameDate = fetchedContexts[fetchedContextIndexWithSameDate]
-
-            if fetchedContextWithSameDate.dataSources != newContext.dataSources {
-                fetchedContexts.remove(at: fetchedContextIndexWithSameDate)
-            }
-        }
-
-        if fetchedContexts.contains(newContext) {
-            self.fetchedContexts = fetchedContexts
-
-            return false
-        }
-
-        self.fetchedContexts = fetchedContexts.appended(newContext)
-
-        return true
-    }
-
+    @discardableResult
     private func _getTasks(from sources: [DataSource],
                            for date: Date,
                            dataIsStale: Bool,
                            updateNotCompletedTasks: Bool) async -> Result<Void, UserErrors> {
-        let startDate = getHashDate(from: date)
-        let newLastFetchedContext = TasksFetchedContext(date: startDate, dataSources: sources)
-
-        guard shouldFetchTasks(newContext: newLastFetchedContext, dataIsStale: dataIsStale) else { return .success(()) }
-
-        logger.info("fetching tasks for \(startDate)")
-
-        let endDate = getHashDate(from: startDate.incrementByDays(1)).incrementBySeconds(-1)
-
-        let predicate = NSPredicate(format: "(dueDate >= %@) AND (dueDate <= %@)", startDate.asNSDate, endDate.asNSDate)
-        return await getTasksByPredicate(
-            from: sources,
-            by: predicate.predicateFormat,
-            updateNotCompletedTasks: updateNotCompletedTasks
-        )
-    }
-
-    private func getTasksByPredicate(from sources: [DataSource],
-                                     by queryString: String?,
-                                     updateNotCompletedTasks: Bool) async -> Result<Void, UserErrors> {
         await withLoadingTasks {
-            var appTasks: [AppTask] = []
-
-            var maybeError: UserErrors?
-            for source in sources {
-                let tasksResult = await getFilteredTasks(from: source, by: queryString)
-
-                switch tasksResult {
-                case let .failure(failure):
-                    maybeError = failure
-                case let .success(success):
-                    appTasks.append(contentsOf: success)
-                }
-            }
-
-            let maybeUpdatedTasks = await updateDueDateOfTasksIfNeeded(
-                appTasks,
-                enabled: updateNotCompletedTasks,
-                sources: sources
+            let (tasks, error) = await backend.tasks.filter(
+                from: sources,
+                for: date,
+                updateNotCompleted: updateNotCompletedTasks,
+                forceFetch: dataIsStale
             )
-
-            let groupedTasks = Dictionary(grouping: maybeUpdatedTasks, by: {
-                getHashDate(from: $0.dueDate)
-            })
-
-            for (date, tasks) in groupedTasks {
-                if let previouslyFetchedTasks = self.tasks[date] {
-                    let tasks: [AppTask] = tasks
-                        .concat(previouslyFetchedTasks)
-                        .reduce([]) { result, task in
-                            if !result.contains(where: { $0.id == task.id }) {
-                                return result.appended(task)
-                            }
-                            return result
-                        }
-                    await setTasks(tasks, forDate: date)
-                } else {
-                    await setTasks(tasks, forDate: date)
-                }
+            if let tasks {
+                await setTasks(tasks, forDate: date)
             }
 
-            if let error = maybeError {
-                _ = fetchedContexts.popLast()
-                return .failure(error)
+            if let error {
+                let mappedError = await mapBackendTaskErrors(error)
+                return .failure(mappedError ?? .getAllFailure)
             }
 
             return .success(())
         }
-    }
-
-    private func getFilteredTasks(from source: DataSource,
-                                  by queryString: String?) async -> Result<[AppTask], TasksViewModel.UserErrors> {
-        let tasksResult: Result<[AppTask], TasksClient.Errors>
-        if let queryString {
-            tasksResult = await backend.tasks.filter(from: source, by: queryString)
-        } else {
-            tasksResult = await backend.tasks.list(from: source)
-        }
-        let tasks: [AppTask]
-        switch tasksResult {
-        case let .failure(failure):
-            let maybeError = await mapBackendTaskErrors(failure)
-            _ = fetchedContexts.popLast()
-            return .failure(maybeError ?? .getAllFailure)
-        case let .success(success):
-            tasks = success
-        }
-
-        return .success(tasks)
     }
 
     @MainActor
@@ -375,48 +286,6 @@ final class TasksViewModel: ObservableObject {
         guard !arguments.title.trimmingByWhitespacesAndNewLines.isEmpty else { return .failure(.invalidTitle) }
 
         return .success(())
-    }
-
-    private func updateDueDateOfTasksIfNeeded(_ tasks: [AppTask],
-                                              enabled: Bool,
-                                              sources: [DataSource]) async -> [AppTask] {
-        guard enabled else { return tasks }
-
-        let now = Date()
-        let today = getHashDate(from: now).asNSDate
-        let tasksIDs = tasks.map(\.id.nsString)
-        let predicate = NSPredicate(format: "(dueDate < %@) AND ticked == NO AND NOT(id in %@)", today, tasksIDs)
-
-        var updatedTasks: [AppTask] = []
-        for source in sources {
-            let outdatedTasksResult = await backend.tasks.filter(from: source, by: predicate.predicateFormat)
-            let outdatedTasks: [AppTask]
-            switch outdatedTasksResult {
-            case let .failure(failure):
-                logger.error(label: "failed to fetch outdated tasks", error: failure)
-                continue
-            case let .success(success):
-                outdatedTasks = success
-            }
-
-            let updateManyDatesResult = await backend.tasks.updateManyDates(outdatedTasks, from: source, date: now)
-            switch updateManyDatesResult {
-            case let .failure(failure):
-                let maybeError = await mapBackendTaskErrors(failure)
-                updatedTasks.append(contentsOf: outdatedTasks)
-                continue
-            case .success:
-                break
-            }
-
-            updatedTasks.append(contentsOf: outdatedTasks.map { task in
-                var mutableTask = task
-                mutableTask.dueDate = now
-                return mutableTask
-            })
-        }
-
-        return tasks + updatedTasks
     }
 
     private func withLoadingTasks<T>(completion: () async -> T) async -> T {
@@ -478,15 +347,15 @@ final class TasksViewModel: ObservableObject {
         case .iCloudChanges:
             let notificationObject = notification.object as? CKNotification
             logger.info("recieved iCloud changes notification; \(notificationObject as Any)")
-            guard let lastFetchedContext = lastFetchedContext,
-                  Environment.Features.iCloudSyncing,
-                  UserDefaults.iCloudSyncingIsEnabled ?? false else { return }
-
-            let dataSources = lastFetchedContext.dataSources
-                .appended(.iCloud)
-                .uniques()
+            guard Environment.Features.iCloudSyncing, UserDefaults.iCloudSyncingIsEnabled ?? true else { return }
 
             Task {
+                guard let lastFetchedContext = await backend.tasks.getLastFetchedForContext() else { return }
+
+                let dataSources = lastFetchedContext.sources
+                    .appended(.iCloud)
+                    .uniques()
+
                 await _getTasks(from: dataSources,
                                 for: lastFetchedContext.date,
                                 dataIsStale: true,
