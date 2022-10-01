@@ -7,7 +7,6 @@
 
 import SwiftUI
 import SalmonUI
-import CDPersist
 import SharedModels
 
 private let RADIO_SIZE: CGFloat = 16
@@ -117,30 +116,30 @@ struct TaskItemView: View {
     }
 }
 
-struct TaskItemView_Previews: PreviewProvider {
-    static var previews: some View {
-        // swiftlint:disable force_try
-        let tasks = try! CoreTask.list(from: PersistenceController.preview.context).get()
-
-        return List {
-            TaskItemView(
-                task: tasks[1].asAppTask,
-                isFocused: true,
-                hasADivider: false,
-                onTaskTick: { _ in },
-                focusOnTask: { },
-                onDetailsPress: { },
-                onDelete: { _ in }
-            )
-            TaskItemView(
-                task: tasks[2].asAppTask,
-                isFocused: false,
-                hasADivider: false,
-                onTaskTick: { _ in },
-                focusOnTask: { },
-                onDetailsPress: { },
-                onDelete: { _ in }
-            )
-        }
-    }
-}
+// struct TaskItemView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        // swiftlint:disable force_try
+//        let tasks = try! CoreTask.list(from: PersistenceController.preview.context).get()
+//
+//        return List {
+//            TaskItemView(
+//                task: tasks[1].asAppTask,
+//                isFocused: true,
+//                hasADivider: false,
+//                onTaskTick: { _ in },
+//                focusOnTask: { },
+//                onDetailsPress: { },
+//                onDelete: { _ in }
+//            )
+//            TaskItemView(
+//                task: tasks[2].asAppTask,
+//                isFocused: false,
+//                hasADivider: false,
+//                onTaskTick: { _ in },
+//                focusOnTask: { },
+//                onDetailsPress: { },
+//                onDelete: { _ in }
+//            )
+//        }
+//    }
+// }

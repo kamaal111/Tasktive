@@ -7,15 +7,14 @@
 
 #if DEBUG
 import SwiftUI
-import CDPersist
 
 struct CoreDataViewerScreen: View {
     @EnvironmentObject private var tasksViewModel: TasksViewModel
 
-    @State private var selectedType = CoreTask.description()
+    @State private var selectedType = "CoreTask"
 
     private let recordTypes: [String] = [
-        CoreTask.description(),
+        "CoreTask",
     ]
 
     var body: some View {
@@ -29,7 +28,7 @@ struct CoreDataViewerScreen: View {
 
     private var databaseItems: [GridItemConfiguration] {
         switch selectedType {
-        case CoreTask.description():
+        case "CoreTask":
             return tasksViewModel
                 .allTasksSortedByCreationDate
                 .filter { $0.source == .coreData }
@@ -41,7 +40,7 @@ struct CoreDataViewerScreen: View {
 
     private func fetchData() async {
         switch selectedType {
-        case CoreTask.description():
+        case "CoreTask":
             try? await tasksViewModel.getAllTasks(from: [.coreData]).get()
         default:
             break

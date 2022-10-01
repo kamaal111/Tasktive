@@ -39,12 +39,6 @@
 		2C3B27C9288CA274007CE538 /* TaskDetailsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3B27C8288CA274007CE538 /* TaskDetailsSheet.swift */; };
 		2C3DAD2A28E08D8C00059DAF /* CDPersist.docc in Sources */ = {isa = PBXBuildFile; fileRef = 2C3DAD2928E08D8C00059DAF /* CDPersist.docc */; };
 		2C3DAD3828E08D8D00059DAF /* CDPersist.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C3DAD2828E08D8C00059DAF /* CDPersist.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2C3DAD3B28E08D8D00059DAF /* CDPersist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C3DAD2628E08D8C00059DAF /* CDPersist.framework */; };
-		2C3DAD3C28E08D8D00059DAF /* CDPersist.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2C3DAD2628E08D8C00059DAF /* CDPersist.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2C3DAD6A28E08FE700059DAF /* CDPersist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C3DAD2628E08D8C00059DAF /* CDPersist.framework */; };
-		2C3DAD6B28E08FE700059DAF /* CDPersist.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2C3DAD2628E08D8C00059DAF /* CDPersist.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2C3DAD6F28E08FEE00059DAF /* CDPersist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C3DAD2628E08D8C00059DAF /* CDPersist.framework */; };
-		2C3DAD7028E08FEE00059DAF /* CDPersist.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2C3DAD2628E08D8C00059DAF /* CDPersist.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2C3DAD7628E0904500059DAF /* Tasktive.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2C3DAD7428E0904500059DAF /* Tasktive.xcdatamodeld */; };
 		2C3DAD7F28E0912D00059DAF /* CoreAttachments+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3DAD7D28E0912D00059DAF /* CoreAttachments+CoreDataClass.swift */; };
 		2C3DAD8028E0912D00059DAF /* CoreAttachments+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3DAD7E28E0912D00059DAF /* CoreAttachments+CoreDataProperties.swift */; };
@@ -79,15 +73,27 @@
 		2C4E81EC28BBDF100056D0D1 /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = 2C4E81EB28BBDF100056D0D1 /* Quick */; };
 		2C4E81EE28BBDF140056D0D1 /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = 2C4E81ED28BBDF140056D0D1 /* Nimble */; };
 		2C4E81F028BBE6EF0056D0D1 /* TasktiveLocale in Frameworks */ = {isa = PBXBuildFile; productRef = 2C4E81EF28BBE6EF0056D0D1 /* TasktiveLocale */; };
-		2C513B5428BFDF5700A835C4 /* CloudTask+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C513B5328BFDF5700A835C4 /* CloudTask+extensions.swift */; };
-		2C513B5528BFDF5700A835C4 /* CloudTask+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C513B5328BFDF5700A835C4 /* CloudTask+extensions.swift */; };
-		2C513B5628BFDF5700A835C4 /* CloudTask+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C513B5328BFDF5700A835C4 /* CloudTask+extensions.swift */; };
 		2C51C90D28847115008939F7 /* AppSizes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C90C28847115008939F7 /* AppSizes.swift */; };
 		2C51C90F28847438008939F7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C90E28847438008939F7 /* Constants.swift */; };
-		2C51C91128847C3B008939F7 /* TasksClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C91028847C3B008939F7 /* TasksClient.swift */; };
 		2C51C91328847F9E008939F7 /* TasksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C91228847F9E008939F7 /* TasksViewModel.swift */; };
 		2C51C916288481A9008939F7 /* AppTask+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C915288481A9008939F7 /* AppTask+extensions.swift */; };
 		2C5AB1B9288D7C870069911C /* ScreenWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5AB1B8288D7C870069911C /* ScreenWrapper.swift */; };
+		2C5F41E228E85AF800278DC7 /* Backend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9F2DE228E4BFCE00377B03 /* Backend.swift */; };
+		2C5F41E328E85AF900278DC7 /* Backend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9F2DE228E4BFCE00377B03 /* Backend.swift */; };
+		2C5F41E428E85AFA00278DC7 /* Backend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9F2DE228E4BFCE00377B03 /* Backend.swift */; };
+		2C5F41E528E85AFE00278DC7 /* TasksClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9F2DE528E4C03C00377B03 /* TasksClient.swift */; };
+		2C5F41E628E85AFF00278DC7 /* TasksClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9F2DE528E4C03C00377B03 /* TasksClient.swift */; };
+		2C5F41E728E85B0000278DC7 /* TasksClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9F2DE528E4C03C00377B03 /* TasksClient.swift */; };
+		2C5F41E828E85B0300278DC7 /* NotificationsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7E974228E62F960046B0C7 /* NotificationsClient.swift */; };
+		2C5F41E928E85B0400278DC7 /* NotificationsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7E974228E62F960046B0C7 /* NotificationsClient.swift */; };
+		2C5F41EA28E85B0400278DC7 /* NotificationsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7E974228E62F960046B0C7 /* NotificationsClient.swift */; };
+		2C5F41ED28E85B4300278DC7 /* Skypiea in Frameworks */ = {isa = PBXBuildFile; productRef = 2C5F41EC28E85B4300278DC7 /* Skypiea */; };
+		2C5F41F428E85DF400278DC7 /* CDPersist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C3DAD2628E08D8C00059DAF /* CDPersist.framework */; };
+		2C5F41F528E85DF400278DC7 /* CDPersist.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2C3DAD2628E08D8C00059DAF /* CDPersist.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2C5F41F628E85E2900278DC7 /* CDPersist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C3DAD2628E08D8C00059DAF /* CDPersist.framework */; };
+		2C5F41F728E85E2900278DC7 /* CDPersist.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2C3DAD2628E08D8C00059DAF /* CDPersist.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2C5F41FA28E85E3200278DC7 /* CDPersist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C3DAD2628E08D8C00059DAF /* CDPersist.framework */; };
+		2C5F41FB28E85E3200278DC7 /* CDPersist.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2C3DAD2628E08D8C00059DAF /* CDPersist.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2C62FA2F28A7E95F00200BF9 /* StoreKitDonation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C62FA2E28A7E95F00200BF9 /* StoreKitDonation.swift */; };
 		2C69A04428B189F500D5006D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C69A04328B189F500D5006D /* LaunchScreen.storyboard */; };
 		2C69A04728B18CA200D5006D /* SplashScreenStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C69A04628B18CA200D5006D /* SplashScreenStack.swift */; };
@@ -104,7 +110,6 @@
 		2C69A06028B19BC600D5006D /* NamiNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF24AA52884289100778BD9 /* NamiNavigator.swift */; };
 		2C69A06128B19BC600D5006D /* SavePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C98E3C928B126620048149F /* SavePanel.swift */; };
 		2C69A06228B19BC600D5006D /* TaskItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C750F6B288C335A00026D67 /* TaskItemView.swift */; };
-		2C69A06328B19BC600D5006D /* TasksClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C91028847C3B008939F7 /* TasksClient.swift */; };
 		2C69A06428B19BC600D5006D /* AppLogoCreatorScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE9EFB628AD629500C89888 /* AppLogoCreatorScreen.swift */; };
 		2C69A06628B19BC600D5006D /* TasktiveApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCE6062881DE240057F4CD /* TasktiveApp.swift */; };
 		2C69A06728B19BC600D5006D /* DeviceShakeViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE9EFBB28AD667300C89888 /* DeviceShakeViewModifier.swift */; };
@@ -167,9 +172,6 @@
 		2C7A560628B4157600CF8A7C /* Array+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7A560528B4157600CF8A7C /* Array+extensions.swift */; };
 		2C7A560728B4157600CF8A7C /* Array+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7A560528B4157600CF8A7C /* Array+extensions.swift */; };
 		2C7A560828B4157600CF8A7C /* Array+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7A560528B4157600CF8A7C /* Array+extensions.swift */; };
-		2C8158EC28C2733000B98E6C /* DataClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8158EB28C2733000B98E6C /* DataClient.swift */; };
-		2C8158ED28C2733000B98E6C /* DataClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8158EB28C2733000B98E6C /* DataClient.swift */; };
-		2C8158EE28C2733000B98E6C /* DataClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8158EB28C2733000B98E6C /* DataClient.swift */; };
 		2C84C30F28D7491700015565 /* TasksViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C84C30E28D7491700015565 /* TasksViewModelTests.swift */; };
 		2C9435DA28B284E600281AF7 /* GridItemConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9435D928B284E600281AF7 /* GridItemConfiguration.swift */; };
 		2C9435DB28B284E600281AF7 /* GridItemConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9435D928B284E600281AF7 /* GridItemConfiguration.swift */; };
@@ -194,7 +196,6 @@
 		2C98E3E828B12E170048149F /* NamiNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF24AA52884289100778BD9 /* NamiNavigator.swift */; };
 		2C98E3E928B12E170048149F /* SavePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C98E3C928B126620048149F /* SavePanel.swift */; };
 		2C98E3EA28B12E170048149F /* TaskItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C750F6B288C335A00026D67 /* TaskItemView.swift */; };
-		2C98E3EB28B12E170048149F /* TasksClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51C91028847C3B008939F7 /* TasksClient.swift */; };
 		2C98E3EC28B12E170048149F /* AppLogoCreatorScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE9EFB628AD629500C89888 /* AppLogoCreatorScreen.swift */; };
 		2C98E3EE28B12E170048149F /* TasktiveApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBCE6062881DE240057F4CD /* TasktiveApp.swift */; };
 		2C98E3EF28B12E170048149F /* DeviceShakeViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE9EFBB28AD667300C89888 /* DeviceShakeViewModifier.swift */; };
@@ -275,9 +276,6 @@
 		2CC2D9B228C4D7430036817B /* EditButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC2D9B028C4D7430036817B /* EditButton.swift */; };
 		2CC325F328B0E68F0091EC3E /* Navigatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC325F228B0E68F0091EC3E /* Navigatable.swift */; };
 		2CC79CE3288D78A400FD5792 /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC79CE2288D78A400FD5792 /* SettingsScreen.swift */; };
-		2CCF228B28B7FA6D00366596 /* Skypiea in Frameworks */ = {isa = PBXBuildFile; productRef = 2CCF228A28B7FA6D00366596 /* Skypiea */; };
-		2CCF228D28B7FA7600366596 /* Skypiea in Frameworks */ = {isa = PBXBuildFile; productRef = 2CCF228C28B7FA7600366596 /* Skypiea */; };
-		2CCF228F28B7FA7D00366596 /* Skypiea in Frameworks */ = {isa = PBXBuildFile; productRef = 2CCF228E28B7FA7D00366596 /* Skypiea */; };
 		2CDC6DA6288D616B00BF8E06 /* ToolbarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDC6DA5288D616B00BF8E06 /* ToolbarButton.swift */; };
 		2CDE6AEB28B2BAFE00924935 /* Date+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE6AEA28B2BAFE00924935 /* Date+extensions.swift */; };
 		2CDE6AEC28B2BAFE00924935 /* Date+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE6AEA28B2BAFE00924935 /* Date+extensions.swift */; };
@@ -302,27 +300,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		2C3DAD3928E08D8D00059DAF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2CBCE5FB2881DE240057F4CD /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2C3DAD2528E08D8C00059DAF;
-			remoteInfo = CDPersist;
-		};
-		2C3DAD6C28E08FE700059DAF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2CBCE5FB2881DE240057F4CD /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2C3DAD2528E08D8C00059DAF;
-			remoteInfo = CDPersist;
-		};
-		2C3DAD7128E08FEE00059DAF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2CBCE5FB2881DE240057F4CD /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2C3DAD2528E08D8C00059DAF;
-			remoteInfo = CDPersist;
-		};
 		2C3DAD9D28E0AFF500059DAF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2CBCE5FB2881DE240057F4CD /* Project object */;
@@ -336,6 +313,41 @@
 			proxyType = 1;
 			remoteGlobalIDString = 2CBCE6022881DE240057F4CD;
 			remoteInfo = Tasktive;
+		};
+		2C5F41EE28E85DC400278DC7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2CBCE5FB2881DE240057F4CD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2C3DAD2528E08D8C00059DAF;
+			remoteInfo = CDPersist;
+		};
+		2C5F41F028E85DCE00278DC7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2CBCE5FB2881DE240057F4CD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2C3DAD2528E08D8C00059DAF;
+			remoteInfo = CDPersist;
+		};
+		2C5F41F228E85DD400278DC7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2CBCE5FB2881DE240057F4CD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2C3DAD2528E08D8C00059DAF;
+			remoteInfo = CDPersist;
+		};
+		2C5F41F828E85E2900278DC7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2CBCE5FB2881DE240057F4CD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2C3DAD2528E08D8C00059DAF;
+			remoteInfo = CDPersist;
+		};
+		2C5F41FC28E85E3200278DC7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2CBCE5FB2881DE240057F4CD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2C3DAD2528E08D8C00059DAF;
+			remoteInfo = CDPersist;
 		};
 		2CBDB63D28D11B08007EC2D5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -353,7 +365,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				2C3DAD3C28E08D8D00059DAF /* CDPersist.framework in Embed Frameworks */,
+				2C5F41F528E85DF400278DC7 /* CDPersist.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -364,7 +376,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				2C3DAD6B28E08FE700059DAF /* CDPersist.framework in Embed Frameworks */,
+				2C5F41F728E85E2900278DC7 /* CDPersist.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -375,7 +387,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				2C3DAD7028E08FEE00059DAF /* CDPersist.framework in Embed Frameworks */,
+				2C5F41FB28E85E3200278DC7 /* CDPersist.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -435,10 +447,8 @@
 		2C47E405288371A300FD4469 /* DetailsColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsColumn.swift; sourceTree = "<group>"; };
 		2C4E81E028BBDC070056D0D1 /* MainFlowsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MainFlowsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C4E81E228BBDC070056D0D1 /* TasksScreenUISpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksScreenUISpec.swift; sourceTree = "<group>"; };
-		2C513B5328BFDF5700A835C4 /* CloudTask+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudTask+extensions.swift"; sourceTree = "<group>"; };
 		2C51C90C28847115008939F7 /* AppSizes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSizes.swift; sourceTree = "<group>"; };
 		2C51C90E28847438008939F7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		2C51C91028847C3B008939F7 /* TasksClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksClient.swift; sourceTree = "<group>"; };
 		2C51C91228847F9E008939F7 /* TasksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksViewModel.swift; sourceTree = "<group>"; };
 		2C51C915288481A9008939F7 /* AppTask+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppTask+extensions.swift"; sourceTree = "<group>"; };
 		2C5AB1B8288D7C870069911C /* ScreenWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenWrapper.swift; sourceTree = "<group>"; };
@@ -455,7 +465,7 @@
 		2C750F6B288C335A00026D67 /* TaskItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskItemView.swift; sourceTree = "<group>"; };
 		2C79879728AC30DF00F36C59 /* NavigationPath+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NavigationPath+extensions.swift"; sourceTree = "<group>"; };
 		2C7A560528B4157600CF8A7C /* Array+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+extensions.swift"; sourceTree = "<group>"; };
-		2C8158EB28C2733000B98E6C /* DataClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataClient.swift; sourceTree = "<group>"; };
+		2C7E974228E62F960046B0C7 /* NotificationsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsClient.swift; sourceTree = "<group>"; };
 		2C84C30E28D7491700015565 /* TasksViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksViewModelTests.swift; sourceTree = "<group>"; };
 		2C8B0CDD288DD73A00041EF8 /* SettingsUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SettingsUI; sourceTree = "<group>"; };
 		2C9435D928B284E600281AF7 /* GridItemConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridItemConfiguration.swift; sourceTree = "<group>"; };
@@ -478,6 +488,8 @@
 		2C98E43628B12FB20048149F /* Shell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shell.swift; sourceTree = "<group>"; };
 		2C98E43A28B1306C0048149F /* FileManager+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+extensions.swift"; sourceTree = "<group>"; };
 		2C98E43D28B130BE0048149F /* String+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+extensions.swift"; sourceTree = "<group>"; };
+		2C9F2DE228E4BFCE00377B03 /* Backend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Backend.swift; sourceTree = "<group>"; };
+		2C9F2DE528E4C03C00377B03 /* TasksClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksClient.swift; sourceTree = "<group>"; };
 		2CA7A02F28A8F5910031C219 /* Donations.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Donations.storekit; sourceTree = "<group>"; };
 		2CAFD79A28BD47AA00B302F8 /* Appfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Appfile; sourceTree = "<group>"; };
 		2CAFD79B28BD47AA00B302F8 /* SnapshotHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
@@ -586,8 +598,7 @@
 				2C69A0A728B19BC600D5006D /* ShrimpExtensions in Frameworks */,
 				2C3E218928D6311C00BD2330 /* Environment in Frameworks */,
 				2C69A0A828B19BC600D5006D /* SettingsUI in Frameworks */,
-				2CCF228D28B7FA7600366596 /* Skypiea in Frameworks */,
-				2C3DAD6A28E08FE700059DAF /* CDPersist.framework in Frameworks */,
+				2C5F41F628E85E2900278DC7 /* CDPersist.framework in Frameworks */,
 				2C69A0A928B19BC600D5006D /* TasktiveLocale in Frameworks */,
 				2C69A0AA28B19BC600D5006D /* PopperUp in Frameworks */,
 				2C1B757328DA38C000181865 /* Logster in Frameworks */,
@@ -603,9 +614,8 @@
 				2C45AB0828C5143900011282 /* TasktiveLocale in Frameworks */,
 				2C3E218B28D6312100BD2330 /* Environment in Frameworks */,
 				2C98E42928B12E170048149F /* ShrimpExtensions in Frameworks */,
+				2C5F41FA28E85E3200278DC7 /* CDPersist.framework in Frameworks */,
 				2C98E42A28B12E170048149F /* SettingsUI in Frameworks */,
-				2C3DAD6F28E08FEE00059DAF /* CDPersist.framework in Frameworks */,
-				2CCF228F28B7FA7D00366596 /* Skypiea in Frameworks */,
 				2C98E42C28B12E170048149F /* PopperUp in Frameworks */,
 				2C1B757528DA38C500181865 /* Logster in Frameworks */,
 			);
@@ -617,11 +627,11 @@
 			files = (
 				2C47E40128836FBF00FD4469 /* SalmonUI in Frameworks */,
 				2C113DCC28E0D8FA00B43BDB /* SharedModels in Frameworks */,
+				2C5F41ED28E85B4300278DC7 /* Skypiea in Frameworks */,
 				2CF24AAE28842F9A00778BD9 /* ShrimpExtensions in Frameworks */,
 				2C3E218728D6311700BD2330 /* Environment in Frameworks */,
 				2CAF4E41288DD036007C2D1A /* SettingsUI in Frameworks */,
-				2CCF228B28B7FA6D00366596 /* Skypiea in Frameworks */,
-				2C3DAD3B28E08D8D00059DAF /* CDPersist.framework in Frameworks */,
+				2C5F41F428E85DF400278DC7 /* CDPersist.framework in Frameworks */,
 				2C39A919288359A1008BAFD2 /* TasktiveLocale in Frameworks */,
 				2C1B196A2888689700D734D2 /* PopperUp in Frameworks */,
 				2C1B757128DA38BA00181865 /* Logster in Frameworks */,
@@ -739,7 +749,7 @@
 			path = SupportingViews;
 			sourceTree = "<group>";
 		};
-		2C39A916288357CA008BAFD2 /* Packages */ = {
+		2C39A916288357CA008BAFD2 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
 				2C3E218528D62F4200BD2330 /* Environment */,
@@ -748,8 +758,10 @@
 				2CF3A6E728E0D30300DCEA2C /* SharedModels */,
 				2CCF228928B7F9DE00366596 /* Skypiea */,
 				2C39A91728835847008BAFD2 /* TasktiveLocale */,
+				2C5F41E128E85AB200278DC7 /* Backend */,
+				2C3DAD2728E08D8C00059DAF /* CDPersist */,
 			);
-			path = Packages;
+			path = Modules;
 			sourceTree = "<group>";
 		};
 		2C39A91A28835AAD008BAFD2 /* GenerateLocales */ = {
@@ -904,7 +916,6 @@
 			children = (
 				2C51C915288481A9008939F7 /* AppTask+extensions.swift */,
 				2C7A560528B4157600CF8A7C /* Array+extensions.swift */,
-				2C513B5328BFDF5700A835C4 /* CloudTask+extensions.swift */,
 				2CDFB1AF28A6DA53004ACED7 /* Colors.swift */,
 				2C98E3C728B125CA0048149F /* Data+extensions.swift */,
 				2CDE6AEA28B2BAFE00924935 /* Date+extensions.swift */,
@@ -1011,13 +1022,13 @@
 			path = Structures;
 			sourceTree = "<group>";
 		};
-		2C8158EA28C2731C00B98E6C /* Clients */ = {
+		2C5F41E128E85AB200278DC7 /* Backend */ = {
 			isa = PBXGroup;
 			children = (
-				2C8158EB28C2733000B98E6C /* DataClient.swift */,
-				2C51C91028847C3B008939F7 /* TasksClient.swift */,
+				2C9F2DE228E4BFCE00377B03 /* Backend.swift */,
+				2C9F2DE428E4C01500377B03 /* Clients */,
 			);
-			path = Clients;
+			path = Backend;
 			sourceTree = "<group>";
 		};
 		2C98E3CC28B12DFB0048149F /* app-icon-generator */ = {
@@ -1049,6 +1060,15 @@
 				2C98E3D128B12DFB0048149F /* app-icon-generator */,
 			);
 			path = bin;
+			sourceTree = "<group>";
+		};
+		2C9F2DE428E4C01500377B03 /* Clients */ = {
+			isa = PBXGroup;
+			children = (
+				2C9F2DE528E4C03C00377B03 /* TasksClient.swift */,
+				2C7E974228E62F960046B0C7 /* NotificationsClient.swift */,
+			);
+			path = Clients;
 			sourceTree = "<group>";
 		};
 		2CA7A03028A8F7320031C219 /* StoreKit */ = {
@@ -1084,7 +1104,7 @@
 				2CAFD79928BD47AA00B302F8 /* fastlane */,
 				2CCCADCC2882010F0033E2EF /* Frameworks */,
 				2C39A91B28835AC1008BAFD2 /* Locales */,
-				2C39A916288357CA008BAFD2 /* Packages */,
+				2C39A916288357CA008BAFD2 /* Modules */,
 				2C12687028A984E3003D1E56 /* Playground */,
 				2CBCE6042881DE240057F4CD /* Products */,
 				2CCCADAC2881F1970033E2EF /* Scripts */,
@@ -1236,7 +1256,6 @@
 		2CCCADCC2882010F0033E2EF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				2C3DAD2728E08D8C00059DAF /* CDPersist */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1247,7 +1266,6 @@
 				2C98E3C928B126620048149F /* SavePanel.swift */,
 				2C98E43628B12FB20048149F /* Shell.swift */,
 				2C157592289F03B800425CDD /* TokensHolder.swift */,
-				2C8158EA28C2731C00B98E6C /* Clients */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1384,7 +1402,8 @@
 			buildRules = (
 			);
 			dependencies = (
-				2C3DAD6D28E08FE700059DAF /* PBXTargetDependency */,
+				2C5F41F128E85DCE00278DC7 /* PBXTargetDependency */,
+				2C5F41F928E85E2900278DC7 /* PBXTargetDependency */,
 			);
 			name = TasktiveMac;
 			packageProductDependencies = (
@@ -1393,7 +1412,6 @@
 				2C69A05328B19BC600D5006D /* ShrimpExtensions */,
 				2C69A05528B19BC600D5006D /* PopperUp */,
 				2C69A05728B19BC600D5006D /* SettingsUI */,
-				2CCF228C28B7FA7600366596 /* Skypiea */,
 				2C3E218828D6311C00BD2330 /* Environment */,
 				2C1B757228DA38C000181865 /* Logster */,
 				2C113DC928E0D8ED00B43BDB /* SharedModels */,
@@ -1415,7 +1433,8 @@
 			buildRules = (
 			);
 			dependencies = (
-				2C3DAD7228E08FEE00059DAF /* PBXTargetDependency */,
+				2C5F41F328E85DD400278DC7 /* PBXTargetDependency */,
+				2C5F41FD28E85E3200278DC7 /* PBXTargetDependency */,
 			);
 			name = TasktiveMacDebug;
 			packageProductDependencies = (
@@ -1423,7 +1442,6 @@
 				2C98E3DB28B12E170048149F /* ShrimpExtensions */,
 				2C98E3DD28B12E170048149F /* PopperUp */,
 				2C98E3DF28B12E170048149F /* SettingsUI */,
-				2CCF228E28B7FA7D00366596 /* Skypiea */,
 				2C45AB0728C5143900011282 /* TasktiveLocale */,
 				2C3E218A28D6312100BD2330 /* Environment */,
 				2C1B757428DA38C500181865 /* Logster */,
@@ -1446,7 +1464,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				2C3DAD3A28E08D8D00059DAF /* PBXTargetDependency */,
+				2C5F41EF28E85DC400278DC7 /* PBXTargetDependency */,
 			);
 			name = Tasktive;
 			packageProductDependencies = (
@@ -1455,10 +1473,10 @@
 				2CF24AAD28842F9A00778BD9 /* ShrimpExtensions */,
 				2C1B19692888689700D734D2 /* PopperUp */,
 				2CAF4E40288DD036007C2D1A /* SettingsUI */,
-				2CCF228A28B7FA6D00366596 /* Skypiea */,
 				2C3E218628D6311700BD2330 /* Environment */,
 				2C1B757028DA38BA00181865 /* Logster */,
 				2C113DCB28E0D8FA00B43BDB /* SharedModels */,
+				2C5F41EC28E85B4300278DC7 /* Skypiea */,
 			);
 			productName = Tasktive;
 			productReference = 2CBCE6032881DE240057F4CD /* Tasktive.app */;
@@ -1724,13 +1742,12 @@
 				2C69A05A28B19BC600D5006D /* AppSizes.swift in Sources */,
 				2C69A05B28B19BC600D5006D /* MainView.swift in Sources */,
 				2C69A05C28B19BC600D5006D /* DetailsColumn.swift in Sources */,
-				2C513B5528BFDF5700A835C4 /* CloudTask+extensions.swift in Sources */,
 				2C69A05E28B19BC600D5006D /* ScreenWrapper.swift in Sources */,
+				2C5F41E328E85AF900278DC7 /* Backend.swift in Sources */,
 				2C69A05F28B19BC600D5006D /* NotificationName+extensions.swift in Sources */,
 				2C69A06028B19BC600D5006D /* NamiNavigator.swift in Sources */,
 				2C69A06128B19BC600D5006D /* SavePanel.swift in Sources */,
 				2C69A06228B19BC600D5006D /* TaskItemView.swift in Sources */,
-				2C69A06328B19BC600D5006D /* TasksClient.swift in Sources */,
 				2C69A06428B19BC600D5006D /* AppLogoCreatorScreen.swift in Sources */,
 				2C69A06628B19BC600D5006D /* TasktiveApp.swift in Sources */,
 				2C69A06728B19BC600D5006D /* DeviceShakeViewModifier.swift in Sources */,
@@ -1770,7 +1787,6 @@
 				2C69A08C28B19BC600D5006D /* PlaygroundNavigationButton.swift in Sources */,
 				2C69A08D28B19BC600D5006D /* DayNumbersRowItem.swift in Sources */,
 				2C69A08E28B19BC600D5006D /* Sidebar.swift in Sources */,
-				2C8158ED28C2733000B98E6C /* DataClient.swift in Sources */,
 				2C69A09028B19BC600D5006D /* String+extensions.swift in Sources */,
 				2C69A09128B19BC600D5006D /* SplashScreenStack.swift in Sources */,
 				2C69A09228B19BC600D5006D /* TokensHolder.swift in Sources */,
@@ -1778,6 +1794,7 @@
 				2C69A09528B19BC600D5006D /* AppTabView.swift in Sources */,
 				2CC2D9A828C4D5A20036817B /* EditMode.swift in Sources */,
 				2C69A09828B19BC600D5006D /* FileManager+extensions.swift in Sources */,
+				2C5F41E928E85B0400278DC7 /* NotificationsClient.swift in Sources */,
 				2C69A09928B19BC600D5006D /* WideNavigationLink.swift in Sources */,
 				2C69A09A28B19BC600D5006D /* PlaygroundScreen.swift in Sources */,
 				2C10089E28D5265300DB1C8F /* UserData.swift in Sources */,
@@ -1789,6 +1806,7 @@
 				2C69A0A128B19BC600D5006D /* SettingsScreen.swift in Sources */,
 				2C69A0A228B19BC600D5006D /* TasksViewModel.swift in Sources */,
 				2C69A0A328B19BC600D5006D /* PopUpError.swift in Sources */,
+				2C5F41E628E85AFF00278DC7 /* TasksClient.swift in Sources */,
 				2C69A0A428B19BC600D5006D /* NavigationPath+extensions.swift in Sources */,
 				2C9435DF28B2868A00281AF7 /* Gridable.swift in Sources */,
 			);
@@ -1801,13 +1819,12 @@
 				2C98E3E228B12E170048149F /* AppSizes.swift in Sources */,
 				2C98E3E328B12E170048149F /* MainView.swift in Sources */,
 				2C98E3E428B12E170048149F /* DetailsColumn.swift in Sources */,
-				2C513B5628BFDF5700A835C4 /* CloudTask+extensions.swift in Sources */,
 				2C98E3E628B12E170048149F /* ScreenWrapper.swift in Sources */,
+				2C5F41E428E85AFA00278DC7 /* Backend.swift in Sources */,
 				2C98E3E728B12E170048149F /* NotificationName+extensions.swift in Sources */,
 				2C98E3E828B12E170048149F /* NamiNavigator.swift in Sources */,
 				2C98E3E928B12E170048149F /* SavePanel.swift in Sources */,
 				2C98E3EA28B12E170048149F /* TaskItemView.swift in Sources */,
-				2C98E3EB28B12E170048149F /* TasksClient.swift in Sources */,
 				2C98E3EC28B12E170048149F /* AppLogoCreatorScreen.swift in Sources */,
 				2C98E3EE28B12E170048149F /* TasktiveApp.swift in Sources */,
 				2C98E3EF28B12E170048149F /* DeviceShakeViewModifier.swift in Sources */,
@@ -1847,7 +1864,6 @@
 				2C69A04E28B193CB00D5006D /* PlaygroundNavigationButton.swift in Sources */,
 				2C98E41228B12E170048149F /* DayNumbersRowItem.swift in Sources */,
 				2C98E41328B12E170048149F /* Sidebar.swift in Sources */,
-				2C8158EE28C2733000B98E6C /* DataClient.swift in Sources */,
 				2C98E43F28B130BE0048149F /* String+extensions.swift in Sources */,
 				2C69A04828B18CA200D5006D /* SplashScreenStack.swift in Sources */,
 				2C98E41528B12E170048149F /* TokensHolder.swift in Sources */,
@@ -1855,6 +1871,7 @@
 				2C98E41828B12E170048149F /* AppTabView.swift in Sources */,
 				2CC2D9A928C4D5A20036817B /* EditMode.swift in Sources */,
 				2C98E43C28B1306F0048149F /* FileManager+extensions.swift in Sources */,
+				2C5F41EA28E85B0400278DC7 /* NotificationsClient.swift in Sources */,
 				2C98E41B28B12E170048149F /* WideNavigationLink.swift in Sources */,
 				2C98E41C28B12E170048149F /* PlaygroundScreen.swift in Sources */,
 				2C10089F28D5265300DB1C8F /* UserData.swift in Sources */,
@@ -1866,6 +1883,7 @@
 				2C98E42328B12E170048149F /* SettingsScreen.swift in Sources */,
 				2C98E42428B12E170048149F /* TasksViewModel.swift in Sources */,
 				2C98E42528B12E170048149F /* PopUpError.swift in Sources */,
+				2C5F41E728E85B0000278DC7 /* TasksClient.swift in Sources */,
 				2C98E42628B12E170048149F /* NavigationPath+extensions.swift in Sources */,
 				2C9435E028B2868A00281AF7 /* Gridable.swift in Sources */,
 			);
@@ -1883,7 +1901,6 @@
 				2CF24AA62884289100778BD9 /* NamiNavigator.swift in Sources */,
 				2C98E3CA28B126620048149F /* SavePanel.swift in Sources */,
 				2C750F6C288C335A00026D67 /* TaskItemView.swift in Sources */,
-				2C51C91128847C3B008939F7 /* TasksClient.swift in Sources */,
 				2CE9EFB728AD629500C89888 /* AppLogoCreatorScreen.swift in Sources */,
 				2CBCE6072881DE240057F4CD /* TasktiveApp.swift in Sources */,
 				2CE9EFBC28AD667300C89888 /* DeviceShakeViewModifier.swift in Sources */,
@@ -1897,6 +1914,7 @@
 				2C750F66288C2F9400026D67 /* CircularProgressBar.swift in Sources */,
 				2CDFB1B028A6DA53004ACED7 /* Colors.swift in Sources */,
 				2CDE6AEB28B2BAFE00924935 /* Date+extensions.swift in Sources */,
+				2C5F41E528E85AFE00278DC7 /* TasksClient.swift in Sources */,
 				2C98E43928B1303C0048149F /* Shell.swift in Sources */,
 				2C1B060728B1083B001E8441 /* AppLogoColorFormRow.swift in Sources */,
 				2C51C916288481A9008939F7 /* AppTask+extensions.swift in Sources */,
@@ -1912,10 +1930,10 @@
 				2C1B060928B10A48001E8441 /* AppLogoColorSelector.swift in Sources */,
 				2CBDB63228D1100F007EC2D5 /* DispatchQueue+extensions.swift in Sources */,
 				2C51C90F28847438008939F7 /* Constants.swift in Sources */,
+				2C5F41E828E85B0300278DC7 /* NotificationsClient.swift in Sources */,
 				2C62FA2F28A7E95F00200BF9 /* StoreKitDonation.swift in Sources */,
 				2C98E3C628B125710048149F /* Image+extensions.swift in Sources */,
 				2CB3F3B128BD327A0016B7F4 /* AccessibilityIdentifiers.swift in Sources */,
-				2C513B5428BFDF5700A835C4 /* CloudTask+extensions.swift in Sources */,
 				2C7A560628B4157600CF8A7C /* Array+extensions.swift in Sources */,
 				2CC325F328B0E68F0091EC3E /* Navigatable.swift in Sources */,
 				2CBCE60E2881DE240057F4CD /* ContentView.swift in Sources */,
@@ -1924,7 +1942,6 @@
 				2C69A04D28B193CB00D5006D /* PlaygroundNavigationButton.swift in Sources */,
 				2C1505E9288C26170040943A /* DayNumbersRowItem.swift in Sources */,
 				2C47E4042883719000FD4469 /* Sidebar.swift in Sources */,
-				2C8158EC28C2733000B98E6C /* DataClient.swift in Sources */,
 				2C98E43E28B130BE0048149F /* String+extensions.swift in Sources */,
 				2C69A04728B18CA200D5006D /* SplashScreenStack.swift in Sources */,
 				2C157593289F03B800425CDD /* TokensHolder.swift in Sources */,
@@ -1941,6 +1958,7 @@
 				2C750F6A288C328C00026D67 /* TasksSection.swift in Sources */,
 				2CC79CE3288D78A400FD5792 /* SettingsScreen.swift in Sources */,
 				2C51C91328847F9E008939F7 /* TasksViewModel.swift in Sources */,
+				2C5F41E228E85AF800278DC7 /* Backend.swift in Sources */,
 				2C1B196C28886CFB00D734D2 /* PopUpError.swift in Sources */,
 				2C79879828AC30DF00F36C59 /* NavigationPath+extensions.swift in Sources */,
 				2C9435DE28B2868A00281AF7 /* Gridable.swift in Sources */,
@@ -1959,21 +1977,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		2C3DAD3A28E08D8D00059DAF /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2C3DAD2528E08D8C00059DAF /* CDPersist */;
-			targetProxy = 2C3DAD3928E08D8D00059DAF /* PBXContainerItemProxy */;
-		};
-		2C3DAD6D28E08FE700059DAF /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2C3DAD2528E08D8C00059DAF /* CDPersist */;
-			targetProxy = 2C3DAD6C28E08FE700059DAF /* PBXContainerItemProxy */;
-		};
-		2C3DAD7228E08FEE00059DAF /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2C3DAD2528E08D8C00059DAF /* CDPersist */;
-			targetProxy = 2C3DAD7128E08FEE00059DAF /* PBXContainerItemProxy */;
-		};
 		2C3DAD9E28E0AFF500059DAF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 2C3DAD2528E08D8C00059DAF /* CDPersist */;
@@ -1983,6 +1986,31 @@
 			isa = PBXTargetDependency;
 			target = 2CBCE6022881DE240057F4CD /* Tasktive */;
 			targetProxy = 2C4E81E628BBDC070056D0D1 /* PBXContainerItemProxy */;
+		};
+		2C5F41EF28E85DC400278DC7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2C3DAD2528E08D8C00059DAF /* CDPersist */;
+			targetProxy = 2C5F41EE28E85DC400278DC7 /* PBXContainerItemProxy */;
+		};
+		2C5F41F128E85DCE00278DC7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2C3DAD2528E08D8C00059DAF /* CDPersist */;
+			targetProxy = 2C5F41F028E85DCE00278DC7 /* PBXContainerItemProxy */;
+		};
+		2C5F41F328E85DD400278DC7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2C3DAD2528E08D8C00059DAF /* CDPersist */;
+			targetProxy = 2C5F41F228E85DD400278DC7 /* PBXContainerItemProxy */;
+		};
+		2C5F41F928E85E2900278DC7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2C3DAD2528E08D8C00059DAF /* CDPersist */;
+			targetProxy = 2C5F41F828E85E2900278DC7 /* PBXContainerItemProxy */;
+		};
+		2C5F41FD28E85E3200278DC7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2C3DAD2528E08D8C00059DAF /* CDPersist */;
+			targetProxy = 2C5F41FC28E85E3200278DC7 /* PBXContainerItemProxy */;
 		};
 		2CBDB63E28D11B08007EC2D5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1997,7 +2025,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 236;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -2037,7 +2065,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Kamaal Farah (DXUKH9VF73)";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution: Kamaal Farah (DXUKH9VF73)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 236;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -2076,7 +2104,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 236;
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -2099,7 +2127,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 236;
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -2121,7 +2149,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 185;
+				CURRENT_PROJECT_VERSION = 236;
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -2141,7 +2169,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 185;
+				CURRENT_PROJECT_VERSION = 236;
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -2160,12 +2188,11 @@
 		2C69A0B128B19BC600D5006D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Tasktive/TasktiveDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 185;
+				CURRENT_PROJECT_VERSION = 236;
 				DEVELOPMENT_ASSET_PATHS = "\"Tasktive/Preview Content\"";
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2197,12 +2224,11 @@
 		2C69A0B228B19BC600D5006D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Tasktive/Tasktive.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 185;
+				CURRENT_PROJECT_VERSION = 236;
 				DEVELOPMENT_ASSET_PATHS = "\"Tasktive/Preview Content\"";
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2234,12 +2260,11 @@
 		2C98E43228B12E170048149F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Tasktive/TasktiveDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 185;
+				CURRENT_PROJECT_VERSION = 236;
 				DEVELOPMENT_ASSET_PATHS = "\"Tasktive/Preview Content\"";
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2271,12 +2296,11 @@
 		2C98E43328B12E170048149F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Tasktive/Tasktive.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 185;
+				CURRENT_PROJECT_VERSION = 236;
 				DEVELOPMENT_ASSET_PATHS = "\"Tasktive/Preview Content\"";
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2421,12 +2445,11 @@
 		2CBCE6182881DE270057F4CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Tasktive/TasktiveDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 185;
+				CURRENT_PROJECT_VERSION = 236;
 				DEVELOPMENT_ASSET_PATHS = "\"Tasktive/Preview Content\"";
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2462,14 +2485,13 @@
 		2CBCE6192881DE270057F4CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Tasktive/Tasktive.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Kamaal Farah (DXUKH9VF73)";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution: Kamaal Farah (DXUKH9VF73)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 185;
+				CURRENT_PROJECT_VERSION = 236;
 				DEVELOPMENT_ASSET_PATHS = "\"Tasktive/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=*]" = DXUKH9VF73;
@@ -2512,7 +2534,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 185;
+				CURRENT_PROJECT_VERSION = 236;
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -2533,7 +2555,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 185;
+				CURRENT_PROJECT_VERSION = 236;
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -2813,6 +2835,10 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = TasktiveLocale;
 		};
+		2C5F41EC28E85B4300278DC7 /* Skypiea */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Skypiea;
+		};
 		2C69A05028B19BC600D5006D /* TasktiveLocale */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = TasktiveLocale;
@@ -2868,18 +2894,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2CCCADC92881FEE90033E2EF /* XCRemoteSwiftPackageReference "Nimble" */;
 			productName = Nimble;
-		};
-		2CCF228A28B7FA6D00366596 /* Skypiea */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Skypiea;
-		};
-		2CCF228C28B7FA7600366596 /* Skypiea */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Skypiea;
-		};
-		2CCF228E28B7FA7D00366596 /* Skypiea */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Skypiea;
 		};
 		2CF24AAD28842F9A00778BD9 /* ShrimpExtensions */ = {
 			isa = XCSwiftPackageProductDependency;

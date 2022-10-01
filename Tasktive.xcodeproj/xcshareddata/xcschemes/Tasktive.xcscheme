@@ -53,36 +53,6 @@
                ReferencedContainer = "container:Tasktive.xcodeproj">
             </BuildableReference>
          </TestableReference>
-         <TestableReference
-            skipped = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "TasktiveLocaleTests"
-               BuildableName = "TasktiveLocaleTests"
-               BlueprintName = "TasktiveLocaleTests"
-               ReferencedContainer = "container:Packages/TasktiveLocale">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "SettingsUITests"
-               BuildableName = "SettingsUITests"
-               BlueprintName = "SettingsUITests"
-               ReferencedContainer = "container:Packages/SettingsUI">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "SkypieaTests"
-               BuildableName = "SkypieaTests"
-               BlueprintName = "SkypieaTests"
-               ReferencedContainer = "container:Packages/Skypiea">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

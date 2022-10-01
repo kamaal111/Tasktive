@@ -7,16 +7,14 @@
 
 #if DEBUG
 import SwiftUI
-import Skypiea
-import CDPersist
 
 struct CloudKitDataViewerScreen: View {
     @EnvironmentObject private var tasksViewModel: TasksViewModel
 
-    @State private var selectedType = CloudTask.recordType
+    @State private var selectedType = "CloudTask"
 
     private let recordTypes: [String] = [
-        CloudTask.recordType,
+        "CloudTask",
     ]
 
     var body: some View {
@@ -30,7 +28,7 @@ struct CloudKitDataViewerScreen: View {
 
     private var databaseItems: [GridItemConfiguration] {
         switch selectedType {
-        case CloudTask.recordType:
+        case "CloudTask":
             return tasksViewModel
                 .allTasksSortedByCreationDate
                 .filter { $0.source == .iCloud }
@@ -42,7 +40,7 @@ struct CloudKitDataViewerScreen: View {
 
     private func fetchData() async {
         switch selectedType {
-        case CoreTask.description():
+        case "CloudTask":
             try? await tasksViewModel.getAllTasks(from: [.iCloud]).get()
         default:
             break

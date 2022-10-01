@@ -8,7 +8,6 @@
 import SwiftUI
 import Logster
 import SalmonUI
-import CDPersist
 import SharedModels
 import TasktiveLocale
 
@@ -105,14 +104,14 @@ struct TaskDetailsSheet: View {
     }
 }
 
-struct TaskDetailsSheet_Previews: PreviewProvider {
-    static var previews: some View {
-        TaskDetailsSheet(
-            // swiftlint:disable force_try
-            task: try! CoreTask.list(from: PersistenceController.preview.context).get().first!.asAppTask,
-            onClose: { },
-            onDone: { _, _ in },
-            onDelete: { }
-        )
-    }
-}
+// struct TaskDetailsSheet_Previews: PreviewProvider {
+//    static var previews: some View {
+//        TaskDetailsSheet(
+//            // swiftlint:disable force_try
+//            task: try! CoreTask.list(from: PersistenceController.preview.context).get().first!.asAppTask,
+//            onClose: { },
+//            onDone: { _, _ in },
+//            onDelete: { }
+//        )
+//    }
+// }

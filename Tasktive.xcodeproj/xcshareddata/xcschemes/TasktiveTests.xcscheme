@@ -33,6 +33,17 @@
                ReferencedContainer = "container:Tasktive.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "2C9F2DBB28E4BE5500377B03"
+               BuildableName = "BackendTests.xctest"
+               BlueprintName = "BackendTests"
+               ReferencedContainer = "container:Tasktive.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

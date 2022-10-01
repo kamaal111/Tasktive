@@ -7,7 +7,6 @@
 
 #if os(iOS)
 import UIKit
-import Skypiea
 import Logster
 import CloudKit
 import Environment
@@ -15,7 +14,7 @@ import Environment
 private let logger = Logster(from: AppDelegate.self)
 
 final class AppDelegate: NSObject, UIApplicationDelegate {
-    private let skypiea: Skypiea = .shared
+    private let backend = Backend(preview: false)
 
     func application(
         _ application: UIApplication,
@@ -26,7 +25,7 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         if Environment.Features.iCloudSyncing {
             Task {
                 do {
-                    try await skypiea.subscripeToAll()
+                    try await backend.notifications.subscribeToAll()
                 } catch {
                     logger.error(label: "failed to subscribe to iCloud subscriptions", error: error)
                 }
