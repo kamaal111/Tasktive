@@ -154,12 +154,14 @@ final class TasksViewModel: ObservableObject {
             guard let taskIndex = tasks[oldDateHash]?.findIndex(by: \.id, is: taskID)
             else { return .failure(.updateFailure) }
 
+            let updateTaskResult = await backend.tasks.update(on: task.source, by: taskID, with: arguments)
             let updatedTask: AppTask
-            do {
-                updatedTask = try await backend.tasks.update(on: task.source, by: taskID, with: arguments)
-            } catch {
-                logger.error(label: "failed to update this task", error: error)
-                return .failure(.updateFailure)
+            switch updateTaskResult {
+            case let .failure(failure):
+                let maybeBackendError = await mapBackendTaskErrors(failure)
+                return .failure(maybeBackendError ?? .updateFailure)
+            case let .success(success):
+                updatedTask = success
             }
 
             var mutableTask = tasks

@@ -87,30 +87,51 @@ public class TasksClient {
         }
     }
 
-    public func update(on source: DataSource, by id: UUID, with arguments: TaskArguments) async throws -> AppTask {
+    /// Update the task by id.
+    /// - Parameters:
+    ///   - source: Where to create the tasks on.
+    ///   - id: The search id.
+    ///   - arguments: The arguments used to update the task.
+    /// - Returns:  A result either containing the updated task on success or ``Errors`` on failure.
+    public func update(
+        on source: DataSource,
+        by id: UUID,
+        with arguments: TaskArguments
+    ) async -> Result<AppTask, Errors> {
         let predicate = NSPredicate(format: "id == %@", id.nsString)
 
-        let object: (any Taskable)?
         switch source {
         case .coreData:
-            object = try await CoreTask.find(by: predicate, from: persistenceController.context)
+            let foundTask: CoreTask
+            let findResult = CoreTask.find(by: predicate, from: persistenceController.context)
                 .mapError(mapCoreTaskErrors)
-                .get()?
-                .update(with: arguments, on: persistenceController.context)
+            switch findResult {
+            case let .failure(failure):
+                return .failure(failure)
+            case let .success(success):
+                guard let success else { return .failure(.notFound) }
+                foundTask = success
+            }
+
+            return await foundTask.update(with: arguments, on: persistenceController.context)
                 .mapError(mapCoreTaskErrors)
-                .get()
+                .map(\.asAppTask)
         case .iCloud:
-            object = try await CloudTask.find(by: predicate, from: skypiea)
+            let foundTask: CloudTask
+            let findResult = await CloudTask.find(by: predicate, from: skypiea)
                 .mapError(mapCloudTaskErrors)
-                .get()?
-                .update(with: arguments, on: skypiea)
+            switch findResult {
+            case let .failure(failure):
+                return .failure(failure)
+            case let .success(success):
+                guard let success else { return .failure(.notFound) }
+                foundTask = success
+            }
+
+            return await foundTask.update(with: arguments, on: skypiea)
                 .mapError(mapCloudTaskErrors)
-                .get()
+                .map(\.asAppTask)
         }
-
-        guard let object = object else { throw Errors.notFound }
-
-        return object.asAppTask
     }
 
     public func delete(on source: DataSource, by id: UUID) async throws {
