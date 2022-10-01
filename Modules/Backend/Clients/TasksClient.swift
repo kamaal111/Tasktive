@@ -69,20 +69,22 @@ public class TasksClient {
         }
     }
 
-    public func create(on source: DataSource, with arguments: TaskArguments) async throws -> AppTask {
-        let object: any Taskable
+    /// Creates a task using the given arguments on the given `DataSource`.
+    /// - Parameters:
+    ///   - source: Where to create the tasks on.
+    ///   - arguments: The arguments used to create a task.
+    /// - Returns: A result either containing the created task on success or ``Errors`` on failure.
+    public func create(on source: DataSource, with arguments: TaskArguments) async -> Result<AppTask, Errors> {
         switch source {
         case .coreData:
-            object = try CoreTask.create(with: arguments, from: persistenceController.context)
+            return CoreTask.create(with: arguments, from: persistenceController.context)
                 .mapError(mapCoreTaskErrors)
-                .get()
+                .map(\.asAppTask)
         case .iCloud:
-            object = try await CloudTask.create(with: arguments, from: skypiea)
+            return await CloudTask.create(with: arguments, from: skypiea)
                 .mapError(mapCloudTaskErrors)
-                .get()
+                .map(\.asAppTask)
         }
-
-        return object.asAppTask
     }
 
     public func update(on source: DataSource, by id: UUID, with arguments: TaskArguments) async throws -> AppTask {

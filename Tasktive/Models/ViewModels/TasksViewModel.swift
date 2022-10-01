@@ -95,11 +95,14 @@ final class TasksViewModel: ObservableObject {
     }
 
     func createTask(with arguments: TaskArguments, on source: DataSource) async -> Result<Void, UserErrors> {
+        let createTaskResult = await backend.tasks.create(on: source, with: arguments)
         let task: AppTask
-        do {
-            task = try await backend.tasks.create(on: source, with: arguments)
-        } catch {
-            return .failure(.createTaskFailure)
+        switch createTaskResult {
+        case let .failure(failure):
+            let maybeMappedBackendError = await mapBackendTaskErrors(failure)
+            return .failure(maybeMappedBackendError ?? .createTaskFailure)
+        case let .success(success):
+            task = success
         }
 
         var updatedTasks = tasks
