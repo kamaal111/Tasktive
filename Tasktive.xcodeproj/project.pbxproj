@@ -301,6 +301,9 @@
 		2CF24AAA28842B5B00778BD9 /* View+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF24AA928842B5B00778BD9 /* View+extensions.swift */; };
 		2CF24AAE28842F9A00778BD9 /* ShrimpExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 2CF24AAD28842F9A00778BD9 /* ShrimpExtensions */; };
 		2CF24AB128843FE800778BD9 /* TasksScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF24AB028843FE800778BD9 /* TasksScreen.swift */; };
+		2CF2BB7628E9F32E0014564D /* ZaWarudo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF2BB7528E9F32E0014564D /* ZaWarudo.swift */; };
+		2CF2BB7728E9F32E0014564D /* ZaWarudo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF2BB7528E9F32E0014564D /* ZaWarudo.swift */; };
+		2CF2BB7828E9F32E0014564D /* ZaWarudo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF2BB7528E9F32E0014564D /* ZaWarudo.swift */; };
 		2CF3A6E928E0D65D00DCEA2C /* SharedModels in Frameworks */ = {isa = PBXBuildFile; productRef = 2CF3A6E828E0D65D00DCEA2C /* SharedModels */; };
 		2CFCA0A428A977CE007A08F2 /* AppDelegate_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFCA0A328A977CE007A08F2 /* AppDelegate_macOS.swift */; };
 		2CFCA0A628A97842007A08F2 /* AppDelegate_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFCA0A528A97842007A08F2 /* AppDelegate_iOS.swift */; };
@@ -563,6 +566,7 @@
 		2CF24AA928842B5B00778BD9 /* View+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+extensions.swift"; sourceTree = "<group>"; };
 		2CF24AAB28842E2600778BD9 /* package.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = package.json; sourceTree = "<group>"; };
 		2CF24AB028843FE800778BD9 /* TasksScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksScreen.swift; sourceTree = "<group>"; };
+		2CF2BB7528E9F32E0014564D /* ZaWarudo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZaWarudo.swift; sourceTree = "<group>"; };
 		2CF3A6E728E0D30300DCEA2C /* SharedModels */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SharedModels; sourceTree = "<group>"; };
 		2CFCA0A328A977CE007A08F2 /* AppDelegate_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate_macOS.swift; sourceTree = "<group>"; };
 		2CFCA0A528A97842007A08F2 /* AppDelegate_iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate_iOS.swift; sourceTree = "<group>"; };
@@ -1173,6 +1177,7 @@
 				2C1B19662888675D00D734D2 /* MainView.swift */,
 				2CB3F3B528BD34760016B7F4 /* SceneDelegate.swift */,
 				2CBCE6062881DE240057F4CD /* TasktiveApp.swift */,
+				2CF2BB7528E9F32E0014564D /* ZaWarudo.swift */,
 				2C51C90B288470C3008939F7 /* Enumerations */,
 				2C47E3F02883685D00FD4469 /* Extensions */,
 				2CCCADAF2881F5680033E2EF /* Models */,
@@ -1830,6 +1835,7 @@
 				2C5F41E928E85B0400278DC7 /* NotificationsClient.swift in Sources */,
 				2C69A09928B19BC600D5006D /* WideNavigationLink.swift in Sources */,
 				2C69A09A28B19BC600D5006D /* PlaygroundScreen.swift in Sources */,
+				2CF2BB7728E9F32E0014564D /* ZaWarudo.swift in Sources */,
 				2C10089E28D5265300DB1C8F /* UserData.swift in Sources */,
 				2C69A09B28B19BC600D5006D /* ProgressSection.swift in Sources */,
 				2C5F426428E8999C00278DC7 /* TasksFetchedContext.swift in Sources */,
@@ -1910,6 +1916,7 @@
 				2C5F41EA28E85B0400278DC7 /* NotificationsClient.swift in Sources */,
 				2C98E41B28B12E170048149F /* WideNavigationLink.swift in Sources */,
 				2C98E41C28B12E170048149F /* PlaygroundScreen.swift in Sources */,
+				2CF2BB7828E9F32E0014564D /* ZaWarudo.swift in Sources */,
 				2C10089F28D5265300DB1C8F /* UserData.swift in Sources */,
 				2C98E41D28B12E170048149F /* ProgressSection.swift in Sources */,
 				2C5F426528E8999C00278DC7 /* TasksFetchedContext.swift in Sources */,
@@ -2002,6 +2009,7 @@
 				2C1B196C28886CFB00D734D2 /* PopUpError.swift in Sources */,
 				2C79879828AC30DF00F36C59 /* NavigationPath+extensions.swift in Sources */,
 				2C9435DE28B2868A00281AF7 /* Gridable.swift in Sources */,
+				2CF2BB7628E9F32E0014564D /* ZaWarudo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -19,41 +19,12 @@ actor TasksFetchedContextStore {
         store = store.appended(context)
     }
 
+    func replaceStore(with newStore: [TasksFetchedContext]) {
+        store = newStore
+    }
+
     @discardableResult
     func pop() -> TasksFetchedContext? {
         store.popLast()
-    }
-
-    @discardableResult
-    func findAndRemoveIfTrue<T: Equatable>(
-        by keyPath: KeyPath<TasksFetchedContext, T>,
-        is comparisonValue: T,
-        condition: (TasksFetchedContext) throws -> Bool
-    ) rethrows -> Bool {
-        try findAndRemoveIfTrue(where: { $0[keyPath: keyPath] == comparisonValue }, condition: condition)
-    }
-
-    @discardableResult
-    func findAndRemoveIfTrue(
-        where predicate: (TasksFetchedContext) throws -> Bool,
-        condition: (TasksFetchedContext) throws -> Bool
-    ) rethrows -> Bool {
-        guard let itemIndex = try store.findIndex(where: predicate) else { return false }
-
-        let item = store[itemIndex]
-        guard try condition(item) else { return false }
-
-        store.remove(at: itemIndex)
-        return true
-    }
-
-    @discardableResult
-    func findAndRemoveIfTrue(where predicate: (TasksFetchedContext) throws -> Bool) rethrows -> Bool {
-        guard let itemIndex = try store.findIndex(where: predicate) else { return false }
-
-        let item = store[itemIndex]
-
-        store.remove(at: itemIndex)
-        return true
     }
 }

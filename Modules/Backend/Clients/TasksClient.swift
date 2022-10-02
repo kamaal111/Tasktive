@@ -41,6 +41,25 @@ public class TasksClient {
         return (context.date, context.dataSources)
     }
 
+    /// Creates a task using the given arguments on the given `DataSource`.
+    /// - Parameters:
+    ///   - arguments: The arguments used to create a task.
+    ///   - source: Where to create the tasks on.
+    /// - Returns: A result either containing the created task on success or ``Errors`` on failure.
+    public func create(with arguments: TaskArguments, on source: DataSource) async -> Result<AppTask, Errors> {
+        let result = await _create(with: arguments, on: source)
+        let task: AppTask
+        switch result {
+        case let .failure(failure):
+            return .failure(failure)
+        case let .success(success):
+            task = success
+        }
+
+        await store.add(task)
+        return .success(task)
+    }
+
     /// List all tasks.
     /// - Parameters:
     ///   - sources: Where to get the tasks from.
@@ -146,24 +165,6 @@ public class TasksClient {
         let startDate = getHashDate(from: date)
         let tasksForSearchedForDate = await store.get(startDate)
         return (tasksForSearchedForDate, maybeError)
-    }
-
-    /// Creates a task using the given arguments on the given `DataSource`.
-    /// - Parameters:
-    ///   - source: Where to create the tasks on.
-    ///   - arguments: The arguments used to create a task.
-    /// - Returns: A result either containing the created task on success or ``Errors`` on failure.
-    public func create(on source: DataSource, with arguments: TaskArguments) async -> Result<AppTask, Errors> {
-        switch source {
-        case .coreData:
-            return CoreTask.create(with: arguments, from: persistenceController.context)
-                .mapError(mapCoreTaskErrors)
-                .map(\.asAppTask)
-        case .iCloud:
-            return await CloudTask.create(with: arguments, from: skypiea)
-                .mapError(mapCloudTaskErrors)
-                .map(\.asAppTask)
-        }
     }
 
     /// Update the task by id.
@@ -280,6 +281,24 @@ public class TasksClient {
         case iCloudDisabledByUser
     }
 
+    /// Creates a task using the given arguments on the given `DataSource`.
+    /// - Parameters:
+    ///   - source: Where to create the tasks on.
+    ///   - arguments: The arguments used to create a task.
+    /// - Returns: A result either containing the created task on success or ``Errors`` on failure.
+    private func _create(with arguments: TaskArguments, on source: DataSource) async -> Result<AppTask, Errors> {
+        switch source {
+        case .coreData:
+            return CoreTask.create(with: arguments, from: persistenceController.context)
+                .mapError(mapCoreTaskErrors)
+                .map(\.asAppTask)
+        case .iCloud:
+            return await CloudTask.create(with: arguments, from: skypiea)
+                .mapError(mapCloudTaskErrors)
+                .map(\.asAppTask)
+        }
+    }
+
     /// List all tasks from the given `DataSource`.
     /// - Parameter source: Where to get the tasks from.
     /// - Returns: A result either containing an array with all tasks on success or ``Errors`` on failure.
@@ -366,12 +385,20 @@ public class TasksClient {
             return true
         }
 
-        await contextStore.findAndRemoveIfTrue(by: \.date, is: newContext.date, condition: {
-            $0.dataSources != newContext.dataSources
-        })
-        guard !(await contextStore.findAndRemoveIfTrue(where: { $0 == newContext })) else { return false }
+        var fetchedContexts = await contextStore.store
+        if let fetchedContextIndexWithSameDate = fetchedContexts.findIndex(by: \.date, is: newContext.date),
+           let fetchedContextWithSameDate = fetchedContexts.at(fetchedContextIndexWithSameDate) {
+            if fetchedContextWithSameDate.dataSources != newContext.dataSources {
+                fetchedContexts.remove(at: fetchedContextIndexWithSameDate)
+            }
+        }
 
-        await contextStore.append(newContext)
+        if fetchedContexts.contains(newContext) {
+            await contextStore.replaceStore(with: fetchedContexts.appended(newContext))
+        } else {
+            await contextStore.append(newContext)
+        }
+
         return true
     }
 

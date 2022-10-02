@@ -89,27 +89,16 @@ final class TasksViewModel: ObservableObject {
     }
 
     func createTask(with arguments: TaskArguments, on source: DataSource) async -> Result<Void, UserErrors> {
-        let createTaskResult = await backend.tasks.create(on: source, with: arguments)
-        let task: AppTask
+        let createTaskResult = await backend.tasks.create(with: arguments, on: source)
         switch createTaskResult {
         case let .failure(failure):
             let maybeMappedBackendError = await mapBackendTaskErrors(failure)
             return .failure(maybeMappedBackendError ?? .createTaskFailure)
-        case let .success(success):
-            task = success
+        case .success:
+            break
         }
 
-        var updatedTasks = tasks
-        let hashDate = getHashDate(from: task.dueDate)
-        if updatedTasks[hashDate] == nil {
-            updatedTasks[hashDate] = [task]
-        } else {
-            updatedTasks[hashDate] = (updatedTasks[hashDate] ?? []) + [task]
-        }
-
-        await setTasks(updatedTasks[hashDate] ?? [], forDate: hashDate)
-
-        return .success(())
+        return await refreshTasks()
     }
 
     func getInitialTasks(from sources: [DataSource]) async -> Result<Void, UserErrors> {
@@ -217,6 +206,12 @@ final class TasksViewModel: ObservableObject {
 
             return .success(())
         })
+    }
+
+    private func refreshTasks() async -> Result<Void, UserErrors> {
+        guard let lastFetchedContext = await backend.tasks.getLastFetchedForContext() else { return .success(()) }
+
+        return await getTasks(from: lastFetchedContext.sources, for: lastFetchedContext.date)
     }
 
     @discardableResult
