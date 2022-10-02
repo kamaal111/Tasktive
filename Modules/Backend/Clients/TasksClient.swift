@@ -60,6 +60,36 @@ public class TasksClient {
         return .success(task)
     }
 
+    /// Update the given task.
+    /// - Parameters:
+    ///   - task: The task to update.
+    ///   - arguments: The arguments used to update the task.
+    /// - Returns: A result either containing the updated task on success or ``Errors`` on failure.
+    public func update(_ task: AppTask, with arguments: TaskArguments) async -> Result<AppTask, Errors> {
+        guard task.arguments != arguments else { return .success(task) }
+
+        let validationResult = validateTaskArguments(arguments)
+        switch validationResult {
+        case let .failure(failure):
+            return .failure(failure)
+        case .success:
+            break
+        }
+
+        let result = await update(on: task.source, by: task.id, with: arguments)
+        let updatedTask: AppTask
+        switch result {
+        case let .failure(failure):
+            return .failure(failure)
+        case let .success(success):
+            updatedTask = success
+        }
+
+        await store.update(updatedTask, fromDate: task.dueDate)
+
+        return .success(updatedTask)
+    }
+
     /// List all tasks.
     /// - Parameters:
     ///   - sources: Where to get the tasks from.
@@ -89,17 +119,22 @@ public class TasksClient {
     ) async -> (tasks: [AppTask]?, errors: Errors?) {
         var queryString: String?
         if let date {
-            let startDate = getHashDate(from: date)
+            let startDate = date.hashed
             let newLastFetchedContext = TasksFetchedContext(date: startDate, dataSources: sources)
 
+            if forceFetch {
+                logger.info("using force fetch to fetch tasks for \(startDate)")
+            }
+
             guard await shouldFetchTasks(newContext: newLastFetchedContext, forceFetch: forceFetch) else {
+                logger.info("getting cached tasks for \(startDate)")
                 let previouslyFetchedForTasks = await store.get(date)
                 return (previouslyFetchedForTasks, .none)
             }
 
             logger.info("fetching tasks for \(startDate)")
 
-            let endDate = getHashDate(from: startDate.incrementByDays(1)).incrementBySeconds(-1)
+            let endDate = startDate.incrementByDays(1).hashed.incrementBySeconds(-1)
             queryString = NSPredicate(
                 format: "(dueDate >= %@) AND (dueDate <= %@)",
                 startDate.asNSDate,
@@ -132,29 +167,7 @@ public class TasksClient {
             appTasks = await updateDueDateOfTasksIfNeeded(appTasks, sources: sources)
         }
 
-        let groupedTasks = Dictionary(grouping: appTasks, by: {
-            getHashDate(from: $0.dueDate)
-        })
-
-        var tasksSet: [AppTask] = []
-        for (date, tasks) in groupedTasks {
-            if let previouslyFetchedTasks = await store.get(date) {
-                let tasks: [AppTask] = tasks
-                    .concat(previouslyFetchedTasks)
-                    .reduce([]) { result, task in
-                        if !result.contains(where: { $0.id == task.id }) {
-                            return result.appended(task)
-                        }
-
-                        return result
-                    }
-                await store.set(tasks, forDate: date)
-                tasksSet.append(contentsOf: tasks)
-            } else {
-                await store.set(tasks, forDate: date)
-                tasksSet.append(contentsOf: tasks)
-            }
-        }
+        let tasksSet = await store.add(appTasks)
 
         if maybeError != nil {
             await contextStore.pop()
@@ -162,8 +175,7 @@ public class TasksClient {
 
         guard let date else { return (tasksSet, maybeError) }
 
-        let startDate = getHashDate(from: date)
-        let tasksForSearchedForDate = await store.get(startDate)
+        let tasksForSearchedForDate = await store.get(date)
         return (tasksForSearchedForDate, maybeError)
     }
 
@@ -173,7 +185,7 @@ public class TasksClient {
     ///   - id: The search id.
     ///   - arguments: The arguments used to update the task.
     /// - Returns:  A result either containing the updated task on success or ``Errors`` on failure.
-    public func update(
+    private func update(
         on source: DataSource,
         by id: UUID,
         with arguments: TaskArguments
@@ -279,6 +291,8 @@ public class TasksClient {
         case generalFailure(message: String)
         /// iCloud is disabled by user.
         case iCloudDisabledByUser
+        /// Invalid title provided.
+        case invalidTitle
     }
 
     /// Creates a task using the given arguments on the given `DataSource`.
@@ -340,9 +354,15 @@ public class TasksClient {
         }
     }
 
+    private func validateTaskArguments(_ arguments: TaskArguments) -> Result<Void, Errors> {
+        guard !arguments.title.trimmingByWhitespacesAndNewLines.isEmpty else { return .failure(.invalidTitle) }
+
+        return .success(())
+    }
+
     private func updateDueDateOfTasksIfNeeded(_ tasks: [AppTask], sources: [DataSource]) async -> [AppTask] {
         let now = Date()
-        let today = getHashDate(from: now).asNSDate
+        let today = now.hashed.asNSDate
         let tasksIDs = tasks.map(\.id.nsString)
         let predicate = NSPredicate(format: "(dueDate < %@) AND ticked == NO AND NOT(id in %@)", today, tasksIDs)
 
@@ -379,32 +399,39 @@ public class TasksClient {
     }
 
     private func shouldFetchTasks(newContext: TasksFetchedContext, forceFetch: Bool) async -> Bool {
-        if forceFetch {
-            await contextStore.append(newContext)
+        let fetchedContexts = await contextStore.store
 
+        let fetchedContextWithSameDateIndex = fetchedContexts.findIndex(by: \.date, is: newContext.date)
+
+        if forceFetch {
+            if let fetchedContextWithSameDateIndex {
+                await contextStore.moveToEnd(fetchedContextWithSameDateIndex)
+            }
             return true
         }
 
-        var fetchedContexts = await contextStore.store
-        if let fetchedContextIndexWithSameDate = fetchedContexts.findIndex(by: \.date, is: newContext.date),
-           let fetchedContextWithSameDate = fetchedContexts.at(fetchedContextIndexWithSameDate) {
+        if let fetchedContextWithSameDateIndex,
+           let fetchedContextWithSameDate = fetchedContexts.at(fetchedContextWithSameDateIndex) {
             if fetchedContextWithSameDate.dataSources != newContext.dataSources {
-                fetchedContexts.remove(at: fetchedContextIndexWithSameDate)
+                await contextStore.remove(at: fetchedContextWithSameDateIndex)
             }
         }
 
-        if fetchedContexts.contains(newContext) {
-            await contextStore.replaceStore(with: fetchedContexts.appended(newContext))
-        } else {
-            await contextStore.append(newContext)
+        if await contextStore.contains(newContext) {
+            if let fetchedContextWithSameDateIndex {
+                await contextStore.moveToEnd(fetchedContextWithSameDateIndex)
+            } else {
+                #if DEBUG
+                fatalError("could not unwrap fetchedContextWithSameDateIndex")
+                #else
+                logger.warning("could not unwrap fetchedContextWithSameDateIndex")
+                #endif
+            }
+            return false
         }
 
+        await contextStore.append(newContext)
         return true
-    }
-
-    private func getHashDate(from date: Date) -> Date {
-        let dateComponents = Calendar.current.dateComponents([.day, .year, .month], from: date)
-        return Calendar.current.date(from: dateComponents) ?? Date()
     }
 
     private func findCoreTask(by id: UUID) -> Result<CoreTask, Errors> {

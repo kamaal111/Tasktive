@@ -69,8 +69,7 @@ final class TasksViewModel: ObservableObject {
     }
 
     func tasksForDate(_ date: Date) -> [AppTask] {
-        let startDate = getHashDate(from: date)
-        return tasks[startDate] ?? []
+        tasks[date.hashed] ?? []
     }
 
     func progressForDate(_ date: Date) -> Double {
@@ -122,7 +121,7 @@ final class TasksViewModel: ObservableObject {
         )
         if let tasks {
             let groupedTasks = Dictionary(grouping: tasks, by: {
-                getHashDate(from: $0.dueDate)
+                $0.dueDate.hashed
             })
             for (date, tasks) in groupedTasks {
                 await setTasks(tasks, forDate: date)
@@ -140,47 +139,16 @@ final class TasksViewModel: ObservableObject {
 
     func updateTask(_ task: AppTask, with arguments: TaskArguments) async -> Result<Void, UserErrors> {
         await withSettingTasks(completion: {
-            guard task.arguments != arguments else { return .success(()) }
-
-            let validationResult = validateTaskArguments(arguments)
-            switch validationResult {
+            let result = await backend.tasks.update(task, with: arguments)
+            switch result {
             case let .failure(failure):
-                return .failure(failure)
+                let mappedError = await mapBackendTaskErrors(failure)
+                return .failure(mappedError ?? .updateFailure)
             case .success:
                 break
             }
 
-            let taskID = task.id
-
-            let oldDateHash = getHashDate(from: task.dueDate)
-            guard let taskIndex = tasks[oldDateHash]?.findIndex(by: \.id, is: taskID)
-            else { return .failure(.updateFailure) }
-
-            let updateTaskResult = await backend.tasks.update(on: task.source, by: taskID, with: arguments)
-            let updatedTask: AppTask
-            switch updateTaskResult {
-            case let .failure(failure):
-                let maybeBackendError = await mapBackendTaskErrors(failure)
-                return .failure(maybeBackendError ?? .updateFailure)
-            case let .success(success):
-                updatedTask = success
-            }
-
-            var mutableTask = tasks
-
-            let newDateHash = getHashDate(from: arguments.dueDate)
-            if oldDateHash != newDateHash {
-                mutableTask[newDateHash]?.append(updatedTask)
-                mutableTask[oldDateHash]?.remove(at: taskIndex)
-
-                await setTasks(mutableTask[newDateHash] ?? [updatedTask], forDate: newDateHash)
-            } else {
-                mutableTask[oldDateHash]?[taskIndex] = updatedTask
-            }
-
-            await setTasks(mutableTask[oldDateHash] ?? [], forDate: oldDateHash)
-
-            return .success(())
+            return await refreshTasks()
         })
     }
 
@@ -195,7 +163,7 @@ final class TasksViewModel: ObservableObject {
                 break
             }
 
-            let dateHash = getHashDate(from: task.dueDate)
+            let dateHash = task.dueDate.hashed
             guard let taskIndex = tasks[dateHash]?.findIndex(by: \.id, is: task.id) else {
                 return .failure(.deleteFailure)
             }
@@ -274,13 +242,10 @@ final class TasksViewModel: ObservableObject {
             logger.warning("iCloud has been disbaled by user")
             await setPendingUserError(.iCloudIsDisabled)
             return .iCloudIsDisabled
+        case .invalidTitle:
+            logger.warning("invalid title provided")
+            return .invalidTitle
         }
-    }
-
-    private func validateTaskArguments(_ arguments: TaskArguments) -> Result<Void, UserErrors> {
-        guard !arguments.title.trimmingByWhitespacesAndNewLines.isEmpty else { return .failure(.invalidTitle) }
-
-        return .success(())
     }
 
     private func withLoadingTasks<T>(completion: () async -> T) async -> T {
@@ -309,14 +274,9 @@ final class TasksViewModel: ObservableObject {
         loadingTasks = state
     }
 
-    private func getHashDate(from date: Date) -> Date {
-        let dateComponents = Calendar.current.dateComponents([.day, .year, .month], from: date)
-        return Calendar.current.date(from: dateComponents) ?? Date()
-    }
-
     @MainActor
     private func setTasks(_ tasks: [AppTask], forDate date: Date) {
-        self.tasks[getHashDate(from: date)] = tasks
+        self.tasks[date.hashed] = tasks
     }
 
     private func setupObservers() {

@@ -7,6 +7,7 @@
 
 import Foundation
 
+// swiftlint:disable identifier_name
 var Current = ZaWarudo()
 
 /// Object to infuluence za warudo in anyway.

@@ -19,12 +19,21 @@ actor TasksFetchedContextStore {
         store = store.appended(context)
     }
 
-    func replaceStore(with newStore: [TasksFetchedContext]) {
-        store = newStore
+    func moveToEnd(_ source: Int) {
+        append(remove(at: source))
     }
 
     @discardableResult
     func pop() -> TasksFetchedContext? {
         store.popLast()
+    }
+
+    @discardableResult
+    func remove(at index: Int) -> TasksFetchedContext {
+        store.remove(at: index)
+    }
+
+    func contains(_ context: TasksFetchedContext) -> Bool {
+        store.contains(context)
     }
 }
