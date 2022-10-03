@@ -202,6 +202,30 @@ public class TasksClient {
         return .success(())
     }
 
+    /// Task failures.
+    public enum Errors: Error {
+        /// Failure while saving.
+        case saveFailure(context: Error?)
+        /// Failure while fetching.
+        case fetchFailure(context: Error?)
+        /// Failure while updating.
+        case updateFailure(context: Error?)
+        /// Failure while deleting.
+        case deleteFailure(context: Error?)
+        /// Failure while updating many tasks.
+        case updateManyFailure(context: Error?)
+        /// Failure while clearing tasks.
+        case clearFailure(context: Error?)
+        /// Task is not found.
+        case notFound
+        /// Unknown error.
+        case generalFailure(message: String)
+        /// iCloud is disabled by user.
+        case iCloudDisabledByUser
+        /// Invalid title provided.
+        case invalidTitle
+    }
+
     /// Update the task by id.
     /// - Parameters:
     ///   - source: Where to create the tasks on.
@@ -292,30 +316,6 @@ public class TasksClient {
             return await CloudTask.updateManyDates(tasks, date: date, on: skypiea)
                 .mapError(mapCloudTaskErrors)
         }
-    }
-
-    /// Task failures.
-    public enum Errors: Error {
-        /// Failure while saving.
-        case saveFailure(context: Error?)
-        /// Failure while fetching.
-        case fetchFailure(context: Error?)
-        /// Failure while updating.
-        case updateFailure(context: Error?)
-        /// Failure while deleting.
-        case deleteFailure(context: Error?)
-        /// Failure while updating many tasks.
-        case updateManyFailure(context: Error?)
-        /// Failure while clearing tasks.
-        case clearFailure(context: Error?)
-        /// Task is not found.
-        case notFound
-        /// Unknown error.
-        case generalFailure(message: String)
-        /// iCloud is disabled by user.
-        case iCloudDisabledByUser
-        /// Invalid title provided.
-        case invalidTitle
     }
 
     /// Creates a task using the given arguments on the given `DataSource`.

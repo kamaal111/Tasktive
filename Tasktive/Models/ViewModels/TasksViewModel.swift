@@ -167,10 +167,22 @@ final class TasksViewModel: ObservableObject {
         })
     }
 
-    private func refreshTasks() async -> Result<Void, UserErrors> {
-        guard let lastFetchedContext = await backend.tasks.getLastFetchedForContext() else { return .success(()) }
+    @discardableResult
+    private func refreshTasks(
+        dataIsStale: Bool = false,
+        enforcedSources: [DataSource] = []
+    ) async -> Result<Void, UserErrors> {
+        guard let lastFetchedContext = await backend.tasks.getLastFetchedForContext() else {
+            logger.warning("can't refresh if no requests have been made before")
+            return .success(())
+        }
 
-        return await getTasks(from: lastFetchedContext.sources, for: lastFetchedContext.date)
+        return await _getTasks(
+            from: lastFetchedContext.sources.concat(enforcedSources).uniques(),
+            for: lastFetchedContext.date,
+            dataIsStale: dataIsStale,
+            updateNotCompletedTasks: false
+        )
     }
 
     @discardableResult
@@ -295,18 +307,7 @@ final class TasksViewModel: ObservableObject {
             logger.info("recieved iCloud changes notification; \(notificationObject as Any)")
             guard Environment.Features.iCloudSyncing, UserDefaults.iCloudSyncingIsEnabled ?? true else { return }
 
-            Task {
-                guard let lastFetchedContext = await backend.tasks.getLastFetchedForContext() else { return }
-
-                let dataSources = lastFetchedContext.sources
-                    .appended(.iCloud)
-                    .uniques()
-
-                await _getTasks(from: dataSources,
-                                for: lastFetchedContext.date,
-                                dataIsStale: true,
-                                updateNotCompletedTasks: false)
-            }
+            Task { await refreshTasks(dataIsStale: true, enforcedSources: [.iCloud]) }
         default:
             break
         }
