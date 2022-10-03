@@ -113,7 +113,7 @@ final class TasksViewModelTests: QuickSpec {
                     }
                     gettingTasksExpectation.fulfill()
                 }
-                waitForExpectations(timeout: 3)
+                waitForExpectations(timeout: 5)
 
                 let updateTaskExpectation = expectation(description: "Updating a task")
                 Task {
@@ -147,8 +147,6 @@ final class TasksViewModelTests: QuickSpec {
 
                 let tasksForNow = tasksViewModel.tasksForDate(now)
                 expect(tasksForNow.isEmpty).to(beTrue())
-
-                print("tasksViewModel.tasks", tasksViewModel.tasks)
 
                 let tasksForTomorrow = tasksViewModel.tasksForDate(tomorrow)
                 expect(tasksForTomorrow.count) == 1

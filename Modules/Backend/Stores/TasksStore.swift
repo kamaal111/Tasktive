@@ -53,7 +53,7 @@ actor TasksStore {
             #endif
         }
 
-        guard source != destination else { return }
+        guard source.hashed != destination.hashed else { return }
 
         remove(task, fromDate: source)
         add(task)
@@ -65,7 +65,7 @@ actor TasksStore {
 
         let removedTask = tasks.remove(at: index)
 
-        set(tasks)
+        store[date.hashed] = tasks
 
         return removedTask
     }
