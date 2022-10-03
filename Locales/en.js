@@ -64,4 +64,5 @@ module.exports = {
   LOG: 'Log',
   DUE_DATE: 'Due date',
   ACKNOWLEDGEMENTS: 'Acknowledgements',
+  PACKAGES: 'Packages',
 };
