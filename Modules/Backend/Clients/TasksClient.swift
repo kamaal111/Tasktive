@@ -41,6 +41,8 @@ public class TasksClient {
         return (context.date, context.dataSources)
     }
 
+    // - MARK: Create
+
     /// Creates a task using the given arguments on the given `DataSource`.
     /// - Parameters:
     ///   - arguments: The arguments used to create a task.
@@ -60,50 +62,7 @@ public class TasksClient {
         return .success(task)
     }
 
-    /// Delete the given task.
-    /// - Parameter task: The task to delete.
-    /// - Returns: A result either containing nothing(`Void`) on success or ``Errors`` on failure.
-    public func delete(_ task: AppTask) async -> Result<Void, Errors> {
-        let result = await _delete(on: task.source, by: task.id)
-        switch result {
-        case let .failure(failure):
-            return .failure(failure)
-        case .success:
-            break
-        }
-
-        await store.remove(task, fromDate: task.dueDate)
-        return .success(())
-    }
-
-    /// Update the given task.
-    /// - Parameters:
-    ///   - task: The task to update.
-    ///   - arguments: The arguments used to update the task.
-    /// - Returns: A result either containing the updated task on success or ``Errors`` on failure.
-    public func update(_ task: AppTask, with arguments: TaskArguments) async -> Result<AppTask, Errors> {
-        guard task.arguments != arguments else { return .success(task) }
-
-        let validationResult = validateTaskArguments(arguments)
-        switch validationResult {
-        case let .failure(failure):
-            return .failure(failure)
-        case .success:
-            break
-        }
-
-        let result = await _update(on: task.source, by: task.id, with: arguments)
-        let updatedTask: AppTask
-        switch result {
-        case let .failure(failure):
-            return .failure(failure)
-        case let .success(success):
-            updatedTask = success
-        }
-
-        await store.update(updatedTask, fromDate: task.dueDate)
-        return .success(updatedTask)
-    }
+    // - MARK: Read
 
     /// List all tasks.
     /// - Parameters:
@@ -192,6 +151,55 @@ public class TasksClient {
 
         let tasksForSearchedForDate = await store.get(date)
         return (tasksForSearchedForDate, maybeError)
+    }
+
+    // - MARK: Update
+
+    /// Update the given task.
+    /// - Parameters:
+    ///   - task: The task to update.
+    ///   - arguments: The arguments used to update the task.
+    /// - Returns: A result either containing the updated task on success or ``Errors`` on failure.
+    public func update(_ task: AppTask, with arguments: TaskArguments) async -> Result<AppTask, Errors> {
+        guard task.arguments != arguments else { return .success(task) }
+
+        let validationResult = validateTaskArguments(arguments)
+        switch validationResult {
+        case let .failure(failure):
+            return .failure(failure)
+        case .success:
+            break
+        }
+
+        let result = await _update(on: task.source, by: task.id, with: arguments)
+        let updatedTask: AppTask
+        switch result {
+        case let .failure(failure):
+            return .failure(failure)
+        case let .success(success):
+            updatedTask = success
+        }
+
+        await store.update(updatedTask, fromDate: task.dueDate)
+        return .success(updatedTask)
+    }
+
+    // - MARK: Delete
+
+    /// Delete the given task.
+    /// - Parameter task: The task to delete.
+    /// - Returns: A result either containing nothing(`Void`) on success or ``Errors`` on failure.
+    public func delete(_ task: AppTask) async -> Result<Void, Errors> {
+        let result = await _delete(on: task.source, by: task.id)
+        switch result {
+        case let .failure(failure):
+            return .failure(failure)
+        case .success:
+            break
+        }
+
+        await store.remove(task, fromDate: task.dueDate)
+        return .success(())
     }
 
     /// Update the task by id.
