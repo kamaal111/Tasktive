@@ -94,6 +94,15 @@
 		2C5F41F728E85E2900278DC7 /* CDPersist.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2C3DAD2628E08D8C00059DAF /* CDPersist.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2C5F41FA28E85E3200278DC7 /* CDPersist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C3DAD2628E08D8C00059DAF /* CDPersist.framework */; };
 		2C5F41FB28E85E3200278DC7 /* CDPersist.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2C3DAD2628E08D8C00059DAF /* CDPersist.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2C5F425A28E8992E00278DC7 /* TasksFetchedContextStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5F425928E8992E00278DC7 /* TasksFetchedContextStore.swift */; };
+		2C5F425B28E8992E00278DC7 /* TasksFetchedContextStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5F425928E8992E00278DC7 /* TasksFetchedContextStore.swift */; };
+		2C5F425C28E8992E00278DC7 /* TasksFetchedContextStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5F425928E8992E00278DC7 /* TasksFetchedContextStore.swift */; };
+		2C5F425F28E8997000278DC7 /* TasksStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5F425E28E8997000278DC7 /* TasksStore.swift */; };
+		2C5F426028E8997000278DC7 /* TasksStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5F425E28E8997000278DC7 /* TasksStore.swift */; };
+		2C5F426128E8997000278DC7 /* TasksStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5F425E28E8997000278DC7 /* TasksStore.swift */; };
+		2C5F426328E8999C00278DC7 /* TasksFetchedContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5F426228E8999C00278DC7 /* TasksFetchedContext.swift */; };
+		2C5F426428E8999C00278DC7 /* TasksFetchedContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5F426228E8999C00278DC7 /* TasksFetchedContext.swift */; };
+		2C5F426528E8999C00278DC7 /* TasksFetchedContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5F426228E8999C00278DC7 /* TasksFetchedContext.swift */; };
 		2C62FA2F28A7E95F00200BF9 /* StoreKitDonation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C62FA2E28A7E95F00200BF9 /* StoreKitDonation.swift */; };
 		2C69A04428B189F500D5006D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C69A04328B189F500D5006D /* LaunchScreen.storyboard */; };
 		2C69A04728B18CA200D5006D /* SplashScreenStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C69A04628B18CA200D5006D /* SplashScreenStack.swift */; };
@@ -292,6 +301,9 @@
 		2CF24AAA28842B5B00778BD9 /* View+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF24AA928842B5B00778BD9 /* View+extensions.swift */; };
 		2CF24AAE28842F9A00778BD9 /* ShrimpExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 2CF24AAD28842F9A00778BD9 /* ShrimpExtensions */; };
 		2CF24AB128843FE800778BD9 /* TasksScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF24AB028843FE800778BD9 /* TasksScreen.swift */; };
+		2CF2BB7628E9F32E0014564D /* ZaWarudo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF2BB7528E9F32E0014564D /* ZaWarudo.swift */; };
+		2CF2BB7728E9F32E0014564D /* ZaWarudo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF2BB7528E9F32E0014564D /* ZaWarudo.swift */; };
+		2CF2BB7828E9F32E0014564D /* ZaWarudo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF2BB7528E9F32E0014564D /* ZaWarudo.swift */; };
 		2CF3A6E928E0D65D00DCEA2C /* SharedModels in Frameworks */ = {isa = PBXBuildFile; productRef = 2CF3A6E828E0D65D00DCEA2C /* SharedModels */; };
 		2CFCA0A428A977CE007A08F2 /* AppDelegate_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFCA0A328A977CE007A08F2 /* AppDelegate_macOS.swift */; };
 		2CFCA0A628A97842007A08F2 /* AppDelegate_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFCA0A528A97842007A08F2 /* AppDelegate_iOS.swift */; };
@@ -452,6 +464,9 @@
 		2C51C91228847F9E008939F7 /* TasksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksViewModel.swift; sourceTree = "<group>"; };
 		2C51C915288481A9008939F7 /* AppTask+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppTask+extensions.swift"; sourceTree = "<group>"; };
 		2C5AB1B8288D7C870069911C /* ScreenWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenWrapper.swift; sourceTree = "<group>"; };
+		2C5F425928E8992E00278DC7 /* TasksFetchedContextStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksFetchedContextStore.swift; sourceTree = "<group>"; };
+		2C5F425E28E8997000278DC7 /* TasksStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksStore.swift; sourceTree = "<group>"; };
+		2C5F426228E8999C00278DC7 /* TasksFetchedContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksFetchedContext.swift; sourceTree = "<group>"; };
 		2C62FA2E28A7E95F00200BF9 /* StoreKitDonation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitDonation.swift; sourceTree = "<group>"; };
 		2C69A04328B189F500D5006D /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2C69A04628B18CA200D5006D /* SplashScreenStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenStack.swift; sourceTree = "<group>"; };
@@ -551,6 +566,7 @@
 		2CF24AA928842B5B00778BD9 /* View+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+extensions.swift"; sourceTree = "<group>"; };
 		2CF24AAB28842E2600778BD9 /* package.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = package.json; sourceTree = "<group>"; };
 		2CF24AB028843FE800778BD9 /* TasksScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksScreen.swift; sourceTree = "<group>"; };
+		2CF2BB7528E9F32E0014564D /* ZaWarudo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZaWarudo.swift; sourceTree = "<group>"; };
 		2CF3A6E728E0D30300DCEA2C /* SharedModels */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SharedModels; sourceTree = "<group>"; };
 		2CFCA0A328A977CE007A08F2 /* AppDelegate_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate_macOS.swift; sourceTree = "<group>"; };
 		2CFCA0A528A97842007A08F2 /* AppDelegate_iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate_iOS.swift; sourceTree = "<group>"; };
@@ -1027,8 +1043,27 @@
 			children = (
 				2C9F2DE228E4BFCE00377B03 /* Backend.swift */,
 				2C9F2DE428E4C01500377B03 /* Clients */,
+				2C5F425828E8990500278DC7 /* Models */,
+				2C5F425D28E8996300278DC7 /* Stores */,
 			);
 			path = Backend;
+			sourceTree = "<group>";
+		};
+		2C5F425828E8990500278DC7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2C5F426228E8999C00278DC7 /* TasksFetchedContext.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		2C5F425D28E8996300278DC7 /* Stores */ = {
+			isa = PBXGroup;
+			children = (
+				2C5F425928E8992E00278DC7 /* TasksFetchedContextStore.swift */,
+				2C5F425E28E8997000278DC7 /* TasksStore.swift */,
+			);
+			path = Stores;
 			sourceTree = "<group>";
 		};
 		2C98E3CC28B12DFB0048149F /* app-icon-generator */ = {
@@ -1142,6 +1177,7 @@
 				2C1B19662888675D00D734D2 /* MainView.swift */,
 				2CB3F3B528BD34760016B7F4 /* SceneDelegate.swift */,
 				2CBCE6062881DE240057F4CD /* TasktiveApp.swift */,
+				2CF2BB7528E9F32E0014564D /* ZaWarudo.swift */,
 				2C51C90B288470C3008939F7 /* Enumerations */,
 				2C47E3F02883685D00FD4469 /* Extensions */,
 				2CCCADAF2881F5680033E2EF /* Models */,
@@ -1777,6 +1813,7 @@
 				2C69A07F28B19BC600D5006D /* AppLogoColorSelector.swift in Sources */,
 				2C69A08128B19BC600D5006D /* Constants.swift in Sources */,
 				2C69A08228B19BC600D5006D /* StoreKitDonation.swift in Sources */,
+				2C5F425B28E8992E00278DC7 /* TasksFetchedContextStore.swift in Sources */,
 				2C69A08328B19BC600D5006D /* Image+extensions.swift in Sources */,
 				2CB3F3B228BD327A0016B7F4 /* AccessibilityIdentifiers.swift in Sources */,
 				2C7A560728B4157600CF8A7C /* Array+extensions.swift in Sources */,
@@ -1792,13 +1829,16 @@
 				2C69A09228B19BC600D5006D /* TokensHolder.swift in Sources */,
 				2CED9A6028BA931F002409C1 /* StackNavigator.swift in Sources */,
 				2C69A09528B19BC600D5006D /* AppTabView.swift in Sources */,
+				2C5F426028E8997000278DC7 /* TasksStore.swift in Sources */,
 				2CC2D9A828C4D5A20036817B /* EditMode.swift in Sources */,
 				2C69A09828B19BC600D5006D /* FileManager+extensions.swift in Sources */,
 				2C5F41E928E85B0400278DC7 /* NotificationsClient.swift in Sources */,
 				2C69A09928B19BC600D5006D /* WideNavigationLink.swift in Sources */,
 				2C69A09A28B19BC600D5006D /* PlaygroundScreen.swift in Sources */,
+				2CF2BB7728E9F32E0014564D /* ZaWarudo.swift in Sources */,
 				2C10089E28D5265300DB1C8F /* UserData.swift in Sources */,
 				2C69A09B28B19BC600D5006D /* ProgressSection.swift in Sources */,
+				2C5F426428E8999C00278DC7 /* TasksFetchedContext.swift in Sources */,
 				2CBDB63328D1100F007EC2D5 /* DispatchQueue+extensions.swift in Sources */,
 				2C69A09C28B19BC600D5006D /* ToolbarButton.swift in Sources */,
 				2C69A09E28B19BC600D5006D /* TaskDetailsSheet.swift in Sources */,
@@ -1854,6 +1894,7 @@
 				2C98E40528B12E170048149F /* AppLogoColorSelector.swift in Sources */,
 				2C98E40728B12E170048149F /* Constants.swift in Sources */,
 				2C98E40828B12E170048149F /* StoreKitDonation.swift in Sources */,
+				2C5F425C28E8992E00278DC7 /* TasksFetchedContextStore.swift in Sources */,
 				2C98E40928B12E170048149F /* Image+extensions.swift in Sources */,
 				2CB3F3B328BD327A0016B7F4 /* AccessibilityIdentifiers.swift in Sources */,
 				2C7A560828B4157600CF8A7C /* Array+extensions.swift in Sources */,
@@ -1869,13 +1910,16 @@
 				2C98E41528B12E170048149F /* TokensHolder.swift in Sources */,
 				2CED9A6128BA931F002409C1 /* StackNavigator.swift in Sources */,
 				2C98E41828B12E170048149F /* AppTabView.swift in Sources */,
+				2C5F426128E8997000278DC7 /* TasksStore.swift in Sources */,
 				2CC2D9A928C4D5A20036817B /* EditMode.swift in Sources */,
 				2C98E43C28B1306F0048149F /* FileManager+extensions.swift in Sources */,
 				2C5F41EA28E85B0400278DC7 /* NotificationsClient.swift in Sources */,
 				2C98E41B28B12E170048149F /* WideNavigationLink.swift in Sources */,
 				2C98E41C28B12E170048149F /* PlaygroundScreen.swift in Sources */,
+				2CF2BB7828E9F32E0014564D /* ZaWarudo.swift in Sources */,
 				2C10089F28D5265300DB1C8F /* UserData.swift in Sources */,
 				2C98E41D28B12E170048149F /* ProgressSection.swift in Sources */,
+				2C5F426528E8999C00278DC7 /* TasksFetchedContext.swift in Sources */,
 				2CBDB63428D1100F007EC2D5 /* DispatchQueue+extensions.swift in Sources */,
 				2C98E41E28B12E170048149F /* ToolbarButton.swift in Sources */,
 				2C98E42028B12E170048149F /* TaskDetailsSheet.swift in Sources */,
@@ -1895,6 +1939,7 @@
 			files = (
 				2C51C90D28847115008939F7 /* AppSizes.swift in Sources */,
 				2C1B19672888675D00D734D2 /* MainView.swift in Sources */,
+				2C5F426328E8999C00278DC7 /* TasksFetchedContext.swift in Sources */,
 				2C47E406288371A300FD4469 /* DetailsColumn.swift in Sources */,
 				2C5AB1B9288D7C870069911C /* ScreenWrapper.swift in Sources */,
 				2C47E3FD28836B2200FD4469 /* NotificationName+extensions.swift in Sources */,
@@ -1905,6 +1950,7 @@
 				2CBCE6072881DE240057F4CD /* TasktiveApp.swift in Sources */,
 				2CE9EFBC28AD667300C89888 /* DeviceShakeViewModifier.swift in Sources */,
 				2C3B27C6288C77F7007CE538 /* DateControlView.swift in Sources */,
+				2C5F425A28E8992E00278DC7 /* TasksFetchedContextStore.swift in Sources */,
 				2CC2D9AD28C4D6270036817B /* EditModeStack.swift in Sources */,
 				2CFCA0A628A97842007A08F2 /* AppDelegate_iOS.swift in Sources */,
 				2C9435E228B28B9D00281AF7 /* DataViewer.swift in Sources */,
@@ -1926,6 +1972,7 @@
 				2CF24AAA28842B5B00778BD9 /* View+extensions.swift in Sources */,
 				2C1B1985288874C100D734D2 /* QuickAddSection.swift in Sources */,
 				2C47E3FB28836A6A00FD4469 /* DeviceModel.swift in Sources */,
+				2C5F425F28E8997000278DC7 /* TasksStore.swift in Sources */,
 				2C9435E628B28C8A00281AF7 /* CloudKitDataViewerScreen.swift in Sources */,
 				2C1B060928B10A48001E8441 /* AppLogoColorSelector.swift in Sources */,
 				2CBDB63228D1100F007EC2D5 /* DispatchQueue+extensions.swift in Sources */,
@@ -1962,6 +2009,7 @@
 				2C1B196C28886CFB00D734D2 /* PopUpError.swift in Sources */,
 				2C79879828AC30DF00F36C59 /* NavigationPath+extensions.swift in Sources */,
 				2C9435DE28B2868A00281AF7 /* Gridable.swift in Sources */,
+				2CF2BB7628E9F32E0014564D /* ZaWarudo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
