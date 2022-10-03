@@ -47,6 +47,15 @@
         }
       },
       {
+        "package": "InAppBrowserSUI",
+        "repositoryURL": "https://github.com/kamaal111/InAppBrowserSUI.git",
+        "state": {
+          "branch": null,
+          "revision": "da7d7554097ba93fc55e8eeca2a1da876b5b90a4",
+          "version": "1.0.0"
+        }
+      },
+      {
         "package": "Nimble",
         "repositoryURL": "https://github.com/Quick/Nimble.git",
         "state": {

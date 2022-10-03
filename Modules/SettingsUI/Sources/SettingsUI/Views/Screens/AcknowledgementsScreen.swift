@@ -9,12 +9,15 @@ import SwiftUI
 import Logster
 import SalmonUI
 import TasktiveLocale
+import InAppBrowserSUI
 
 private let logger = Logster(from: SettingsUI.AcknowledgementsScreen.self)
 
 extension SettingsUI {
     public struct AcknowledgementsScreen: View {
         @State private var acknowledgements: AcknowledgementsFileContent?
+        @State private var selectedAcknowledgementPackage: AcknowledgementPackage?
+        @State private var showBrowser = false
 
         public init() { }
 
@@ -22,10 +25,32 @@ extension SettingsUI {
             KScrollableForm {
                 KSection(header: TasktiveLocale.getText(.PACKAGES)) {
                     ForEach(acknowledgements?.packages ?? [], id: \.self) { package in
-                        Text(package.name)
+                        Button(action: { selectedAcknowledgementPackage = package }) {
+                            VStack(alignment: .leading) {
+                                Text(package.name)
+                                    .bold()
+                                Text(package.url.absoluteString)
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                            }
+                        }
                     }
                 }
             }
+            .onChange(of: showBrowser, perform: { newValue in
+                if !newValue {
+                    selectedAcknowledgementPackage = nil
+                }
+            })
+            .onChange(of: selectedAcknowledgementPackage, perform: { newValue in
+                showBrowser = newValue != nil
+                logger.info("selected acknowledgement package changed to \(newValue as Any)")
+            })
+            .inAppBrowserSUI(
+                isPresented: $showBrowser,
+                url: selectedAcknowledgementPackage?.url ?? URL(staticString: "https://kamaal.io"),
+                color: UIColor(.accentColor)
+            )
             .onAppear {
                 guard acknowledgements == nil,
                       let url = Bundle.module.url(forResource: "Acknowledgements", withExtension: "json") else {

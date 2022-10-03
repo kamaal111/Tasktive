@@ -31,6 +31,12 @@
       "license": null
     },
     {
+      "name": "InAppBrowserSUI",
+      "url": "https://github.com/kamaal111/InAppBrowserSUI",
+      "author": "kamaal111",
+      "license": null
+    },
+    {
       "name": "Nimble",
       "url": "https://github.com/Quick/Nimble",
       "author": "Quick",
