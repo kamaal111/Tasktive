@@ -60,6 +60,22 @@ public class TasksClient {
         return .success(task)
     }
 
+    /// Delete the given task.
+    /// - Parameter task: The task to delete.
+    /// - Returns: A result either containing nothing(`Void`) on success or ``Errors`` on failure.
+    public func delete(_ task: AppTask) async -> Result<Void, Errors> {
+        let result = await _delete(on: task.source, by: task.id)
+        switch result {
+        case let .failure(failure):
+            return .failure(failure)
+        case .success:
+            break
+        }
+
+        await store.remove(task, fromDate: task.dueDate)
+        return .success(())
+    }
+
     /// Update the given task.
     /// - Parameters:
     ///   - task: The task to update.
@@ -76,7 +92,7 @@ public class TasksClient {
             break
         }
 
-        let result = await update(on: task.source, by: task.id, with: arguments)
+        let result = await _update(on: task.source, by: task.id, with: arguments)
         let updatedTask: AppTask
         switch result {
         case let .failure(failure):
@@ -86,7 +102,6 @@ public class TasksClient {
         }
 
         await store.update(updatedTask, fromDate: task.dueDate)
-
         return .success(updatedTask)
     }
 
@@ -150,9 +165,9 @@ public class TasksClient {
         for source in sources {
             let tasksResult: Result<[AppTask], Errors>
             if let queryString {
-                tasksResult = await filter(from: source, by: queryString)
+                tasksResult = await _filter(from: source, by: queryString)
             } else {
-                tasksResult = await list(from: source)
+                tasksResult = await _list(from: source)
             }
 
             switch tasksResult {
@@ -185,7 +200,7 @@ public class TasksClient {
     ///   - id: The search id.
     ///   - arguments: The arguments used to update the task.
     /// - Returns:  A result either containing the updated task on success or ``Errors`` on failure.
-    private func update(
+    private func _update(
         on source: DataSource,
         by id: UUID,
         with arguments: TaskArguments
@@ -225,7 +240,7 @@ public class TasksClient {
     ///   - source: Where to create the tasks on.
     ///   - id: The search id.
     /// - Returns: A result either containing nothing (`Void`) on success or ``Errors`` on failure.
-    public func delete(on source: DataSource, by id: UUID) async -> Result<Void, Errors> {
+    public func _delete(on source: DataSource, by id: UUID) async -> Result<Void, Errors> {
         switch source {
         case .coreData:
             let foundTask: CoreTask
@@ -316,7 +331,7 @@ public class TasksClient {
     /// List all tasks from the given `DataSource`.
     /// - Parameter source: Where to get the tasks from.
     /// - Returns: A result either containing an array with all tasks on success or ``Errors`` on failure.
-    private func list(from source: DataSource) async -> Result<[AppTask], Errors> {
+    private func _list(from source: DataSource) async -> Result<[AppTask], Errors> {
         switch source {
         case .coreData:
             return CoreTask.list(from: persistenceController.context)
@@ -335,7 +350,7 @@ public class TasksClient {
     ///   - queryString: The query to filters tasks with.
     ///   - limit: The maximum amount of tasks to return, if this value is kepts nil then there is no limit.
     /// - Returns: A result either containing an array with filtered tasks on success or ``Errors`` on failure.
-    private func filter(
+    private func _filter(
         from source: DataSource,
         by queryString: String,
         limit: Int? = nil
@@ -368,7 +383,7 @@ public class TasksClient {
 
         var updatedTasks: [AppTask] = []
         for source in sources {
-            let outdatedTasksResult = await filter(from: source, by: predicate.predicateFormat)
+            let outdatedTasksResult = await _filter(from: source, by: predicate.predicateFormat)
             let outdatedTasks: [AppTask]
             switch outdatedTasksResult {
             case let .failure(failure):

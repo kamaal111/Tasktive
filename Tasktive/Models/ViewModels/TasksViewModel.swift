@@ -154,25 +154,16 @@ final class TasksViewModel: ObservableObject {
 
     func deleteTask(_ task: AppTask) async -> Result<Void, UserErrors> {
         await withSettingTasks(completion: {
-            let deleteTaskResult = await backend.tasks.delete(on: task.source, by: task.id)
-            switch deleteTaskResult {
+            let result = await backend.tasks.delete(task)
+            switch result {
             case let .failure(failure):
-                let maybeBackendError = await mapBackendTaskErrors(failure)
-                return .failure(maybeBackendError ?? .deleteFailure)
+                let mappedError = await mapBackendTaskErrors(failure)
+                return .failure(mappedError ?? .deleteFailure)
             case .success:
                 break
             }
 
-            let dateHash = task.dueDate.hashed
-            guard let taskIndex = tasks[dateHash]?.findIndex(by: \.id, is: task.id) else {
-                return .failure(.deleteFailure)
-            }
-
-            var mutableTask = tasks
-            mutableTask[dateHash]?.remove(at: taskIndex)
-            await setTasks(mutableTask[dateHash] ?? [], forDate: dateHash)
-
-            return .success(())
+            return await refreshTasks()
         })
     }
 
