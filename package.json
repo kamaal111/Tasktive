@@ -16,7 +16,8 @@
     "format": "swiftformat .",
     "archive:ios:ci": "sh Scripts/archive_ios.sh",
     "build:ios:release": "SCHEME=Tasktive sh Scripts/build_release.sh",
-    "build:mac:release": "SCHEME=TasktiveMac sh Scripts/build_release.sh"
+    "build:mac:release": "SCHEME=TasktiveMac sh Scripts/build_release.sh",
+    "acknowledgements": "python3 Scripts/xcode-acknowledgements/main.py --scheme Tasktive --output Modules/SettingsUI/Resources"
   },
   "repository": {
     "type": "git",

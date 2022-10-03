@@ -43,6 +43,11 @@ extension SettingsUI {
 
         public var body: some View {
             KSection(header: TasktiveLocale.getText(.ABOUT)) {
+                RowImageTextNavigationLink(
+                    label: TasktiveLocale.getText(.ACKNOWLEDGEMENTS),
+                    imageSystemName: "medal.fill",
+                    destination: .acknowledgements
+                )
                 VersionRowView()
             }
         }

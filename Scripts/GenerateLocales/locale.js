@@ -36,8 +36,8 @@ ${input}
 
 const main = () => {
   const localize = new Localize(
-    'Packages/TasktiveLocale/Sources/TasktiveLocale/Resources',
-    'Packages/TasktiveLocale/Sources/TasktiveLocale/Keys.swift',
+    'Modules/TasktiveLocale/Sources/TasktiveLocale/Resources',
+    'Modules/TasktiveLocale/Sources/TasktiveLocale/Keys.swift',
     locales,
     DEFAULT_LOCALE,
     2,

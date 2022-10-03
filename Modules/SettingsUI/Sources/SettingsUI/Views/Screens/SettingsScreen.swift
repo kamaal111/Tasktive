@@ -158,6 +158,8 @@ extension SettingsUI {
                     )
                 case .logs:
                     LogsScreen(navigate: { screen in navigationPath.append(screen) })
+                case .acknowledgements:
+                    AcknowledgementsScreen()
                 }
             }
             .frame(minWidth: viewSize.width, minHeight: viewSize.height)

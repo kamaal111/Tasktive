@@ -38,7 +38,9 @@ let package = Package(
                 "Logster",
                 "TasktiveLocale",
             ],
-            resources: []
+            resources: [
+                .process("Resources"),
+            ]
         ),
         .testTarget(
             name: "SettingsUITests",

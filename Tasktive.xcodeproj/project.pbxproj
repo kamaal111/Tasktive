@@ -572,6 +572,7 @@
 		2CFCA0A528A97842007A08F2 /* AppDelegate_iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate_iOS.swift; sourceTree = "<group>"; };
 		2CFEB90028A43905000B1667 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		2CFEB90228A43F75000B1667 /* UserDefaults+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+extensions.swift"; sourceTree = "<group>"; };
+		2CFF855F28EB5BC50005A0C0 /* main.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = main.py; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1266,6 +1267,7 @@
 				2C03068528A006E70071F0CA /* generate_tokens */,
 				2C39A91A28835AAD008BAFD2 /* GenerateLocales */,
 				2CBD455228CE067A0073E317 /* swiftlint_checker */,
+				2CFF855D28EB5BC50005A0C0 /* xcode-acknowledgements */,
 				2CBD455428CE06820073E317 /* xcode-app-version-bumper */,
 			);
 			path = Scripts;
@@ -1340,6 +1342,14 @@
 				2CF24AB028843FE800778BD9 /* TasksScreen.swift */,
 			);
 			path = Screens;
+			sourceTree = "<group>";
+		};
+		2CFF855D28EB5BC50005A0C0 /* xcode-acknowledgements */ = {
+			isa = PBXGroup;
+			children = (
+				2CFF855F28EB5BC50005A0C0 /* main.py */,
+			);
+			path = "xcode-acknowledgements";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
