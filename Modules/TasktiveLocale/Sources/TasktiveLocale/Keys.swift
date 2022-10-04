@@ -69,5 +69,8 @@ extension TasktiveLocale {
         case LOGS
         case LOG
         case DUE_DATE
+        case ACKNOWLEDGEMENTS
+        case PACKAGES
+        case CONTRIBUTORS
     }
 }

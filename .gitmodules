@@ -10,3 +10,7 @@
 	path = Scripts/xcode-app-version-bumper
 	url = git@github.com:kamaal111/xcode-app-version-bumper.git
 	branch = main
+[submodule "xcode-acknowledgements"]
+	path = Scripts/xcode-acknowledgements
+	url = git@github.com:kamaal111/xcode-acknowledgements.git
+	branch = main
