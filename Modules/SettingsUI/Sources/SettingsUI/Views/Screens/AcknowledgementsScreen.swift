@@ -23,6 +23,12 @@ extension SettingsUI {
 
         public var body: some View {
             KScrollableForm {
+                KSection(header: TasktiveLocale.getText(.CONTRIBUTORS)) {
+                    ForEach(acknowledgements?.contributors ?? [], id: \.self) { contributor in
+                        Text(contributor.name)
+                            .bold()
+                    }
+                }
                 KSection(header: TasktiveLocale.getText(.PACKAGES)) {
                     ForEach(acknowledgements?.packages ?? [], id: \.self) { package in
                         Button(action: { selectedAcknowledgementPackage = package }) {
@@ -82,6 +88,12 @@ extension SettingsUI {
 
 struct AcknowledgementsFileContent: Hashable, Codable {
     let packages: [AcknowledgementPackage]
+    let contributors: [AcknowledgementContributor]
+}
+
+struct AcknowledgementContributor: Hashable, Codable {
+    let name: String
+    let contributions: Int
 }
 
 struct AcknowledgementPackage: Hashable, Codable {

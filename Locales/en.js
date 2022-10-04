@@ -65,4 +65,5 @@ module.exports = {
   DUE_DATE: 'Due date',
   ACKNOWLEDGEMENTS: 'Acknowledgements',
   PACKAGES: 'Packages',
+  CONTRIBUTORS: 'Contributors',
 };
