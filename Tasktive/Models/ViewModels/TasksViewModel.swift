@@ -252,6 +252,9 @@ final class TasksViewModel: ObservableObject {
         case .invalidTitle:
             logger.warning("invalid title provided")
             return .invalidTitle
+        case .reminderCreationFailure:
+            logger.error(label: "failed to save reminder on task", error: error)
+            return .createTaskFailure
         }
     }
 

@@ -14,8 +14,6 @@ extension CoreReminder {
         NSFetchRequest<CoreReminder>(entityName: "CoreReminder")
     }
 
-    @NSManaged public var reminderDescription: String
     @NSManaged public var time: Date
-    @NSManaged public var title: String
     @NSManaged public var task: CoreTask
 }

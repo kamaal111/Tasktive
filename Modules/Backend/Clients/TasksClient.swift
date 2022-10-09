@@ -14,6 +14,7 @@ import ShrimpExtensions
 
 private let logger = Logster(from: TasksClient.self)
 
+// swiftlint:disable type_body_length
 /// Client to handle all tasks store modifications.
 public class TasksClient {
     private let store = TasksStore()
@@ -258,6 +259,8 @@ public class TasksClient {
         case iCloudDisabledByUser
         /// Invalid title provided.
         case invalidTitle
+        /// Failure on creating a reminder.
+        case reminderCreationFailure(context: Error)
     }
 
     // - MARK: Private methods
@@ -321,7 +324,7 @@ public class TasksClient {
             }
 
             logger.info("deleted local task; \(foundTask)")
-            return await foundTask.delete(on: persistenceController.context)
+            return foundTask.delete(on: persistenceController.context)
                 .mapError(mapCoreTaskErrors)
         case .iCloud:
             let foundTask: CloudTask
@@ -345,8 +348,11 @@ public class TasksClient {
     ///   - source: Where to create the tasks on.
     ///   - date: The new due date.
     /// - Returns: A result either containing nothing (`Void`) on success or ``Errors`` on failure.
-    private func updateManyDates(_ tasks: [AppTask], from source: DataSource,
-                                 date: Date) async -> Result<Void, Errors> {
+    private func updateManyDates(
+        _ tasks: [AppTask],
+        from source: DataSource,
+        date: Date
+    ) async -> Result<Void, Errors> {
         switch source {
         case .coreData:
             return CoreTask.updateManyDates(tasks, date: date, on: persistenceController.context)
@@ -548,6 +554,8 @@ public class TasksClient {
             return .updateManyFailure(context: context)
         case let .generalFailure(message):
             return .generalFailure(message: message)
+        case let .reminderCreationFailure(context: context):
+            return .reminderCreationFailure(context: context)
         }
     }
 
