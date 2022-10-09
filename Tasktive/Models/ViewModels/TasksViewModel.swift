@@ -178,7 +178,7 @@ final class TasksViewModel: ObservableObject {
         }
 
         return await _getTasks(
-            from: lastFetchedContext.sources.concat(enforcedSources).uniques(),
+            from: enforcedSources.concat(lastFetchedContext.sources).uniques(),
             for: lastFetchedContext.date,
             dataIsStale: dataIsStale,
             updateNotCompletedTasks: false
