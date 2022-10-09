@@ -160,10 +160,11 @@ public class TasksClient {
     ///   - task: The task to update.
     ///   - arguments: The arguments used to update the task.
     /// - Returns: A result either containing the updated task on success or ``Errors`` on failure.
-    public func update(_ task: AppTask, with arguments: TaskArguments) async -> Result<AppTask, Errors> {
-        guard task.arguments != arguments else { return .success(task) }
+    public func update(_ task: AppTask, with arguments: (TaskArguments, DataSource)) async -> Result<AppTask, Errors> {
+        let argumentsHaveChanged = task.arguments != arguments.0
+        guard argumentsHaveChanged else { return .success(task) }
 
-        let validationResult = validateTaskArguments(arguments)
+        let validationResult = validateTaskArguments(arguments.0)
         switch validationResult {
         case let .failure(failure):
             return .failure(failure)
@@ -171,9 +172,32 @@ public class TasksClient {
             break
         }
 
-        let result = await _update(on: task.source, by: task.id, with: arguments)
+        let sourceHasChanged = task.source != arguments.1
+        if sourceHasChanged {
+            let deleteResult = await delete(task)
+            switch deleteResult {
+            case let .failure(failure):
+                return .failure(failure)
+            case .success:
+                break
+            }
+
+            let createResult = await create(with: arguments.0, on: arguments.1)
+            let createdTask: AppTask
+            switch createResult {
+            case let .failure(failure):
+                return .failure(failure)
+            case let .success(success):
+                createdTask = success
+            }
+
+            logger.info("successfully changed the source from \(task.source) -> \(arguments.1)")
+            return .success(createdTask)
+        }
+
+        let updateResult = await _update(on: task.source, by: task.id, with: arguments.0)
         let updatedTask: AppTask
-        switch result {
+        switch updateResult {
         case let .failure(failure):
             return .failure(failure)
         case let .success(success):
@@ -202,6 +226,8 @@ public class TasksClient {
         return .success(())
     }
 
+    // - MARK: Errors
+
     /// Task failures.
     public enum Errors: Error {
         /// Failure while saving.
@@ -225,6 +251,8 @@ public class TasksClient {
         /// Invalid title provided.
         case invalidTitle
     }
+
+    // - MARK: Private methods
 
     /// Update the task by id.
     /// - Parameters:
@@ -272,7 +300,7 @@ public class TasksClient {
     ///   - source: Where to create the tasks on.
     ///   - id: The search id.
     /// - Returns: A result either containing nothing (`Void`) on success or ``Errors`` on failure.
-    public func _delete(on source: DataSource, by id: UUID) async -> Result<Void, Errors> {
+    private func _delete(on source: DataSource, by id: UUID) async -> Result<Void, Errors> {
         switch source {
         case .coreData:
             let foundTask: CoreTask
@@ -309,7 +337,8 @@ public class TasksClient {
     ///   - source: Where to create the tasks on.
     ///   - date: The new due date.
     /// - Returns: A result either containing nothing (`Void`) on success or ``Errors`` on failure.
-    public func updateManyDates(_ tasks: [AppTask], from source: DataSource, date: Date) async -> Result<Void, Errors> {
+    private func updateManyDates(_ tasks: [AppTask], from source: DataSource,
+                                 date: Date) async -> Result<Void, Errors> {
         switch source {
         case .coreData:
             return CoreTask.updateManyDates(tasks, date: date, on: persistenceController.context)

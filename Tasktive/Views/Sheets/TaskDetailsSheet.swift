@@ -17,8 +17,9 @@ struct TaskDetailsSheet: View {
     @StateObject private var viewModel = ViewModel()
 
     let task: AppTask?
+    let availableSources: [DataSource]
     let onClose: () -> Void
-    let onDone: (_ arguments: TaskArguments?, _ isNew: Bool) -> Void
+    let onDone: (_ arguments: (TaskArguments, DataSource)?, _ isNew: Bool) -> Void
     let onDelete: () -> Void
 
     var body: some View {
@@ -35,7 +36,6 @@ struct TaskDetailsSheet: View {
         ) {
             VStack(alignment: .leading) {
                 KFloatingTextField(text: $viewModel.title, title: TasktiveLocale.getText(.TITLE))
-
                 KFloatingDatePicker(value: $viewModel.dueDate, title: TasktiveLocale.getText(.DUE_DATE))
 
                 if !viewModel.isNewTask {
@@ -57,21 +57,22 @@ struct TaskDetailsSheet: View {
             .padding(.vertical, .medium)
         }
         .onAppear(perform: {
-            viewModel.setValues(from: task)
+            viewModel.setValues(from: task, availableSources: availableSources)
         })
     }
 
     final class ViewModel: ObservableObject {
         @Published var title = ""
         @Published var dueDate = Date()
+        @Published var dataSource: DataSource = .coreData
 
         @Published private(set) var isNewTask = false
 
-        func makeCoreTaskArguments(using task: AppTask?) -> TaskArguments? {
+        func makeCoreTaskArguments(using task: AppTask?) -> (TaskArguments, DataSource)? {
             if isNewTask {
                 let arguments = TaskArguments(title: title, taskDescription: nil, notes: nil, dueDate: dueDate)
 
-                return arguments
+                return (arguments, dataSource)
             } else {
                 guard let task = task else {
                     logger.warning("could not make task arguments")
@@ -82,20 +83,23 @@ struct TaskDetailsSheet: View {
                 arguments.title = title
                 arguments.dueDate = dueDate
 
-                return arguments
+                return (arguments, dataSource)
             }
         }
 
         @MainActor
-        func setValues(from task: AppTask?) {
+        func setValues(from task: AppTask?, availableSources: [DataSource]) {
             if let task {
                 title = task.title
                 dueDate = task.dueDate
+                dataSource = task.source
 
                 isNewTask = false
 
                 logger.info("task values have set")
             } else {
+                dataSource = availableSources.first ?? .coreData
+
                 isNewTask = true
 
                 logger.info("prepared for a new task")
@@ -104,14 +108,22 @@ struct TaskDetailsSheet: View {
     }
 }
 
-// struct TaskDetailsSheet_Previews: PreviewProvider {
-//    static var previews: some View {
-//        TaskDetailsSheet(
-//            // swiftlint:disable force_try
-//            task: try! CoreTask.list(from: PersistenceController.preview.context).get().first!.asAppTask,
-//            onClose: { },
-//            onDone: { _, _ in },
-//            onDelete: { }
-//        )
-//    }
-// }
+struct TaskDetailsSheet_Previews: PreviewProvider {
+    static var previews: some View {
+        TaskDetailsSheet(
+            task: AppTask(
+                id: UUID(uuidString: "1d7b2a98-0395-4a35-89d6-fcee3e3809cf")!,
+                title: "Preview",
+                ticked: false,
+                dueDate: Date(),
+                completionDate: nil,
+                creationDate: Date(),
+                source: .coreData
+            ),
+            availableSources: DataSource.allCases,
+            onClose: { },
+            onDone: { _, _ in },
+            onDelete: { }
+        )
+    }
+}

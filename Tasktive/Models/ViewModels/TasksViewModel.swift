@@ -65,7 +65,7 @@ final class TasksViewModel: ObservableObject {
     }
 
     func setTickOnTask(_ task: AppTask, with newTickedState: Bool) async -> Result<Void, UserErrors> {
-        await updateTask(task, with: task.toggleCoreTaskTickArguments(with: newTickedState))
+        await updateTask(task, with: (task.toggleCoreTaskTickArguments(with: newTickedState), task.source))
     }
 
     func tasksForDate(_ date: Date) -> [AppTask] {
@@ -137,7 +137,7 @@ final class TasksViewModel: ObservableObject {
     }
     #endif
 
-    func updateTask(_ task: AppTask, with arguments: TaskArguments) async -> Result<Void, UserErrors> {
+    func updateTask(_ task: AppTask, with arguments: (TaskArguments, DataSource)) async -> Result<Void, UserErrors> {
         await withSettingTasks(completion: {
             let result = await backend.tasks.update(task, with: arguments)
             switch result {
