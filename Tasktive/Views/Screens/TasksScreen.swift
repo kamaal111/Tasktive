@@ -99,6 +99,7 @@ struct TasksScreen: View {
         .sheet(isPresented: $viewModel.showTaskDetailsSheet) {
             TaskDetailsSheet(
                 task: viewModel.shownTaskDetails,
+                availableSources: dataSources,
                 onClose: { Task { await viewModel.closeDetailsSheet() } },
                 onDone: handleTaskEditedInDetailsSheet,
                 onDelete: handleTaskDeletedInDetailsSheet
@@ -198,7 +199,7 @@ struct TasksScreen: View {
         }
     }
 
-    private func handleTaskEditedInDetailsSheet(_ arguments: TaskArguments?, _ isNewTask: Bool) {
+    private func handleTaskEditedInDetailsSheet(_ arguments: (TaskArguments, DataSource)?, _ isNewTask: Bool) {
         guard let arguments else {
             logger.warning("arguments are missing", "arguments='\(arguments as Any)'")
             return
@@ -287,7 +288,7 @@ struct TasksScreen: View {
         logger.info("submitting new task")
 
         Task {
-            let created = await createTask(with: viewModel.taskArguments)
+            let created = await createTask(with: (viewModel.taskArguments, viewModel.currentSource))
 
             if created {
                 viewModel.clearQuickAddInput()
@@ -295,8 +296,8 @@ struct TasksScreen: View {
         }
     }
 
-    private func createTask(with arguments: TaskArguments) async -> Bool {
-        let createTaskResult = await tasksViewModel.createTask(with: arguments, on: viewModel.currentSource)
+    private func createTask(with arguments: (TaskArguments, DataSource)) async -> Bool {
+        let createTaskResult = await tasksViewModel.createTask(with: arguments.0, on: arguments.1)
         switch createTaskResult {
         case let .failure(failure):
             popperUpManager.showPopup(style: failure.style, timeout: failure.timeout)
