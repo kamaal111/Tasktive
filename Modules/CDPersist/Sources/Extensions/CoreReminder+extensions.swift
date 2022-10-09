@@ -9,6 +9,7 @@ import Logster
 import CoreData
 import Foundation
 import SharedModels
+import ShrimpExtensions
 
 private let logger = Logster(from: CoreReminder.self)
 
@@ -24,7 +25,9 @@ extension CoreReminder {
         /// General failure.
         case generalFailure(message: String)
         /// Failure on clearing tasks.
-        case clearFailure(context: Error?)
+        case clearFailure(context: Error)
+        /// Failure on fetching tasks.
+        case fetchFailure(context: Error)
     }
 
     // - MARK: Helper methods
@@ -67,6 +70,12 @@ extension CoreReminder {
             }
         }
 
+        var taskReminders = task.remindersArray
+        if let index = taskReminders.findIndex(by: \.id, is: id) {
+            taskReminders.remove(at: index)
+            task.reminders = taskReminders.asNSSet
+        }
+
         return .success(())
     }
 
@@ -86,6 +95,26 @@ extension CoreReminder {
         newReminder.kCreationDate = Date()
 
         return .success(newReminder)
+    }
+
+    public static func find(by predicate: NSPredicate,
+                            from context: NSManagedObjectContext) -> Result<CoreReminder?, CrudErrors> {
+        filter(by: predicate, limit: 1, from: context).map(\.first)
+    }
+
+    public static func filter(by predicate: NSPredicate, limit: Int?,
+                              from context: NSManagedObjectContext) -> Result<[CoreReminder], CrudErrors> {
+        let request = request(by: predicate, limit: limit)
+
+        let result: [CoreReminder]
+        do {
+            result = try context.fetch(request)
+        } catch {
+            logger.error(label: "error while fetching reminders", error: error)
+            return .failure(.fetchFailure(context: error))
+        }
+
+        return .success(result)
     }
 
     // - MARK: Internal properties/methods
@@ -131,8 +160,8 @@ extension CoreReminder {
         return .success(())
     }
 
-    private static func request(by predicate: NSPredicate? = nil, limit: Int? = nil) -> NSFetchRequest<CoreTask> {
-        let request = NSFetchRequest<CoreTask>(entityName: String(describing: CoreTask.self))
+    private static func request(by predicate: NSPredicate? = nil, limit: Int? = nil) -> NSFetchRequest<CoreReminder> {
+        let request = NSFetchRequest<CoreReminder>(entityName: String(describing: CoreReminder.self))
         if let predicate = predicate {
             request.predicate = predicate
         }
