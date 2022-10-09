@@ -1,0 +1,157 @@
+//
+//  CoreReminder+extensions.swift
+//  CDPersist
+//
+//  Created by Kamaal M Farah on 09/10/2022.
+//
+
+import Logster
+import CoreData
+import Foundation
+import SharedModels
+
+private let logger = Logster(from: CoreReminder.self)
+
+extension CoreReminder {
+    // - MARK: Crud errors
+
+    /// Errors that can come from `CoreData` operations.
+    public enum CrudErrors: Error {
+        /// Failure on saving a reminder.
+        case saveFailure(context: Error)
+        /// Failure on deleting a reminder.
+        case deletionFailure(context: Error)
+        /// General failure.
+        case generalFailure(message: String)
+        /// Failure on clearing tasks.
+        case clearFailure(context: Error?)
+    }
+
+    // - MARK: Helper methods
+
+    /// Arguments to be used to create and/or update a reminder.
+    public var arguments: ReminderArguments {
+        .init(time: time)
+    }
+
+    /// Alias for ``CoreBase/kCreationDate``.
+    public var creationDate: Date {
+        get {
+            kCreationDate
+        }
+        set {
+            kCreationDate = newValue
+        }
+    }
+
+    /// Where this object is located, in this in `CoreData`.
+    public var source: DataSource {
+        .coreData
+    }
+
+    // - MARK: CoreData operations
+
+    /// Delete this reminder.
+    /// - Parameters:
+    ///   - context: The context to use to operate the `CoreData` operation.
+    ///   - save: Whether to save or not
+    /// - Returns: A result either containing nothing (`Void`) on success or ``CrudErrors`` on failure.
+    public func delete(on context: NSManagedObjectContext, save: Bool = false) -> Result<Void, CrudErrors> {
+        context.delete(self)
+
+        if save {
+            do {
+                try context.save()
+            } catch {
+                return .failure(.deletionFailure(context: error))
+            }
+        }
+
+        return .success(())
+    }
+
+    /// This static method creates a ``CoreReminder`` instance and persists it in the `CoreData` store.
+    /// - Parameters:
+    ///   - arguments: Arguments used to create the ``CoreReminder`` instance.
+    ///   - context: The context to use to operate the `CoreData` operation.
+    /// - Returns: A result either containing ``CoreReminder`` on success or ``CrudErrors`` on failure.
+    public static func create(
+        with arguments: ReminderArguments,
+        on context: NSManagedObjectContext
+    ) -> Result<CoreReminder, CrudErrors> {
+        let newReminder = CoreReminder(context: context)
+            .updateValues(with: arguments)
+
+        newReminder.id = UUID()
+        newReminder.kCreationDate = Date()
+
+        return .success(newReminder)
+    }
+
+    // - MARK: Internal properties/methods
+
+    #if DEBUG
+    static func clear(from context: NSManagedObjectContext) -> Result<Void, CrudErrors> {
+        guard let request = request() as? NSFetchRequest<NSFetchRequestResult> else {
+            let message = "Could not typecast request"
+            logger.warning(message)
+            return .failure(.generalFailure(message: message))
+        }
+
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: request)
+
+        do {
+            try context.execute(deleteRequest)
+        } catch {
+            logger.error(label: "failed to clear reminders", error: error)
+            return .failure(.clearFailure(context: error))
+        }
+
+        return save(from: context)
+    }
+    #endif
+
+    // - MARK: Private properties/methods
+
+    private func updateValues(with arguments: ReminderArguments) -> CoreReminder {
+        time = arguments.time
+        updateDate = Date()
+
+        return self
+    }
+
+    private static func save(from context: NSManagedObjectContext) -> Result<Void, CrudErrors> {
+        do {
+            try context.save()
+        } catch {
+            logger.error(label: "error while creating a reminder", error: error)
+            return .failure(.saveFailure(context: error))
+        }
+
+        return .success(())
+    }
+
+    private static func request(by predicate: NSPredicate? = nil, limit: Int? = nil) -> NSFetchRequest<CoreTask> {
+        let request = NSFetchRequest<CoreTask>(entityName: String(describing: CoreTask.self))
+        if let predicate = predicate {
+            request.predicate = predicate
+        }
+        if let limit = limit {
+            request.fetchLimit = limit
+        }
+        return request
+    }
+}
+
+/// Object to be used to create and/or update a reminders.
+public struct ReminderArguments: Equatable {
+    /// When to send a reminder.
+    public let time: Date
+
+    /// Memberwise initializer.
+    /// - Parameters:
+    ///   - time: When to send a reminder.
+    public init(time: Date) {
+        self.time = time
+    }
+}

@@ -13,6 +13,8 @@ import SharedModels
 private let logger = Logster(from: CoreTask.self)
 
 extension CoreTask: Crudable, Taskable {
+    // - MARK: Crud errors
+
     /// Errors that can come from `CoreData` operations.
     public enum CrudErrors: Error {
         /// Failure on saving a task.
@@ -27,6 +29,8 @@ extension CoreTask: Crudable, Taskable {
         case updateManyFailure(context: Error?)
         /// General failure.
         case generalFailure(message: String)
+        /// Failure on creating a reminder.
+        case reminderCreationFailure(context: CoreReminder.CrudErrors)
     }
 
     // - MARK: Helper methods
@@ -59,13 +63,51 @@ extension CoreTask: Crudable, Taskable {
         )
     }
 
+    /// This tasks reminders.
+    public var remindersArray: [CoreReminder] {
+        reminders?.allObjects as? [CoreReminder] ?? []
+    }
+
     // - MARK: CoreData operations
+
+    /// Set an reminder on this task.
+    /// - Parameters:
+    ///   - arguments: Arguments to create reminder out of.
+    ///   - save: Whether to save or not.
+    /// - Returns: A result either containing ``CoreReminder`` on success or ``CrudErrors`` on failure.
+    public func setAnReminder(
+        with arguments: ReminderArguments,
+        save: Bool = true
+    ) -> Result<CoreReminder, CrudErrors> {
+        guard let context = managedObjectContext else {
+            return .failure(.generalFailure(message: "failed to access managed object context on this task"))
+        }
+
+        let result = CoreReminder.create(with: arguments, on: context)
+        let reminder: CoreReminder
+        switch result {
+        case let .failure(failure):
+            return .failure(.reminderCreationFailure(context: failure))
+        case let .success(success):
+            reminder = success
+        }
+
+        reminder.task = self
+        addToReminders(reminder)
+
+        guard save else { return .success(reminder) }
+
+        return Self.save(from: context)
+            .map {
+                reminder
+            }
+    }
 
     /// Update the task.
     /// - Parameters:
     ///   - arguments: The arguments used to update a task.
     ///   - context: The context to use to operate the `CoreData` operation.
-    /// - Returns: A result either containing ``CoreTask`` on success or ``CoreErrors`` on failure.
+    /// - Returns: A result either containing ``CoreTask`` on success or ``CrudErrors`` on failure.
     public func update(
         with arguments: TaskArguments,
         on context: NSManagedObjectContext
@@ -80,8 +122,15 @@ extension CoreTask: Crudable, Taskable {
 
     /// Delete the task.
     /// - Parameter context: The context to use to operate the `CoreData` operation.
-    /// - Returns: A result either containing nothing (`Void`) on success or ``CoreErrors`` on failure.
-    public func delete(on context: NSManagedObjectContext) async -> Result<Void, CrudErrors> {
+    /// - Returns: A result either containing nothing (`Void`) on success or ``CrudErrors`` on failure.
+    public func delete(on context: NSManagedObjectContext) -> Result<Void, CrudErrors> {
+        switch deleteReminders() {
+        case let .failure(failure):
+            return .failure(failure)
+        case .success:
+            logger.info("deleted reminders successfully")
+        }
+
         context.delete(self)
 
         do {
@@ -95,9 +144,9 @@ extension CoreTask: Crudable, Taskable {
 
     /// This static method creates a ``CoreTask`` instances and persists in the `CoreData` store.
     /// - Parameters:
-    ///   - arguments: ``Arguments`` used to create the ``CoreTask`` instance.
+    ///   - arguments: Arguments used to create the ``CoreTask`` instance.
     ///   - context: The context to use to operate the `CoreData` operation.
-    /// - Returns: A result either containing ``CoreTask`` on success or ``CoreErrors`` on failure.
+    /// - Returns: A result either containing ``CoreTask`` on success or ``CrudErrors`` on failure.
     public static func create(
         with arguments: TaskArguments,
         from context: NSManagedObjectContext
@@ -121,7 +170,7 @@ extension CoreTask: Crudable, Taskable {
     /// - Parameters:
     ///   - predicate: Query to find the task.
     ///   - context: The context to use to operate the `CoreData` operation.
-    /// - Returns: A result either containing an optional ``CoreTask`` on success or ``CoreErrors`` on failure.
+    /// - Returns: A result either containing an optional ``CoreTask`` on success or ``CrudErrors`` on failure.
     public static func find(
         by predicate: NSPredicate,
         from context: NSManagedObjectContext
@@ -131,7 +180,7 @@ extension CoreTask: Crudable, Taskable {
 
     /// List all tasks.
     /// - Parameter context: The context to use to operate the `CoreData` operation.
-    /// - Returns: A result either containing an array with all tasks on success or ``CoreErrors`` on failure.
+    /// - Returns: A result either containing an array with all tasks on success or ``CrudErrors`` on failure.
     public static func list(from context: NSManagedObjectContext) -> Result<[CoreTask], CrudErrors> {
         let predicate = NSPredicate(value: true)
 
@@ -142,7 +191,7 @@ extension CoreTask: Crudable, Taskable {
     /// - Parameters:
     ///   - predicate: Query to filter the tasks on.
     ///   - context: The context to use to operate the `CoreData` operation.
-    /// - Returns: A result either containing an array with filtered tasks on success or ``CoreErrors`` on failure.
+    /// - Returns: A result either containing an array with filtered tasks on success or ``CrudErrors`` on failure.
     public static func filter(
         by predicate: NSPredicate,
         from context: NSManagedObjectContext
@@ -155,7 +204,7 @@ extension CoreTask: Crudable, Taskable {
     ///   - predicate:  Query to filter the tasks on.
     ///   - limit: The maximum amount of tasks to return.
     ///   - context: The context to use to operate the `CoreData` operation.
-    /// - Returns: A result either containing an array with filtered tasks on success or ``CoreErrors`` on failure.
+    /// - Returns: A result either containing an array with filtered tasks on success or ``CrudErrors`` on failure.
     public static func filter(
         by predicate: NSPredicate,
         limit: Int?,
@@ -179,7 +228,7 @@ extension CoreTask: Crudable, Taskable {
     ///   - tasks: The tasks to update.
     ///   - date: What to change the ``dueDate`` to.
     ///   - context: The context to use to operate the `CoreData` operation.
-    /// - Returns: A result either containing nothing (`Void`) on success or ``CoreErrors`` on failure.
+    /// - Returns: A result either containing nothing (`Void`) on success or ``CrudErrors`` on failure.
     public static func updateManyDates(
         _ tasks: [AppTask],
         date: Date,
@@ -209,8 +258,15 @@ extension CoreTask: Crudable, Taskable {
     #if DEBUG
     /// To clear all tasks.
     /// - Parameter context: The context to use to operate the `CoreData` operation.
-    /// - Returns: A result either containing nothing(`Void`) on success or ``CoreErrors`` on failure.
+    /// - Returns: A result either containing nothing(`Void`) on success or ``CrudErrors`` on failure.
     public static func clear(from context: NSManagedObjectContext) -> Result<Void, CrudErrors> {
+        switch CoreReminder.clear(from: context) {
+        case let .failure(failure):
+            return .failure(.clearFailure(context: failure))
+        case .success:
+            break
+        }
+
         guard let request = request() as? NSFetchRequest<NSFetchRequestResult> else {
             let message = "Could not typecast request"
             logger.warning(message)
@@ -242,6 +298,22 @@ extension CoreTask: Crudable, Taskable {
         updateDate = Date()
 
         return self
+    }
+
+    private func deleteReminders() -> Result<Void, CrudErrors> {
+        guard let context = managedObjectContext else {
+            return .failure(.generalFailure(message: "failed to access managed object context on this task"))
+        }
+
+        for reminder in remindersArray {
+            do {
+                try reminder.delete(on: context, save: false).get()
+            } catch {
+                return .failure(.deletionFailure(context: error))
+            }
+        }
+
+        return .success(())
     }
 
     private static func request(by predicate: NSPredicate? = nil, limit: Int? = nil) -> NSFetchRequest<CoreTask> {
