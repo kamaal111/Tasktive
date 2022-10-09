@@ -72,5 +72,8 @@ extension TasktiveLocale {
         case ACKNOWLEDGEMENTS
         case PACKAGES
         case CONTRIBUTORS
+        case LOCALLY
+        case ICLOUD
+        case LOCATION
     }
 }

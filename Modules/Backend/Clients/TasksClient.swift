@@ -159,12 +159,14 @@ public class TasksClient {
     /// - Parameters:
     ///   - task: The task to update.
     ///   - arguments: The arguments used to update the task.
+    ///   - newSource: The source of the updated task.
     /// - Returns: A result either containing the updated task on success or ``Errors`` on failure.
-    public func update(_ task: AppTask, with arguments: (TaskArguments, DataSource)) async -> Result<AppTask, Errors> {
-        let argumentsHaveChanged = task.arguments != arguments.0
-        guard argumentsHaveChanged else { return .success(task) }
-
-        let validationResult = validateTaskArguments(arguments.0)
+    public func update(
+        _ task: AppTask,
+        with arguments: TaskArguments,
+        on newSource: DataSource
+    ) async -> Result<AppTask, Errors> {
+        let validationResult = validateTaskArguments(arguments)
         switch validationResult {
         case let .failure(failure):
             return .failure(failure)
@@ -172,7 +174,7 @@ public class TasksClient {
             break
         }
 
-        let sourceHasChanged = task.source != arguments.1
+        let sourceHasChanged = task.source != newSource
         if sourceHasChanged {
             let deleteResult = await delete(task)
             switch deleteResult {
@@ -182,7 +184,7 @@ public class TasksClient {
                 break
             }
 
-            let createResult = await create(with: arguments.0, on: arguments.1)
+            let createResult = await create(with: arguments, on: newSource)
             let createdTask: AppTask
             switch createResult {
             case let .failure(failure):
@@ -191,11 +193,17 @@ public class TasksClient {
                 createdTask = success
             }
 
-            logger.info("successfully changed the source from \(task.source) -> \(arguments.1)")
+            logger.info("successfully changed the source from \(task.source) -> \(newSource)")
             return .success(createdTask)
         }
 
-        let updateResult = await _update(on: task.source, by: task.id, with: arguments.0)
+        let argumentsHaveChanged = task.arguments != arguments
+        guard argumentsHaveChanged else {
+            logger.info("arguments have not changed")
+            return .success(task)
+        }
+
+        let updateResult = await _update(on: task.source, by: task.id, with: arguments)
         let updatedTask: AppTask
         switch updateResult {
         case let .failure(failure):

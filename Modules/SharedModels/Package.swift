@@ -17,12 +17,14 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../Environment"),
+        .package(path: "../TasktiveLocale"),
     ],
     targets: [
         .target(
             name: "SharedModels",
             dependencies: [
                 "Environment",
+                "TasktiveLocale",
             ]
         ),
         .testTarget(
