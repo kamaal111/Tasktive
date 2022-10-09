@@ -7,6 +7,7 @@
 
 import Foundation
 import Environment
+import TasktiveLocale
 
 /// Data source representation that tells where a certain object comes from.
 public enum DataSource: Codable, Hashable, CaseIterable {
@@ -39,9 +40,18 @@ public enum DataSource: Codable, Hashable, CaseIterable {
     public var persistanceMethodImageName: String {
         switch self {
         case .coreData:
-            return "iphone.and.arrow.forward"
+            return "arrow.turn.up.forward.iphone"
         case .iCloud:
             return "icloud"
+        }
+    }
+
+    public var label: String {
+        switch self {
+        case .iCloud:
+            return TasktiveLocale.getText(.ICLOUD)
+        case .coreData:
+            return TasktiveLocale.getText(.LOCALLY)
         }
     }
 }

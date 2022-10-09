@@ -101,8 +101,7 @@ struct TasksScreen: View {
                 task: viewModel.shownTaskDetails,
                 availableSources: dataSources,
                 onClose: { Task { await viewModel.closeDetailsSheet() } },
-                onDone: handleTaskEditedInDetailsSheet,
-                onDelete: handleTaskDeletedInDetailsSheet
+                onDone: handleTaskEditedInDetailsSheet
             )
             .accentColor(theme.currentAccentColor(scheme: colorScheme))
             .withPopperUp(popperUpManager)
@@ -199,7 +198,11 @@ struct TasksScreen: View {
         }
     }
 
-    private func handleTaskEditedInDetailsSheet(_ arguments: (TaskArguments, DataSource)?, _ isNewTask: Bool) {
+    private func handleTaskEditedInDetailsSheet(
+        _ arguments: TaskArguments?,
+        _ newSource: DataSource,
+        _ isNewTask: Bool
+    ) {
         guard let arguments else {
             logger.warning("arguments are missing", "arguments='\(arguments as Any)'")
             return
@@ -207,7 +210,7 @@ struct TasksScreen: View {
 
         Task {
             if isNewTask {
-                let created = await createTask(with: arguments)
+                let created = await createTask(with: arguments, on: newSource)
                 if !created {
                     return
                 }
@@ -217,7 +220,7 @@ struct TasksScreen: View {
                     return
                 }
 
-                let result = await tasksViewModel.updateTask(task, with: arguments)
+                let result = await tasksViewModel.updateTask(task, with: arguments, on: newSource)
                 switch result {
                 case let .failure(failure):
                     popperUpManager.showPopup(style: failure.style, timeout: failure.timeout)
@@ -225,26 +228,6 @@ struct TasksScreen: View {
                 case .success:
                     break
                 }
-            }
-
-            await viewModel.closeDetailsSheet()
-        }
-    }
-
-    private func handleTaskDeletedInDetailsSheet() {
-        guard let task = viewModel.shownTaskDetails else {
-            logger.warning("task is missing", "task='\(viewModel.shownTaskDetails as Any)'")
-            return
-        }
-
-        Task {
-            let result = await tasksViewModel.deleteTask(task)
-            switch result {
-            case let .failure(failure):
-                popperUpManager.showPopup(style: failure.style, timeout: failure.timeout)
-                return
-            case .success:
-                break
             }
 
             await viewModel.closeDetailsSheet()
@@ -288,7 +271,7 @@ struct TasksScreen: View {
         logger.info("submitting new task")
 
         Task {
-            let created = await createTask(with: (viewModel.taskArguments, viewModel.currentSource))
+            let created = await createTask(with: viewModel.taskArguments, on: viewModel.currentSource)
 
             if created {
                 viewModel.clearQuickAddInput()
@@ -296,8 +279,8 @@ struct TasksScreen: View {
         }
     }
 
-    private func createTask(with arguments: (TaskArguments, DataSource)) async -> Bool {
-        let createTaskResult = await tasksViewModel.createTask(with: arguments.0, on: arguments.1)
+    private func createTask(with arguments: TaskArguments, on newSource: DataSource) async -> Bool {
+        let createTaskResult = await tasksViewModel.createTask(with: arguments, on: newSource)
         switch createTaskResult {
         case let .failure(failure):
             popperUpManager.showPopup(style: failure.style, timeout: failure.timeout)

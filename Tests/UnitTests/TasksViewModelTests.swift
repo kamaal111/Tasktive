@@ -46,7 +46,7 @@ final class TasksViewModelTests: QuickSpec {
                     var arguments = taskOfNow.arguments
                     arguments.title = ""
 
-                    let result = await tasksViewModel.updateTask(taskOfNow.asAppTask, with: arguments)
+                    let result = await tasksViewModel.updateTask(taskOfNow.asAppTask, with: arguments, on: .coreData)
                     switch result {
                     case .success:
                         fail("not supposed to succeed")
@@ -79,7 +79,7 @@ final class TasksViewModelTests: QuickSpec {
                 Task {
                     let arguments = taskOfNow.arguments
 
-                    let result = await tasksViewModel.updateTask(taskOfNow.asAppTask, with: arguments)
+                    let result = await tasksViewModel.updateTask(taskOfNow.asAppTask, with: arguments, on: .coreData)
                     switch result {
                     case .success:
                         break
@@ -120,7 +120,7 @@ final class TasksViewModelTests: QuickSpec {
                     var arguments = taskOfNow.arguments
                     arguments.dueDate = tomorrow
 
-                    let result = await tasksViewModel.updateTask(taskOfNow.asAppTask, with: arguments)
+                    let result = await tasksViewModel.updateTask(taskOfNow.asAppTask, with: arguments, on: .coreData)
                     switch result {
                     case .success:
                         break

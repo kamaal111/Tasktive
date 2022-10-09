@@ -66,4 +66,7 @@ module.exports = {
   ACKNOWLEDGEMENTS: 'Acknowledgements',
   PACKAGES: 'Packages',
   CONTRIBUTORS: 'Contributors',
+  LOCALLY: 'Locally',
+  ICLOUD: 'iCloud',
+  LOCATION: 'Location',
 };

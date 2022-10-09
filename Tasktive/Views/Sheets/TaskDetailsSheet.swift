@@ -19,8 +19,7 @@ struct TaskDetailsSheet: View {
     let task: AppTask?
     let availableSources: [DataSource]
     let onClose: () -> Void
-    let onDone: (_ arguments: (TaskArguments, DataSource)?, _ isNew: Bool) -> Void
-    let onDelete: () -> Void
+    let onDone: (_ arguments: TaskArguments?, _ newSource: DataSource, _ isNew: Bool) -> Void
 
     var body: some View {
         KSheetStack(
@@ -30,7 +29,7 @@ struct TaskDetailsSheet: View {
             },
             trailingNavigationButton: {
                 ToolbarButton(localized: .DONE, action: {
-                    onDone(viewModel.makeCoreTaskArguments(using: task), viewModel.isNewTask)
+                    onDone(viewModel.makeCoreTaskArguments(using: task), viewModel.dataSource, viewModel.isNewTask)
                 })
             }
         ) {
@@ -38,20 +37,16 @@ struct TaskDetailsSheet: View {
                 KFloatingTextField(text: $viewModel.title, title: TasktiveLocale.getText(.TITLE))
                 KFloatingDatePicker(value: $viewModel.dueDate, title: TasktiveLocale.getText(.DUE_DATE))
 
-                if !viewModel.isNewTask {
-                    Button(action: onDelete) {
-                        HStack(spacing: 5) {
-                            Image(systemName: "trash")
-                            Text(localized: .DELETE)
-                        }
-                        .foregroundColor(.white)
-                        .font(.headline)
-                        .padding(.vertical, .small)
-                        .ktakeWidthEagerly()
-                        .background(Color.accentColor)
-                        .cornerRadius(.small)
+                if availableSources.count > 1 {
+                    Text(localized: .LOCATION)
+                        .font(.caption)
+                        .foregroundColor(.accentColor)
+                        .padding(.bottom, -(AppSizes.small.rawValue))
+                        .padding(.top, .extraSmall)
+                    VStack {
+                        DataSourcePicker(source: $viewModel.dataSource, sources: availableSources, withLabel: true)
                     }
-                    .buttonStyle(.plain)
+                    .padding(.horizontal, .small)
                 }
             }
             .padding(.vertical, .medium)
@@ -68,11 +63,11 @@ struct TaskDetailsSheet: View {
 
         @Published private(set) var isNewTask = false
 
-        func makeCoreTaskArguments(using task: AppTask?) -> (TaskArguments, DataSource)? {
+        func makeCoreTaskArguments(using task: AppTask?) -> TaskArguments? {
             if isNewTask {
                 let arguments = TaskArguments(title: title, taskDescription: nil, notes: nil, dueDate: dueDate)
 
-                return (arguments, dataSource)
+                return arguments
             } else {
                 guard let task = task else {
                     logger.warning("could not make task arguments")
@@ -83,7 +78,7 @@ struct TaskDetailsSheet: View {
                 arguments.title = title
                 arguments.dueDate = dueDate
 
-                return (arguments, dataSource)
+                return arguments
             }
         }
 
@@ -122,8 +117,7 @@ struct TaskDetailsSheet_Previews: PreviewProvider {
             ),
             availableSources: DataSource.allCases,
             onClose: { },
-            onDone: { _, _ in },
-            onDelete: { }
+            onDone: { _, _, _ in }
         )
     }
 }

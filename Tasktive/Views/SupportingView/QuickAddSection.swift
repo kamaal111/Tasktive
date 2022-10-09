@@ -31,16 +31,8 @@ struct QuickAddSection: View {
                     submit()
                 }
             if dataSources.count > 1 {
-                Picker(selection: $currentSource, label: Text.empty()) {
-                    ForEach(dataSources, id: \.self) { source in
-                        Image(systemName: source.persistanceMethodImageName)
-                            .tag(source)
-                            .ktakeWidthEagerly()
-                    }
-                }
-                .labelsHidden()
-                .frame(maxWidth: 60)
-                .padding(.top, topPaddingCorrection)
+                DataSourcePicker(source: $currentSource, sources: dataSources, withLabel: false)
+                    .padding(.top, topPaddingCorrection)
             }
             Button(action: submit) {
                 Text(localized: .SUBMIT)
