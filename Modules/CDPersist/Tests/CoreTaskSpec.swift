@@ -14,6 +14,7 @@ import SharedModels
 final class CoreTaskSpec: QuickSpec {
     let viewContext = PersistenceController.preview.context
 
+    // swiftlint:disable function_body_length
     override func spec() {
         describe("CRUD operations on CoreTask") {
             beforeEach {
@@ -142,7 +143,7 @@ final class CoreTaskSpec: QuickSpec {
 
                     let deleteTaskExpectation = expectation(description: "delete task")
                     Task {
-                        _ = await task.delete(on: viewContext)
+                        _ = task.delete(on: viewContext)
 
                         deleteTaskExpectation.fulfill()
                     }
@@ -151,6 +152,68 @@ final class CoreTaskSpec: QuickSpec {
                     let updatedTasks = try CoreTask.list(from: viewContext).get()
 
                     expect(updatedTasks).to(beEmpty())
+                }
+            }
+        }
+
+        describe("CRUD operations on CoreReminder") {
+            // swiftlint:disable implicitly_unwrapped_optional
+            var task: CoreTask!
+
+            beforeEach {
+                do {
+                    try task?.delete(on: self.viewContext).get()
+                } catch {
+                    fail("failed to delete the task; error='\(error)'")
+                }
+
+                let now = Date()
+                let arguments = TaskArguments(
+                    title: "Title",
+                    taskDescription: "Description",
+                    notes: "Notes\nNew Line",
+                    dueDate: now
+                )
+                let result = CoreTask.create(with: arguments, from: self.viewContext)
+                do {
+                    task = try result.get()
+                } catch {
+                    fail("failed to make a task; error='\(error)'")
+                }
+            }
+
+            context("when trying to create a reminder") {
+                it("returns a new reminder") {
+                    let arguments = ReminderArguments(time: Date())
+                    let reminder = try task.setAnReminder(with: arguments).get()
+
+                    expect(task.remindersArray.count) == 1
+                    expect(task.remindersArray.first) == reminder
+                    expect(reminder.task) == task
+                    expect(reminder.time) == arguments.time
+                }
+            }
+
+            context("when trying to delete a reminder") {
+                it("get's deleted successfully") {
+                    let arguments = ReminderArguments(time: Date())
+                    let reminder = try task.setAnReminder(with: arguments).get()
+
+                    try reminder.delete(on: self.viewContext).get()
+                    expect(task.remindersArray.count) == 0
+                }
+
+                it("get's deleted when task is deleted as well") {
+                    let arguments = ReminderArguments(time: Date())
+                    let reminder = try task.setAnReminder(with: arguments).get()
+                    let reminderID = reminder.id.uuidString as NSString
+                    let predicate = NSPredicate(format: "id == %@", reminderID)
+
+                    expect({ try CoreReminder.find(by: predicate, from: self.viewContext).get()! }) == reminder
+
+                    try task.delete(on: self.viewContext).get()
+
+                    expect({ try CoreReminder.find(by: predicate, from: self.viewContext).get() }).to(beNil())
                 }
             }
         }
