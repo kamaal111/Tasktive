@@ -284,6 +284,7 @@ public class TasksClient {
                 foundTask = success
             }
 
+            logger.info("deleted local task; \(foundTask)")
             return await foundTask.delete(on: persistenceController.context)
                 .mapError(mapCoreTaskErrors)
         case .iCloud:
@@ -296,6 +297,7 @@ public class TasksClient {
                 foundTask = success
             }
 
+            logger.info("deleted cloud task; \(foundTask)")
             return await foundTask.delete(on: skypiea)
                 .mapError(mapCloudTaskErrors)
         }
@@ -386,7 +388,7 @@ public class TasksClient {
     private func updateDueDateOfTasksIfNeeded(_ tasks: [AppTask], sources: [DataSource]) async -> [AppTask] {
         let now = Date()
         let today = now.hashed.asNSDate
-        let tasksIDs = tasks.map(\.id.nsString)
+        let tasksIDs = tasks.map(\.id.nsString).uniques()
         let predicate = NSPredicate(format: "(dueDate < %@) AND ticked == NO AND NOT(id in %@)", today, tasksIDs)
 
         var updatedTasks: [AppTask] = []
@@ -416,6 +418,10 @@ public class TasksClient {
                 mutableTask.dueDate = now
                 return mutableTask
             })
+        }
+
+        if !updatedTasks.isEmpty {
+            logger.info("updated tasks; \(updatedTasks)")
         }
 
         return tasks + updatedTasks

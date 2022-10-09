@@ -89,7 +89,31 @@ public class Skypiea {
             return []
         }
 
-        return try await iCloutKit.fetch(ofType: objectType, by: predicate)
+        var items: [CKRecord] = []
+        do {
+            items = try await iCloutKit.fetch(ofType: objectType, by: predicate)
+        } catch {
+            throw error
+        }
+
+        var recordsMappedByID: [NSString: CKRecord] = [:]
+        var recordsToDelete: [CKRecord] = []
+        for item in items {
+            if let id = item["id"] as? NSString {
+                if let recordToDelete = recordsMappedByID[id] {
+                    recordsToDelete.append(recordToDelete)
+                } else {
+                    recordsMappedByID[id] = item
+                }
+            }
+        }
+
+        let deletedTasks = try await iCloutKit.deleteMultiple(recordsToDelete)
+        if !deletedTasks.isEmpty {
+            logger.info("deleted cloud tasks; \(deletedTasks)")
+        }
+
+        return recordsMappedByID.values.asArray()
     }
 
     /// Save the given record on iCloud.

@@ -164,6 +164,7 @@ public struct CloudTask: Identifiable, Hashable, Taskable, Cloudable, Crudable {
         } catch {
             return handleFetchErrors(error)
         }
+
         return .success(tasks)
     }
 
