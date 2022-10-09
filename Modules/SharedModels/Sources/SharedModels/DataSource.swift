@@ -10,10 +10,10 @@ import Environment
 
 /// Data source representation that tells where a certain object comes from.
 public enum DataSource: Codable, Hashable, CaseIterable {
-    /// From CoreData store.
-    case coreData
     /// From iCloud store.
     case iCloud
+    /// From CoreData store.
+    case coreData
 
     /// If the parent object requires internet for the content to be fetched.
     public var requiresInternet: Bool {
