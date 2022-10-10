@@ -294,6 +294,8 @@
 		2CDE6AEC28B2BAFE00924935 /* Date+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE6AEA28B2BAFE00924935 /* Date+extensions.swift */; };
 		2CDE6AED28B2BAFE00924935 /* Date+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE6AEA28B2BAFE00924935 /* Date+extensions.swift */; };
 		2CDFB1B028A6DA53004ACED7 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDFB1AF28A6DA53004ACED7 /* Colors.swift */; };
+		2CE7E45828F464AC001F453B /* Skypiea in Frameworks */ = {isa = PBXBuildFile; productRef = 2CE7E45728F464AC001F453B /* Skypiea */; };
+		2CE7E45A28F464B2001F453B /* Skypiea in Frameworks */ = {isa = PBXBuildFile; productRef = 2CE7E45928F464B2001F453B /* Skypiea */; };
 		2CE9EFB728AD629500C89888 /* AppLogoCreatorScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE9EFB628AD629500C89888 /* AppLogoCreatorScreen.swift */; };
 		2CE9EFB928AD639500C89888 /* WideNavigationLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE9EFB828AD639500C89888 /* WideNavigationLink.swift */; };
 		2CE9EFBC28AD667300C89888 /* DeviceShakeViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE9EFBB28AD667300C89888 /* DeviceShakeViewModifier.swift */; };
@@ -619,6 +621,7 @@
 				2C69A0A628B19BC600D5006D /* SalmonUI in Frameworks */,
 				2C113DCA28E0D8ED00B43BDB /* SharedModels in Frameworks */,
 				2C69A0A728B19BC600D5006D /* ShrimpExtensions in Frameworks */,
+				2CE7E45828F464AC001F453B /* Skypiea in Frameworks */,
 				2C3E218928D6311C00BD2330 /* Environment in Frameworks */,
 				2C69A0A828B19BC600D5006D /* SettingsUI in Frameworks */,
 				2C5F41F628E85E2900278DC7 /* CDPersist.framework in Frameworks */,
@@ -635,6 +638,7 @@
 				2C98E42828B12E170048149F /* SalmonUI in Frameworks */,
 				2C113DC828E0D8E500B43BDB /* SharedModels in Frameworks */,
 				2C45AB0828C5143900011282 /* TasktiveLocale in Frameworks */,
+				2CE7E45A28F464B2001F453B /* Skypiea in Frameworks */,
 				2C3E218B28D6312100BD2330 /* Environment in Frameworks */,
 				2C98E42928B12E170048149F /* ShrimpExtensions in Frameworks */,
 				2C5F41FA28E85E3200278DC7 /* CDPersist.framework in Frameworks */,
@@ -1469,6 +1473,7 @@
 				2C3E218828D6311C00BD2330 /* Environment */,
 				2C1B757228DA38C000181865 /* Logster */,
 				2C113DC928E0D8ED00B43BDB /* SharedModels */,
+				2CE7E45728F464AC001F453B /* Skypiea */,
 			);
 			productName = Tasktive;
 			productReference = 2C69A0B328B19BC600D5006D /* TasktiveMac.app */;
@@ -1500,6 +1505,7 @@
 				2C3E218A28D6312100BD2330 /* Environment */,
 				2C1B757428DA38C500181865 /* Logster */,
 				2C113DC728E0D8E500B43BDB /* SharedModels */,
+				2CE7E45928F464B2001F453B /* Skypiea */,
 			);
 			productName = Tasktive;
 			productReference = 2C98E43428B12E170048149F /* TasktiveMacDebug.app */;
@@ -2964,6 +2970,14 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2CCCADC92881FEE90033E2EF /* XCRemoteSwiftPackageReference "Nimble" */;
 			productName = Nimble;
+		};
+		2CE7E45728F464AC001F453B /* Skypiea */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Skypiea;
+		};
+		2CE7E45928F464B2001F453B /* Skypiea */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Skypiea;
 		};
 		2CF24AAD28842F9A00778BD9 /* ShrimpExtensions */ = {
 			isa = XCSwiftPackageProductDependency;
