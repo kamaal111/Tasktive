@@ -16,7 +16,7 @@ private let logger = Logster(from: SettingsUI.AcknowledgementsScreen.self)
 extension SettingsUI {
     public struct AcknowledgementsScreen: View {
         @State private var acknowledgements: AcknowledgementsFileContent?
-        @State private var selectedAcknowledgementPackage: AcknowledgementPackage?
+        @State private var selectedAcknowledgementPackage: URL?
         @State private var showBrowser = false
 
         public init() { }
@@ -31,7 +31,7 @@ extension SettingsUI {
                 }
                 KSection(header: TasktiveLocale.getText(.PACKAGES)) {
                     ForEach(acknowledgements?.packages ?? [], id: \.self) { package in
-                        Button(action: { selectedAcknowledgementPackage = package }) {
+                        Button(action: { selectedAcknowledgementPackage = package.url }) {
                             VStack(alignment: .leading) {
                                 Text(package.name)
                                     .bold()
@@ -53,8 +53,8 @@ extension SettingsUI {
                 logger.info("selected acknowledgement package changed to \(newValue as Any)")
             })
             .inAppBrowserSUI(
-                isPresented: $showBrowser,
-                url: selectedAcknowledgementPackage?.url ?? URL(staticString: "https://kamaal.io"),
+                $selectedAcknowledgementPackage,
+                fallbackURL: URL(staticString: "https://kamaal.io"),
                 color: .accentColor
             )
             .onAppear {
