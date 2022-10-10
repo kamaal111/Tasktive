@@ -49,6 +49,11 @@ public struct CloudTask: Identifiable, Hashable, Taskable, Cloudable, Crudable {
         self._record = record
     }
 
+    public var remindersArray: [AppReminder] {
+        #warning("Get the reminders here")
+        return []
+    }
+
     public var source: DataSource {
         .iCloud
     }

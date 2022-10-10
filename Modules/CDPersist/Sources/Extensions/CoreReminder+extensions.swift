@@ -13,7 +13,7 @@ import ShrimpExtensions
 
 private let logger = Logster(from: CoreReminder.self)
 
-extension CoreReminder {
+extension CoreReminder: Remindable {
     // - MARK: Crud errors
 
     /// Errors that can come from `CoreData` operations.

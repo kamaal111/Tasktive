@@ -64,8 +64,8 @@ extension CoreTask: Crudable, Taskable {
     }
 
     /// This tasks reminders.
-    public var remindersArray: [CoreReminder] {
-        reminders?.allObjects as? [CoreReminder] ?? []
+    public var remindersArray: [AppReminder] {
+        (reminders?.allObjects as? [CoreReminder] ?? []).map(\.toAppReminder)
     }
 
     // - MARK: CoreData operations
@@ -305,7 +305,7 @@ extension CoreTask: Crudable, Taskable {
             return .failure(.generalFailure(message: "failed to access managed object context on this task"))
         }
 
-        for reminder in remindersArray {
+        for reminder in reminders?.allObjects as? [CoreReminder] ?? [] {
             do {
                 try reminder.delete(on: context, save: false).get()
             } catch {
