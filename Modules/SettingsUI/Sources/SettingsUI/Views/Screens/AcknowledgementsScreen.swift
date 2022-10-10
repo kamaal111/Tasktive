@@ -55,7 +55,7 @@ extension SettingsUI {
             .inAppBrowserSUI(
                 isPresented: $showBrowser,
                 url: selectedAcknowledgementPackage?.url ?? URL(staticString: "https://kamaal.io"),
-                color: UIColor(.accentColor)
+                color: .accentColor
             )
             .onAppear {
                 guard acknowledgements == nil,
