@@ -188,7 +188,7 @@ final class CoreTaskSpec: QuickSpec {
                     let reminder = try task.setAnReminder(with: arguments).get()
 
                     expect(task.remindersArray.count) == 1
-                    expect(task.remindersArray.first) == reminder
+                    expect(task.remindersArray.first) == reminder.toAppReminder
                     expect(reminder.task) == task
                     expect(reminder.time) == arguments.time
                 }

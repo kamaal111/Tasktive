@@ -113,7 +113,15 @@ struct TaskDetailsSheet_Previews: PreviewProvider {
                 dueDate: Date(),
                 completionDate: nil,
                 creationDate: Date(),
-                source: .coreData
+                source: .coreData,
+                remindersArray: [
+                    .init(
+                        id: UUID(uuidString: "6907eaa1-13f0-42ef-ad74-101a5fd6c44a")!,
+                        time: Date(),
+                        creationDate: Date(),
+                        source: .coreData
+                    ),
+                ]
             ),
             availableSources: DataSource.allCases,
             onClose: { },

@@ -289,7 +289,7 @@ public class TasksClient {
 
             return await foundTask.update(with: arguments, on: persistenceController.context)
                 .mapError(mapCoreTaskErrors)
-                .map(\.asAppTask)
+                .map(\.toAppTask)
         case .iCloud:
             let foundTask: CloudTask
             let findResult = await findCloudTask(by: id)
@@ -302,7 +302,7 @@ public class TasksClient {
 
             return await foundTask.update(with: arguments, on: skypiea)
                 .mapError(mapCloudTaskErrors)
-                .map(\.asAppTask)
+                .map(\.toAppTask)
         }
     }
 
@@ -373,11 +373,11 @@ public class TasksClient {
         case .coreData:
             return CoreTask.create(with: arguments, from: persistenceController.context)
                 .mapError(mapCoreTaskErrors)
-                .map(\.asAppTask)
+                .map(\.toAppTask)
         case .iCloud:
             return await CloudTask.create(with: arguments, from: skypiea)
                 .mapError(mapCloudTaskErrors)
-                .map(\.asAppTask)
+                .map(\.toAppTask)
         }
     }
 
@@ -389,11 +389,11 @@ public class TasksClient {
         case .coreData:
             return CoreTask.list(from: persistenceController.context)
                 .mapError(mapCoreTaskErrors)
-                .map { $0.map(\.asAppTask) }
+                .map { $0.map(\.toAppTask) }
         case .iCloud:
             return await CloudTask.list(from: skypiea)
                 .mapError(mapCloudTaskErrors)
-                .map { $0.map(\.asAppTask) }
+                .map { $0.map(\.toAppTask) }
         }
     }
 
@@ -414,11 +414,11 @@ public class TasksClient {
         case .coreData:
             return CoreTask.filter(by: predicate, limit: limit, from: persistenceController.context)
                 .mapError(mapCoreTaskErrors)
-                .map { $0.map(\.asAppTask) }
+                .map { $0.map(\.toAppTask) }
         case .iCloud:
             return await CloudTask.filter(by: predicate, limit: limit, from: skypiea)
                 .mapError(mapCloudTaskErrors)
-                .map { $0.map(\.asAppTask) }
+                .map { $0.map(\.toAppTask) }
         }
     }
 

@@ -28,6 +28,8 @@ public struct AppTask: Hashable, Identifiable {
     public let creationDate: Date
     /// Data source of the task.
     public let source: DataSource
+    /// The tasks reminders.
+    public var remindersArray: [AppReminder]
     /// If this object is from iCloud it will have this property set.
     public var record: CKRecord?
 
@@ -42,6 +44,7 @@ public struct AppTask: Hashable, Identifiable {
     ///   - completionDate: Completion date on a task.
     ///   - creationDate: Creation date of a task.
     ///   - source: Data source of the task.
+    ///   - remindersArray: The tasks reminders.
     ///   - record: If this object is from iCloud it will have this property set.
     public init(
         id: UUID,
@@ -53,6 +56,7 @@ public struct AppTask: Hashable, Identifiable {
         completionDate: Date?,
         creationDate: Date,
         source: DataSource,
+        remindersArray: [AppReminder],
         record: CKRecord? = nil
     ) {
         self.id = id
@@ -64,6 +68,7 @@ public struct AppTask: Hashable, Identifiable {
         self.completionDate = completionDate
         self.creationDate = creationDate
         self.source = source
+        self.remindersArray = remindersArray
         self.record = record
     }
 

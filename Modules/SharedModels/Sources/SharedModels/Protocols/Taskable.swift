@@ -27,11 +27,13 @@ public protocol Taskable {
     var creationDate: Date { get }
     /// Data source of the task.
     var source: DataSource { get }
+    /// The tasks reminders.
+    var remindersArray: [AppReminder] { get }
 }
 
 extension Taskable {
     /// App task representation of the task.
-    public var asAppTask: AppTask {
+    public var toAppTask: AppTask {
         .init(
             id: id,
             title: title,
@@ -39,7 +41,8 @@ extension Taskable {
             dueDate: dueDate,
             completionDate: completionDate,
             creationDate: creationDate,
-            source: source
+            source: source,
+            remindersArray: remindersArray
         )
     }
 }
