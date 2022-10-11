@@ -8,14 +8,24 @@
 import Foundation
 
 /// Object to be used to create and/or update a reminders.
-public struct ReminderArguments: Equatable {
+public struct ReminderArguments: Equatable, Hashable {
     /// When to send a reminder.
     public let time: Date
+    /// The reminders id, if already set.
+    public let id: UUID?
+    /// The parent task id.
+    public let taskID: UUID?
 
     /// Memberwise initializer.
     /// - Parameters:
     ///   - time: When to send a reminder.
-    public init(time: Date) {
+    ///   - id: The reminders id, if already set.
+    ///   - taskID: The parent task id.
+    public init(time: Date, id: UUID?, taskID: UUID) {
         self.time = time
+        self.id = id
+        self.taskID = taskID
     }
+
+//    public var toCloudReminder
 }

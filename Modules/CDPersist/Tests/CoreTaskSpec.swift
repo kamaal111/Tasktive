@@ -32,7 +32,8 @@ final class CoreTaskSpec: QuickSpec {
                         title: "Title",
                         taskDescription: "Description",
                         notes: "Notes\nNew Line",
-                        dueDate: now
+                        dueDate: now,
+                        reminders: []
                     )
                     let result = CoreTask.create(with: arguments, from: self.viewContext)
                     let task = try result.get()
@@ -59,9 +60,16 @@ final class CoreTaskSpec: QuickSpec {
                             title: "First",
                             taskDescription: "Some things to think about",
                             notes: "Wow notes",
-                            dueDate: Date()
+                            dueDate: Date(),
+                            reminders: []
                         ),
-                        .init(title: "Second", taskDescription: "Other things ", notes: "Oh yeah", dueDate: Date()),
+                        .init(
+                            title: "Second",
+                            taskDescription: "Other things ",
+                            notes: "Oh yeah",
+                            dueDate: Date(),
+                            reminders: []
+                        ),
                     ]
 
                     for arg in args {
@@ -88,7 +96,8 @@ final class CoreTaskSpec: QuickSpec {
                         title: "Title",
                         taskDescription: "Description",
                         notes: "Notes\nNew Line",
-                        dueDate: Date().addingTimeInterval(100_000)
+                        dueDate: Date().addingTimeInterval(100_000),
+                        reminders: []
                     )
                     let task = try CoreTask.create(with: arguments, from: viewContext).get()
                     let oldTaskTitle = task.title
@@ -105,12 +114,13 @@ final class CoreTaskSpec: QuickSpec {
                         taskDescription: "New description",
                         notes: "yes note",
                         dueDate: Date(),
-                        ticked: true
+                        ticked: true,
+                        reminders: []
                     )
 
                     let updateTaskExpectation = expectation(description: "updating task")
                     Task {
-                        let updatedTask = try await task.update(with: updatedArguments, on: viewContext).get()
+                        let updatedTask = try task.update(with: updatedArguments, on: viewContext).get()
 
                         expect(updatedTask.id) == oldTaskID
                         expect(updatedTask.kCreationDate) == oldTaskCreationDate
@@ -134,7 +144,8 @@ final class CoreTaskSpec: QuickSpec {
                         title: "Title",
                         taskDescription: nil,
                         notes: nil,
-                        dueDate: Date()
+                        dueDate: Date(),
+                        reminders: []
                     )
                     let task = try CoreTask.create(with: arguments, from: viewContext).get()
                     let tasks = try CoreTask.list(from: viewContext).get()
@@ -172,7 +183,8 @@ final class CoreTaskSpec: QuickSpec {
                     title: "Title",
                     taskDescription: "Description",
                     notes: "Notes\nNew Line",
-                    dueDate: now
+                    dueDate: now,
+                    reminders: []
                 )
                 let result = CoreTask.create(with: arguments, from: self.viewContext)
                 do {
@@ -184,29 +196,38 @@ final class CoreTaskSpec: QuickSpec {
 
             context("when trying to create a reminder") {
                 it("returns a new reminder") {
-                    let arguments = ReminderArguments(time: Date())
-                    let reminder = try task.setAnReminder(with: arguments).get()
+                    let arguments = ReminderArguments(time: Date(), id: nil, taskID: task.id)
+                    var taskArguments = task.arguments
+                    taskArguments.reminders = [arguments]
+                    let reminder = try task.update(with: taskArguments, on: self.viewContext).get().remindersArray
+                        .first!
 
                     expect(task.remindersArray.count) == 1
-                    expect(task.remindersArray.first) == reminder.toAppReminder
-                    expect(reminder.task) == task
+                    expect(task.remindersArray.first) == reminder
+                    expect(reminder.taskID) == task.id
                     expect(reminder.time) == arguments.time
                 }
             }
 
             context("when trying to delete a reminder") {
                 it("get's deleted successfully") {
-                    let arguments = ReminderArguments(time: Date())
-                    let reminder = try task.setAnReminder(with: arguments).get()
+                    let arguments = ReminderArguments(time: Date(), id: nil, taskID: task.id)
+                    var taskArguments = task.arguments
+                    taskArguments.reminders = [arguments]
+                    let updatedTask = try task.update(with: taskArguments, on: self.viewContext).get()
+                    let reminder = (updatedTask.reminders?.allObjects as? [CoreReminder])?.first
 
-                    try reminder.delete(on: self.viewContext).get()
+                    try reminder?.delete(on: self.viewContext).get()
                     expect(task.remindersArray.count) == 0
                 }
 
                 it("get's deleted when task is deleted as well") {
-                    let arguments = ReminderArguments(time: Date())
-                    let reminder = try task.setAnReminder(with: arguments).get()
-                    let reminderID = reminder.id.uuidString as NSString
+                    let arguments = ReminderArguments(time: Date(), id: nil, taskID: task.id)
+                    var taskArguments = task.arguments
+                    taskArguments.reminders = [arguments]
+                    let updatedTask = try task.update(with: taskArguments, on: self.viewContext).get()
+                    let reminder = (updatedTask.reminders?.allObjects as? [CoreReminder])?.first
+                    let reminderID = reminder!.id.uuidString as NSString
                     let predicate = NSPredicate(format: "id == %@", reminderID)
 
                     expect({ try CoreReminder.find(by: predicate, from: self.viewContext).get()! }) == reminder

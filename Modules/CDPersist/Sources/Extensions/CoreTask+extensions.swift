@@ -9,6 +9,7 @@ import Logster
 import CoreData
 import Foundation
 import SharedModels
+import ShrimpExtensions
 
 private let logger = Logster(from: CoreTask.self)
 
@@ -59,7 +60,8 @@ extension CoreTask: Crudable, Taskable {
             dueDate: dueDate,
             ticked: ticked,
             id: id,
-            completionDate: completionDate
+            completionDate: completionDate,
+            reminders: remindersArray.map(\.toArguments)
         )
     }
 
@@ -70,39 +72,6 @@ extension CoreTask: Crudable, Taskable {
 
     // - MARK: CoreData operations
 
-    /// Set an reminder on this task.
-    /// - Parameters:
-    ///   - arguments: Arguments to create reminder out of.
-    ///   - save: Whether to save or not.
-    /// - Returns: A result either containing ``CoreReminder`` on success or ``CrudErrors`` on failure.
-    public func setAnReminder(
-        with arguments: ReminderArguments,
-        save: Bool = true
-    ) -> Result<CoreReminder, CrudErrors> {
-        guard let context = managedObjectContext else {
-            return .failure(.generalFailure(message: "failed to access managed object context on this task"))
-        }
-
-        let result = CoreReminder.create(with: arguments, on: context)
-        let reminder: CoreReminder
-        switch result {
-        case let .failure(failure):
-            return .failure(.reminderCreationFailure(context: failure))
-        case let .success(success):
-            reminder = success
-        }
-
-        reminder.task = self
-        addToReminders(reminder)
-
-        guard save else { return .success(reminder) }
-
-        return Self.save(from: context)
-            .map {
-                reminder
-            }
-    }
-
     /// Update the task.
     /// - Parameters:
     ///   - arguments: The arguments used to update a task.
@@ -111,10 +80,10 @@ extension CoreTask: Crudable, Taskable {
     public func update(
         with arguments: TaskArguments,
         on context: NSManagedObjectContext
-    ) async -> Result<CoreTask, CrudErrors> {
+    ) -> Result<CoreTask, CrudErrors> {
         let updatedTask = updateValues(with: arguments)
 
-        return CoreTask.save(from: context)
+        return Self.save(from: context)
             .map {
                 updatedTask
             }
@@ -157,7 +126,6 @@ extension CoreTask: Crudable, Taskable {
         newTask.id = arguments.id ?? UUID()
         newTask.kCreationDate = Date()
         newTask.attachments = NSSet(array: [])
-        newTask.reminders = NSSet(array: [])
         newTask.tags = NSSet(array: [])
 
         return save(from: context)
@@ -289,6 +257,14 @@ extension CoreTask: Crudable, Taskable {
     // - MARK: Private properties/methods
 
     private func updateValues(with arguments: TaskArguments) -> CoreTask {
+        guard let context = managedObjectContext else {
+            #if DEBUG
+            fatalError("context not found")
+            #else
+            return self
+            #endif
+        }
+
         ticked = arguments.ticked
         title = arguments.title
         taskDescription = arguments.taskDescription
@@ -297,7 +273,74 @@ extension CoreTask: Crudable, Taskable {
         completionDate = arguments.completionDate
         updateDate = Date()
 
+        var reminders: [CoreReminder] = reminders?.allObjects as? [CoreReminder] ?? []
+
+        for reminderArgument in arguments.reminders {
+            if let reminderID = reminderArgument.id,
+               let existingReminderIndex = reminders.findIndex(by: \.id, is: reminderID) {
+                if reminders[existingReminderIndex].toArguments != reminderArgument {
+                    // update existing reminder
+                    let updatedReminder: CoreReminder
+                    do {
+                        updatedReminder = try reminders[existingReminderIndex]
+                            .update(with: reminderArgument, on: context)
+                            .get()
+                    } catch {
+                        logger.error(label: "failed to update a existing reminder", error: error)
+                        continue
+                    }
+                    reminders[existingReminderIndex] = updatedReminder
+                }
+            } else {
+                // create a new reminder
+                let createdReminder: CoreReminder
+                do {
+                    createdReminder = try setAnReminder(with: reminderArgument, save: false).get()
+                } catch {
+                    logger.error(label: "failed to create a new reminder", error: error)
+                    continue
+                }
+                createdReminder.task = self
+                reminders.append(createdReminder)
+            }
+        }
+
+        self.reminders = reminders.asNSSet
+
         return self
+    }
+
+    /// Set an reminder on this task.
+    /// - Parameters:
+    ///   - arguments: Arguments to create reminder out of.
+    ///   - save: Whether to save or not.
+    /// - Returns: A result either containing ``CoreReminder`` on success or ``CrudErrors`` on failure.
+    private func setAnReminder(
+        with arguments: ReminderArguments,
+        save: Bool = true
+    ) -> Result<CoreReminder, CrudErrors> {
+        guard let context = managedObjectContext else {
+            return .failure(.generalFailure(message: "failed to access managed object context on this task"))
+        }
+
+        let result = CoreReminder.create(with: arguments, on: context)
+        let reminder: CoreReminder
+        switch result {
+        case let .failure(failure):
+            return .failure(.reminderCreationFailure(context: failure))
+        case let .success(success):
+            reminder = success
+        }
+
+        reminder.task = self
+        addToReminders(reminder)
+
+        guard save else { return .success(reminder) }
+
+        return Self.save(from: context)
+            .map {
+                reminder
+            }
     }
 
     private func deleteReminders() -> Result<Void, CrudErrors> {

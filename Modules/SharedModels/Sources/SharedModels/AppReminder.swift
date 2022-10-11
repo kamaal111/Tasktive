@@ -16,6 +16,8 @@ public struct AppReminder: Hashable, Identifiable {
     public let time: Date
     /// Creation date of a reminder.
     public let creationDate: Date
+    /// The parent taskID.
+    public let taskID: UUID
     /// Data source of the reminder.
     public let source: DataSource
     /// If this object is from iCloud it will have this property set.
@@ -26,12 +28,19 @@ public struct AppReminder: Hashable, Identifiable {
     ///   - id: ID of the reminder.
     ///   - time: When to send out the reminder.
     ///   - creationDate: Creation date of a reminder.
+    ///   - taskID: The parent taskID.
     ///   - source: Data source of the reminder.
     ///   - record: If this object is from iCloud it will have this property set.
-    public init(id: UUID, time: Date, creationDate: Date, source: DataSource, record _: CKRecord? = nil) {
+    public init(id: UUID, time: Date, creationDate: Date, taskID: UUID, source: DataSource, record: CKRecord? = nil) {
         self.id = id
         self.time = time
         self.creationDate = creationDate
+        self.taskID = taskID
         self.source = source
+        self.record = record
+    }
+
+    public var toArguments: ReminderArguments {
+        .init(time: time, id: id, taskID: taskID)
     }
 }
