@@ -287,7 +287,7 @@ public class TasksClient {
                 foundTask = success
             }
 
-            return await foundTask.update(with: arguments, on: persistenceController.context)
+            return foundTask.update(with: arguments, on: persistenceController.context)
                 .mapError(mapCoreTaskErrors)
                 .map(\.toAppTask)
         case .iCloud:

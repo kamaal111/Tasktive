@@ -81,7 +81,8 @@ public struct AppTask: Hashable, Identifiable {
             dueDate: dueDate,
             ticked: ticked,
             id: id,
-            completionDate: completionDate
+            completionDate: completionDate,
+            reminders: remindersArray.map(\.toArguments)
         )
     }
 
@@ -96,7 +97,8 @@ public struct AppTask: Hashable, Identifiable {
             dueDate: dueDate,
             ticked: newTickState,
             id: id,
-            completionDate: newTickState ? Date() : nil
+            completionDate: newTickState ? Date() : nil,
+            reminders: remindersArray.map(\.toArguments)
         )
     }
 }

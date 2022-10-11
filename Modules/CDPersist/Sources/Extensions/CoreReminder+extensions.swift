@@ -32,11 +32,6 @@ extension CoreReminder: Remindable {
 
     // - MARK: Helper methods
 
-    /// Arguments to be used to create and/or update a reminder.
-    public var arguments: ReminderArguments {
-        .init(time: time)
-    }
-
     /// Alias for ``CoreBase/kCreationDate``.
     public var creationDate: Date {
         get {
@@ -45,6 +40,10 @@ extension CoreReminder: Remindable {
         set {
             kCreationDate = newValue
         }
+    }
+
+    public var taskID: UUID {
+        task.id
     }
 
     /// Where this object is located, in this in `CoreData`.
@@ -79,6 +78,16 @@ extension CoreReminder: Remindable {
         return .success(())
     }
 
+    public func update(with arguments: ReminderArguments,
+                       on context: NSManagedObjectContext) -> Result<CoreReminder, CrudErrors> {
+        let updatedReminder = updateValues(with: arguments)
+
+        return Self.save(from: context)
+            .map {
+                updatedReminder
+            }
+    }
+
     /// This static method creates a ``CoreReminder`` instance and persists it in the `CoreData` store.
     /// - Parameters:
     ///   - arguments: Arguments used to create the ``CoreReminder`` instance.
@@ -91,7 +100,7 @@ extension CoreReminder: Remindable {
         let newReminder = CoreReminder(context: context)
             .updateValues(with: arguments)
 
-        newReminder.id = UUID()
+        newReminder.id = arguments.id ?? UUID()
         newReminder.kCreationDate = Date()
 
         return .success(newReminder)

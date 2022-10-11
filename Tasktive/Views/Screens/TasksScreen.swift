@@ -319,7 +319,7 @@ struct TasksScreen: View {
         init() { }
 
         var taskArguments: TaskArguments {
-            .init(title: newTitle, taskDescription: nil, notes: nil, dueDate: currentDay)
+            .init(title: newTitle, taskDescription: nil, notes: nil, dueDate: currentDay, reminders: [])
         }
 
         @MainActor

@@ -73,7 +73,8 @@ public class PersistenceController {
                 dueDate: Date().adding(minutes: -aDayInMinutes),
                 ticked: true,
                 id: UUID(uuidString: "dd74c487-8b6a-4939-943d-88e93a2f3713")!,
-                completionDate: Date().adding(minutes: -aDayInMinutes)
+                completionDate: Date().adding(minutes: -aDayInMinutes),
+                reminders: []
             ),
             .init(
                 title: "First Task",
@@ -82,7 +83,8 @@ public class PersistenceController {
                 dueDate: Date(),
                 ticked: false,
                 id: UUID(uuidString: "24b47a12-541c-401c-b2f1-82a4a1800d0b")!,
-                completionDate: nil
+                completionDate: nil,
+                reminders: []
             ),
             .init(
                 title: "Second of today",
@@ -91,7 +93,8 @@ public class PersistenceController {
                 dueDate: Date(),
                 ticked: true,
                 id: UUID(uuidString: "29bb34c1-d8ba-48a5-b48a-059d7d2c3a62")!,
-                completionDate: Date()
+                completionDate: Date(),
+                reminders: []
             ),
             .init(
                 title: "Second Task",
@@ -100,7 +103,8 @@ public class PersistenceController {
                 dueDate: Date().adding(minutes: aDayInMinutes),
                 ticked: false,
                 id: UUID(uuidString: "19396d5b-375c-4d47-bda4-6b8d68ba5320")!,
-                completionDate: nil
+                completionDate: nil,
+                reminders: []
             ),
             .init(
                 title: "Third Task",
@@ -109,7 +113,8 @@ public class PersistenceController {
                 dueDate: Date().adding(minutes: aDayInMinutes * 2),
                 ticked: false,
                 id: UUID(uuidString: "6d98883b-a57a-4d18-82eb-4226da137615")!,
-                completionDate: nil
+                completionDate: nil,
+                reminders: []
             ),
         ]
         for argument in arguments {

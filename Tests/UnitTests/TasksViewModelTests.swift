@@ -227,7 +227,8 @@ final class TasksViewModelTests: QuickSpec {
             dueDate: date,
             ticked: ticked,
             id: UUID(),
-            completionDate: ticked ? date : nil
+            completionDate: ticked ? date : nil,
+            reminders: []
         )
         return try CoreTask.create(with: arguments, from: viewContext).get()
     }

@@ -23,6 +23,7 @@ public struct CloudTask: Identifiable, Hashable, Taskable, Cloudable, Crudable {
     public let taskDescription: String?
     public let ticked: Bool
     public let title: String
+    public var reminders: [CloudReminder]
     private var _record: CKRecord?
 
     public init(
@@ -35,6 +36,7 @@ public struct CloudTask: Identifiable, Hashable, Taskable, Cloudable, Crudable {
         taskDescription: String?,
         ticked: Bool,
         title: String,
+        reminders: [CloudReminder],
         record: CKRecord? = nil
     ) {
         self.id = id
@@ -46,12 +48,12 @@ public struct CloudTask: Identifiable, Hashable, Taskable, Cloudable, Crudable {
         self.taskDescription = taskDescription
         self.ticked = ticked
         self.title = title
+        self.reminders = reminders
         self._record = record
     }
 
     public var remindersArray: [AppReminder] {
-        #warning("Get the reminders here")
-        return []
+        reminders.map(\.toAppReminder)
     }
 
     public var source: DataSource {
@@ -92,7 +94,10 @@ public struct CloudTask: Identifiable, Hashable, Taskable, Cloudable, Crudable {
               let updateDate = record[.updateDate] as? Date,
               let dueDate = record[.dueDate] as? Date,
               let ticked = (record[.ticked] as? Int64)?.nsNumber.boolValue,
-              let title = (record[.title] as? NSString)?.string else { return nil }
+              let title = (record[.title] as? NSString)?.string else {
+            logger.error("failed to decode record in to task")
+            return nil
+        }
 
         return self.init(
             id: id,
@@ -104,6 +109,7 @@ public struct CloudTask: Identifiable, Hashable, Taskable, Cloudable, Crudable {
             taskDescription: (record[.taskDescription] as? NSString)?.string,
             ticked: ticked,
             title: title,
+            reminders: [],
             record: record
         )
     }
@@ -128,7 +134,12 @@ public struct CloudTask: Identifiable, Hashable, Taskable, Cloudable, Crudable {
 
         guard let updatedTask = updatedTask else { return .failure(.updateFailure()) }
 
-        return .success(updatedTask)
+        let updatedTaskWithReminders = await updatedTask.setOrEditReminders(
+            with: arguments.reminders,
+            onContext: context
+        )
+
+        return .success(updatedTaskWithReminders)
     }
 
     public static func create(
@@ -145,7 +156,12 @@ public struct CloudTask: Identifiable, Hashable, Taskable, Cloudable, Crudable {
 
         guard let createdTask = createdTask else { return .failure(.saveFailure()) }
 
-        return .success(createdTask)
+        let createdTaskWithReminders = await createdTask.setOrEditReminders(
+            with: arguments.reminders,
+            onContext: context
+        )
+
+        return .success(createdTaskWithReminders)
     }
 
     public static func list(from context: Skypiea) async -> Result<[CloudTask], CrudErrors> {
@@ -155,6 +171,7 @@ public struct CloudTask: Identifiable, Hashable, Taskable, Cloudable, Crudable {
         } catch {
             return handleFetchErrors(error)
         }
+
         return .success(tasks)
     }
 
@@ -185,7 +202,7 @@ public struct CloudTask: Identifiable, Hashable, Taskable, Cloudable, Crudable {
         do {
             task = try await CloudTask.find(by: predicate, from: context)
         } catch {
-            return handleFetchErrors(error).map(\.first)
+            return handleFetchErrors(error).map { _ in nil }
         }
 
         return .success(task)
@@ -229,6 +246,54 @@ public struct CloudTask: Identifiable, Hashable, Taskable, Cloudable, Crudable {
         case title
     }
 
+    private func setOrEditReminders(
+        with arguments: [ReminderArguments],
+        onContext context: Skypiea
+    ) async -> CloudTask {
+        var reminders = reminders
+
+        for argument in arguments {
+            if let reminderID = argument.id,
+               let existingReminderIndex = reminders.findIndex(by: \.id, is: reminderID) {
+                // update a existing reminder
+                let existingReminder = reminders[existingReminderIndex]
+                if existingReminder.toArguments != argument {
+                    let updatedReminder: CloudReminder?
+                    do {
+                        updatedReminder = try await existingReminder.update(
+                            existingReminder.updateArguments(argument),
+                            on: context
+                        )
+                    } catch {
+                        logger.error(label: "failed to update an existing reminder", error: error)
+                        continue
+                    }
+
+                    guard let updatedReminder else { continue }
+
+                    reminders[existingReminderIndex] = updatedReminder
+                }
+            } else {
+                // create a new reminder
+                let createdReminder: CloudReminder?
+                do {
+                    createdReminder = try await CloudReminder.create(with: argument, on: self, from: context)
+                } catch {
+                    logger.error(label: "failed to create an new reminder", error: error)
+                    continue
+                }
+                guard let createdReminder else { continue }
+
+                reminders.append(createdReminder)
+            }
+        }
+
+        var task = self
+        task.reminders = reminders
+
+        return task
+    }
+
     private func updateArguments(_ arguments: TaskArguments) -> CloudTask {
         CloudTask(
             id: id,
@@ -240,6 +305,7 @@ public struct CloudTask: Identifiable, Hashable, Taskable, Cloudable, Crudable {
             taskDescription: arguments.taskDescription,
             ticked: arguments.ticked,
             title: arguments.title,
+            reminders: reminders,
             record: record
         )
     }
@@ -271,6 +337,16 @@ extension AppTask {
             taskDescription: taskDescription,
             ticked: ticked,
             title: title,
+            reminders: remindersArray.map { reminder in
+                CloudReminder(
+                    id: reminder.id,
+                    time: reminder.time,
+                    creationDate: reminder.creationDate,
+                    updateDate: Date(),
+                    taskID: id,
+                    record: reminder.record
+                )
+            },
             record: record
         )
     }
@@ -279,9 +355,10 @@ extension AppTask {
 extension TaskArguments {
     fileprivate var toCloudTask: CloudTask {
         let now = Date()
+        let taskID = id ?? UUID()
 
         return CloudTask(
-            id: id ?? UUID(),
+            id: taskID,
             creationDate: now,
             updateDate: now,
             completionDate: completionDate,
@@ -290,6 +367,15 @@ extension TaskArguments {
             taskDescription: taskDescription,
             ticked: ticked,
             title: title,
+            reminders: reminders.map { reminder in
+                CloudReminder(
+                    id: reminder.id ?? UUID(),
+                    time: reminder.time,
+                    creationDate: now,
+                    updateDate: now,
+                    taskID: taskID
+                )
+            },
             record: nil
         )
     }

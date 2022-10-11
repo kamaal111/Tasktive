@@ -5,10 +5,13 @@
 //  Created by Kamaal M Farah on 27/08/2022.
 //
 
+import Logster
 import CloudKit
 import ICloutKit
 import Foundation
 import ShrimpExtensions
+
+private let logger = Logster(from: (any Cloudable).self)
 
 /// Protocol to help perform iCloud operations.
 public protocol Cloudable {
@@ -40,7 +43,8 @@ extension Cloudable {
     ///   - context: the context to use for iCloud operations.
     /// - Returns: the saved object when it succeeds.
     public static func create(_ object: Object, on context: Skypiea) async throws -> Object? {
-        try await save(object, on: context)
+        await findAndDeleteDuplicate(object, onContext: context)
+        return try await save(object, on: context)
     }
 
     /// Fetch all of the given record.
@@ -122,6 +126,29 @@ extension Cloudable {
     public static func updateMany(_ objects: [Object], on context: Skypiea) async throws -> [Object] {
         try await context.saveMany(objects.map(\.record))
             .compactMap(fromRecord(_:))
+    }
+
+    private static func findAndDeleteDuplicate(_ object: Object, onContext context: Skypiea) async {
+        guard let id = (object.record["id"] as? NSString),
+              let duplicateItem = try? await find(by: NSPredicate(format: "id == %@", id), from: context) else {
+            return
+        }
+
+        do {
+            try await duplicateItem.delete(onContext: context)
+        } catch {
+            #if DEBUG
+            fatalError("failed to delete the duplicate item; \(duplicateItem)")
+            #else
+            logger.error(label: "failed to delete the duplicate item", error: error)
+            #endif
+        }
+
+        #if DEBUG
+        fatalError("found duplicate item; \(duplicateItem)")
+        #else
+        logger.warning("found duplicate item; \(duplicateItem)")
+        #endif
     }
 
     private static func handleFetchErrors(_ error: Error) throws {

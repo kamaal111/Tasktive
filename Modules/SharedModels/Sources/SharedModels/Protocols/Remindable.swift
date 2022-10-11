@@ -15,6 +15,8 @@ public protocol Remindable {
     var time: Date { get }
     /// Creation date of a reminder.
     var creationDate: Date { get }
+    /// The parent task id.
+    var taskID: UUID { get }
     /// Data source of the reminder.
     var source: DataSource { get }
 }
@@ -22,6 +24,10 @@ public protocol Remindable {
 extension Remindable {
     /// App reminder representation of the reminder.
     public var toAppReminder: AppReminder {
-        .init(id: id, time: time, creationDate: creationDate, source: source)
+        .init(id: id, time: time, creationDate: creationDate, taskID: taskID, source: source)
+    }
+
+    public var toArguments: ReminderArguments {
+        .init(time: time, id: id, taskID: taskID)
     }
 }

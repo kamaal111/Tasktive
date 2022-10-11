@@ -65,7 +65,13 @@ struct TaskDetailsSheet: View {
 
         func makeCoreTaskArguments(using task: AppTask?) -> TaskArguments? {
             if isNewTask {
-                let arguments = TaskArguments(title: title, taskDescription: nil, notes: nil, dueDate: dueDate)
+                let arguments = TaskArguments(
+                    title: title,
+                    taskDescription: nil,
+                    notes: nil,
+                    dueDate: dueDate,
+                    reminders: task?.remindersArray.map(\.toArguments) ?? []
+                )
 
                 return arguments
             } else {
@@ -105,9 +111,11 @@ struct TaskDetailsSheet: View {
 
 struct TaskDetailsSheet_Previews: PreviewProvider {
     static var previews: some View {
-        TaskDetailsSheet(
+        let taskID = UUID(uuidString: "1d7b2a98-0395-4a35-89d6-fcee3e3809cf")!
+
+        return TaskDetailsSheet(
             task: AppTask(
-                id: UUID(uuidString: "1d7b2a98-0395-4a35-89d6-fcee3e3809cf")!,
+                id: taskID,
                 title: "Preview",
                 ticked: false,
                 dueDate: Date(),
@@ -119,6 +127,7 @@ struct TaskDetailsSheet_Previews: PreviewProvider {
                         id: UUID(uuidString: "6907eaa1-13f0-42ef-ad74-101a5fd6c44a")!,
                         time: Date(),
                         creationDate: Date(),
+                        taskID: taskID,
                         source: .coreData
                     ),
                 ]
