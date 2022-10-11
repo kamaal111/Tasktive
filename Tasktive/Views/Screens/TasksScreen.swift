@@ -248,7 +248,8 @@ struct TasksScreen: View {
     }
 
     private func handleOnAppear() {
-        if viewModel.currentSource == .iCloud, !userData.iCloudSyncingIsEnabled {
+        if viewModel.currentSource == .iCloud,
+           !userData.iCloudSyncingIsEnabled || !Environment.Features.iCloudSyncing {
             viewModel.currentSource = .coreData
         }
 
