@@ -456,6 +456,8 @@ public class TasksClient {
                 break
             }
 
+            await store.remove(outdatedTasks)
+
             updatedTasks.append(contentsOf: outdatedTasks.map { task in
                 var mutableTask = task
                 mutableTask.dueDate = now

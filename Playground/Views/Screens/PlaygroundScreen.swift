@@ -27,6 +27,11 @@ struct PlaygroundScreen: View {
                     PlaygroundNavigationButton(title: "Cloud Kit data viewer", destination: .cloudKitDataViewer)
                 }
             }
+            KSection(header: "Testing") {
+                Button(action: { }) {
+                    Text("Notifications")
+                }
+            }
         }
         #if os(macOS)
         .padding(.vertical, .medium)
