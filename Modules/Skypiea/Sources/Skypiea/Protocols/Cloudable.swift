@@ -82,15 +82,21 @@ extension Cloudable {
             throw error
         }
 
+        let decodedItems = items
+            .compactMap(fromRecord(_:))
+
         if let limit = limit {
-            return items
-                .compactMap(fromRecord(_:))
+            if decodedItems.count < limit {
+                return decodedItems
+                    .asArray()
+            }
+
+            return decodedItems
                 .prefix(upTo: limit)
                 .asArray()
         }
 
-        return items
-            .compactMap(fromRecord(_:))
+        return decodedItems
     }
 
     /// Finds a record by the given record.
