@@ -70,6 +70,14 @@ actor TasksStore {
         return removedTask
     }
 
+    func remove(_ tasks: [AppTask]) {
+        for (date, tasks) in Dictionary(grouping: tasks, by: \.dueDate.hashed) {
+            for task in tasks {
+                remove(task, fromDate: date)
+            }
+        }
+    }
+
     @discardableResult
     func add(_ tasks: [AppTask]) -> [AppTask] {
         let groupedTasks = Dictionary(grouping: tasks, by: {
