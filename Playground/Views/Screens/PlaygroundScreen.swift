@@ -13,6 +13,9 @@ import Environment
 private let SCREEN: StackNavigator.Screens = .playground
 
 struct PlaygroundScreen: View {
+    @EnvironmentObject
+    private var userData: UserData
+
     var body: some View {
         KScrollableForm {
             KSection(header: "Personalization") {
@@ -28,8 +31,10 @@ struct PlaygroundScreen: View {
                 }
             }
             KSection(header: "Testing") {
-                Button(action: { }) {
-                    Text("Notifications")
+                Button(action: testNotification) {
+                    Text(userData.notificationsAreAuthorized
+                        ? "Notifications are authorized"
+                        : "Notifications are not authorized")
                 }
             }
         }
@@ -37,6 +42,12 @@ struct PlaygroundScreen: View {
         .padding(.vertical, .medium)
         .padding(.horizontal, .medium)
         #endif
+    }
+
+    private func testNotification() {
+        Task {
+            await userData.authorizeNotifications()
+        }
     }
 }
 
