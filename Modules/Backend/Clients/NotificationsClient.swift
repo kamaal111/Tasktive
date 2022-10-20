@@ -6,12 +6,16 @@
 //
 
 import Skypiea
+import Logster
 import Foundation
 import UserNotifications
+
+private let logger = Logster(from: NotificationsClient.self)
 
 /// The notifications client.
 public class NotificationsClient {
     private var _isAuthorized = false
+    private let userNotificationCenter: UNUserNotificationCenter = .current()
     private let skypiea: Skypiea
     private let preview: Bool
 
@@ -36,10 +40,32 @@ public class NotificationsClient {
         guard !preview else { return true }
 
         let options: UNAuthorizationOptions = [.sound, .badge, .alert]
-        let authorized = try await UNUserNotificationCenter.current().requestAuthorization(options: options)
+        let authorized = try await userNotificationCenter.requestAuthorization(options: options)
         _isAuthorized = authorized
 
         return authorized
+    }
+
+    /// Schedule a notification.
+    /// - Parameters:
+    ///   - content: notification content.
+    ///   - date: for when to schedule the notification for.
+    public func schedule(_ content: NotificationContent, for date: Date, identifier: UUID) {
+        guard isAuthorized else { return }
+
+        var triggerTime = date.timeIntervalSince(Date())
+        if triggerTime <= 5 {
+            triggerTime = 5
+        }
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: triggerTime, repeats: false)
+        let request = UNNotificationRequest(
+            identifier: identifier.uuidString,
+            content: content.userNotificationContent,
+            trigger: trigger
+        )
+
+        logger.info("scheduled notification for in \(triggerTime) seconds, with the id \(identifier.uuidString)")
+        userNotificationCenter.add(request)
     }
 
     /// Subscribe to all notifications.

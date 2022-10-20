@@ -46,7 +46,19 @@ struct PlaygroundScreen: View {
 
     private func testNotification() {
         Task {
-            await userData.authorizeNotifications()
+            if !userData.notificationsAreAuthorized {
+                await userData.authorizeNotifications()
+                return
+            }
+
+            let whenToNotify = Date().addingTimeInterval(5)
+            let content = NotificationContent(
+                title: "Testing",
+                subTitle: "The test of tests",
+                sound: .default,
+                data: ["yes": "no"]
+            )
+            Backend.shared.notifications.schedule(content, for: whenToNotify, identifier: UUID())
         }
     }
 }

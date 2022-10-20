@@ -24,6 +24,9 @@
 		2C15758C289EF43E00425CDD /* FeedbackMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C15758B289EF43E00425CDD /* FeedbackMetadata.swift */; };
 		2C157591289F02E900425CDD /* Tokens.json in Resources */ = {isa = PBXBuildFile; fileRef = 2C157590289F02E900425CDD /* Tokens.json */; };
 		2C157593289F03B800425CDD /* TokensHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C157592289F03B800425CDD /* TokensHolder.swift */; };
+		2C160ABB2901AD0E0027DDB6 /* NotificationContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C160ABA2901AD0E0027DDB6 /* NotificationContent.swift */; };
+		2C160ABC2901AD0E0027DDB6 /* NotificationContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C160ABA2901AD0E0027DDB6 /* NotificationContent.swift */; };
+		2C160ABD2901AD0E0027DDB6 /* NotificationContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C160ABA2901AD0E0027DDB6 /* NotificationContent.swift */; };
 		2C1B060328B10052001E8441 /* AppLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B060228B10052001E8441 /* AppLogo.swift */; };
 		2C1B060728B1083B001E8441 /* AppLogoColorFormRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B060628B1083B001E8441 /* AppLogoColorFormRow.swift */; };
 		2C1B060928B10A48001E8441 /* AppLogoColorSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B060828B10A48001E8441 /* AppLogoColorSelector.swift */; };
@@ -432,6 +435,7 @@
 		2C15758B289EF43E00425CDD /* FeedbackMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackMetadata.swift; sourceTree = "<group>"; };
 		2C157590289F02E900425CDD /* Tokens.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Tokens.json; sourceTree = "<group>"; };
 		2C157592289F03B800425CDD /* TokensHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensHolder.swift; sourceTree = "<group>"; };
+		2C160ABA2901AD0E0027DDB6 /* NotificationContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationContent.swift; sourceTree = "<group>"; };
 		2C1A416628CE152100C2E5D1 /* app.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = app.py; sourceTree = "<group>"; };
 		2C1B060228B10052001E8441 /* AppLogo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogo.swift; sourceTree = "<group>"; };
 		2C1B060628B1083B001E8441 /* AppLogoColorFormRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogoColorFormRow.swift; sourceTree = "<group>"; };
@@ -1066,6 +1070,7 @@
 			isa = PBXGroup;
 			children = (
 				2C5F426228E8999C00278DC7 /* TasksFetchedContext.swift */,
+				2C160ABA2901AD0E0027DDB6 /* NotificationContent.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1822,6 +1827,7 @@
 				2C69A06D28B19BC600D5006D /* Data+extensions.swift in Sources */,
 				2C69A06F28B19BC600D5006D /* CircularProgressBar.swift in Sources */,
 				2C69A07028B19BC600D5006D /* Colors.swift in Sources */,
+				2C160ABC2901AD0E0027DDB6 /* NotificationContent.swift in Sources */,
 				2CDE6AEC28B2BAFE00924935 /* Date+extensions.swift in Sources */,
 				2C69A07128B19BC600D5006D /* Shell.swift in Sources */,
 				2C69A07328B19BC600D5006D /* AppLogoColorFormRow.swift in Sources */,
@@ -1904,6 +1910,7 @@
 				2C98E3F428B12E170048149F /* Data+extensions.swift in Sources */,
 				2C98E3F628B12E170048149F /* CircularProgressBar.swift in Sources */,
 				2C98E3F728B12E170048149F /* Colors.swift in Sources */,
+				2C160ABD2901AD0E0027DDB6 /* NotificationContent.swift in Sources */,
 				2CDE6AED28B2BAFE00924935 /* Date+extensions.swift in Sources */,
 				2C98E43828B12FB60048149F /* Shell.swift in Sources */,
 				2C98E3F928B12E170048149F /* AppLogoColorFormRow.swift in Sources */,
@@ -2034,6 +2041,7 @@
 				2CC79CE3288D78A400FD5792 /* SettingsScreen.swift in Sources */,
 				2C51C91328847F9E008939F7 /* TasksViewModel.swift in Sources */,
 				2C5F41E228E85AF800278DC7 /* Backend.swift in Sources */,
+				2C160ABB2901AD0E0027DDB6 /* NotificationContent.swift in Sources */,
 				2C1B196C28886CFB00D734D2 /* PopUpError.swift in Sources */,
 				2C79879828AC30DF00F36C59 /* NavigationPath+extensions.swift in Sources */,
 				2C9435DE28B2868A00281AF7 /* Gridable.swift in Sources */,

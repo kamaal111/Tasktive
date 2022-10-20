@@ -31,7 +31,11 @@ final class TasksViewModel: ObservableObject {
         #if !DEBUG
         self.backend = .init()
         #else
-        self.backend = .init(preview: Environment.CommandLineArguments.previewCoredata.enabled)
+        if Environment.CommandLineArguments.previewCoredata.enabled {
+            self.backend = .preview
+        } else {
+            self.backend = .shared
+        }
         #endif
 
         setupObservers()
@@ -39,7 +43,11 @@ final class TasksViewModel: ObservableObject {
 
     #if DEBUG
     init(preview: Bool) {
-        self.backend = .init(preview: preview || Environment.CommandLineArguments.previewCoredata.enabled)
+        if preview || Environment.CommandLineArguments.previewCoredata.enabled {
+            self.backend = .preview
+        } else {
+            self.backend = .shared
+        }
 
         setupObservers()
     }

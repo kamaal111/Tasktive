@@ -14,8 +14,6 @@ import Environment
 private let logger = Logster(from: AppDelegate.self)
 
 final class AppDelegate: NSObject, UIApplicationDelegate {
-    private let backend = Backend(preview: false)
-
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]? = nil
@@ -25,7 +23,7 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         if Environment.Features.iCloudSyncing {
             Task {
                 do {
-                    try await backend.notifications.subscribeToAll()
+                    try await Backend.shared.notifications.subscribeToAll()
                 } catch {
                     logger.error(label: "failed to subscribe to iCloud subscriptions", error: error)
                 }

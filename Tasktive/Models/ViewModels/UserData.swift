@@ -17,11 +17,7 @@ final class UserData: ObservableObject {
         }
     }
 
-    @Published private(set) var notificationsAreAuthorized = false {
-        didSet {
-            logger.info("notifications are authorized; \(notificationsAreAuthorized)")
-        }
-    }
+    @Published private(set) var notificationsAreAuthorized = false
 
     private let backend: Backend
     private let notifications: [Notification.Name] = [
@@ -31,8 +27,11 @@ final class UserData: ObservableObject {
     init(preview: Bool = false) {
         self.iCloudSyncingIsEnabled = UserDefaults.iCloudSyncingIsEnabled ?? true
 
-        let backend = Backend(preview: preview)
-        self.backend = backend
+        if preview {
+            self.backend = .preview
+        } else {
+            self.backend = .shared
+        }
 
         Task { await requestNotificationAuthorizationIfRequestBefore() }
         setupObservers()
