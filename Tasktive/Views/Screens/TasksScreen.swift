@@ -100,6 +100,7 @@ struct TasksScreen: View {
             TaskDetailsSheet(
                 task: viewModel.shownTaskDetails,
                 availableSources: dataSources,
+                currentDate: viewModel.currentDay,
                 onClose: { Task { await viewModel.closeDetailsSheet() } },
                 onDone: handleTaskEditedInDetailsSheet
             )
@@ -200,6 +201,7 @@ struct TasksScreen: View {
 
     private func handleTaskEditedInDetailsSheet(
         _ arguments: TaskArguments?,
+        _ reminderTime: Date?,
         _ newSource: DataSource,
         _ isNewTask: Bool
     ) {
@@ -218,6 +220,15 @@ struct TasksScreen: View {
                 guard let task = viewModel.shownTaskDetails else {
                     logger.warning("task are missing", "task='\(viewModel.shownTaskDetails as Any)'")
                     return
+                }
+
+                var arguments = arguments
+                if let reminderTime {
+                    arguments.reminders = [
+                        .init(time: reminderTime, id: task.remindersArray.first?.id, taskID: task.id),
+                    ]
+                } else {
+                    arguments.reminders = []
                 }
 
                 let result = await tasksViewModel.updateTask(task, with: arguments, on: newSource)

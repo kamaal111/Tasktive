@@ -18,8 +18,9 @@ struct TaskDetailsSheet: View {
 
     let task: AppTask?
     let availableSources: [DataSource]
+    let currentDate: Date
     let onClose: () -> Void
-    let onDone: (_ arguments: TaskArguments?, _ newSource: DataSource, _ isNew: Bool) -> Void
+    let onDone: (_ arguments: TaskArguments?, _ reminderTime: Date?, _ newSource: DataSource, _ isNew: Bool) -> Void
 
     var body: some View {
         KSheetStack(
@@ -29,13 +30,41 @@ struct TaskDetailsSheet: View {
             },
             trailingNavigationButton: {
                 ToolbarButton(localized: .DONE, action: {
-                    onDone(viewModel.makeCoreTaskArguments(using: task), viewModel.dataSource, viewModel.isNewTask)
+                    onDone(
+                        viewModel.makeCoreTaskArguments(using: task),
+                        viewModel.enableReminder ? viewModel.reminderTime : nil,
+                        viewModel.dataSource,
+                        viewModel.isNewTask
+                    )
                 })
             }
         ) {
             VStack(alignment: .leading) {
                 KFloatingTextField(text: $viewModel.title, title: TasktiveLocale.getText(.TITLE))
                 KFloatingDatePicker(value: $viewModel.dueDate, title: TasktiveLocale.getText(.DUE_DATE))
+
+                if viewModel.enableReminder {
+                    KFloatingDatePicker(
+                        value: $viewModel.reminderTime,
+                        title: TasktiveLocale.getText(.REMINDER),
+                        displayedComponents: [.date, .hourAndMinute]
+                    )
+                    WideButton(action: { viewModel.setEnableReminder(false, currentDay: currentDate) }) {
+                        HStack {
+                            Image(systemName: "minus.circle")
+                            Text(localized: .REMOVE_REMINDER)
+                        }
+                    }
+                    .padding(.top, .extraSmall)
+                } else {
+                    WideButton(action: { viewModel.setEnableReminder(true, currentDay: currentDate) }) {
+                        HStack {
+                            Image(systemName: "plus.circle")
+                            Text(localized: .ADD_REMINDER)
+                        }
+                    }
+                    .padding(.top, .extraSmall)
+                }
 
                 if availableSources.count > 1 {
                     Text(localized: .LOCATION)
@@ -60,8 +89,11 @@ struct TaskDetailsSheet: View {
         @Published var title = ""
         @Published var dueDate = Date()
         @Published var dataSource: DataSource = .coreData
+        @Published var reminderTime = Date()
+        @Published private(set) var enableReminder = false
 
-        @Published private(set) var isNewTask = false
+        private(set) var isNewTask = false
+        private var originalReminder: AppReminder?
 
         func makeCoreTaskArguments(using task: AppTask?) -> TaskArguments? {
             if isNewTask {
@@ -89,11 +121,38 @@ struct TaskDetailsSheet: View {
         }
 
         @MainActor
+        func setEnableReminder(_ enabled: Bool, currentDay: Date) {
+            guard enabled != enableReminder else { return }
+
+            if enabled {
+                if let originalReminder {
+                    reminderTime = originalReminder.time
+                } else {
+                    var currentDay = currentDay
+                    if currentDay.timeIntervalSince(Date()) <= (60 * 60) {
+                        let dateComponents = Calendar.current
+                            .dateComponents([.day, .year, .month, .hour], from: currentDay)
+                        currentDay = Calendar.current.date(from: dateComponents)?.adding(minutes: 60) ?? currentDay
+                    }
+                    reminderTime = currentDay
+                }
+            }
+
+            withAnimation { enableReminder = enabled }
+        }
+
+        @MainActor
         func setValues(from task: AppTask?, availableSources: [DataSource]) {
             if let task {
                 title = task.title
                 dueDate = task.dueDate
                 dataSource = task.source
+
+                if let firstReminder = task.remindersArray.first {
+                    enableReminder = true
+                    originalReminder = firstReminder
+                    reminderTime = firstReminder.time
+                }
 
                 isNewTask = false
 
@@ -133,8 +192,9 @@ struct TaskDetailsSheet_Previews: PreviewProvider {
                 ]
             ),
             availableSources: DataSource.allCases,
+            currentDate: Date(),
             onClose: { },
-            onDone: { _, _, _ in }
+            onDone: { _, _, _, _ in }
         )
     }
 }

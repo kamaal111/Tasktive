@@ -64,7 +64,9 @@ public class NotificationsClient {
             trigger: trigger
         )
 
-        logger.info("scheduled notification for in \(triggerTime) seconds, with the id \(identifier.uuidString)")
+        logger.info("scheduled notification for in \(triggerTime) seconds",
+                    "id='\(identifier.uuidString)'",
+                    "category='\(content.category.identifier)'")
         userNotificationCenter.add(request)
     }
 

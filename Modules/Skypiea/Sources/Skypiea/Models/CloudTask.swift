@@ -252,6 +252,25 @@ public struct CloudTask: Identifiable, Hashable, Taskable, Cloudable, Crudable {
     ) async -> CloudTask {
         var reminders = reminders
 
+        var successfullyRemovedReminders: [CloudReminder.ID] = []
+        let remindersToRemove = reminders
+            .filter { reminder in
+                !arguments.contains(where: { argument in argument.id == reminder.id })
+            }
+        for reminder in remindersToRemove {
+            do {
+                try await reminder.delete(onContext: context)
+            } catch {
+                logger.error(label: "failed to delete removed reminder", error: error)
+                continue
+            }
+            successfullyRemovedReminders.append(reminder.id)
+        }
+
+        reminders = reminders.filter { reminder in
+            !successfullyRemovedReminders.contains(where: { removedReminder in removedReminder == reminder.id })
+        }
+
         for argument in arguments {
             if let reminderID = argument.id,
                let existingReminderIndex = reminders.findIndex(by: \.id, is: reminderID) {

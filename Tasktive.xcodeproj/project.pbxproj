@@ -27,6 +27,9 @@
 		2C160ABB2901AD0E0027DDB6 /* NotificationContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C160ABA2901AD0E0027DDB6 /* NotificationContent.swift */; };
 		2C160ABC2901AD0E0027DDB6 /* NotificationContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C160ABA2901AD0E0027DDB6 /* NotificationContent.swift */; };
 		2C160ABD2901AD0E0027DDB6 /* NotificationContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C160ABA2901AD0E0027DDB6 /* NotificationContent.swift */; };
+		2C196CFE2901CAC600093165 /* WideButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C196CFD2901CAC600093165 /* WideButton.swift */; };
+		2C196CFF2901CAC600093165 /* WideButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C196CFD2901CAC600093165 /* WideButton.swift */; };
+		2C196D002901CAC600093165 /* WideButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C196CFD2901CAC600093165 /* WideButton.swift */; };
 		2C1B060328B10052001E8441 /* AppLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B060228B10052001E8441 /* AppLogo.swift */; };
 		2C1B060728B1083B001E8441 /* AppLogoColorFormRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B060628B1083B001E8441 /* AppLogoColorFormRow.swift */; };
 		2C1B060928B10A48001E8441 /* AppLogoColorSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B060828B10A48001E8441 /* AppLogoColorSelector.swift */; };
@@ -436,6 +439,7 @@
 		2C157590289F02E900425CDD /* Tokens.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Tokens.json; sourceTree = "<group>"; };
 		2C157592289F03B800425CDD /* TokensHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensHolder.swift; sourceTree = "<group>"; };
 		2C160ABA2901AD0E0027DDB6 /* NotificationContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationContent.swift; sourceTree = "<group>"; };
+		2C196CFD2901CAC600093165 /* WideButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WideButton.swift; sourceTree = "<group>"; };
 		2C1A416628CE152100C2E5D1 /* app.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = app.py; sourceTree = "<group>"; };
 		2C1B060228B10052001E8441 /* AppLogo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogo.swift; sourceTree = "<group>"; };
 		2C1B060628B1083B001E8441 /* AppLogoColorFormRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogoColorFormRow.swift; sourceTree = "<group>"; };
@@ -1005,6 +1009,7 @@
 				2C750F6B288C335A00026D67 /* TaskItemView.swift */,
 				2C750F69288C328C00026D67 /* TasksSection.swift */,
 				2CDC6DA5288D616B00BF8E06 /* ToolbarButton.swift */,
+				2C196CFD2901CAC600093165 /* WideButton.swift */,
 				2CE9EFB828AD639500C89888 /* WideNavigationLink.swift */,
 				2CC2D9AB28C4D6120036817B /* Stacks */,
 			);
@@ -1856,6 +1861,7 @@
 				2C69A08C28B19BC600D5006D /* PlaygroundNavigationButton.swift in Sources */,
 				2C69A08D28B19BC600D5006D /* DayNumbersRowItem.swift in Sources */,
 				2C69A08E28B19BC600D5006D /* Sidebar.swift in Sources */,
+				2C196CFF2901CAC600093165 /* WideButton.swift in Sources */,
 				2C69A09028B19BC600D5006D /* String+extensions.swift in Sources */,
 				2C69A09128B19BC600D5006D /* SplashScreenStack.swift in Sources */,
 				2C69A09228B19BC600D5006D /* TokensHolder.swift in Sources */,
@@ -1939,6 +1945,7 @@
 				2C69A04E28B193CB00D5006D /* PlaygroundNavigationButton.swift in Sources */,
 				2C98E41228B12E170048149F /* DayNumbersRowItem.swift in Sources */,
 				2C98E41328B12E170048149F /* Sidebar.swift in Sources */,
+				2C196D002901CAC600093165 /* WideButton.swift in Sources */,
 				2C98E43F28B130BE0048149F /* String+extensions.swift in Sources */,
 				2C69A04828B18CA200D5006D /* SplashScreenStack.swift in Sources */,
 				2C98E41528B12E170048149F /* TokensHolder.swift in Sources */,
@@ -2043,6 +2050,7 @@
 				2C5F41E228E85AF800278DC7 /* Backend.swift in Sources */,
 				2C160ABB2901AD0E0027DDB6 /* NotificationContent.swift in Sources */,
 				2C1B196C28886CFB00D734D2 /* PopUpError.swift in Sources */,
+				2C196CFE2901CAC600093165 /* WideButton.swift in Sources */,
 				2C79879828AC30DF00F36C59 /* NavigationPath+extensions.swift in Sources */,
 				2C9435DE28B2868A00281AF7 /* Gridable.swift in Sources */,
 				2CF2BB7628E9F32E0014564D /* ZaWarudo.swift in Sources */,
@@ -2746,7 +2754,7 @@
 			repositoryURL = "https://github.com/kamaal111/SalmonUI.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.2;
+				minimumVersion = 5.1.0;
 			};
 		};
 		2C69A05228B19BC600D5006D /* XCRemoteSwiftPackageReference "SalmonUI" */ = {

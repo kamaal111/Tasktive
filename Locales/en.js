@@ -69,4 +69,7 @@ module.exports = {
   LOCALLY: 'Locally',
   ICLOUD: 'iCloud',
   LOCATION: 'Location',
+  REMINDER: 'Reminder',
+  ADD_REMINDER: 'Add reminder',
+  REMOVE_REMINDER: 'Remove reminder',
 };

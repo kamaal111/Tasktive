@@ -55,12 +55,13 @@ struct PlaygroundScreen: View {
             let content = NotificationContent(
                 title: "Testing",
                 subTitle: "The test of tests",
+                category: .playground,
                 sound: .default,
                 data: ["yes": "no"]
             )
             let id = UUID()
             Backend.shared.notifications.schedule(content, for: whenToNotify, identifier: id)
-            Backend.shared.notifications.cancel(identifier: id)
+//            Backend.shared.notifications.cancel(identifier: id)
         }
     }
 }
