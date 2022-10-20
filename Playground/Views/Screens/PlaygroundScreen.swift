@@ -58,7 +58,9 @@ struct PlaygroundScreen: View {
                 sound: .default,
                 data: ["yes": "no"]
             )
-            Backend.shared.notifications.schedule(content, for: whenToNotify, identifier: UUID())
+            let id = UUID()
+            Backend.shared.notifications.schedule(content, for: whenToNotify, identifier: id)
+            Backend.shared.notifications.cancel(identifier: id)
         }
     }
 }

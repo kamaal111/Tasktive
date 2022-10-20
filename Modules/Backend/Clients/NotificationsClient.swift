@@ -68,6 +68,13 @@ public class NotificationsClient {
         userNotificationCenter.add(request)
     }
 
+    /// Cancel a pending notification.
+    /// - Parameter identifier: The notification identifier to delete.
+    public func cancel(identifier: UUID) {
+        logger.info("cancelled scheduled notification with the id \(identifier.uuidString)")
+        userNotificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier.uuidString])
+    }
+
     /// Subscribe to all notifications.
     public func subscribeToAll() async throws {
         guard !preview else { return }
