@@ -8,6 +8,7 @@
 import SwiftUI
 import Logster
 import SalmonUI
+import Environment
 import SharedModels
 import TasktiveLocale
 
@@ -32,7 +33,7 @@ struct TaskDetailsSheet: View {
                 ToolbarButton(localized: .DONE, action: {
                     onDone(
                         viewModel.makeCoreTaskArguments(using: task),
-                        viewModel.enableReminder ? viewModel.reminderTime : nil,
+                        viewModel.enableReminder && Environment.Features.taskReminders ? viewModel.reminderTime : nil,
                         viewModel.dataSource,
                         viewModel.isNewTask
                     )
@@ -43,27 +44,29 @@ struct TaskDetailsSheet: View {
                 KFloatingTextField(text: $viewModel.title, title: TasktiveLocale.getText(.TITLE))
                 KFloatingDatePicker(value: $viewModel.dueDate, title: TasktiveLocale.getText(.DUE_DATE))
 
-                if viewModel.enableReminder {
-                    KFloatingDatePicker(
-                        value: $viewModel.reminderTime,
-                        title: TasktiveLocale.getText(.REMINDER),
-                        displayedComponents: [.date, .hourAndMinute]
-                    )
-                    WideButton(action: { viewModel.setEnableReminder(false, currentDay: currentDate) }) {
-                        HStack {
-                            Image(systemName: "minus.circle")
-                            Text(localized: .REMOVE_REMINDER)
+                if Environment.Features.taskReminders {
+                    if viewModel.enableReminder {
+                        KFloatingDatePicker(
+                            value: $viewModel.reminderTime,
+                            title: TasktiveLocale.getText(.REMINDER),
+                            displayedComponents: [.date, .hourAndMinute]
+                        )
+                        WideButton(action: { viewModel.setEnableReminder(false, currentDay: currentDate) }) {
+                            HStack {
+                                Image(systemName: "minus.circle")
+                                Text(localized: .REMOVE_REMINDER)
+                            }
                         }
-                    }
-                    .padding(.top, .extraSmall)
-                } else {
-                    WideButton(action: { viewModel.setEnableReminder(true, currentDay: currentDate) }) {
-                        HStack {
-                            Image(systemName: "plus.circle")
-                            Text(localized: .ADD_REMINDER)
+                        .padding(.top, .extraSmall)
+                    } else {
+                        WideButton(action: { viewModel.setEnableReminder(true, currentDay: currentDate) }) {
+                            HStack {
+                                Image(systemName: "plus.circle")
+                                Text(localized: .ADD_REMINDER)
+                            }
                         }
+                        .padding(.top, .extraSmall)
                     }
-                    .padding(.top, .extraSmall)
                 }
 
                 if availableSources.count > 1 {
