@@ -81,7 +81,8 @@ extension CoreTask: Crudable, Taskable {
         with arguments: TaskArguments,
         on context: NSManagedObjectContext
     ) -> Result<CoreTask, CrudErrors> {
-        let updatedTask = updateValues(with: arguments).setReminders(arguments.reminders)
+        let updatedTask = updateValues(with: arguments)
+            .setReminders(arguments.reminders)
 
         return Self.save(from: context)
             .map {
