@@ -17,14 +17,11 @@ public class Backend {
 
     /// Initialize ``Backend`` in preview mode or not.
     /// - Parameter preview: Whether to turn on preview mode or not.
-    private init(preview: Bool = false) {
+    public init(preview: Bool = false) {
         self.tasks = .init(preview: preview)
         self.notifications = .init(preview: preview)
     }
 
     /// Shared ``Backend`` instance.
     public static let shared = Backend()
-
-    /// Preview ``Backend`` instance.
-    public static let preview = Backend(preview: true)
 }

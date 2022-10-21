@@ -28,7 +28,7 @@ final class UserData: ObservableObject {
         self.iCloudSyncingIsEnabled = UserDefaults.iCloudSyncingIsEnabled ?? true
 
         if preview {
-            self.backend = .preview
+            self.backend = .init(preview: true)
         } else {
             self.backend = .shared
         }

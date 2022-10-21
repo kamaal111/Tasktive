@@ -118,7 +118,7 @@ final class TasksViewModelTests: XCTestCase {
         let todaysTasks = tasksViewModel.tasksForDate(now)
         XCTAssertEqual(todaysTasks.count, 2)
         XCTAssert(todaysTasks.contains(where: { $0.id == taskOfNow.id }))
-        XCTAssertFalse(todaysTasks.contains(where: { $0.id == taskOfYeserday.id }))
+        XCTAssert(todaysTasks.contains(where: { $0.id == taskOfYeserday.id }))
     }
 
     @discardableResult
