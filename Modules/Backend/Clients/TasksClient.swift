@@ -21,6 +21,7 @@ public class TasksClient {
     private let contextStore = TasksFetchedContextStore()
     private let persistenceController: PersistenceController
     private let skypiea: Skypiea
+    private let preview: Bool
 
     /// Initializer of ``TasksClient``
     /// - Parameter preview: Whether to return static preview data or not.
@@ -32,6 +33,8 @@ public class TasksClient {
             self.persistenceController = .preview
             self.skypiea = .preview
         }
+
+        self.preview = preview
     }
 
     /// Get last fetched date and data sources.
@@ -57,6 +60,20 @@ public class TasksClient {
             return .failure(failure)
         case let .success(success):
             task = success
+        }
+
+        let notificationsClient: NotificationsClient
+        if !preview {
+            notificationsClient = Backend.shared.notifications
+        } else {
+            notificationsClient = .init(preview: true)
+        }
+        for reminder in task.remindersArray {
+            notificationsClient.schedule(
+                reminder.notificationContent(task: task),
+                for: reminder.time,
+                identifier: reminder.id
+            )
         }
 
         await store.add(task)
@@ -223,6 +240,17 @@ public class TasksClient {
     /// - Parameter task: The task to delete.
     /// - Returns: A result either containing nothing(`Void`) on success or ``Errors`` on failure.
     public func delete(_ task: AppTask) async -> Result<Void, Errors> {
+        let notificationsClient: NotificationsClient
+        if !preview {
+            notificationsClient = Backend.shared.notifications
+        } else {
+            notificationsClient = .init(preview: true)
+        }
+
+        for reminder in task.remindersArray {
+            notificationsClient.cancel(identifier: reminder.id)
+        }
+
         let result = await _delete(on: task.source, by: task.id)
         switch result {
         case let .failure(failure):

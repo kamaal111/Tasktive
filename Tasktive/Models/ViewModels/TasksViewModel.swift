@@ -97,21 +97,12 @@ final class TasksViewModel: ObservableObject {
 
     func createTask(with arguments: TaskArguments, on source: DataSource) async -> Result<Void, UserErrors> {
         let createTaskResult = await backend.tasks.create(with: arguments, on: source)
-        let task: AppTask
         switch createTaskResult {
         case let .failure(failure):
             let maybeMappedBackendError = await mapBackendTaskErrors(failure)
             return .failure(maybeMappedBackendError ?? .createTaskFailure)
-        case let .success(success):
-            task = success
-        }
-
-        for reminder in task.remindersArray {
-            backend.notifications.schedule(
-                reminder.notificationContent(task: task),
-                for: reminder.time,
-                identifier: reminder.id
-            )
+        case let .success:
+            break
         }
 
         return await refreshTasks()
@@ -161,21 +152,12 @@ final class TasksViewModel: ObservableObject {
     ) async -> Result<Void, UserErrors> {
         await withSettingTasks(completion: {
             let result = await backend.tasks.update(task, with: arguments, on: newSource)
-            let task: AppTask
             switch result {
             case let .failure(failure):
                 let mappedError = await mapBackendTaskErrors(failure)
                 return .failure(mappedError ?? .updateFailure)
-            case let .success(success):
-                task = success
-            }
-
-            for reminder in task.remindersArray {
-                backend.notifications.schedule(
-                    reminder.notificationContent(task: task),
-                    for: reminder.time,
-                    identifier: reminder.id
-                )
+            case let .success:
+                break
             }
 
             return await refreshTasks()
@@ -191,10 +173,6 @@ final class TasksViewModel: ObservableObject {
                 return .failure(mappedError ?? .deleteFailure)
             case .success:
                 break
-            }
-
-            for reminder in task.remindersArray {
-                backend.notifications.cancel(identifier: reminder.id)
             }
 
             return await refreshTasks()
