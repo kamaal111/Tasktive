@@ -58,6 +58,7 @@ extension View {
         return environmentObject(DeviceModel())
             .environmentObject(namiNavigator)
             .environmentObject(TasksViewModel(preview: true))
+            .environmentObject(UserData(preview: true))
             .withPopperUp(PopperUpManager(config: .init()))
     }
     #endif

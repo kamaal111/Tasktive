@@ -62,6 +62,10 @@ public struct Logster {
         addLogToQueue(type: .info, message: message)
     }
 
+    public func info(_ messages: String...) {
+        info(messages.joined(separator: "; "))
+    }
+
     private func addLogToQueue(type: HoldedLog.LogTypes, message: String) {
         Task { await LogHolder.shared.addLog(.init(label: label, type: type, message: message, timestamp: Date())) }
     }

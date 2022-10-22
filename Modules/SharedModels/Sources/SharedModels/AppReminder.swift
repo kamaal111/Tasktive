@@ -7,6 +7,7 @@
 
 import CloudKit
 import Foundation
+import ShrimpExtensions
 
 /// Reminder object.
 public struct AppReminder: Hashable, Identifiable {
@@ -38,6 +39,25 @@ public struct AppReminder: Hashable, Identifiable {
         self.taskID = taskID
         self.source = source
         self.record = record
+    }
+
+    /// The representation data for notifications.
+    /// - Parameter task: The parent task.
+    /// - Returns: A representation data for notifications.
+    public func notificationContent(task: AppTask) -> NotificationContent {
+        var data = [
+            "reminder_id": id.uuidString,
+            "task_id": task.id.uuidString,
+        ]
+
+        let timeComponents = Calendar.current.dateComponents([.day, .year, .month], from: time)
+        if let day = timeComponents.day, let month = timeComponents.month, let year = timeComponents.year {
+            data["day"] = String(day)
+            data["month"] = String(month)
+            data["year"] = String(year)
+        }
+
+        return .init(title: "Tasktivity", subTitle: task.title, category: .taskReminder, data: data)
     }
 
     public var toArguments: ReminderArguments {

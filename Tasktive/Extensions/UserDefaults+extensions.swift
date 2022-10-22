@@ -17,6 +17,8 @@ extension UserDefaults {
     static var lastChosenDataSource: DataSource?
     @UserDefaultValue(key: .iCloudSyncingIsEnabled, container: .appGroup)
     static var iCloudSyncingIsEnabled: Bool?
+    @UserDefaultValue(key: .notificationsHaveBeenRequestedBefore, container: .appGroup)
+    static var notificationsHaveBeenRequestedBefore: Bool?
 
     private static let appGroup = UserDefaults(suiteName: Constants.appGroupIdentifier)
 }
@@ -26,7 +28,7 @@ struct UserDefaultValue<Value> {
     let key: Keys
     let container: UserDefaults?
 
-    private let logger = Logster(from: Self.self)
+    private let logger = Logster(from: UserDefaultValue.self)
 
     init(key: Keys, container: UserDefaults? = .standard) {
         self.key = key
@@ -35,6 +37,7 @@ struct UserDefaultValue<Value> {
 
     enum Keys: String {
         case iCloudSyncingIsEnabled
+        case notificationsHaveBeenRequestedBefore
     }
 
     var wrappedValue: Value? {
@@ -88,7 +91,7 @@ struct UserDefaultObject<Value: Codable> {
     let key: Keys
     let container: UserDefaults?
 
-    private let logger = Logster(from: Self.self)
+    private let logger = Logster(from: UserDefaultObject.self)
 
     init(key: Keys, container: UserDefaults? = .standard) {
         self.key = key

@@ -100,6 +100,7 @@ struct TasksScreen: View {
             TaskDetailsSheet(
                 task: viewModel.shownTaskDetails,
                 availableSources: dataSources,
+                currentDate: viewModel.currentDay,
                 onClose: { Task { await viewModel.closeDetailsSheet() } },
                 onDone: handleTaskEditedInDetailsSheet
             )
@@ -200,6 +201,7 @@ struct TasksScreen: View {
 
     private func handleTaskEditedInDetailsSheet(
         _ arguments: TaskArguments?,
+        _ reminderTime: Date?,
         _ newSource: DataSource,
         _ isNewTask: Bool
     ) {
@@ -210,6 +212,11 @@ struct TasksScreen: View {
 
         Task {
             if isNewTask {
+                var arguments = arguments
+                if let reminderTime {
+                    arguments.reminders = [.init(time: reminderTime)]
+                }
+
                 let created = await createTask(with: arguments, on: newSource)
                 if !created {
                     return
@@ -218,6 +225,15 @@ struct TasksScreen: View {
                 guard let task = viewModel.shownTaskDetails else {
                     logger.warning("task are missing", "task='\(viewModel.shownTaskDetails as Any)'")
                     return
+                }
+
+                var arguments = arguments
+                if let reminderTime {
+                    arguments.reminders = [
+                        .init(time: reminderTime, id: task.remindersArray.first?.id, taskID: task.id),
+                    ]
+                } else {
+                    arguments.reminders = []
                 }
 
                 let result = await tasksViewModel.updateTask(task, with: arguments, on: newSource)
@@ -317,7 +333,17 @@ struct TasksScreen: View {
 
         let quickAddViewHeight: CGFloat = 50
 
-        init() { }
+        private let notifications: [Notification.Name] = [
+            .navigateToTasksDueDate,
+        ]
+
+        init() {
+            setupObservers()
+        }
+
+        deinit {
+            removeObservers()
+        }
 
         var taskArguments: TaskArguments {
             .init(title: newTitle, taskDescription: nil, notes: nil, dueDate: currentDay, reminders: [])
@@ -451,6 +477,45 @@ struct TasksScreen: View {
         private func setCurrentDay(_ date: Date) {
             withAnimation {
                 currentDay = date
+            }
+        }
+
+        private func setupObservers() {
+            notifications.forEach { notification in
+                NotificationCenter.default.addObserver(
+                    self,
+                    selector: #selector(handleNotification),
+                    name: notification,
+                    object: .none
+                )
+            }
+        }
+
+        private func removeObservers() {
+            notifications.forEach { notification in
+                NotificationCenter.default.removeObserver(self, name: notification, object: .none)
+            }
+        }
+
+        @objc
+        private func handleNotification(_ notification: Notification) {
+            switch notification.name {
+            case .navigateToTasksDueDate:
+                guard let notificationObject = notification.object as? [String: String],
+                      let day = notificationObject["day"]?.int,
+                      let month = notificationObject["month"]?.int,
+                      let year = notificationObject["year"]?.int else { return }
+
+                var dateComponents = DateComponents()
+                dateComponents.year = year
+                dateComponents.month = month
+                dateComponents.day = day
+
+                guard let dateToShow = Calendar.current.date(from: dateComponents) else { return }
+
+                Task { await setCurrentDay(dateToShow) }
+            default:
+                break
             }
         }
     }

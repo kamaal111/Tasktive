@@ -75,5 +75,8 @@ extension TasktiveLocale {
         case LOCALLY
         case ICLOUD
         case LOCATION
+        case REMINDER
+        case ADD_REMINDER
+        case REMOVE_REMINDER
     }
 }

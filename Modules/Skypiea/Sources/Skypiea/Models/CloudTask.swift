@@ -115,10 +115,36 @@ public struct CloudTask: Identifiable, Hashable, Taskable, Cloudable, Crudable {
     }
 
     public func delete(on context: Skypiea) async -> Result<Void, CrudErrors> {
+        async let delete: () = delete(onContext: context)
+
+        async let remindersPromise = CloudReminder.filter(
+            by: NSPredicate(format: "taskID == %@", id.nsString),
+            from: context
+        )
+
         do {
-            try await delete(onContext: context)
+            try await delete
         } catch {
             return .failure(.deleteFailure(context: error))
+        }
+
+        // Fetch all reminders for this task
+        let reminders: [CloudReminder]
+        do {
+            reminders = try await remindersPromise
+        } catch {
+            logger.error(label: "failed to fetch reminders", error: error)
+
+            return .success(())
+        }
+
+        // Delete all of them
+        if !reminders.isEmpty {
+            do {
+                try await context.deleteMultiple(reminders.map(\.record))
+            } catch {
+                logger.error(label: "failed to delete reminders", error: error)
+            }
         }
 
         return .success(())
@@ -251,6 +277,25 @@ public struct CloudTask: Identifiable, Hashable, Taskable, Cloudable, Crudable {
         onContext context: Skypiea
     ) async -> CloudTask {
         var reminders = reminders
+
+        var successfullyRemovedReminders: [CloudReminder.ID] = []
+        let remindersToRemove = reminders
+            .filter { reminder in
+                !arguments.contains(where: { argument in argument.id == reminder.id })
+            }
+        for reminder in remindersToRemove {
+            do {
+                try await reminder.delete(onContext: context)
+            } catch {
+                logger.error(label: "failed to delete removed reminder", error: error)
+                continue
+            }
+            successfullyRemovedReminders.append(reminder.id)
+        }
+
+        reminders = reminders.filter { reminder in
+            !successfullyRemovedReminders.contains(where: { removedReminder in removedReminder == reminder.id })
+        }
 
         for argument in arguments {
             if let reminderID = argument.id,

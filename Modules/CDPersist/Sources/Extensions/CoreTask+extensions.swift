@@ -82,6 +82,7 @@ extension CoreTask: Crudable, Taskable {
         on context: NSManagedObjectContext
     ) -> Result<CoreTask, CrudErrors> {
         let updatedTask = updateValues(with: arguments)
+            .setReminders(arguments.reminders)
 
         return Self.save(from: context)
             .map {
@@ -120,13 +121,15 @@ extension CoreTask: Crudable, Taskable {
         with arguments: TaskArguments,
         from context: NSManagedObjectContext
     ) -> Result<CoreTask, CrudErrors> {
-        let newTask = CoreTask(context: context)
+        var newTask = CoreTask(context: context)
             .updateValues(with: arguments)
 
         newTask.id = arguments.id ?? UUID()
         newTask.kCreationDate = Date()
         newTask.attachments = NSSet(array: [])
         newTask.tags = NSSet(array: [])
+
+        newTask = newTask.setReminders(arguments.reminders)
 
         return save(from: context)
             .map {
@@ -257,14 +260,6 @@ extension CoreTask: Crudable, Taskable {
     // - MARK: Private properties/methods
 
     private func updateValues(with arguments: TaskArguments) -> CoreTask {
-        guard let context = managedObjectContext else {
-            #if DEBUG
-            fatalError("context not found")
-            #else
-            return self
-            #endif
-        }
-
         ticked = arguments.ticked
         title = arguments.title
         taskDescription = arguments.taskDescription
@@ -273,9 +268,40 @@ extension CoreTask: Crudable, Taskable {
         completionDate = arguments.completionDate
         updateDate = Date()
 
+        return self
+    }
+
+    private func setReminders(_ arguments: [ReminderArguments]) -> CoreTask {
+        guard let context = managedObjectContext else {
+            #if DEBUG
+            fatalError("context not found")
+            #else
+            return self
+            #endif
+        }
+
         var reminders: [CoreReminder] = reminders?.allObjects as? [CoreReminder] ?? []
 
-        for reminderArgument in arguments.reminders {
+        var successfullyRemovedReminders: [CoreReminder.ID] = []
+        reminders
+            .filter { reminder in
+                !arguments.contains(where: { argument in argument.id == reminder.id })
+            }
+            .forEach { reminder in
+                do {
+                    try reminder.delete(on: context).get()
+                } catch {
+                    logger.error(label: "failed to delete removed reminder", error: error)
+                    return
+                }
+                successfullyRemovedReminders.append(reminder.id)
+            }
+
+        reminders = reminders.filter { reminder in
+            !successfullyRemovedReminders.contains(where: { removedReminder in removedReminder == reminder.id })
+        }
+
+        for reminderArgument in arguments {
             if let reminderID = reminderArgument.id,
                let existingReminderIndex = reminders.findIndex(by: \.id, is: reminderID) {
                 if reminders[existingReminderIndex].toArguments != reminderArgument {

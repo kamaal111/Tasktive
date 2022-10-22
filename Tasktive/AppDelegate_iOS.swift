@@ -10,17 +10,21 @@ import UIKit
 import Logster
 import CloudKit
 import Environment
+import ShrimpExtensions
+import UserNotifications
 
 private let logger = Logster(from: AppDelegate.self)
 
-final class AppDelegate: NSObject, UIApplicationDelegate {
-    private let backend = Backend(preview: false)
+final class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+    private let userNotificationCenter: UNUserNotificationCenter = .current()
+    private let backend: Backend = .shared
 
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         application.registerForRemoteNotifications()
+        userNotificationCenter.delegate = self
 
         if Environment.Features.iCloudSyncing {
             Task {
@@ -34,6 +38,8 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
 
         return true
     }
+
+    // - MARK: UIApplicationDelegate
 
     func application(
         _: UIApplication,
@@ -54,6 +60,38 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
             NotificationCenter.default.post(name: .iCloudChanges, object: notification)
             completionHandler(.newData)
         }
+    }
+
+    // - MARK: UNUserNotificationCenterDelegate
+
+    func userNotificationCenter(
+        _: UNUserNotificationCenter,
+        didReceive response: UNNotificationResponse,
+        withCompletionHandler completionHandler: @escaping () -> Void
+    ) {
+        handleUserNotification(response.notification, mode: .background)
+        completionHandler()
+    }
+
+    func userNotificationCenter(
+        _: UNUserNotificationCenter,
+        willPresent notification: UNNotification,
+        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
+    ) {
+        handleUserNotification(notification, mode: .foreground)
+        completionHandler(UNNotificationPresentationOptions(rawValue: 0))
+    }
+
+    private func handleUserNotification(_ notification: UNNotification, mode: UserNotificationMode) {
+        let content = notification.request.content
+
+        logger.info("handling notification", "mode='\(mode)'", "userInfo='\(content.userInfo)'")
+        NotificationCenter.default.post(name: .navigateToTasksDueDate, object: content.userInfo)
+    }
+
+    private enum UserNotificationMode {
+        case foreground
+        case background
     }
 }
 #endif

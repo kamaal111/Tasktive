@@ -21,11 +21,9 @@ public struct ReminderArguments: Equatable, Hashable {
     ///   - time: When to send a reminder.
     ///   - id: The reminders id, if already set.
     ///   - taskID: The parent task id.
-    public init(time: Date, id: UUID?, taskID: UUID) {
+    public init(time: Date, id: UUID? = nil, taskID: UUID? = nil) {
         self.time = time
         self.id = id
         self.taskID = taskID
     }
-
-//    public var toCloudReminder
 }

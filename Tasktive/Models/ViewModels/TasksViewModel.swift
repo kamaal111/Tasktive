@@ -31,7 +31,11 @@ final class TasksViewModel: ObservableObject {
         #if !DEBUG
         self.backend = .init()
         #else
-        self.backend = .init(preview: Environment.CommandLineArguments.previewCoredata.enabled)
+        if Environment.CommandLineArguments.previewCoredata.enabled {
+            self.backend = .init(preview: true)
+        } else {
+            self.backend = .shared
+        }
         #endif
 
         setupObservers()
@@ -39,7 +43,11 @@ final class TasksViewModel: ObservableObject {
 
     #if DEBUG
     init(preview: Bool) {
-        self.backend = .init(preview: preview || Environment.CommandLineArguments.previewCoredata.enabled)
+        if preview || Environment.CommandLineArguments.previewCoredata.enabled {
+            self.backend = .init(preview: true)
+        } else {
+            self.backend = .shared
+        }
 
         setupObservers()
     }
@@ -93,7 +101,7 @@ final class TasksViewModel: ObservableObject {
         case let .failure(failure):
             let maybeMappedBackendError = await mapBackendTaskErrors(failure)
             return .failure(maybeMappedBackendError ?? .createTaskFailure)
-        case .success:
+        case let .success:
             break
         }
 
@@ -148,7 +156,7 @@ final class TasksViewModel: ObservableObject {
             case let .failure(failure):
                 let mappedError = await mapBackendTaskErrors(failure)
                 return .failure(mappedError ?? .updateFailure)
-            case .success:
+            case let .success:
                 break
             }
 

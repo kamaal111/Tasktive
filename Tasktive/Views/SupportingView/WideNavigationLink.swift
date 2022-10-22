@@ -20,10 +20,8 @@ struct WideNavigationLink<Destination: Codable & Hashable, Content: View>: View 
     }
 
     var body: some View {
-        KJustStack {
-            NavigationLink(value: destination) {
-                view
-            }
+        NavigationLink(value: destination) {
+            view
         }
         .buttonStyle(.plain)
     }
