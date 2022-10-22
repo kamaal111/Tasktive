@@ -10,6 +10,7 @@ import UIKit
 import Logster
 import CloudKit
 import Environment
+import ShrimpExtensions
 import UserNotifications
 
 private let logger = Logster(from: AppDelegate.self)
@@ -82,11 +83,10 @@ final class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCent
     }
 
     private func handleUserNotification(_ notification: UNNotification, mode: UserNotificationMode) {
-        print("reading notification from \(mode)")
         let content = notification.request.content
-        let userInfo = content.userInfo as? [String: String]
-        print("userInfo", userInfo as Any)
-        print("id", notification.request.identifier)
+
+        logger.info("handling notification", "mode='\(mode)'", "userInfo='\(content.userInfo)'")
+        NotificationCenter.default.post(name: .navigateToTasksDueDate, object: content.userInfo)
     }
 
     private enum UserNotificationMode {
