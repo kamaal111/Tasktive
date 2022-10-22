@@ -31,9 +31,30 @@ struct TaskDetailsSheet: View {
             },
             trailingNavigationButton: {
                 ToolbarButton(localized: .DONE, action: {
+                    var reminderTime: Date?
+                    if viewModel.enableReminder, Environment.Features.taskReminders {
+                        let reminderTimeComponents = Calendar.current.dateComponents(
+                            [.hour, .minute],
+                            from: viewModel.reminderTime
+                        )
+                        let taskDueDateComponents = Calendar.current.dateComponents(
+                            [.month, .day, .year],
+                            from: viewModel.dueDate
+                        )
+
+                        var finalComponents = DateComponents()
+                        finalComponents.hour = reminderTimeComponents.hour
+                        finalComponents.minute = reminderTimeComponents.minute
+                        finalComponents.month = taskDueDateComponents.month
+                        finalComponents.day = taskDueDateComponents.day
+                        finalComponents.year = taskDueDateComponents.year
+
+                        reminderTime = Calendar.current.date(from: finalComponents)
+                    }
+
                     onDone(
                         viewModel.makeCoreTaskArguments(using: task),
-                        viewModel.enableReminder && Environment.Features.taskReminders ? viewModel.reminderTime : nil,
+                        reminderTime,
                         viewModel.dataSource,
                         viewModel.isNewTask
                     )
@@ -49,7 +70,7 @@ struct TaskDetailsSheet: View {
                         KFloatingDatePicker(
                             value: $viewModel.reminderTime,
                             title: TasktiveLocale.getText(.REMINDER),
-                            displayedComponents: [.date, .hourAndMinute]
+                            displayedComponents: [.hourAndMinute]
                         )
                         WideButton(action: { viewModel.setEnableReminder(false, currentDay: currentDate) }) {
                             HStack {

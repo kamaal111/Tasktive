@@ -40,6 +40,16 @@ public struct AppReminder: Hashable, Identifiable {
         self.record = record
     }
 
+    /// The representation data for notifications.
+    /// - Parameter task: The parent task.
+    /// - Returns: A representation data for notifications.
+    public func notificationContent(task: AppTask) -> NotificationContent {
+        .init(title: "Tasktivity", subTitle: task.title, category: .taskReminder, data: [
+            "reminder_id": id.uuidString,
+            "task_id": task.id.uuidString,
+        ])
+    }
+
     public var toArguments: ReminderArguments {
         .init(time: time, id: id, taskID: taskID)
     }

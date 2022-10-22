@@ -1,8 +1,8 @@
 //
 //  NotificationContent.swift
-//  Tasktive
 //
-//  Created by Kamaal M Farah on 20/10/2022.
+//
+//  Created by Kamaal M Farah on 22/10/2022.
 //
 
 import Foundation
@@ -59,6 +59,8 @@ public struct NotificationContent {
     public enum Category: String {
         /// Playground category.
         case playground
+        /// Task reminder.
+        case taskReminder
 
         /// Formatted identifier to be passed in to `UNMutableNotificationContent`.
         public var identifier: String {
@@ -66,7 +68,8 @@ public struct NotificationContent {
         }
     }
 
-    var userNotificationContent: UNMutableNotificationContent {
+    /// ``NotificationContent``'s representation for `UNMutableNotificationContent`.
+    public var userNotificationContent: UNMutableNotificationContent {
         let content = UNMutableNotificationContent()
         content.title = title
         content.subtitle = subTitle

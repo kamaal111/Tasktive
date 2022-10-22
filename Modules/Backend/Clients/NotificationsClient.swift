@@ -8,6 +8,7 @@
 import Skypiea
 import Logster
 import Foundation
+import SharedModels
 import UserNotifications
 
 private let logger = Logster(from: NotificationsClient.self)
@@ -74,6 +75,7 @@ public class NotificationsClient {
     /// - Parameter identifier: The notification identifier to delete.
     public func cancel(identifier: UUID) {
         logger.info("cancelled scheduled notification with the id \(identifier.uuidString)")
+
         userNotificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier.uuidString])
     }
 

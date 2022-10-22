@@ -9,6 +9,7 @@
 import SwiftUI
 import SalmonUI
 import Environment
+import SharedModels
 
 private let SCREEN: StackNavigator.Screens = .playground
 
