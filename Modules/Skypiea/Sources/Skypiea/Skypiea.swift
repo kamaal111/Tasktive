@@ -142,6 +142,14 @@ public class Skypiea {
         _ = try await iCloutKit.delete(record)
     }
 
+    /// Delete multiple given records.
+    /// - Parameter records: The records to delete.
+    func deleteMultiple(_ records: [CKRecord]) async throws {
+        guard !preview else { return }
+
+        _ = try await iCloutKit.deleteMultiple(records)
+    }
+
     private func fetchAllSubcriptions() async throws -> [CKSubscription] {
         guard !preview else {
             return []

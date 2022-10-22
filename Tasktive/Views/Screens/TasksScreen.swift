@@ -212,6 +212,11 @@ struct TasksScreen: View {
 
         Task {
             if isNewTask {
+                var arguments = arguments
+                if let reminderTime {
+                    arguments.reminders = [.init(time: reminderTime)]
+                }
+
                 let created = await createTask(with: arguments, on: newSource)
                 if !created {
                     return
