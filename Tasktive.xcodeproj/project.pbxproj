@@ -456,7 +456,6 @@
 		2C1B19662888675D00D734D2 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		2C1B196B28886CFB00D734D2 /* PopUpError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpError.swift; sourceTree = "<group>"; };
 		2C1B1984288874C100D734D2 /* QuickAddSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAddSection.swift; sourceTree = "<group>"; };
-		2C1B756F28DA36DC00181865 /* Logster */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Logster; sourceTree = "<group>"; };
 		2C2BABDC2902DD0E00C83FA1 /* BackendTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BackendTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C2BABDE2902DD1000C83FA1 /* BackendTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendTests.swift; sourceTree = "<group>"; };
 		2C2BABE9290328F600C83FA1 /* CoreReminderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreReminderTests.swift; sourceTree = "<group>"; };
@@ -815,7 +814,6 @@
 			isa = PBXGroup;
 			children = (
 				2C3E218528D62F4200BD2330 /* Environment */,
-				2C1B756F28DA36DC00181865 /* Logster */,
 				2C8B0CDD288DD73A00041EF8 /* SettingsUI */,
 				2CF3A6E728E0D30300DCEA2C /* SharedModels */,
 				2CCF228928B7F9DE00366596 /* Skypiea */,
@@ -1675,6 +1673,7 @@
 				2C47E3FF28836FBF00FD4469 /* XCRemoteSwiftPackageReference "SalmonUI" */,
 				2CF24AAC28842F9A00778BD9 /* XCRemoteSwiftPackageReference "ShrimpExtensions" */,
 				2C1B19682888689700D734D2 /* XCRemoteSwiftPackageReference "PopperUp" */,
+				2CBCB3382925670F00D170FC /* XCRemoteSwiftPackageReference "Logster" */,
 			);
 			productRefGroup = 2CBCE6042881DE240057F4CD /* Products */;
 			projectDirPath = "";
@@ -2929,6 +2928,14 @@
 			requirement = {
 				kind = upToNextMinorVersion;
 				minimumVersion = 0.3.0;
+			};
+		};
+		2CBCB3382925670F00D170FC /* XCRemoteSwiftPackageReference "Logster" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kamaal111/Logster.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.0;
 			};
 		};
 		2CCCADC62881FECB0033E2EF /* XCRemoteSwiftPackageReference "Quick" */ = {
