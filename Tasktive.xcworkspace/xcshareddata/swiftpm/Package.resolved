@@ -56,6 +56,15 @@
         }
       },
       {
+        "package": "Logster",
+        "repositoryURL": "https://github.com/kamaal111/Logster.git",
+        "state": {
+          "branch": null,
+          "revision": "c16009fc4ca6a6e8948fca05070f0b095a7096ee",
+          "version": "1.1.0"
+        }
+      },
+      {
         "package": "Nimble",
         "repositoryURL": "https://github.com/Quick/Nimble.git",
         "state": {
