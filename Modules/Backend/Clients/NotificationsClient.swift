@@ -31,6 +31,13 @@ public class NotificationsClient {
         self.preview = preview
     }
 
+    // - MARK: Errors
+
+    public enum Errors: Error {
+        case unauthorizedToRecieveNotifications(context: Error?)
+        case failedToSchedule(context: Error?)
+    }
+
     /// Whether user has authorized user notifications or not.
     public var isAuthorized: Bool {
         _isAuthorized
@@ -51,10 +58,27 @@ public class NotificationsClient {
     /// - Parameters:
     ///   - content: notification content.
     ///   - date: for when to schedule the notification for.
-    public func schedule(_ content: NotificationContent, for date: Date, identifier: UUID) {
-        guard isAuthorized else { return }
+    ///   - identifier: Identifier of reminder.
+    /// - Returns: a result returning nothing (Void) on success and ``Errors`` on failure.
+    public func schedule(
+        _ content: NotificationContent,
+        for date: Date,
+        identifier: UUID
+    ) async -> Result<Void, Errors> {
+        if !isAuthorized {
+            let isAuthorized: Bool
+            do {
+                isAuthorized = try await authorize()
+            } catch {
+                return .failure(.unauthorizedToRecieveNotifications(context: error))
+            }
 
-        var triggerTime = date.timeIntervalSince(Date())
+            if !isAuthorized {
+                return .failure(.unauthorizedToRecieveNotifications(context: .none))
+            }
+        }
+
+        var triggerTime = abs(date.timeIntervalSince(Date()))
         if triggerTime <= 5 {
             triggerTime = 5
         }
@@ -65,10 +89,17 @@ public class NotificationsClient {
             trigger: trigger
         )
 
+        do {
+            try await userNotificationCenter.add(request)
+        } catch {
+            return .failure(.failedToSchedule(context: error))
+        }
+
         logger.info("scheduled notification for in \(triggerTime) seconds",
                     "id='\(identifier.uuidString)'",
                     "category='\(content.category.identifier)'")
-        userNotificationCenter.add(request)
+
+        return .success(())
     }
 
     /// Cancel a pending notification.

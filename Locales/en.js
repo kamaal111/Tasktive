@@ -32,6 +32,8 @@ module.exports = {
   CANCEL: 'Cancel',
   ICLOUD_DISABLED_WARNING_TITLE: 'iCloud is disabled warning',
   ICLOUD_DISABLED_WARNING_DESCRIPTION: 'Please enable iCloud in your settings',
+  NOTIFICATION_UNAUTHORIZED_WARNING_TITLE: 'Notifications are disabled',
+  NOTIFICATION_UNAUTHORIZED_WARNING_DESCRIPTION: 'Please enable notifications in your settings',
   VERSION: 'Version',
   ABOUT: 'About',
   FEEDBACK: 'Feedback',

@@ -18,11 +18,8 @@ public enum Environment {
         /// If iCloud syncing is enabled or not.
         public static let iCloudSyncing = true
         #endif
-        #if DEBUG
+        /// If task reminders are enabled or not.
         public static let taskReminders = true
-        #else
-        public static let taskReminders = false
-        #endif
     }
 
     /// Command line arguments driven by the current schemes configuration.
