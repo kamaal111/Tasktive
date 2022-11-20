@@ -25,7 +25,10 @@ public class Skypiea {
         containerID: "iCloud.com.io.kamaal.Tasktivity",
         databaseType: .private
     )
-    private let subscriptionsWanted = [CloudTask.recordType]
+    private let subscriptionsWanted = [
+        CloudTask.recordType,
+        CloudReminder.recordType,
+    ]
     private(set) var subscriptions: [CKSubscription] = [] {
         didSet { logger.info("subscribed iCloud subscriptions; \(subscriptions)") }
     }
