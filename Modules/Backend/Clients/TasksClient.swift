@@ -62,18 +62,13 @@ public class TasksClient {
             task = success
         }
 
-        let notificationsClient: NotificationsClient
-        if !preview {
-            notificationsClient = Backend.shared.notifications
-        } else {
-            notificationsClient = .init(preview: true)
-        }
-        for reminder in task.remindersArray {
-            notificationsClient.schedule(
-                reminder.notificationContent(task: task),
-                for: reminder.time,
-                identifier: reminder.id
-            )
+        let taskWithScheduledRemindersResult = await scheduleReminders(task)
+        switch taskWithScheduledRemindersResult {
+        case let .failure(failure):
+            _ = await _delete(on: source, by: task.id)
+            return .failure(failure)
+        case .success:
+            break
         }
 
         await store.add(task)
@@ -221,6 +216,8 @@ public class TasksClient {
             return .success(task)
         }
 
+        let oldReminderIDs = task.remindersArray.map(\.id)
+
         let updateResult = await _update(on: task.source, by: task.id, with: arguments)
         let updatedTask: AppTask
         switch updateResult {
@@ -231,6 +228,28 @@ public class TasksClient {
         }
 
         await store.update(updatedTask, fromDate: task.dueDate)
+
+        let notificationsClient: NotificationsClient
+        if !preview {
+            notificationsClient = Backend.shared.notifications
+        } else {
+            notificationsClient = .init(preview: true)
+        }
+
+        if task.remindersArray.isEmpty {
+            for id in oldReminderIDs {
+                notificationsClient.cancel(identifier: id)
+            }
+        } else {
+            let scheduleReminders = await scheduleReminders(task)
+            switch scheduleReminders {
+            case let .failure(failure):
+                return .failure(failure)
+            case .success:
+                break
+            }
+        }
+
         return .success(updatedTask)
     }
 
@@ -288,7 +307,9 @@ public class TasksClient {
         /// Invalid title provided.
         case invalidTitle
         /// Failure on creating a reminder.
-        case reminderCreationFailure(context: Error)
+        case reminderCreationFailure(context: Error?)
+        /// Failed to authorize notifications.
+        case notificationUnauthorized(context: Error?)
     }
 
     // - MARK: Private methods
@@ -447,6 +468,40 @@ public class TasksClient {
             return await CloudTask.filter(by: predicate, limit: limit, from: skypiea)
                 .mapError(mapCloudTaskErrors)
                 .map { $0.map(\.toAppTask) }
+        }
+    }
+
+    private func scheduleReminders(_ task: AppTask) async -> Result<Void, Errors> {
+        let notificationsClient: NotificationsClient
+        if !preview {
+            notificationsClient = Backend.shared.notifications
+        } else {
+            notificationsClient = .init(preview: true)
+        }
+
+        var lastFailedReason: NotificationsClient.Errors?
+        for reminder in task.remindersArray {
+            let scheduleReminderResult = await notificationsClient.schedule(
+                reminder.notificationContent(task: task),
+                for: reminder.time,
+                identifier: reminder.id
+            )
+            switch scheduleReminderResult {
+            case let .failure(failure):
+                logger.error(label: "failed to schedule task reminder", error: failure)
+                lastFailedReason = failure
+            case .success:
+                break
+            }
+        }
+
+        guard let lastFailedReason else { return .success(()) }
+
+        switch lastFailedReason {
+        case let .failedToSchedule(context: context):
+            return .failure(.reminderCreationFailure(context: context))
+        case let .unauthorizedToRecieveNotifications(context: context):
+            return .failure(.notificationUnauthorized(context: context))
         }
     }
 

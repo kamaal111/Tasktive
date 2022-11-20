@@ -61,7 +61,7 @@ struct PlaygroundScreen: View {
                 data: ["yes": "no"]
             )
             let id = UUID()
-            Backend.shared.notifications.schedule(content, for: whenToNotify, identifier: id)
+            _ = await Backend.shared.notifications.schedule(content, for: whenToNotify, identifier: id)
 //            Backend.shared.notifications.cancel(identifier: id)
         }
     }

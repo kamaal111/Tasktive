@@ -156,7 +156,7 @@ final class TasksViewModel: ObservableObject {
             case let .failure(failure):
                 let mappedError = await mapBackendTaskErrors(failure)
                 return .failure(mappedError ?? .updateFailure)
-            case let .success:
+            case .success:
                 break
             }
 
@@ -263,6 +263,9 @@ final class TasksViewModel: ObservableObject {
         case .reminderCreationFailure:
             logger.error(label: "failed to save reminder on task", error: error)
             return .createTaskFailure
+        case .notificationUnauthorized:
+            logger.warning("notifications unauthorized")
+            return .notificationUnauthorized
         }
     }
 
@@ -337,6 +340,7 @@ extension TasksViewModel {
         case deleteFailure
         case invalidTitle
         case iCloudIsDisabled
+        case notificationUnauthorized
 
         var title: String {
             switch self {
@@ -352,6 +356,8 @@ extension TasksViewModel {
                 return TasktiveLocale.getText(.GENERAL_WARNING_TITLE)
             case .iCloudIsDisabled:
                 return TasktiveLocale.getText(.ICLOUD_DISABLED_WARNING_TITLE)
+            case .notificationUnauthorized:
+                return TasktiveLocale.getText(.NOTIFICATION_UNAUTHORIZED_WARNING_TITLE)
             }
         }
 
@@ -369,6 +375,8 @@ extension TasksViewModel {
                 return TasktiveLocale.getText(.INVALID_TITLE_WARNING_DESCRIPTION)
             case .iCloudIsDisabled:
                 return TasktiveLocale.getText(.ICLOUD_DISABLED_WARNING_DESCRIPTION)
+            case .notificationUnauthorized:
+                return TasktiveLocale.getText(.NOTIFICATION_UNAUTHORIZED_WARNING_DESCRIPTION)
             }
         }
 
@@ -376,7 +384,7 @@ extension TasksViewModel {
             switch self {
             case .getAllFailure, .createTaskFailure, .updateFailure, .deleteFailure:
                 return .error
-            case .invalidTitle, .iCloudIsDisabled:
+            case .invalidTitle, .iCloudIsDisabled, .notificationUnauthorized:
                 return .warning
             }
         }
