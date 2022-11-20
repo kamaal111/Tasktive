@@ -213,7 +213,29 @@ public struct CloudTask: Identifiable, Hashable, Taskable, Cloudable, Crudable {
             return handleFetchErrors(error)
         }
 
-        return .success(tasks)
+        var tasksMappedByID: [UUID: CloudTask] = tasks
+            .reduce([:]) { result, task in
+                var result = result
+                result[task.id] = task
+                return result
+            }
+        // Fetch all reminders of these tasks
+        let remindersPredicate = NSPredicate(format: "taskID IN %@", tasksMappedByID.keys.map(\.nsString))
+        let reminders: [CloudReminder]
+        do {
+            reminders = try await CloudReminder.filter(by: remindersPredicate, from: context)
+        } catch {
+            logger.warning("failed to fetch reminders", "error='\(error)'")
+            return .success(tasks)
+        }
+        // Add them to CloudTask
+        let remindersMappedByTaskID = Dictionary(grouping: reminders, by: \.taskID)
+        for (taskID, taskReminders) in remindersMappedByTaskID {
+            tasksMappedByID[taskID]?.reminders = taskReminders
+        }
+
+        let tasksWithReminders = tasksMappedByID.values.asArray()
+        return .success(tasksWithReminders)
     }
 
     public static func filter(
