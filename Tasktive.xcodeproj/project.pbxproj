@@ -189,9 +189,6 @@
 		2C750F6A288C328C00026D67 /* TasksSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C750F69288C328C00026D67 /* TasksSection.swift */; };
 		2C750F6C288C335A00026D67 /* TaskItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C750F6B288C335A00026D67 /* TaskItemView.swift */; };
 		2C79879828AC30DF00F36C59 /* NavigationPath+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C79879728AC30DF00F36C59 /* NavigationPath+extensions.swift */; };
-		2C7A560628B4157600CF8A7C /* Array+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7A560528B4157600CF8A7C /* Array+extensions.swift */; };
-		2C7A560728B4157600CF8A7C /* Array+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7A560528B4157600CF8A7C /* Array+extensions.swift */; };
-		2C7A560828B4157600CF8A7C /* Array+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7A560528B4157600CF8A7C /* Array+extensions.swift */; };
 		2C84C30F28D7491700015565 /* TasksViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C84C30E28D7491700015565 /* TasksViewModelTests.swift */; };
 		2C9435DA28B284E600281AF7 /* GridItemConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9435D928B284E600281AF7 /* GridItemConfiguration.swift */; };
 		2C9435DB28B284E600281AF7 /* GridItemConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9435D928B284E600281AF7 /* GridItemConfiguration.swift */; };
@@ -504,7 +501,6 @@
 		2C750F69288C328C00026D67 /* TasksSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksSection.swift; sourceTree = "<group>"; };
 		2C750F6B288C335A00026D67 /* TaskItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskItemView.swift; sourceTree = "<group>"; };
 		2C79879728AC30DF00F36C59 /* NavigationPath+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NavigationPath+extensions.swift"; sourceTree = "<group>"; };
-		2C7A560528B4157600CF8A7C /* Array+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+extensions.swift"; sourceTree = "<group>"; };
 		2C7E974228E62F960046B0C7 /* NotificationsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsClient.swift; sourceTree = "<group>"; };
 		2C84C30E28D7491700015565 /* TasksViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksViewModelTests.swift; sourceTree = "<group>"; };
 		2C8B0CDD288DD73A00041EF8 /* SettingsUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SettingsUI; sourceTree = "<group>"; };
@@ -977,7 +973,6 @@
 			isa = PBXGroup;
 			children = (
 				2C51C915288481A9008939F7 /* AppTask+extensions.swift */,
-				2C7A560528B4157600CF8A7C /* Array+extensions.swift */,
 				2CDFB1AF28A6DA53004ACED7 /* Colors.swift */,
 				2C98E3C728B125CA0048149F /* Data+extensions.swift */,
 				2CDE6AEA28B2BAFE00924935 /* Date+extensions.swift */,
@@ -1922,7 +1917,6 @@
 				2C5F425B28E8992E00278DC7 /* TasksFetchedContextStore.swift in Sources */,
 				2C69A08328B19BC600D5006D /* Image+extensions.swift in Sources */,
 				2CB3F3B228BD327A0016B7F4 /* AccessibilityIdentifiers.swift in Sources */,
-				2C7A560728B4157600CF8A7C /* Array+extensions.swift in Sources */,
 				2C69A08528B19BC600D5006D /* Navigatable.swift in Sources */,
 				2C69A08628B19BC600D5006D /* ContentView.swift in Sources */,
 				2C69A08A28B19BC600D5006D /* Theme.swift in Sources */,
@@ -2005,7 +1999,6 @@
 				2C5F425C28E8992E00278DC7 /* TasksFetchedContextStore.swift in Sources */,
 				2C98E40928B12E170048149F /* Image+extensions.swift in Sources */,
 				2CB3F3B328BD327A0016B7F4 /* AccessibilityIdentifiers.swift in Sources */,
-				2C7A560828B4157600CF8A7C /* Array+extensions.swift in Sources */,
 				2C98E40B28B12E170048149F /* Navigatable.swift in Sources */,
 				2C98E40C28B12E170048149F /* ContentView.swift in Sources */,
 				2C98E41028B12E170048149F /* Theme.swift in Sources */,
@@ -2091,7 +2084,6 @@
 				2C62FA2F28A7E95F00200BF9 /* StoreKitDonation.swift in Sources */,
 				2C98E3C628B125710048149F /* Image+extensions.swift in Sources */,
 				2CB3F3B128BD327A0016B7F4 /* AccessibilityIdentifiers.swift in Sources */,
-				2C7A560628B4157600CF8A7C /* Array+extensions.swift in Sources */,
 				2CC325F328B0E68F0091EC3E /* Navigatable.swift in Sources */,
 				2CBCE60E2881DE240057F4CD /* ContentView.swift in Sources */,
 				2CFEB90128A43905000B1667 /* Theme.swift in Sources */,
@@ -2959,7 +2951,7 @@
 			repositoryURL = "https://github.com/kamaal111/ShrimpExtensions.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.6.0;
+				minimumVersion = 2.7.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
