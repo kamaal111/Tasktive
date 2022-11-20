@@ -515,7 +515,7 @@ public class TasksClient {
         let now = Date()
         let today = now.hashed.asNSDate
         let tasksIDs = tasks.map(\.id.nsString).uniques()
-        let predicate = NSPredicate(format: "(dueDate < %@) AND ticked == NO AND NOT(id in %@)", today, tasksIDs)
+        let predicate = NSPredicate(format: "(dueDate < %@) AND ticked == NO AND NOT(id IN %@)", today, tasksIDs)
 
         var updatedTasks: [AppTask] = []
         for source in sources {
