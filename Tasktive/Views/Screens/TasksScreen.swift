@@ -281,6 +281,7 @@ struct TasksScreen: View {
 
             showMessageWhenNotConnectedToTheInternet()
             viewModel.indicateThatViewModelHasLoaded()
+            await userData.authorizeNotifications()
         }
     }
 
