@@ -48,6 +48,9 @@ extension SettingsUI {
                     imageSystemName: "medal.fill",
                     destination: .acknowledgements
                 )
+                #if os(macOS)
+                Divider()
+                #endif
                 VersionRowView()
             }
         }
