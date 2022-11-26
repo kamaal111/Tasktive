@@ -27,8 +27,16 @@ extension SettingsUI {
                     ForEach(acknowledgements?.contributors ?? [], id: \.self) { contributor in
                         Text(contributor.name)
                             .bold()
+                            .ktakeWidthEagerly(alignment: .leading)
+                        #if os(macOS)
+                        if contributor != acknowledgements?.contributors.last {
+                            Divider()
+                        }
+                        #endif
                     }
                 }
+                .padding(.horizontal, 16)
+                .padding(.top, 16)
                 KSection(header: TasktiveLocale.getText(.PACKAGES)) {
                     ForEach(acknowledgements?.packages ?? [], id: \.self) { package in
                         Button(action: { selectedAcknowledgementPackage = package.url }) {
@@ -39,9 +47,21 @@ extension SettingsUI {
                                     .font(.subheadline)
                                     .foregroundColor(.secondary)
                             }
+                            .ktakeWidthEagerly(alignment: .leading)
+                            #if os(macOS)
+                                .background(Color(nsColor: .separatorColor).opacity(0.01))
+                            #endif
                         }
+                        .buttonStyle(.plain)
+                        #if os(macOS)
+                        if package != acknowledgements?.packages.last {
+                            Divider()
+                        }
+                        #endif
                     }
                 }
+                .padding(.horizontal, 16)
+                .padding(.bottom, 16)
             }
             .onChange(of: showBrowser, perform: { newValue in
                 if !newValue {

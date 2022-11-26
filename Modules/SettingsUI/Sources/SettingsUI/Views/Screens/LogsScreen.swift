@@ -35,7 +35,9 @@ extension SettingsUI {
                                     .lineLimit(1)
                             }
                             .ktakeWidthEagerly(alignment: .leading)
-                            .background(Color(nsColor: .separatorColor).opacity(0.01))
+                            #if os(macOS)
+                                .background(Color(nsColor: .separatorColor).opacity(0.01))
+                            #endif
                         }
                         .buttonStyle(.plain)
                         #if os(macOS)
