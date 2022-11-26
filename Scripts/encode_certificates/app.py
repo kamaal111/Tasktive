@@ -3,9 +3,15 @@ import json
 import os
 from typing import Optional, TypedDict
 
+
 SECRETS_DIRECTORY = "Secrets"
-PROVISIONING_PROFILE = "Tasktivity_App_Store_distribution.mobileprovision"
-SIGNING_CERTIFICATE = "Certificates.p12"
+
+MAP_FILENAME_TO_CERTIFICATES = {
+    "Tasktivity_App_Store_distribution.mobileprovision": "provisioning_profile",
+    "Certificates.p12": "signing_certificate",
+    "MacOSCertificates.p12": "mac_signing_certificate",
+    "Tasktivity_Mac_App_Store_distribution.provisionprofile": "mac_provisioning_profile",
+}
 
 
 class Certificates(TypedDict):
@@ -33,10 +39,8 @@ def make_certificates_dict():
     certificates: Certificates = {}
 
     for filename in os.listdir(SECRETS_DIRECTORY):
-        if filename == PROVISIONING_PROFILE:
-            certificates["provisioning_profile"] = encode_certificate(filename=filename)
-        if filename == SIGNING_CERTIFICATE:
-            certificates["signing_certificate"] = encode_certificate(filename=filename)
+        if key := MAP_FILENAME_TO_CERTIFICATES.get(filename):
+            certificates[key] = encode_certificate(filename=filename)
 
     return certificates
 
