@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#  import_signing_certificate_ios.bash
+#  import_signing_certificate.bash
 #  Tasktive
 #
 #  Created by Kamaal M Farah on 11/09/2022.

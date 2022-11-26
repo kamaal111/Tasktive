@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#  import_provisioning_profile_ios.bash
+#  import_provisioning_profile.bash
 #  Tasktive
 #
 #  Created by Kamaal M Farah on 11/09/2022.
