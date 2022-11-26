@@ -17,6 +17,7 @@ import ShrimpExtensions
 private let SCREEN: NamiNavigator.Screens = .tasks
 private let logger = Logster(from: TasksScreen.self)
 
+// swiftlint:disable type_body_length
 struct TasksScreen: View {
     @SwiftUI.Environment(\.colorScheme) private var colorScheme
 
