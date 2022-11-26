@@ -34,10 +34,20 @@ extension SettingsUI {
                                     .foregroundColor(.primary)
                                     .lineLimit(1)
                             }
+                            .ktakeWidthEagerly(alignment: .leading)
+                            .background(Color(nsColor: .separatorColor).opacity(0.01))
                         }
                         .buttonStyle(.plain)
+                        #if os(macOS)
+                        if item != logs.last {
+                            Divider()
+                        }
+                        #endif
                     }
                 }
+                #if os(macOS)
+                .padding(.all, 16)
+                #endif
             }
             .ktakeSizeEagerly(alignment: .topLeading)
             .onAppear {
