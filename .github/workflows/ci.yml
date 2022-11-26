@@ -52,34 +52,52 @@ jobs:
         run: |
           yarn build:ios:release
 
-  # buildMacOSRelease:
-  #   name: Build macOS release
-  #   timeout-minutes: 15
-  #   runs-on: macos-12
-  #   needs: [quality]
-  #   if: contains(github.ref, 'refs/heads/release/') == false && github.ref != 'refs/heads/main'
-  #   steps:
-  #     - name: Git - Checkout
-  #       uses: actions/checkout@v2
-  #       with:
-  #         ref: ${{ github.ref }}
-  #         submodules: recursive
+  buildMacOSRelease:
+    name: Build macOS release
+    timeout-minutes: 15
+    runs-on: macos-12
+    needs: [quality]
+    if: contains(github.ref, 'refs/heads/release/') == false && github.ref != 'refs/heads/main'
+    steps:
+      - name: Git - Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+          submodules: recursive
 
-  #     - name: Setup - Xcode
-  #       env:
-  #         XCODE_APP_NAME: Xcode_14.1.app
-  #       run: |
-  #         sh Scripts/select_xcode_version.sh
+      - name: Import signing certificate
+        timeout-minutes: 1
+        env:
+          SIGNING_CERTIFICATE_P12_DATA: ${{ secrets.MAC_SIGNING_CERTIFICATE_P12_DATA }}
+          SIGNING_CERTIFICATE_PASSWORD: ${{ secrets.MACOS_SIGNING_CERTIFICATE_PASSWORD }}
+          KEYCHAIN_PASSPHRASE: ${{ secrets.KEYCHAIN_PASSPHRASE }}
+        run: |
+          bash Scripts/import_signing_certificate.bash
 
-  #     - name: Create token file
-  #       run: |
-  #         # No need to actually add the tokens in the test
+      - name: Import provisioning profile
+        timeout-minutes: 1
+        env:
+          PROVISIONING_PROFILE_DATA: ${{ secrets.MAC_PROVISIONING_PROFILE_DATA }}
+        run: |
+          bash Scripts/import_provisioning_profile.bash
 
-  #         yarn generate-tokens
+      - name: Setup - Xcode
+        timeout-minutes: 1
+        env:
+          XCODE_APP_NAME: Xcode_14.1.app
+        run: |
+          sh Scripts/select_xcode_version.sh
 
-  #     - name: Build
-  #       run: |
-  #         yarn build:mac:release
+      - name: Create token file
+        timeout-minutes: 1
+        run: |
+          # No need to actually add the tokens in the test
+
+          yarn generate-tokens
+
+      - name: Build
+        run: |
+          yarn build:mac:release
 
   testIOS:
     name: Test iOS
@@ -129,13 +147,13 @@ jobs:
           SIGNING_CERTIFICATE_PASSWORD: ${{ secrets.SIGNING_CERTIFICATE_PASSWORD }}
           KEYCHAIN_PASSPHRASE: ${{ secrets.KEYCHAIN_PASSPHRASE }}
         run: |
-          bash Scripts/import_signing_certificate_ios.bash
+          bash Scripts/import_signing_certificate.bash
 
       - name: Import provisioning profile
         env:
           PROVISIONING_PROFILE_DATA: ${{ secrets.PROVISIONING_PROFILE_DATA }}
         run: |
-          bash Scripts/import_provisioning_profile_ios.bash
+          bash Scripts/import_provisioning_profile.bash
 
       - name: Setup - Xcode
         env:
