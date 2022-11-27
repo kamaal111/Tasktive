@@ -20,7 +20,7 @@ let package = Package(
         .package(url: "https://github.com/kamaal111/GitHubAPI.git", "0.1.2" ..< "0.2.0"),
         .package(url: "https://github.com/kamaal111/StoreAPIClient.git", "0.1.1" ..< "0.2.0"),
         .package(url: "https://github.com/simibac/ConfettiSwiftUI.git", "1.0.1" ..< "1.0.2"),
-        .package(url: "https://github.com/kamaal111/ShrimpExtensions.git", "2.6.0" ..< "3.0.0"),
+        .package(url: "https://github.com/kamaal111/ShrimpExtensions.git", "2.8.0" ..< "3.0.0"),
         .package(url: "https://github.com/kamaal111/InAppBrowserSUI.git", "2.1.0" ..< "3.0.0"),
         .package(url: "https://github.com/kamaal111/Logster.git", "1.1.0" ..< "2.0.0"),
         .package(path: "../Environment"),
