@@ -80,5 +80,7 @@ extension TasktiveLocale {
         case REMINDER
         case ADD_REMINDER
         case REMOVE_REMINDER
+        case SURE
+        case DELETE_TASK_ALERT_TITLE
     }
 }
