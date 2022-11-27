@@ -17,7 +17,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/kamaal111/ICloutKit.git", "3.0.0" ..< "4.0.0"),
-        .package(url: "https://github.com/kamaal111/ShrimpExtensions.git", "2.6.0" ..< "3.0.0"),
+        .package(url: "https://github.com/kamaal111/ShrimpExtensions.git", "2.8.0" ..< "3.0.0"),
         .package(url: "https://github.com/kamaal111/Logster.git", "1.1.0" ..< "2.0.0"),
         .package(path: "../SharedModels"),
     ],
