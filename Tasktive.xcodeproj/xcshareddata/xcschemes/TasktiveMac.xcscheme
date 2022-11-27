@@ -50,6 +50,12 @@
             ReferencedContainer = "container:Tasktive.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "preview_core_data"
+            isEnabled = "NO">
+         </CommandLineArgument>
+      </CommandLineArguments>
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "starting_stack_screen"

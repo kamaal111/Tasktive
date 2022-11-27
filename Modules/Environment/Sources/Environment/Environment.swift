@@ -27,7 +27,6 @@ public enum Environment {
         case uiTestingLightMode = "ui_testing_light_mode"
         case uiTestingDarkMode = "ui_testing_dark_mode"
         case previewCoredata = "preview_core_data"
-        case enableICloudSyncing = "enable_icloud_syncing"
 
         /// If the argument is enabled or not.
         public var enabled: Bool {
