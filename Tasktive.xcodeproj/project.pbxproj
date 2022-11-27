@@ -494,7 +494,7 @@
 		2C69A04628B18CA200D5006D /* SplashScreenStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenStack.swift; sourceTree = "<group>"; };
 		2C69A04928B1932F00D5006D /* CoreDataViewerScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataViewerScreen.swift; sourceTree = "<group>"; };
 		2C69A04C28B193CB00D5006D /* PlaygroundNavigationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundNavigationButton.swift; sourceTree = "<group>"; };
-		2C69A0B328B19BC600D5006D /* TasktiveMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TasktiveMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C69A0B328B19BC600D5006D /* Tasktivity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tasktivity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C717E7B28D3B09E00DC060D /* build_release.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = build_release.sh; sourceTree = "<group>"; };
 		2C750F65288C2F9400026D67 /* CircularProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressBar.swift; sourceTree = "<group>"; };
 		2C750F67288C31CF00026D67 /* ProgressSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressSection.swift; sourceTree = "<group>"; };
@@ -524,6 +524,7 @@
 		2C98E43628B12FB20048149F /* Shell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shell.swift; sourceTree = "<group>"; };
 		2C98E43A28B1306C0048149F /* FileManager+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+extensions.swift"; sourceTree = "<group>"; };
 		2C98E43D28B130BE0048149F /* String+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+extensions.swift"; sourceTree = "<group>"; };
+		2C9910DF29338EB500A25BB9 /* MacInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = MacInfo.plist; sourceTree = "<group>"; };
 		2C9F2DE228E4BFCE00377B03 /* Backend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Backend.swift; sourceTree = "<group>"; };
 		2C9F2DE528E4C03C00377B03 /* TasksClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksClient.swift; sourceTree = "<group>"; };
 		2CA7A02F28A8F5910031C219 /* Donations.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Donations.storekit; sourceTree = "<group>"; };
@@ -559,7 +560,7 @@
 		2CCF228928B7F9DE00366596 /* Skypiea */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Skypiea; sourceTree = "<group>"; };
 		2CD2EB7728BA41F500C14B18 /* run_ios_tests.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = run_ios_tests.sh; sourceTree = "<group>"; };
 		2CD2EB7828BA423C00C14B18 /* Gemfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Gemfile; sourceTree = "<group>"; };
-		2CD7EF5728B8076B009FA620 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		2CD7EF5728B8076B009FA620 /* IOSInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = IOSInfo.plist; sourceTree = "<group>"; };
 		2CD9B01328CE2FED00DA7ECC /* Gymfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Gymfile; sourceTree = "<group>"; };
 		2CD9B01428CE2FF900DA7ECC /* ExportOptions.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ExportOptions.plist; sourceTree = "<group>"; };
 		2CD9B01528CE300A00DA7ECC /* Simulator Screen Shot - iPhone 13 - 2022-09-10 at 00.12.02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Simulator Screen Shot - iPhone 13 - 2022-09-10 at 00.12.02.png"; sourceTree = "<group>"; };
@@ -1197,7 +1198,7 @@
 			children = (
 				2CBCE6032881DE240057F4CD /* Tasktive.app */,
 				2C98E43428B12E170048149F /* TasktiveMacDebug.app */,
-				2C69A0B328B19BC600D5006D /* TasktiveMac.app */,
+				2C69A0B328B19BC600D5006D /* Tasktivity.app */,
 				2C4E81E028BBDC070056D0D1 /* MainFlowsUITests.xctest */,
 				2CBDB63928D11B08007EC2D5 /* TasktiveTests.xctest */,
 				2C3DAD2628E08D8C00059DAF /* CDPersist.framework */,
@@ -1212,7 +1213,8 @@
 			children = (
 				2CBCE6112881DE270057F4CD /* Tasktive.entitlements */,
 				2C98E3CB28B12B080048149F /* TasktiveDebug.entitlements */,
-				2CD7EF5728B8076B009FA620 /* Info.plist */,
+				2CD7EF5728B8076B009FA620 /* IOSInfo.plist */,
+				2C9910DF29338EB500A25BB9 /* MacInfo.plist */,
 				2C69A04328B189F500D5006D /* LaunchScreen.storyboard */,
 				2CFCA0A528A97842007A08F2 /* AppDelegate_iOS.swift */,
 				2CFCA0A328A977CE007A08F2 /* AppDelegate_macOS.swift */,
@@ -1530,7 +1532,7 @@
 				2CE7E45728F464AC001F453B /* Skypiea */,
 			);
 			productName = Tasktive;
-			productReference = 2C69A0B328B19BC600D5006D /* TasktiveMac.app */;
+			productReference = 2C69A0B328B19BC600D5006D /* Tasktivity.app */;
 			productType = "com.apple.product-type.application";
 		};
 		2C98E3D728B12E170048149F /* TasktiveMacDebug */ = {
@@ -2183,7 +2185,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 345;
+				CURRENT_PROJECT_VERSION = 357;
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -2204,7 +2206,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 345;
+				CURRENT_PROJECT_VERSION = 357;
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -2225,7 +2227,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 345;
+				CURRENT_PROJECT_VERSION = 357;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -2265,7 +2267,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Kamaal Farah (DXUKH9VF73)";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution: Kamaal Farah (DXUKH9VF73)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 345;
+				CURRENT_PROJECT_VERSION = 357;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -2304,7 +2306,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 345;
+				CURRENT_PROJECT_VERSION = 357;
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -2327,7 +2329,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 345;
+				CURRENT_PROJECT_VERSION = 357;
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -2349,7 +2351,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 345;
+				CURRENT_PROJECT_VERSION = 357;
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -2369,7 +2371,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 345;
+				CURRENT_PROJECT_VERSION = 357;
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -2392,12 +2394,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Tasktive/TasktiveDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 345;
+				CURRENT_PROJECT_VERSION = 357;
 				DEVELOPMENT_ASSET_PATHS = "\"Tasktive/Preview Content\"";
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Tasktive/MacInfo.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Tasktivity;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
@@ -2411,7 +2414,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = io.kamaal.Tasktivity;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Tasktivity;
 				SDKROOT = macosx;
 				SUPPORTED_PLATFORMS = macosx;
 				SUPPORTS_MACCATALYST = NO;
@@ -2429,12 +2432,13 @@
 				CODE_SIGN_ENTITLEMENTS = Tasktive/Tasktive.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 345;
+				CURRENT_PROJECT_VERSION = 357;
 				DEVELOPMENT_ASSET_PATHS = "\"Tasktive/Preview Content\"";
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Tasktive/MacInfo.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Tasktivity;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
@@ -2448,7 +2452,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = io.kamaal.Tasktivity;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Tasktivity;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				SUPPORTED_PLATFORMS = macosx;
@@ -2466,7 +2470,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Tasktive/TasktiveDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 345;
+				CURRENT_PROJECT_VERSION = 357;
 				DEVELOPMENT_ASSET_PATHS = "\"Tasktive/Preview Content\"";
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2502,7 +2506,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Tasktive/Tasktive.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 345;
+				CURRENT_PROJECT_VERSION = 357;
 				DEVELOPMENT_ASSET_PATHS = "\"Tasktive/Preview Content\"";
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2651,13 +2655,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Tasktive/TasktiveDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 345;
+				CURRENT_PROJECT_VERSION = 357;
 				DEVELOPMENT_ASSET_PATHS = "\"Tasktive/Preview Content\"";
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Tasktive/Info.plist;
+				INFOPLIST_FILE = Tasktive/IOSInfo.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Tasktivity;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
@@ -2693,7 +2697,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Kamaal Farah (DXUKH9VF73)";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution: Kamaal Farah (DXUKH9VF73)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 345;
+				CURRENT_PROJECT_VERSION = 357;
 				DEVELOPMENT_ASSET_PATHS = "\"Tasktive/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=*]" = DXUKH9VF73;
@@ -2701,7 +2705,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Tasktive/Info.plist;
+				INFOPLIST_FILE = Tasktive/IOSInfo.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Tasktivity;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
@@ -2736,7 +2740,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 345;
+				CURRENT_PROJECT_VERSION = 357;
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -2757,7 +2761,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 345;
+				CURRENT_PROJECT_VERSION = 357;
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
