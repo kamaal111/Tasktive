@@ -70,7 +70,7 @@ struct TasksScreen: View {
                     },
                     focusOnTask: { task in viewModel.setCurrentFocusedTaskID(task.id) },
                     onDetailsPress: { task in Task { await viewModel.showDetailsSheet(for: task) } },
-                    onDelete: { task in Task { await tasksViewModel.deleteTask(task) } }
+                    onDelete: { task in viewModel.deleteTask(task) }
                 )
                 .disabled(tasksViewModel.settingTasks)
                 #if os(macOS)
@@ -125,6 +125,16 @@ struct TasksScreen: View {
             addTaskButton
             #endif
         }
+        .alert(TasktiveLocale.getText(.DELETE_TASK_ALERT_TITLE), isPresented: $viewModel.showTaskDeleteAlert, actions: {
+            Button(TasktiveLocale.getText(.CANCEL), role: .cancel) {
+                viewModel.closeDeleteTaskAlert()
+            }
+            .foregroundColor(theme.currentAccentColor(scheme: colorScheme))
+            Button(TasktiveLocale.getText(.SURE), role: .destructive) {
+                Task { await definitlyDeleteTask() }
+            }
+            .foregroundColor(theme.currentAccentColor(scheme: colorScheme))
+        })
         .alert(
             tasksViewModel.pendingUserError?.title ?? "",
             isPresented: $viewModel.showUserErrorAlert,
@@ -187,6 +197,20 @@ struct TasksScreen: View {
             isConnectedToNetwork: deviceModel.isConnectedToNetwork,
             iCloudSyncingIsEnabledByUser: userData.iCloudSyncingIsEnabled
         )
+    }
+
+    private func definitlyDeleteTask() async {
+        if let task = viewModel.taskToDelete {
+            let result = await tasksViewModel.deleteTask(task)
+            switch result {
+            case let .failure(failure):
+                logger.error(label: "failed to delete task", error: failure)
+                popperUpManager.showPopup(style: failure.style, timeout: failure.timeout)
+            case .success:
+                break
+            }
+        }
+        viewModel.closeDeleteTaskAlert()
     }
 
     private func fetchTasksAfterInternetIsAvailable(_ internetIsAvailable: Bool) {
@@ -323,6 +347,7 @@ struct TasksScreen: View {
         @Published var showTaskDetailsSheet = false
         @Published var showUserErrorAlert = false
         @Published private(set) var loaded = false
+        @Published var showTaskDeleteAlert = false
         @Published var currentSource = UserDefaults.lastChosenDataSource ?? .coreData {
             didSet { currentSourceDidSet() }
         }
@@ -332,6 +357,8 @@ struct TasksScreen: View {
                 showUserErrorAlert = pendingUserError != nil
             }
         }
+
+        private(set) var taskToDelete: AppTask?
 
         let quickAddViewHeight: CGFloat = 50
 
@@ -349,6 +376,18 @@ struct TasksScreen: View {
 
         var taskArguments: TaskArguments {
             .init(title: newTitle, taskDescription: nil, notes: nil, dueDate: currentDay, reminders: [])
+        }
+
+        @MainActor
+        func deleteTask(_ task: AppTask) {
+            taskToDelete = task
+            showTaskDeleteAlert = true
+        }
+
+        @MainActor
+        func closeDeleteTaskAlert() {
+            showTaskDeleteAlert = false
+            taskToDelete = nil
         }
 
         @MainActor

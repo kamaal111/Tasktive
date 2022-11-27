@@ -74,4 +74,6 @@ module.exports = {
   REMINDER: 'Reminder',
   ADD_REMINDER: 'Add reminder',
   REMOVE_REMINDER: 'Remove reminder',
+  SURE: 'Sure',
+  DELETE_TASK_ALERT_TITLE: 'Delete task',
 };
