@@ -184,6 +184,7 @@
 		2C69A0AC28B19BC600D5006D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CBCE6132881DE270057F4CD /* Preview Assets.xcassets */; };
 		2C69A0AE28B19BC600D5006D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CBCE60F2881DE270057F4CD /* Assets.xcassets */; };
 		2C69A0AF28B19BC600D5006D /* Tokens.json in Resources */ = {isa = PBXBuildFile; fileRef = 2C157590289F02E900425CDD /* Tokens.json */; };
+		2C6A79D229354BAA004590AB /* ManuallyManagedObject in Frameworks */ = {isa = PBXBuildFile; productRef = 2C6A79D129354BAA004590AB /* ManuallyManagedObject */; };
 		2C750F66288C2F9400026D67 /* CircularProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C750F65288C2F9400026D67 /* CircularProgressBar.swift */; };
 		2C750F68288C31CF00026D67 /* ProgressSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C750F67288C31CF00026D67 /* ProgressSection.swift */; };
 		2C750F6A288C328C00026D67 /* TasksSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C750F69288C328C00026D67 /* TasksSection.swift */; };
@@ -611,6 +612,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C6A79D229354BAA004590AB /* ManuallyManagedObject in Frameworks */,
 				2C3DAD8F28E0947400059DAF /* ShrimpExtensions in Frameworks */,
 				2CF3A6E928E0D65D00DCEA2C /* SharedModels in Frameworks */,
 				2C3DAD9728E0A2A200059DAF /* Logster in Frameworks */,
@@ -1452,6 +1454,7 @@
 				2C3DAD8E28E0947400059DAF /* ShrimpExtensions */,
 				2C3DAD9628E0A2A200059DAF /* Logster */,
 				2CF3A6E828E0D65D00DCEA2C /* SharedModels */,
+				2C6A79D129354BAA004590AB /* ManuallyManagedObject */,
 			);
 			productName = CDPersist;
 			productReference = 2C3DAD2628E08D8C00059DAF /* CDPersist.framework */;
@@ -1671,6 +1674,7 @@
 				2CF24AAC28842F9A00778BD9 /* XCRemoteSwiftPackageReference "ShrimpExtensions" */,
 				2C1B19682888689700D734D2 /* XCRemoteSwiftPackageReference "PopperUp" */,
 				2CBCB3382925670F00D170FC /* XCRemoteSwiftPackageReference "Logster" */,
+				2C6A79D029354BAA004590AB /* XCRemoteSwiftPackageReference "ManuallyManagedObject" */,
 			);
 			productRefGroup = 2CBCE6042881DE240057F4CD /* Products */;
 			projectDirPath = "";
@@ -2904,6 +2908,14 @@
 				minimumVersion = 0.3.0;
 			};
 		};
+		2C6A79D029354BAA004590AB /* XCRemoteSwiftPackageReference "ManuallyManagedObject" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kamaal111/ManuallyManagedObject.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.1;
+			};
+		};
 		2C98E3DA28B12E170048149F /* XCRemoteSwiftPackageReference "SalmonUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kamaal111/SalmonUI.git";
@@ -3094,6 +3106,11 @@
 		2C69A05728B19BC600D5006D /* SettingsUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SettingsUI;
+		};
+		2C6A79D129354BAA004590AB /* ManuallyManagedObject */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2C6A79D029354BAA004590AB /* XCRemoteSwiftPackageReference "ManuallyManagedObject" */;
+			productName = ManuallyManagedObject;
 		};
 		2C98E3D928B12E170048149F /* SalmonUI */ = {
 			isa = XCSwiftPackageProductDependency;

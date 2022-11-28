@@ -157,7 +157,7 @@ extension SettingsUI {
                         handlePurchaseFailure: onPurchaseFailure
                     )
                 case .logs:
-                    LogsScreen(navigate: { screen in navigationPath.append(screen) })
+                    LogsScreen(appColor: appColor, navigate: { screen in navigationPath.append(screen) })
                 case .acknowledgements:
                     AcknowledgementsScreen()
                 }
