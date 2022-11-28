@@ -17,9 +17,11 @@ extension SettingsUI {
         @State private var showSelectedLogSheet = false
 
         let navigate: (_ screen: SettingsScreens) -> Void
+        let appColor: Color
 
-        public init(navigate: @escaping (_ screen: SettingsScreens) -> Void) {
+        public init(appColor: Color, navigate: @escaping (_ screen: SettingsScreens) -> Void) {
             self.navigate = navigate
+            self.appColor = appColor
         }
 
         public var body: some View {
@@ -27,7 +29,7 @@ extension SettingsUI {
                 KSection {
                     ForEach(logs, id: \.self) { item in
                         Button(action: { selectedLog = item }) {
-                            HStack(spacing: 8) {
+                            HStack(alignment: .top, spacing: 8) {
                                 Text(item.label)
                                     .foregroundColor(item.type.color)
                                 Text(item.message)
@@ -86,6 +88,7 @@ extension SettingsUI {
                         }
                     }
                 })
+                .accentColor(appColor)
             }
         }
 
