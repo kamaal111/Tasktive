@@ -72,7 +72,7 @@ final class TasksViewModel: ObservableObject {
             .sorted(by: \.creationDate, using: .orderedAscending)
     }
 
-    func setTickOnTask(_ task: AppTask, with newTickedState: Bool) async -> Result<Void, UserErrors> {
+    func setTickOnTask(_ task: AppTask, with newTickedState: Bool) async -> Result<Int, UserErrors> {
         await updateTask(task, with: task.toggleCoreTaskTickArguments(with: newTickedState), on: task.source)
     }
 
@@ -95,24 +95,24 @@ final class TasksViewModel: ObservableObject {
         return Double(tasksDone) / Double(tasks.count)
     }
 
-    func createTask(with arguments: TaskArguments, on source: DataSource) async -> Result<Void, UserErrors> {
+    func createTask(with arguments: TaskArguments, on source: DataSource) async -> Result<Int, UserErrors> {
         let createTaskResult = await backend.tasks.create(with: arguments, on: source)
         switch createTaskResult {
         case let .failure(failure):
             let maybeMappedBackendError = await mapBackendTaskErrors(failure)
             return .failure(maybeMappedBackendError ?? .createTaskFailure)
-        case let .success:
+        case .success:
             break
         }
 
         return await refreshTasks()
     }
 
-    func getInitialTasks(from sources: [DataSource]) async -> Result<Void, UserErrors> {
+    func getInitialTasks(from sources: [DataSource]) async -> Result<Int, UserErrors> {
         await _getTasks(from: sources, for: Date(), dataIsStale: false, updateNotCompletedTasks: true)
     }
 
-    func getTasks(from sources: [DataSource], for date: Date) async -> Result<Void, UserErrors> {
+    func getTasks(from sources: [DataSource], for date: Date) async -> Result<Int, UserErrors> {
         await _getTasks(from: sources, for: date, dataIsStale: false, updateNotCompletedTasks: false)
     }
 
@@ -149,7 +149,7 @@ final class TasksViewModel: ObservableObject {
         _ task: AppTask,
         with arguments: TaskArguments,
         on newSource: DataSource
-    ) async -> Result<Void, UserErrors> {
+    ) async -> Result<Int, UserErrors> {
         await withSettingTasks(completion: {
             let result = await backend.tasks.update(task, with: arguments, on: newSource)
             switch result {
@@ -164,7 +164,7 @@ final class TasksViewModel: ObservableObject {
         })
     }
 
-    func deleteTask(_ task: AppTask) async -> Result<Void, UserErrors> {
+    func deleteTask(_ task: AppTask) async -> Result<Int, UserErrors> {
         await withSettingTasks(completion: {
             let result = await backend.tasks.delete(task)
             switch result {
@@ -183,10 +183,10 @@ final class TasksViewModel: ObservableObject {
     private func refreshTasks(
         dataIsStale: Bool = false,
         enforcedSources: [DataSource] = []
-    ) async -> Result<Void, UserErrors> {
+    ) async -> Result<Int, UserErrors> {
         guard let lastFetchedContext = await backend.tasks.getLastFetchedForContext() else {
             logger.warning("can't refresh if no requests have been made before")
-            return .success(())
+            return .success(0)
         }
 
         return await _getTasks(
@@ -201,7 +201,7 @@ final class TasksViewModel: ObservableObject {
     private func _getTasks(from sources: [DataSource],
                            for date: Date,
                            dataIsStale: Bool,
-                           updateNotCompletedTasks: Bool) async -> Result<Void, UserErrors> {
+                           updateNotCompletedTasks: Bool) async -> Result<Int, UserErrors> {
         await withLoadingTasks {
             let (tasks, error) = await backend.tasks.filter(
                 from: sources,
@@ -218,7 +218,7 @@ final class TasksViewModel: ObservableObject {
                 return .failure(mappedError ?? .getAllFailure)
             }
 
-            return .success(())
+            return .success(tasks?.count ?? 0)
         }
     }
 
