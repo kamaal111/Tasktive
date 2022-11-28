@@ -14,7 +14,11 @@ final class TasksViewModelTests: XCTestCase {
     let viewContext = PersistenceController.preview.context
 
     override func setUpWithError() throws {
-        try CoreTask.clear(from: viewContext).get()
+        let tasks = try CoreTask.list(from: viewContext).get()
+        for task in tasks {
+            try task.delete(on: viewContext).get()
+        }
+        try viewContext.save()
     }
 
     // - MARK: Update task
@@ -24,7 +28,7 @@ final class TasksViewModelTests: XCTestCase {
         let now = Date()
         let taskOfNow = try createTask(forDate: now)
 
-        try await tasksViewModel.getTasks(from: [.coreData], for: now).get()
+        _ = try await tasksViewModel.getTasks(from: [.coreData], for: now).get()
 
         var arguments = taskOfNow.arguments
         arguments.title = ""
@@ -44,9 +48,9 @@ final class TasksViewModelTests: XCTestCase {
         let now = Date()
         let taskOfNow = try createTask(forDate: now)
 
-        try await tasksViewModel.getTasks(from: [.coreData], for: now).get()
+        _ = try await tasksViewModel.getTasks(from: [.coreData], for: now).get()
         let arguments = taskOfNow.arguments
-        try await tasksViewModel.updateTask(taskOfNow.toAppTask, with: arguments, on: .coreData).get()
+        _ = try await tasksViewModel.updateTask(taskOfNow.toAppTask, with: arguments, on: .coreData).get()
 
         let tasksForNow = tasksViewModel.tasksForDate(now)
         XCTAssertEqual(tasksForNow.count, 1)
@@ -59,16 +63,16 @@ final class TasksViewModelTests: XCTestCase {
         let tomorrow = now.incrementByDays(1)
         let taskOfNow = try createTask(forDate: now)
 
-        try await tasksViewModel.getTasks(from: [.coreData], for: now).get()
-        try await tasksViewModel.getTasks(from: [.coreData], for: tomorrow).get()
+        _ = try await tasksViewModel.getTasks(from: [.coreData], for: now).get()
+        _ = try await tasksViewModel.getTasks(from: [.coreData], for: tomorrow).get()
 
         var arguments = taskOfNow.arguments
         arguments.dueDate = tomorrow
 
-        try await tasksViewModel.updateTask(taskOfNow.toAppTask, with: arguments, on: .coreData).get()
+        _ = try await tasksViewModel.updateTask(taskOfNow.toAppTask, with: arguments, on: .coreData).get()
 
-        try await tasksViewModel.getTasks(from: [.coreData], for: now).get()
-        try await tasksViewModel.getTasks(from: [.coreData], for: tomorrow).get()
+        _ = try await tasksViewModel.getTasks(from: [.coreData], for: now).get()
+        _ = try await tasksViewModel.getTasks(from: [.coreData], for: tomorrow).get()
 
         let tasksForNow = tasksViewModel.tasksForDate(now)
         XCTAssert(tasksForNow.isEmpty)
@@ -88,8 +92,8 @@ final class TasksViewModelTests: XCTestCase {
         let yesterday = now.incrementByDays(-1)
         let taskOfYeserday = try createTask(forDate: yesterday)
 
-        try await tasksViewModel.getTasks(from: [.coreData], for: now).get()
-        try await tasksViewModel.getTasks(from: [.coreData], for: yesterday).get()
+        _ = try await tasksViewModel.getTasks(from: [.coreData], for: now).get()
+        _ = try await tasksViewModel.getTasks(from: [.coreData], for: yesterday).get()
 
         XCTAssertEqual(tasksViewModel.allTasksSortedByCreationDate.count, 2)
 
@@ -111,7 +115,7 @@ final class TasksViewModelTests: XCTestCase {
         let taskOfNow = try createTask(forDate: now)
         let taskOfYeserday = try createTask(forDate: now.incrementByDays(-1))
 
-        try await tasksViewModel.getInitialTasks(from: [.coreData]).get()
+        _ = try await tasksViewModel.getInitialTasks(from: [.coreData]).get()
 
         XCTAssertEqual(tasksViewModel.allTasksSortedByCreationDate.count, 2)
 

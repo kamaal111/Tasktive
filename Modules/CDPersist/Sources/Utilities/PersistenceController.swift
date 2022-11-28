@@ -9,6 +9,7 @@ import Logster
 import CoreData
 import SharedModels
 import ShrimpExtensions
+import ManuallyManagedObject
 
 private let logger = Logster(from: PersistenceController.self)
 
@@ -17,30 +18,30 @@ public class PersistenceController {
     private let container: NSPersistentContainer
 
     private init(inMemory: Bool = false) {
-        guard let bundle = Bundle(identifier: Constants.bundleIdentifier) else {
-            fatalError("framework container not found")
-        }
-
         let containerName = "Tasktive"
-        guard let containerURL = bundle.url(forResource: containerName, withExtension: "momd") else {
-            fatalError("container url not found")
-        }
+        let persistentContainerBuilder = _PersistentContainerBuilder(
+            entities: [
+                CoreTask.entity,
+                CoreAttachments.entity,
+                CoreReminder.entity,
+                CoreTag.entity,
+                CoreTaskList.entity,
+            ],
+            relationships: CoreTask._relationships
+                .concat(CoreAttachments._relationships)
+                .concat(CoreReminder._relationships)
+                .concat(CoreTag._relationships)
+                .concat(CoreTaskList._relationships),
+            containerName: containerName,
+            preview: inMemory
+        )
+        self.container = persistentContainerBuilder.make()
 
-        guard let managedObjectModel = NSManagedObjectModel(contentsOf: containerURL) else {
-            fatalError("managed object model")
-        }
-
-        self.container = NSPersistentContainer(name: containerName, managedObjectModel: managedObjectModel)
-
-        if inMemory {
-            container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
-        } else if let defaultURL = container.persistentStoreDescriptions.first?.url {
+        if !inMemory, let defaultURL = container.persistentStoreDescriptions.first?.url {
             let defaultStore = NSPersistentStoreDescription(url: defaultURL)
             defaultStore.configuration = "Default"
             defaultStore.shouldMigrateStoreAutomatically = false
             defaultStore.shouldInferMappingModelAutomatically = true
-        } else {
-            fatalError("default url not found")
         }
 
         container.viewContext.automaticallyMergesChangesFromParent = true

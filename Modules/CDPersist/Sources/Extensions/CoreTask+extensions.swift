@@ -93,7 +93,7 @@ extension CoreTask: Crudable, Taskable {
     /// Delete the task.
     /// - Parameter context: The context to use to operate the `CoreData` operation.
     /// - Returns: A result either containing nothing (`Void`) on success or ``CrudErrors`` on failure.
-    public func delete(on context: NSManagedObjectContext) -> Result<Void, CrudErrors> {
+    public func delete(on _: NSManagedObjectContext) -> Result<Void, CrudErrors> {
         switch deleteReminders() {
         case let .failure(failure):
             return .failure(failure)
@@ -101,14 +101,11 @@ extension CoreTask: Crudable, Taskable {
             logger.info("deleted reminders successfully")
         }
 
-        context.delete(self)
-
         do {
-            try context.save()
+            try delete()
         } catch {
             return .failure(.deletionFailure(context: error))
         }
-
         return .success(())
     }
 
@@ -181,17 +178,14 @@ extension CoreTask: Crudable, Taskable {
         limit: Int?,
         from context: NSManagedObjectContext
     ) -> Result<[CoreTask], CrudErrors> {
-        let request = request(by: predicate, limit: limit)
-
-        let result: [CoreTask]
+        let tasks: [CoreTask]
         do {
-            result = try context.fetch(request)
+            tasks = try filter(by: predicate, limit: limit, from: context)
         } catch {
             logger.error(label: "error while fetching tasks", error: error)
             return .failure(.fetchFailure(context: error))
         }
-
-        return .success(result)
+        return .success(tasks)
     }
 
     /// Update many tasks ``dueDate`` depending on a certain predicate query.
@@ -359,7 +353,7 @@ extension CoreTask: Crudable, Taskable {
         }
 
         reminder.task = self
-        addToReminders(reminder)
+        addToReminders(reminder, save: false)
 
         guard save else { return .success(reminder) }
 
