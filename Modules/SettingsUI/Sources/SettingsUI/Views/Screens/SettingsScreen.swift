@@ -159,7 +159,7 @@ extension SettingsUI {
                 case .logs:
                     LogsScreen(appColor: appColor, navigate: { screen in navigationPath.append(screen) })
                 case .acknowledgements:
-                    AcknowledgementsScreen()
+                    AcknowledgementsScreen(appColor: appColor)
                 }
             }
             .frame(minWidth: viewSize.width, minHeight: viewSize.height)

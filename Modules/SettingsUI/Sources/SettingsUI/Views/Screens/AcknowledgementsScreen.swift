@@ -19,7 +19,11 @@ extension SettingsUI {
         @State private var selectedAcknowledgementPackage: URL?
         @State private var showBrowser = false
 
-        public init() { }
+        let appColor: Color
+
+        public init(appColor: Color) {
+            self.appColor = appColor
+        }
 
         public var body: some View {
             KScrollableForm {
@@ -75,7 +79,7 @@ extension SettingsUI {
             .inAppBrowserSUI(
                 $selectedAcknowledgementPackage,
                 fallbackURL: URL(staticString: "https://kamaal.io"),
-                color: .accentColor
+                color: appColor
             )
             .onAppear {
                 guard acknowledgements == nil,
