@@ -11,10 +11,6 @@ extension String {
     var shellEncodedURL: String {
         replacingOccurrences(of: " ", with: "\\ \\").replacingOccurrences(of: ")", with: "\\)")
     }
-
-    var int: Int? {
-        Int(self)
-    }
 }
 
 extension Array where Element == String {

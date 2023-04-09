@@ -1,0 +1,77 @@
+{
+  "pins" : [
+    {
+      "identity" : "confettiswiftui",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/simibac/ConfettiSwiftUI.git",
+      "state" : {
+        "revision" : "8d3a15d0aa2991e0761749b767ef8d89bca6275a",
+        "version" : "1.0.1"
+      }
+    },
+    {
+      "identity" : "githubapi",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kamaal111/GitHubAPI.git",
+      "state" : {
+        "revision" : "61cf801b44ad22cbce46235231f91075e482b58e",
+        "version" : "0.1.2"
+      }
+    },
+    {
+      "identity" : "inappbrowsersui",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kamaal111/InAppBrowserSUI.git",
+      "state" : {
+        "revision" : "191c767f7226313002ea78903dab5f11e2e05d59",
+        "version" : "2.1.0"
+      }
+    },
+    {
+      "identity" : "logster",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kamaal111/Logster.git",
+      "state" : {
+        "revision" : "c16009fc4ca6a6e8948fca05070f0b095a7096ee",
+        "version" : "1.1.0"
+      }
+    },
+    {
+      "identity" : "salmonui",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kamaal111/SalmonUI.git",
+      "state" : {
+        "revision" : "add6319b93b53a7330d82a06c66e11c6c5b13d30",
+        "version" : "5.1.0"
+      }
+    },
+    {
+      "identity" : "shrimpextensions",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kamaal111/ShrimpExtensions.git",
+      "state" : {
+        "revision" : "4c962e09fab2ab8929914002dcdac684bdcd7a02",
+        "version" : "2.9.0"
+      }
+    },
+    {
+      "identity" : "storeapiclient",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kamaal111/StoreAPIClient.git",
+      "state" : {
+        "revision" : "9b5c4260e3577c91a0c7ad596245117c7533c8e2",
+        "version" : "0.1.1"
+      }
+    },
+    {
+      "identity" : "xiphiasnet",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kamaal111/XiphiasNet.git",
+      "state" : {
+        "revision" : "b8c2bd983f6c6df1338fdebc1d5b4740119b745b",
+        "version" : "7.0.0"
+      }
+    }
+  ],
+  "version" : 2
+}
